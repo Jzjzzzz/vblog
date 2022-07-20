@@ -15,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -138,6 +141,47 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
             dictTypeMapper.deleteDictTypeById(dictId);
             DictUtils.removeDictCache(dictType.getDictType());
         }
+    }
+
+    @Override
+    public void resetDictCache() {
+        clearDictCache();
+        loadingDictCache();
+    }
+
+    /**
+     * 清空字典缓存数据
+     */
+    @Override
+    public void clearDictCache()
+    {
+        DictUtils.clearDictCache();
+    }
+
+    /**
+     * 加载字典缓存数据
+     */
+    @Override
+    public void loadingDictCache()
+    {
+        SysDictData dictData = new SysDictData();
+        dictData.setStatus("0");
+        Map<String, List<SysDictData>> dictDataMap = dictDataMapper.selectDictDataList(dictData).stream().collect(Collectors.groupingBy(SysDictData::getDictType));
+        for (Map.Entry<String, List<SysDictData>> entry : dictDataMap.entrySet())
+        {
+            DictUtils.setDictCache(entry.getKey(), entry.getValue().stream().sorted(Comparator.comparing(SysDictData::getDictSort)).collect(Collectors.toList()));
+        }
+    }
+
+    /**
+     * 根据所有字典类型
+     *
+     * @return 字典类型集合信息
+     */
+    @Override
+    public List<SysDictType> selectDictTypeAll()
+    {
+        return dictTypeMapper.selectDictTypeAll();
     }
 
 }

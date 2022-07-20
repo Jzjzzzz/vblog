@@ -62,4 +62,11 @@ public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
      * @return 结果
      */
     int deleteDictTypeById(Long dictId);
+
+    /**
+     * 根据所有字典类型
+     *
+     * @return 字典类型集合信息
+     */
+     List<SysDictType> selectDictTypeAll();
 }

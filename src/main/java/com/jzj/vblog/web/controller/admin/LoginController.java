@@ -30,7 +30,7 @@ public class LoginController {
     @PostMapping("/login")
     public R login(@RequestBody LoginVo vo){
         String token = adminUserService.login(vo);
-        return R.ok().data("token",token);
+        return R.ok("token",token);
     }
 
     @ApiOperation("退出登录")

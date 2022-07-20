@@ -84,5 +84,26 @@ public class SysDictTypeController extends BaseController {
         return success();
     }
 
+    /**
+     * 刷新字典缓存
+     */
+
+    @DeleteMapping("/refreshCache")
+    public R refreshCache()
+    {
+        dictTypeService.resetDictCache();
+        return R.ok();
+    }
+
+    /**
+     * 获取字典选择框列表
+     */
+    @GetMapping("/optionselect")
+    public R optionselect()
+    {
+        List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
+        return R.ok(dictTypes);
+    }
+
 }
 

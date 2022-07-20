@@ -77,4 +77,8 @@
     <delete id="deleteDictTypeById" parameterType="Long">
         delete from sys_dict_type where id = #{dictId}
     </delete>
+
+    <select id="selectDictTypeAll" resultMap="SysDictTypeResult">
+        <include refid="selectDictTypeVo"/>
+    </select>
 </mapper>

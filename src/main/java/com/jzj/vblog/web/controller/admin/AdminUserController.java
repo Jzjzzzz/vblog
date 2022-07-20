@@ -31,7 +31,7 @@ public class AdminUserController {
     @ApiOperation("根据token获取用户信息")
     public R Info(String token){
         UserInfoVO user = adminUserService.info(token);
-        return R.ok().data("data",user);
+        return R.ok("data",user);
     }
 
 }

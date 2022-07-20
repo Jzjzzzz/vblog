@@ -54,5 +54,15 @@ public class SysDictDataController extends BaseController {
         }
         return R.ok(data);
     }
+
+    /**
+     * 查询字典数据详细
+     */
+    @GetMapping(value = "/{dictCode}")
+    public R getInfo(@PathVariable Long dictCode)
+    {
+        return R.ok(dictDataService.selectDictDataById(dictCode));
+    }
+
 }
 

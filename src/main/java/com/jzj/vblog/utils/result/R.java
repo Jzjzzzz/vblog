@@ -23,13 +23,11 @@ public class R {
     private Integer code;
 
     @ApiModelProperty(value = "返回消息")
-    private String message;
+    private String msg;
 
-    @ApiModelProperty(value = "返回数据(Map类型)")
-    private Map<String, Object> data = new HashMap<String, Object>();
 
     @ApiModelProperty(value = "返回数据(Object类型)")
-    private Object object;
+    private Object data;
 
     private R(){}
 
@@ -37,16 +35,36 @@ public class R {
         R r = new R();
         r.setSuccess(true);
         r.setCode(ResultCode.SUCCESS);
-        r.setMessage("操作成功");
+        r.setMsg("操作成功");
         return r;
     }
 
-    public static R ok(Object o){
+    public static R ok(Object object){
         R r = new R();
         r.setSuccess(true);
         r.setCode(ResultCode.SUCCESS);
-        r.setMessage("操作成功");
-        r.setObject(o);
+        r.setMsg("操作成功");
+        r.setData(object);
+        return r;
+    }
+
+    public static R ok(String key, Object value){
+        R r = new R();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(key,value);
+        r.setSuccess(true);
+        r.setCode(ResultCode.SUCCESS);
+        r.setMsg("操作成功");
+        r.setData(map);
+        return r;
+    }
+
+    public static R ok(Map<String, Object> map){
+        R r = new R();
+        r.setSuccess(true);
+        r.setCode(ResultCode.SUCCESS);
+        r.setMsg("操作成功");
+        r.setData(map);
         return r;
     }
 
@@ -54,7 +72,7 @@ public class R {
         R r = new R();
         r.setSuccess(false);
         r.setCode(ResultCode.ERROR);
-        r.setMessage("操作失败");
+        r.setMsg("操作失败");
         return r;
     }
 
@@ -62,7 +80,7 @@ public class R {
         R r = new R();
         r.setSuccess(false);
         r.setCode(ResultCode.ERROR);
-        r.setMessage(message);
+        r.setMsg(message);
         return r;
     }
 
@@ -72,22 +90,12 @@ public class R {
     }
 
     public R message(String message){
-        this.setMessage(message);
+        this.setMsg(message);
         return this;
     }
 
     public R code(Integer code){
         this.setCode(code);
-        return this;
-    }
-
-    public R data(String key, Object value){
-        this.data.put(key, value);
-        return this;
-    }
-
-    public R data(Map<String, Object> map){
-        this.setData(map);
         return this;
     }
 

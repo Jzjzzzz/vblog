@@ -110,7 +110,7 @@
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
       <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <router-link :to="'/system/dict-data/index/' + scope.row.id" class="link-type">
+          <router-link :to="'/system/data/' + scope.row.id" class="link-type">
             <span>{{ scope.row.dictType }}</span>
           </router-link>
         </template>
@@ -289,8 +289,7 @@ export default {
       this.reset();
       const id = row.id || this.ids
       getType(id).then(response => {
-        console.log(response)
-        this.form = response.object;
+        this.form = response.data;
         this.open = true;
         this.title = "修改字典类型";
       });

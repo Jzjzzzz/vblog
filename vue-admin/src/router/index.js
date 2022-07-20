@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '主页', icon: 'dashboard' }
     }]
   },
 
@@ -88,7 +88,14 @@ export const constantRoutes = [
         path: 'dict',
         name: 'Dict',
         component: () => import('@/views/system/dict/index'),
-        meta: { title: '字典管理',icon: 'el-icon-receiving' }
+        meta: { title: '字典分类',icon: 'el-icon-receiving' }
+      },
+      {
+        path: 'data/:id(\\d+)',
+        name: 'Data',
+        hidden: true,
+        component: () => import('@/views/system/dict/data'),
+        meta: { title: '字典数据',icon: 'el-icon-receiving' }
       }
     ]
 },

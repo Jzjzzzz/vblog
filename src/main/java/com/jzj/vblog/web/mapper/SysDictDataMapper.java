@@ -42,4 +42,12 @@ public interface SysDictDataMapper extends BaseMapper<SysDictData> {
      * @return 字典数据
      */
     int countDictDataByType(String dictType);
+
+    /**
+     * 根据字典数据ID查询信息
+     *
+     * @param dictCode 字典数据ID
+     * @return 字典数据
+     */
+    SysDictData selectDictDataById(Long dictCode);
 }

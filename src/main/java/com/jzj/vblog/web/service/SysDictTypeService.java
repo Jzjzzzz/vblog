@@ -47,4 +47,28 @@ public interface SysDictTypeService extends IService<SysDictType> {
      * @param dictIds 需要删除的字典ID
      */
     void deleteDictTypeByIds(Long[] dictIds);
+
+
+    /**
+     * 重置字典缓存数据
+     */
+    void resetDictCache();
+
+    /**
+     * 清空字典缓存数据
+     */
+    void clearDictCache();
+
+
+    /**
+     * 加载字典缓存数据
+     */
+    void loadingDictCache();
+
+    /**
+     * 根据所有字典类型
+     *
+     * @return 字典类型集合信息
+     */
+     List<SysDictType> selectDictTypeAll();
 }

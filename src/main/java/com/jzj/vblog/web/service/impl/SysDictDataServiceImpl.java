@@ -26,4 +26,15 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
     public List<SysDictData> selectDictDataList(SysDictData dictData) {
         return dictDataMapper.selectDictDataList(dictData);
     }
+
+    /**
+     * 根据字典数据ID查询信息
+     *
+     * @param dictCode 字典数据ID
+     * @return 字典数据
+     */
+    @Override
+    public SysDictData selectDictDataById(Long dictCode) {
+        return dictDataMapper.selectDictDataById(dictCode);
+    }
 }

@@ -10,6 +10,8 @@ import router from './router'
 import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree } from "@/utils/ruoyi";
 import '@/icons' // icon
 import '@/permission' // permission control
+import { getDicts } from "@/api/system/dict/data";
+import plugins from './plugins' // plugins
 
 // 分页组件
 import Pagination from "@/components/Pagination";
@@ -35,6 +37,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // 全局方法挂载
+Vue.prototype.getDicts = getDicts
 Vue.prototype.addDateRange = addDateRange
 Vue.prototype.parseTime = parseTime
 Vue.prototype.resetForm = resetForm
@@ -51,6 +54,7 @@ Vue.component('RightToolbar', RightToolbar)
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
+Vue.use(plugins)
 DictData.install()
 
 Vue.config.productionTip = false

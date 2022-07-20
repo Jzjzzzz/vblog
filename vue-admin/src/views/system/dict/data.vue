@@ -5,7 +5,7 @@
         <el-select v-model="queryParams.dictType">
           <el-option
             v-for="item in typeOptions"
-            :key="item.dictId"
+            :key="item.id"
             :label="item.dictName"
             :value="item.dictType"
           />
@@ -88,7 +88,7 @@
 
     <el-table v-loading="loading" :data="dataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="字典编码" align="center" prop="dictCode" />
+      <el-table-column label="字典编码" align="center" prop="id" />
       <el-table-column label="字典标签" align="center" prop="dictLabel">
         <template slot-scope="scope">
           <span v-if="scope.row.listClass == '' || scope.row.listClass == 'default'">{{scope.row.dictLabel}}</span>
@@ -266,14 +266,14 @@ export default {
     };
   },
   created() {
-    const dictId = this.$route.params && this.$route.params.dictId;
-    this.getType(dictId);
+    const id = this.$route.params && this.$route.params.id;
+    this.getType(id);
     this.getTypeList();
   },
   methods: {
     /** 查询字典类型详细 */
-    getType(dictId) {
-      getType(dictId).then(response => {
+    getType(id) {
+      getType(id).then(response => {
         this.queryParams.dictType = response.data.dictType;
         this.defaultDictType = response.data.dictType;
         this.getList();
@@ -302,7 +302,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        dictCode: undefined,
+        id: undefined,
         dictLabel: undefined,
         dictValue: undefined,
         cssClass: undefined,
@@ -338,15 +338,15 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.dictCode)
+      this.ids = selection.map(item => item.id)
       this.single = selection.length!=1
       this.multiple = !selection.length
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const dictCode = row.dictCode || this.ids
-      getData(dictCode).then(response => {
+      const id = row.id || this.ids
+      getData(id).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改字典数据";
@@ -356,7 +356,7 @@ export default {
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.dictCode != undefined) {
+          if (this.form.id != undefined) {
             updateData(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
@@ -374,9 +374,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const dictCodes = row.dictCode || this.ids;
-      this.$modal.confirm('是否确认删除字典编码为"' + dictCodes + '"的数据项？').then(function() {
-        return delData(dictCodes);
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除字典编码为"' + ids + '"的数据项？').then(function() {
+        return delData(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
