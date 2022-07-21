@@ -12,6 +12,10 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import { getDicts } from "@/api/system/dict/data";
 import plugins from './plugins' // plugins
+import './assets/styles/element-variables.scss'
+
+import '@/assets/styles/index.scss' // global css
+import '@/assets/styles/ruoyi.scss' // ruoyi css
 
 // 分页组件
 import Pagination from "@/components/Pagination";

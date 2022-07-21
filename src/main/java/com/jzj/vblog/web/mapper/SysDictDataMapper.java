@@ -50,4 +50,28 @@ public interface SysDictDataMapper extends BaseMapper<SysDictData> {
      * @return 字典数据
      */
     SysDictData selectDictDataById(Long dictCode);
+
+    /**
+     * 新增字典数据信息
+     *
+     * @param dictData 字典数据信息
+     * @return 结果
+     */
+    int insertDictData(SysDictData dictData);
+
+    /**
+     * 修改字典数据信息
+     *
+     * @param dictData 字典数据信息
+     * @return 结果
+     */
+    int updateDictData(SysDictData dictData);
+
+    /**
+     * 通过字典ID删除字典数据信息
+     *
+     * @param dictCode 字典数据ID
+     * @return 结果
+     */
+    int deleteDictDataById(Long dictCode);
 }

@@ -83,12 +83,14 @@
           @click="handleClose"
         >关闭</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <el-col :span="1.5">
+        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="dataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="字典编码" align="center" prop="id" />
+      <el-table-column type="index" label="序号" align="center" :index="getIndex" />
       <el-table-column label="字典标签" align="center" prop="dictLabel">
         <template slot-scope="scope">
           <span v-if="scope.row.listClass == '' || scope.row.listClass == 'default'">{{scope.row.dictLabel}}</span>
@@ -271,6 +273,10 @@ export default {
     this.getTypeList();
   },
   methods: {
+    //设置序号
+    getIndex(index){
+      return index + (this.queryParams.pageNum - 1)*this.queryParams.pageSize + 1;
+    },
     /** 查询字典类型详细 */
     getType(id) {
       getType(id).then(response => {

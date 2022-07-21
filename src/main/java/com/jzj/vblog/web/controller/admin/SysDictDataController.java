@@ -7,11 +7,10 @@ import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysDictDataService;
 import com.jzj.vblog.web.service.SysDictTypeService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +63,35 @@ public class SysDictDataController extends BaseController {
         return R.ok(dictDataService.selectDictDataById(dictCode));
     }
 
+
+    /**
+     * 新增字典类型
+     */
+    @PostMapping
+    public R add(@Validated @RequestBody SysDictData dict)
+    {
+        dict.setCreateBy(getUsername());
+        return toAjax(dictDataService.insertDictData(dict));
+    }
+
+    /**
+     * 修改保存字典类型
+     */
+    @PutMapping
+    public R edit(@Validated @RequestBody SysDictData dict)
+    {
+        dict.setUpdateBy(getUsername());
+        return toAjax(dictDataService.updateDictData(dict));
+    }
+
+    /**
+     * 删除字典类型
+     */
+    @DeleteMapping("/{dictCodes}")
+    public R remove(@PathVariable Long[] dictCodes)
+    {
+        dictDataService.deleteDictDataByIds(dictCodes);
+        return success();
+    }
 }
 
