@@ -1,5 +1,3 @@
-
-
 /**
  * 通用js方法封装处理
  * Copyright (c) 2019 ruoyi
@@ -65,10 +63,11 @@ export function addDateRange(params, dateRange, propName) {
     search.params['begin' + propName] = dateRange[0];
     search.params['end' + propName] = dateRange[1];
   }
+  console.log(search)
   return search;
 }
 
-// 回显数据字典 
+// 回显数据字典
 export function selectDictLabel(datas, value) {
   if (value === undefined) {
     return "";

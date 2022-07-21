@@ -1,13 +1,10 @@
 package com.jzj.vblog.web.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
-import lombok.Data;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author Jzj
@@ -16,29 +13,34 @@ import java.util.Date;
  * @Message: Entity基类
  */
 
-@Data
 @ApiModel(value="Entity基类", description="Entity基类")
-public class BaseEntity {
+public class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /** 搜索值 */
+    private String searchValue;
 
-    /**
-     * Id
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    /** 请求参数 */
+    private Map<String, Object> params;
 
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    public String getSearchValue() {
+        return searchValue;
+    }
 
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
+    }
 
-    /**
-     * 修改时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+    public Map<String, Object> getParams()
+    {
+        if (params == null)
+        {
+            params = new HashMap<>();
+        }
+        return params;
+    }
 
+    public void setParams(Map<String, Object> params)
+    {
+        this.params = params;
+    }
 }

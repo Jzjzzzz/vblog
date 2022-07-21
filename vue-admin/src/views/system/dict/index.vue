@@ -106,7 +106,7 @@
 
     <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="字典编号" align="center" prop="id" />
+      <el-table-column type="index" label="序号" align="center" :index="getIndex" />
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
       <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
@@ -235,6 +235,10 @@ export default {
     this.getList();
   },
   methods: {
+    //设置序号
+    getIndex(index){
+      return index + (this.queryParams.pageNum - 1)*this.queryParams.pageSize + 1;
+    },
     /** 查询字典类型列表 */
     getList() {
       this.loading = true;
