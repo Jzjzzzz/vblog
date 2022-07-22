@@ -1,33 +1,28 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="字典名称" prop="dictName">
+      <el-form-item label="参数名称" prop="configName">
         <el-input
-          v-model="queryParams.dictName"
-          placeholder="请输入字典名称"
+          v-model="queryParams.configName"
+          placeholder="请输入参数名称"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="字典类型" prop="dictType">
+      <el-form-item label="参数键名" prop="configKey">
         <el-input
-          v-model="queryParams.dictType"
-          placeholder="请输入字典类型"
+          v-model="queryParams.configKey"
+          placeholder="请输入参数键名"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="字典状态"
-          clearable
-          style="width: 240px"
-        >
+      <el-form-item label="系统内置" prop="configType">
+        <el-select v-model="queryParams.configType" placeholder="系统内置" clearable>
           <el-option
-            v-for="dict in dict.type.sys_normal_disable"
+            v-for="dict in dict.type.sys_yes_no"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -82,7 +77,8 @@
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button style="display: none"
+        <el-button
+          style="display: none"
           type="warning"
           plain
           icon="el-icon-download"
@@ -99,25 +95,18 @@
           @click="handleRefreshCache"
         >刷新缓存</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="configList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column type="index" label="序号" align="center" :index="getIndex" />
-      <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
-      <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
+      <el-table-column label="序号" align="center" :index="getIndex" type="index" />
+      <el-table-column label="参数名称" align="center" prop="configName" :show-overflow-tooltip="true" />
+      <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true" />
+      <el-table-column label="参数键值" align="center" prop="configValue" />
+      <el-table-column label="系统内置" align="center" prop="configType">
         <template slot-scope="scope">
-          <router-link :to="'/system/data/' + scope.row.id" class="link-type">
-            <span>{{ scope.row.dictType }}</span>
-          </router-link>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.configType"/>
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
@@ -155,23 +144,26 @@
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="字典名称" prop="dictName">
-          <el-input v-model="form.dictName" placeholder="请输入字典名称" />
+        <el-form-item label="参数名称" prop="configName">
+          <el-input v-model="form.configName" placeholder="请输入参数名称" />
         </el-form-item>
-        <el-form-item label="字典类型" prop="dictType">
-          <el-input v-model="form.dictType" placeholder="请输入字典类型" />
+        <el-form-item label="参数键名" prop="configKey">
+          <el-input v-model="form.configKey" placeholder="请输入参数键名" />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="form.status">
+        <el-form-item label="参数键值" prop="configValue">
+          <el-input v-model="form.configValue" placeholder="请输入参数键值" />
+        </el-form-item>
+        <el-form-item label="系统内置" prop="configType">
+          <el-radio-group v-model="form.configType">
             <el-radio
-              v-for="dict in dict.type.sys_normal_disable"
+              v-for="dict in dict.type.sys_yes_no"
               :key="dict.value"
               :label="dict.value"
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -183,11 +175,11 @@
 </template>
 
 <script>
-import { listType, getType, delType, addType, updateType, refreshCache } from "@/api/system/dict/type";
+import { listConfig, getConfig, delConfig, addConfig, updateConfig, refreshCache } from "@/api/system/config";
 
 export default {
-  name: "Dict",
-  dicts: ['sys_normal_disable'],
+  name: "Config",
+  dicts: ['sys_yes_no'],
   data() {
     return {
       // 遮罩层
@@ -202,8 +194,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 字典表格数据
-      typeList: [],
+      // 参数表格数据
+      configList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -214,19 +206,22 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        dictName: undefined,
-        dictType: undefined,
-        status: undefined
+        configName: undefined,
+        configKey: undefined,
+        configType: undefined
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        dictName: [
-          { required: true, message: "字典名称不能为空", trigger: "blur" }
+        configName: [
+          { required: true, message: "参数名称不能为空", trigger: "blur" }
         ],
-        dictType: [
-          { required: true, message: "字典类型不能为空", trigger: "blur" }
+        configKey: [
+          { required: true, message: "参数键名不能为空", trigger: "blur" }
+        ],
+        configValue: [
+          { required: true, message: "参数键值不能为空", trigger: "blur" }
         ]
       }
     };
@@ -239,11 +234,11 @@ export default {
     getIndex(index){
       return index + (this.queryParams.pageNum - 1)*this.queryParams.pageSize + 1;
     },
-    /** 查询字典类型列表 */
+    /** 查询参数列表 */
     getList() {
       this.loading = true;
-      listType(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.typeList = response.rows;
+      listConfig(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+          this.configList = response.rows;
           this.total = response.total;
           this.loading = false;
         }
@@ -258,9 +253,10 @@ export default {
     reset() {
       this.form = {
         id: undefined,
-        dictName: undefined,
-        dictType: undefined,
-        status: "0",
+        configName: undefined,
+        configKey: undefined,
+        configValue: undefined,
+        configType: "Y",
         remark: undefined
       };
       this.resetForm("form");
@@ -280,7 +276,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加字典类型";
+      this.title = "添加参数";
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -292,10 +288,10 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getType(id).then(response => {
+      getConfig(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改字典类型";
+        this.title = "修改参数";
       });
     },
     /** 提交按钮 */
@@ -303,13 +299,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
-            updateType(this.form).then(response => {
+            updateConfig(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addType(this.form).then(response => {
+            addConfig(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -321,18 +317,18 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除字典编号为"' + ids + '"的数据项？').then(function() {
-        return delType(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal.confirm('是否确认删除参数编号为"' + ids + '"的数据项？').then(function() {
+          return delConfig(ids);
+        }).then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        }).catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/dict/type/export', {
+      this.download('system/config/export', {
         ...this.queryParams
-      }, `type_${new Date().getTime()}.xlsx`)
+      }, `config_${new Date().getTime()}.xlsx`)
     },
     /** 刷新缓存按钮操作 */
     handleRefreshCache() {

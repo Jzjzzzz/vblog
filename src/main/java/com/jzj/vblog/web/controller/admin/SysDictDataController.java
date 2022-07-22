@@ -7,6 +7,7 @@ import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysDictDataService;
 import com.jzj.vblog.web.service.SysDictTypeService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -40,9 +41,7 @@ public class SysDictDataController extends BaseController {
         return getDataTable(list);
     }
 
-    /**
-     * 根据字典类型查询字典数据信息
-     */
+    @ApiOperation("根据字典类型查询字典数据信息")
     @GetMapping(value = "/type/{dictType}")
     public R dictType(@PathVariable String dictType)
     {
@@ -54,9 +53,7 @@ public class SysDictDataController extends BaseController {
         return R.ok(data);
     }
 
-    /**
-     * 查询字典数据详细
-     */
+    @ApiOperation("查询字典数据详细")
     @GetMapping(value = "/{dictCode}")
     public R getInfo(@PathVariable Long dictCode)
     {
@@ -64,9 +61,7 @@ public class SysDictDataController extends BaseController {
     }
 
 
-    /**
-     * 新增字典类型
-     */
+    @ApiOperation("新增字典类型")
     @PostMapping
     public R add(@Validated @RequestBody SysDictData dict)
     {
@@ -74,9 +69,7 @@ public class SysDictDataController extends BaseController {
         return toAjax(dictDataService.insertDictData(dict));
     }
 
-    /**
-     * 修改保存字典类型
-     */
+    @ApiOperation("修改保存字典类型")
     @PutMapping
     public R edit(@Validated @RequestBody SysDictData dict)
     {
@@ -84,9 +77,7 @@ public class SysDictDataController extends BaseController {
         return toAjax(dictDataService.updateDictData(dict));
     }
 
-    /**
-     * 删除字典类型
-     */
+    @ApiOperation("删除字典类型")
     @DeleteMapping("/{dictCodes}")
     public R remove(@PathVariable Long[] dictCodes)
     {

@@ -96,6 +96,12 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/system/dict/data'),
         meta: { title: '字典数据',icon: 'el-icon-receiving' }
+      },
+      {
+        path: 'config',
+        name: 'Config',
+        component: () => import('@/views/system/config/index'),
+        meta: { title: '参数设置',icon: 'el-icon-receiving' }
       }
     ]
 },

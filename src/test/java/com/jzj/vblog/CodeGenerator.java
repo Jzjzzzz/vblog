@@ -86,7 +86,7 @@ public class CodeGenerator {
         mpg.setCfg(cfg);
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("sys_dict_type"); //这里输入你要生成的表
+        strategy.setInclude("sys_config"); //这里输入你要生成的表
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);//数据库表字段映射到实体的命名策略

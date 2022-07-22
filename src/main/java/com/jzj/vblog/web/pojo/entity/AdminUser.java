@@ -22,8 +22,7 @@ import java.util.Date;
  * @since 2022-06-07
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value="AdminUser对象", description="管理员用户表")
 public class AdminUser extends BaseEntity implements Serializable {
 

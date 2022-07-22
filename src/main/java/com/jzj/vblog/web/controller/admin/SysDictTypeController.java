@@ -26,8 +26,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/dict/type")
 public class SysDictTypeController extends BaseController {
+
     @Autowired
     private SysDictTypeService dictTypeService;
+
     @ApiOperation("分页列表")
     @GetMapping("/list")
     public TableDataInfo list(SysDictType dictType)
@@ -37,18 +39,14 @@ public class SysDictTypeController extends BaseController {
         return getDataTable(list);
     }
 
-    /**
-     * 查询字典类型详细
-     */
+    @ApiOperation("查询字典类型详细")
     @GetMapping(value = "/{dictId}")
     public R getInfo(@PathVariable Long dictId)
     {
         return R.ok(dictTypeService.selectDictTypeById(dictId));
     }
 
-    /**
-     * 新增字典类型
-     */
+    @ApiOperation("新增字典类型")
     @PostMapping
     public R add(@Validated @RequestBody SysDictType dict)
     {
@@ -60,9 +58,7 @@ public class SysDictTypeController extends BaseController {
         return toAjax(dictTypeService.insertDictType(dict));
     }
 
-    /**
-     * 修改字典类型
-     */
+    @ApiOperation("修改字典类型")
     @PutMapping
     public R edit(@Validated @RequestBody SysDictType dict)
     {
@@ -74,9 +70,7 @@ public class SysDictTypeController extends BaseController {
         return toAjax(dictTypeService.updateDictType(dict));
     }
 
-    /**
-     * 删除字典类型
-     */
+    @ApiOperation("删除字典类型")
     @DeleteMapping("/{dictIds}")
     public R remove(@PathVariable Long[] dictIds)
     {
@@ -84,10 +78,7 @@ public class SysDictTypeController extends BaseController {
         return success();
     }
 
-    /**
-     * 刷新字典缓存
-     */
-
+    @ApiOperation("刷新字典缓存")
     @DeleteMapping("/refreshCache")
     public R refreshCache()
     {
@@ -95,9 +86,7 @@ public class SysDictTypeController extends BaseController {
         return R.ok();
     }
 
-    /**
-     * 获取字典选择框列表
-     */
+    @ApiOperation("获取字典选择框列表")
     @GetMapping("/optionselect")
     public R optionselect()
     {

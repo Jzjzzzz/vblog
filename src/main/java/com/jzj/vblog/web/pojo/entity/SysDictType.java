@@ -21,8 +21,7 @@ import java.util.Date;
  * @since 2022-07-08
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value="SysDictType对象", description="字典类型表")
 public class SysDictType extends BaseEntity {
 
