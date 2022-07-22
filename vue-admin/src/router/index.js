@@ -101,13 +101,19 @@ export const constantRoutes = [
         path: 'config',
         name: 'Config',
         component: () => import('@/views/system/config/index'),
-        meta: { title: '参数设置',icon: 'el-icon-receiving' }
+        meta: { title: '参数设置',icon: 'el-icon-s-tools' }
+      },
+      {
+        path: 'notice',
+        name: 'Notice',
+        component: () => import('@/views/system/notice/index'),
+        meta: { title: '公告管理',icon: 'el-icon-s-comment' }
       },
       {
         path: 'operlog',
         name: 'Operlog',
         component: () => import('@/views/monitor/operlog/index'),
-        meta: { title: '日志管理',icon: 'el-icon-receiving' }
+        meta: { title: '日志管理',icon: 'el-icon-s-order' }
       }
     ]
 },

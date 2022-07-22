@@ -25,6 +25,8 @@ import DictData from '@/components/DictData'
 import DictTag from '@/components/DictTag'
 // 自定义表格工具组件
 import RightToolbar from "@/components/RightToolbar"
+// 富文本组件
+import Editor from "@/components/Editor"
 
 
 /**
@@ -48,6 +50,7 @@ Vue.prototype.resetForm = resetForm
 Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.handleTree = handleTree
+Vue.component('Editor', Editor)
 
 Vue.component('DictTag', DictTag)
 Vue.component('Pagination', Pagination)
