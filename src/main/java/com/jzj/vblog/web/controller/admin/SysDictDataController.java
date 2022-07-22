@@ -1,14 +1,15 @@
 package com.jzj.vblog.web.controller.admin;
 
 
+import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
+import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysDictDataService;
 import com.jzj.vblog.web.service.SysDictTypeService;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class SysDictDataController extends BaseController {
         return R.ok(dictDataService.selectDictDataById(dictCode));
     }
 
-
+    @Log(title = "字典类型",businessType = BusinessType.INSERT)
     @ApiOperation("新增字典类型")
     @PostMapping
     public R add(@Validated @RequestBody SysDictData dict)
@@ -69,6 +70,7 @@ public class SysDictDataController extends BaseController {
         return toAjax(dictDataService.insertDictData(dict));
     }
 
+    @Log(title = "字典类型",businessType = BusinessType.UPDATE)
     @ApiOperation("修改保存字典类型")
     @PutMapping
     public R edit(@Validated @RequestBody SysDictData dict)
@@ -77,6 +79,7 @@ public class SysDictDataController extends BaseController {
         return toAjax(dictDataService.updateDictData(dict));
     }
 
+    @Log(title = "字典类型",businessType = BusinessType.DELETE)
     @ApiOperation("删除字典类型")
     @DeleteMapping("/{dictCodes}")
     public R remove(@PathVariable Long[] dictCodes)

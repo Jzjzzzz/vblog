@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "后台管理员登录")
 @RestController
 @RequestMapping("/admin")
-public class LoginController {
+public class SysLoginController {
 
 
     @Autowired

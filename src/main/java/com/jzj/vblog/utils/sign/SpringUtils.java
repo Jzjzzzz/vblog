@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
  * @Message: spring工具类 方便在非spring管理环境中获取bean
  */
 @Component
-public class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
+public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware
+{
     /** Spring应用上下文环境 */
     private static ConfigurableListableBeanFactory beanFactory;
 
@@ -141,5 +142,17 @@ public class SpringUtils implements BeanFactoryPostProcessor, ApplicationContext
     {
         final String[] activeProfiles = getActiveProfiles();
         return StringUtils.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+    }
+
+    /**
+     * 获取配置文件中的值
+     *
+     * @param key 配置文件的key
+     * @return 当前的配置文件的值
+     *
+     */
+    public static String getRequiredProperty(String key)
+    {
+        return applicationContext.getEnvironment().getRequiredProperty(key);
     }
 }

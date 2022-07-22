@@ -2,6 +2,8 @@ package com.jzj.vblog.web.controller.admin;
 
 import com.jzj.vblog.web.pojo.entity.AdminUser;
 
+import java.util.Date;
+
 /**
  * @Author Jzj
  * @Date 2022/7/8 16:32
@@ -10,9 +12,7 @@ import com.jzj.vblog.web.pojo.entity.AdminUser;
  */
 public class TestDemo01 {
     public static void main(String[] args) {
-        AdminUser adminUser = new AdminUser();
-        adminUser.setAvatar("1111");
-        adminUser.setId(2L);
-        System.out.println(adminUser.getId());
+        Date date = new Date();
+        System.out.println(date);
     }
 }

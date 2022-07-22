@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin/user")
 @Api("后台管理员控制器")
-public class AdminUserController {
+public class SysUserController {
 
     @Autowired
     AdminUserService adminUserService;
