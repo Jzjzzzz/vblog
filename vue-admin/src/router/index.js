@@ -77,6 +77,22 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/article',
+    component: Layout,
+    redirect: '/article/index',
+    name: 'Article',
+    meta: { title: '文章管理', icon: 'el-icon-setting' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'article',
+        name: 'Article',
+        component: () => import('@/views/article/index'),
+        meta: { title: '文章列表',icon: 'el-icon-receiving' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/dict',

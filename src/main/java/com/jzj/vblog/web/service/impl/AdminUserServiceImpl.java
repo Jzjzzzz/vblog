@@ -9,7 +9,7 @@ import com.jzj.vblog.utils.sign.MD5Utils;
 import com.jzj.vblog.web.mapper.AdminUserMapper;
 import com.jzj.vblog.web.pojo.entity.AdminUser;
 import com.jzj.vblog.web.pojo.vo.LoginVo;
-import com.jzj.vblog.web.pojo.vo.UserInfoVO;
+import com.jzj.vblog.web.pojo.vo.UserInfoVo;
 import com.jzj.vblog.web.service.AdminUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
 
         AdminUser user = baseMapper.login(username, MD5Utils.encrypt(password));
         if(user==null) throw new BusinessException(ResponseEnum.LOGIN_USER_ERROR); //账号密码错误
-        UserInfoVO userinfo = new UserInfoVO();
+        UserInfoVo userinfo = new UserInfoVo();
         BeanUtils.copyProperties(user,userinfo);
         userinfo.setName(user.getUsername());
 
@@ -44,8 +44,8 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     }
 
     @Override
-    public UserInfoVO info(String token) {
-        UserInfoVO user = JwtUtils.getUserByJwtToken(token);
+    public UserInfoVo info(String token) {
+        UserInfoVo user = JwtUtils.getUserByJwtToken(token);
         return user;
     }
 }

@@ -3,7 +3,7 @@ package com.jzj.vblog.web.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.AdminUser;
 import com.jzj.vblog.web.pojo.vo.LoginVo;
-import com.jzj.vblog.web.pojo.vo.UserInfoVO;
+import com.jzj.vblog.web.pojo.vo.UserInfoVo;
 
 /**
  * <p>
@@ -17,5 +17,5 @@ public interface AdminUserService extends IService<AdminUser> {
 
     String login(LoginVo vo);
 
-    UserInfoVO info(String token);
+    UserInfoVo info(String token);
 }

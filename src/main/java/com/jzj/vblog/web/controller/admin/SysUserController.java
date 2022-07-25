@@ -2,7 +2,7 @@ package com.jzj.vblog.web.controller.admin;
 
 
 import com.jzj.vblog.utils.result.R;
-import com.jzj.vblog.web.pojo.vo.UserInfoVO;
+import com.jzj.vblog.web.pojo.vo.UserInfoVo;
 import com.jzj.vblog.web.service.AdminUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,7 @@ public class SysUserController {
     @GetMapping("/info")
     @ApiOperation("根据token获取用户信息")
     public R Info(String token){
-        UserInfoVO user = adminUserService.info(token);
+        UserInfoVo user = adminUserService.info(token);
         return R.ok("data",user);
     }
 

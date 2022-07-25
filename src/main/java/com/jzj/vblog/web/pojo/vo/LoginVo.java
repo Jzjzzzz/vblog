@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(description="登录表单提交对象")
-public class LoginVo  {
+public class LoginVo {
     @ApiModelProperty(value = "用户账号")
     private String username;
     @ApiModelProperty(value = "用户密码")

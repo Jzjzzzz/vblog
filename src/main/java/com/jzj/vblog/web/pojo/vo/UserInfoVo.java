@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @ApiModel("用户信息实体")
 @Data
-public class UserInfoVO  {
+public class UserInfoVo {
 
     @ApiModelProperty("id")
     private Long id;

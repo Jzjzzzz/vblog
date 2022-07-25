@@ -1,7 +1,7 @@
 package com.jzj.vblog.utils.sign;
 
 import com.jzj.vblog.utils.result.BusinessException;
-import com.jzj.vblog.web.pojo.vo.UserInfoVO;
+import com.jzj.vblog.web.pojo.vo.UserInfoVo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ public class JwtUtils {
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
     public static final String APP_SECRET = "ukc8BDbRzgUDaY6pZFfWus2jZWLPHO";
 
-    public static String getJwtToken(UserInfoVO vo){
+    public static String getJwtToken(UserInfoVo vo){
 
         String JwtToken = Jwts.builder()
                 //头部信息
@@ -93,7 +93,7 @@ public class JwtUtils {
     /**
      * 根据token获取用户信息
      */
-    public static UserInfoVO getUserByJwtToken(String token){
+    public static UserInfoVo getUserByJwtToken(String token){
         //判断token是否有效
         if(StringUtils.isEmpty(token)) return null;
         boolean flag = checkToken(token);
@@ -101,7 +101,7 @@ public class JwtUtils {
         //获取用户信息
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
-        UserInfoVO user = new UserInfoVO();
+        UserInfoVo user = new UserInfoVo();
         user.setName((String) claims.get("name"));
         user.setAvatar((String) claims.get("avatar"));
         user.setIntroduction((String) claims.get("introduction"));
