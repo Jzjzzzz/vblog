@@ -93,6 +93,22 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/website',
+    component: Layout,
+    redirect: '/website/index',
+    name: 'Website',
+    meta: { title: '资源管理', icon: 'el-icon-setting' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'website',
+        name: 'Website',
+        component: () => import('@/views/website/index'),
+        meta: { title: '资源列表',icon: 'el-icon-receiving' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/dict',

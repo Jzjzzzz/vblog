@@ -17,6 +17,7 @@ import './assets/styles/element-variables.scss'
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/ruoyi.scss' // ruoyi css
 
+
 // 分页组件
 import Pagination from "@/components/Pagination";
 // 字典数据组件
@@ -27,6 +28,8 @@ import DictTag from '@/components/DictTag'
 import RightToolbar from "@/components/RightToolbar"
 // 富文本组件
 import Editor from "@/components/Editor"
+//普通图片上传组件
+import EleUploadImage from "vue-ele-upload-image";
 
 
 /**
@@ -51,6 +54,7 @@ Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.handleTree = handleTree
 Vue.component('Editor', Editor)
+Vue.component(EleUploadImage.name, EleUploadImage);
 
 Vue.component('DictTag', DictTag)
 Vue.component('Pagination', Pagination)
