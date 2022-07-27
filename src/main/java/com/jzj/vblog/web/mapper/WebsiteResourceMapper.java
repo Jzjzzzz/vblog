@@ -15,5 +15,9 @@ import java.util.List;
  */
 public interface WebsiteResourceMapper extends BaseMapper<WebsiteResource> {
 
+
+
     List<WebsiteResource> selectWebsiteList(WebsiteResource websiteResource);
+
+    WebsiteResource checkwebSiteUnique(String resourceName);
 }

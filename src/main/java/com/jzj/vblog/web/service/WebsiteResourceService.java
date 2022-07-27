@@ -16,4 +16,14 @@ import java.util.List;
 public interface WebsiteResourceService extends IService<WebsiteResource> {
 
     List<WebsiteResource> selectWebsiteList(WebsiteResource websiteResource);
+
+    String checkWebsiteUnique(WebsiteResource websiteResource);
+
+    int insertWebsite(WebsiteResource websiteResource);
+
+    WebsiteResource selectWebsiteById(String id);
+
+    int updateWebsite(WebsiteResource websiteResource);
+
+    int deleteWebsiteByIds(List<String> ids);
 }

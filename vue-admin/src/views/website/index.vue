@@ -57,10 +57,10 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" :index="getIndex" />
       <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true" />
-      <el-table-column label="资源地址" align="center" prop="resourceAddress" :show-overflow-tooltip="true" />
       <el-table-column prop="resourceImg" label="标题图" align="center" >
         <template slot-scope="scope">
             <el-image
+              style="width:100px;height: 100px"
               :src="scope.row.resourceImg"
               :preview-src-list="[scope.row.resourceImg]">
             </el-image>
@@ -71,7 +71,13 @@
           <dict-tag :options="dict.type.sys_website_type" :value="scope.row.resourceType"/>
         </template>
       </el-table-column>
-      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true" />
+      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true">
+        <template slot-scope="scope">
+          <el-tag effect="plain">
+            {{ scope.row.clickRate }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_website_status" :value="scope.row.status"/>
@@ -109,7 +115,7 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="30%" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="资源名称" prop="resourceName">
           <el-input v-model="form.resourceName" placeholder="请输入资源名称" />
@@ -119,14 +125,14 @@
         </el-form-item>
         <el-form-item label="资源分类" prop="resourceType">
           <el-select v-model="form.resourceType" placeholder="请选择分类" clearable :style="{width: '100%'}">
-            <el-option v-for="dict in dict.type.sys_website_type" :key="dict.value" :label="dict.value"
-                       :value="dict.label" >{{dict.label}}</el-option>
+            <el-option v-for="dict in dict.type.sys_website_type" :key="dict.value" :label="dict.label"
+                       :value="dict.value" ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
-            <el-option v-for="dict in dict.type.sys_website_status" :key="dict.value" :label="dict.value"
-                       :value="dict.label" >{{dict.label}}</el-option>
+            <el-option v-for="dict in dict.type.sys_website_status" :key="dict.value" :label="dict.label"
+                       :value="dict.value" ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="资源图" prop="resourceImg">
@@ -134,6 +140,10 @@
             action="http://localhost:8081/api/upload/uploadImg?name=website"
             v-model="form.resourceImg"
             :responseFn="handleResponse"
+            :isShowSuccessTip="false"
+            :fileSize="5"
+            :file-type="imgType"
+            :beforeRemove="beforeRemove"
           ></ele-upload-image>
         </el-form-item>
       </el-form>
@@ -146,13 +156,15 @@
 </template>
 
 <script>
-import {  getType, delType, addType, updateType, refreshCache } from "@/api/system/dict/type";
-import { listWebsiteInform } from "@/api/website/website";
+import { listWebsiteInform,addWebSite,getInfo,updateWebsite,delWebSite} from "@/api/website/website";
+import { deleteImg } from "@/api/upload";
 export default {
   name: "Dict",
   dicts: ['sys_website_type','sys_website_status'],
   data() {
     return {
+      //文件上传类型
+      imgType:['png', 'jpg', 'jpeg'],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -171,6 +183,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      //图片url
+      imgPath:'',
       // 日期范围
       dateRange: [],
       // 查询参数
@@ -183,11 +197,17 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        dictName: [
-          { required: true, message: "字典名称不能为空", trigger: "blur" }
+        resourceName: [
+          { required: true, message: "资源名称不能为空", trigger: "blur" }
         ],
-        dictType: [
-          { required: true, message: "字典类型不能为空", trigger: "blur" }
+        resourceAddress: [
+          { required: true, message: "资源地址不能为空", trigger: "blur" }
+        ],
+        resourceType: [
+          { required: true, message: "资源分类不能为空", trigger: "blur" }
+        ],
+        status: [
+          { required: true, message: "资源状态不能为空", trigger: "blur" }
         ]
       }
     };
@@ -197,9 +217,20 @@ export default {
   },
   methods: {
     //图片回显
-    handleResponse(response, file, fileList) {
-      // 根据响应结果, 设置 URL
-      return "https://xxx.xxx.com/image/" + response.id;
+    handleResponse(response) {
+      if(response.code==20000){
+        this.$modal.msgSuccess("上传文件成功")
+        this.imgPath = response.data.url
+        return response.data.url;
+      }
+      return this.$modal.msgError("上传文件失败");
+    },
+    //删除图片
+    beforeRemove(){
+      deleteImg(this.imgPath).then(response=>{
+        this.$modal.msgSuccess("删除成功")
+        this.imgPath = '';
+      })
     },
     //设置序号
     getIndex(index){
@@ -255,10 +286,10 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getType(id).then(response => {
+      getInfo(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改字典类型";
+        this.title = "修改资源";
       });
     },
     /** 提交按钮 */
@@ -266,13 +297,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
-            updateType(this.form).then(response => {
+            updateWebsite(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addType(this.form).then(response => {
+            addWebSite(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -284,8 +315,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除字典编号为"' + ids + '"的数据项？').then(function() {
-        return delType(ids);
+      this.$modal.confirm('是否确认删除资源编号为"' + ids + '"的数据项？').then(function() {
+        return delWebSite(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

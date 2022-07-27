@@ -1,10 +1,9 @@
 import request from '@/utils/request'
 
-// 上传图片
-export function pictureUpload(query) {
+// 删除图片
+export function deleteImg(url) {
   return request({
-    url: '/api/upload/uploadImg',
-    method: 'get',
-    params: query
+    url: `/api/upload/deleteImg?url=`+url ,
+    method: 'delete'
   })
 }

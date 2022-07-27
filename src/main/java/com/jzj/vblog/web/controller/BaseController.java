@@ -1,4 +1,4 @@
-package com.jzj.vblog.web.controller.admin;
+package com.jzj.vblog.web.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

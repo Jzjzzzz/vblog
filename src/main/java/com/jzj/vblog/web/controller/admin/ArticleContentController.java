@@ -1,6 +1,7 @@
 package com.jzj.vblog.web.controller.admin;
 
 
+import com.jzj.vblog.web.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;

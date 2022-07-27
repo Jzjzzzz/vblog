@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 
 import java.io.Serializable;
@@ -17,9 +18,11 @@ import java.util.Map;
 public class BaseEntity implements Serializable {
 
     /** 搜索值 */
+    @TableField(exist = false)
     private String searchValue;
 
     /** 请求参数 */
+    @TableField(exist = false)
     private Map<String, Object> params;
 
     public String getSearchValue() {

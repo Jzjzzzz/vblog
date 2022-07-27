@@ -28,7 +28,7 @@ public class WebsiteResource extends BaseEntity {
 
     @ApiModelProperty(value = "资源站点表id")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private Long id;
+    private String id;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

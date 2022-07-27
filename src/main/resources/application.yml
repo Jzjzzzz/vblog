@@ -49,7 +49,3 @@ pagehelper:
   helper-dialect: mysql
   support-methods-arguments: true
   params: count=countSql
-
-#文件上传地址
-web:
-  upload-path: D:\item\vblog\src\main\resources\static\img\

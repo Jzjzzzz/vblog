@@ -14,7 +14,7 @@
         <result property="clickRate" column="click_rate" />
     </resultMap>
     <sql id="selectWebsiteResourceVo">
-        select id,create_time, update_time,resource_name,resource_address,resource_img,resource_type,click_rate
+        select id,create_time, update_time,resource_name,resource_address,resource_img,resource_type,click_rate,status
         from website_resource
     </sql>
 
@@ -32,4 +32,9 @@
             </if>
         </where>
     </select>
+    <select id="checkwebSiteUnique" resultType="com.jzj.vblog.web.pojo.entity.WebsiteResource" parameterType="java.lang.String">
+        <include refid="selectWebsiteResourceVo"/>
+        where resource_name = #{resourceName} limit 1
+    </select>
+
 </mapper>
