@@ -49,3 +49,11 @@ pagehelper:
   helper-dialect: mysql
   support-methods-arguments: true
   params: count=countSql
+
+#阿里云oss
+aliyun:
+  oss:
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    keyId: LTAI5tPJqdTCFLCYhoBvApLN
+    keySecret: tKfhKeOT3axaQhYLbpmznLXtVHZL7o
+    bucketName: vue-vblog

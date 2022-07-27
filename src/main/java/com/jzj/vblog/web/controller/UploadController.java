@@ -1,20 +1,17 @@
 package com.jzj.vblog.web.controller;
 
 import com.jzj.vblog.annotation.Log;
-import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
-import com.jzj.vblog.utils.result.ResponseEnum;
-import com.jzj.vblog.utils.uuid.IdUtils;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
+import com.jzj.vblog.web.service.UploadService;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
 
 /**
  * @Author Jzj
@@ -27,26 +24,14 @@ import java.time.LocalDate;
 @Api("图片上传控制器")
 public class UploadController {
 
+    @Autowired
+    private UploadService uploadService;
+
     @Log(title = "文件管理",businessType = BusinessType.UPLOAD)
     @PostMapping("/uploadImg")
-    public R upload(@RequestParam("file") MultipartFile photo,String name,HttpServletRequest request) {
-        File folder = new File(ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+name+'/'+LocalDate.now().getYear()+'/');
-        if (!folder.isDirectory()) {
-            folder.mkdirs();
-        }
-        // 对上传的文件重命名，避免文件重名
-        String oldName = photo.getOriginalFilename();
-        String newName = IdUtils.fastSimpleUUID() + oldName.substring(oldName.lastIndexOf("."));
-        try {
-            // 文件保存
-            photo.transferTo(new File(folder, newName));
-            // 返回上传文件的访问路径
-            String url = request.getScheme() + "://" + request.getServerName()
-                    + ":" + request.getServerPort() +"/"+name+"/"+LocalDate.now().getYear()+"/"+ newName;
-            return R.ok("url",url);
-        } catch (IOException e) {
-            throw new BusinessException(ResponseEnum.UPLOAD_ERROR);
-        }
+    public R uploadImg(@RequestParam("file") MultipartFile photo,String name,HttpServletRequest request) {
+        String url = uploadService.uploadImg(photo,name,request);
+        return R.ok("url",url);
     }
 
 
