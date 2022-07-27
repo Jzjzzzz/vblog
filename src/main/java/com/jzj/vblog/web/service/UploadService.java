@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.service;
 
+import com.jzj.vblog.web.pojo.enums.UploadCode;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,12 @@ import javax.servlet.http.HttpServletRequest;
  * @Message:
  */
 public interface UploadService {
+
+    /**
+     * 查询实现类编码
+     * @return 编码
+     */
+    UploadCode getCode();
 
     String uploadImg(MultipartFile photo, String name, HttpServletRequest request);
 }

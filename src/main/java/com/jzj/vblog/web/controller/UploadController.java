@@ -1,8 +1,11 @@
 package com.jzj.vblog.web.controller;
 
 import com.jzj.vblog.annotation.Log;
+import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
+import com.jzj.vblog.web.pojo.enums.UploadCode;
+import com.jzj.vblog.web.service.SysConfigService;
 import com.jzj.vblog.web.service.UploadService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +28,23 @@ import java.io.File;
 public class UploadController {
 
     @Autowired
-    private UploadService uploadService;
+    private SysConfigService sysConfigService;
 
     @Log(title = "文件管理",businessType = BusinessType.UPLOAD)
     @PostMapping("/uploadImg")
     public R uploadImg(@RequestParam("file") MultipartFile photo,String name,HttpServletRequest request) {
-        String url = uploadService.uploadImg(photo,name,request);
+        //获取阿里云oss是否开启
+        String enable = sysConfigService.selectConfigByKey("sys.oss.enable");
+        String url = ""; //回显URL
+        UploadService uploadService;
+        if(enable.equals("true")){
+            //阿里云存储
+            uploadService = UploadFactory.getUploadService(UploadCode.A_LI_YUN);
+        }else {
+            //本地存储
+            uploadService = UploadFactory.getUploadService(UploadCode.LOCAL);
+        }
+        url = uploadService.uploadImg(photo, name, request);
         return R.ok("url",url);
     }
 
