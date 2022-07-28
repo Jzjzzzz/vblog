@@ -1,6 +1,45 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="资源名称" prop="resourceName">
+        <el-input
+          v-model="queryParams.resourceName"
+          placeholder="请输入资源名称"
+          clearable
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="资源类型" prop="resourceType">
+        <el-select
+          v-model="queryParams.resourceType"
+          placeholder="资源类型"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in dict.type.sys_website_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="状态" prop="status">
+        <el-select
+          v-model="queryParams.status"
+          placeholder="状态"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in dict.type.sys_website_status"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="创建时间">
         <el-date-picker
           v-model="dateRange"
@@ -71,18 +110,12 @@
           <dict-tag :options="dict.type.sys_website_type" :value="scope.row.resourceType"/>
         </template>
       </el-table-column>
-      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
-          <el-tag effect="plain">
-            {{ scope.row.clickRate }}
-          </el-tag>
-        </template>
-      </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_website_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
+      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -119,6 +152,9 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="资源名称" prop="resourceName">
           <el-input v-model="form.resourceName" placeholder="请输入资源名称" />
+        </el-form-item>
+        <el-form-item label="资源描述" prop="resourceDetail">
+          <el-input v-model="form.resourceDetail" placeholder="请输入资源描述" />
         </el-form-item>
         <el-form-item label="资源地址" prop="resourceAddress">
           <el-input v-model="form.resourceAddress" placeholder="请输入资源地址" />
@@ -191,7 +227,9 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        articleTitle: undefined,
+        resourceName: undefined,
+        resourceType: undefined,
+        status: undefined
       },
       // 表单参数
       form: {},
@@ -218,7 +256,7 @@ export default {
   methods: {
     //图片回显
     handleResponse(response) {
-      if(response.code==20000){
+      if(response.code===20000){
         this.$modal.msgSuccess("上传文件成功")
         this.imgPath = response.data.url
         return response.data.url;
@@ -229,7 +267,6 @@ export default {
     beforeRemove(){
       deleteImg(this.imgPath).then(response=>{
         this.$modal.msgSuccess("删除成功")
-        this.imgPath = '';
       })
     },
     //设置序号
@@ -288,6 +325,7 @@ export default {
       const id = row.id || this.ids
       getInfo(id).then(response => {
         this.form = response.data;
+        this.imgPath = this.form.resourceImg
         this.open = true;
         this.title = "修改资源";
       });

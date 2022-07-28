@@ -12,15 +12,22 @@
         <result property="resourceImg" column="resource_img" />
         <result property="resourceType" column="resource_type" />
         <result property="clickRate" column="click_rate" />
+        <result property="resourceDetail" column="resource_detail"/>
     </resultMap>
     <sql id="selectWebsiteResourceVo">
-        select id,create_time, update_time,resource_name,resource_address,resource_img,resource_type,click_rate,status
+        select id,create_time, update_time,resource_name,resource_address,resource_img,resource_type,click_rate,status,resource_detail
         from website_resource
     </sql>
 
     <select id="selectWebsiteList" resultType="com.jzj.vblog.web.pojo.entity.WebsiteResource" parameterType="com.jzj.vblog.web.pojo.entity.WebsiteResource">
         <include refid="selectWebsiteResourceVo"/>
         <where>
+            <if test="resourceName != null and resourceName != ''">
+                AND resource_name like concat('%',#{resourceName},'%')
+            </if>
+            <if test="resourceType != null and resourceType != ''">
+                AND resource_type = #{resourceType}
+            </if>
             <if test="status != null and status != ''">
                 AND status = #{status}
             </if>

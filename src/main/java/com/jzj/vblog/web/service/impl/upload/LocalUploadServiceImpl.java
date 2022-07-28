@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -42,23 +41,48 @@ public class LocalUploadServiceImpl implements UploadService {
      */
     @Override
     public String uploadImg(MultipartFile photo, String name, HttpServletRequest request) {
-        File folder = new File(ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+name+'/'+ LocalDate.now().getYear()+'/');
-        if (!folder.isDirectory()) {
-            folder.mkdirs();
-        }
-        // 对上传的文件重命名，避免文件重名
-        String oldName = photo.getOriginalFilename();
-        String newName = IdUtils.fastSimpleUUID() + oldName.substring(oldName.lastIndexOf("."));
         try {
+            File folder = new File(ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+name+'/'+ LocalDate.now().getYear()+'/');
+            if (!folder.isDirectory()) {
+                boolean mkdirsResult = folder.mkdirs();
+                if(mkdirsResult) throw new BusinessException("文件夹创建失败！");
+            }
+            // 对上传的文件重命名，避免文件重名
+            String oldName = photo.getOriginalFilename();
+            String newName = IdUtils.fastSimpleUUID() + oldName.substring(oldName.lastIndexOf("."));
             // 文件保存
             photo.transferTo(new File(folder, newName));
             // 返回上传文件的访问路径
-            String url = request.getScheme() + "://" + request.getServerName()
-                    + ":" + request.getServerPort() +"/"+name+"/"+LocalDate.now().getYear()+"/"+ newName;
-            return url;
-        } catch (IOException e) {
+            return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +"/"+name+"/"+LocalDate.now().getYear()+"/"+ newName;
+        } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UPLOAD_ERROR);
         }
     }
+
+    /**
+     * 本地文件删除
+     * @param url
+     * @param request
+     * @return
+     */
+    @Override
+    public boolean deleteImg(String url, HttpServletRequest request) {
+        try {
+            //获取需要截取部分
+            String s = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +"/";
+            String substring = url.substring(s.length());
+            //文件位置
+            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+substring;
+            File file = new File(path);
+            if(file.exists()){
+                return file.delete();
+            }else {
+                throw new BusinessException(ResponseEnum.UPLOAD_DELETE_NOT);
+            }
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UPLOAD_DELETE_ERROR);
+        }
+    }
+
 
 }

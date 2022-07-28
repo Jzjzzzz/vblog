@@ -4,6 +4,8 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.jzj.vblog.utils.properties.AliYunOssProperties;
+import com.jzj.vblog.utils.result.BusinessException;
+import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.utils.uuid.IdUtils;
 import com.jzj.vblog.web.pojo.enums.UploadCode;
 import com.jzj.vblog.web.service.UploadService;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -34,14 +35,11 @@ public class AliYunUploadServiceImpl implements UploadService {
 
     @Override
     public String uploadImg(MultipartFile photo, String name, HttpServletRequest request) {
-        try {
-            InputStream inputStream = photo.getInputStream();
-            String fileName = photo.getOriginalFilename();
+        OSS ossClient = null;
+        try(InputStream inputStream = photo.getInputStream()) {
             // 创建OSSClient实例。
-            OSS ossClient = new OSSClientBuilder().build(
-                    AliYunOssProperties.ENDPOINT,
-                    AliYunOssProperties.KEY_ID,
-                    AliYunOssProperties.KEY_SECRET);
+            ossClient = new OSSClientBuilder().build(AliYunOssProperties.ENDPOINT, AliYunOssProperties.KEY_ID, AliYunOssProperties.KEY_SECRET);
+            String fileName = photo.getOriginalFilename();
             //判断oss实例是否存在：如果不存在则创建，如果存在则获取
             if(!ossClient.doesBucketExist(AliYunOssProperties.BUCKET_NAME)){
                 //创建bucket
@@ -57,12 +55,33 @@ public class AliYunUploadServiceImpl implements UploadService {
             String key = name + "/" + folder + "/" + fileName;
             //文件上传至阿里云
             ossClient.putObject(AliYunOssProperties.BUCKET_NAME, key, inputStream);
-            // 关闭OSSClient。
-            ossClient.shutdown();
             //阿里云文件绝对路径
             return "https://" + AliYunOssProperties.BUCKET_NAME + "." + AliYunOssProperties.ENDPOINT + "/" + key;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UPLOAD_ERROR);
+        }finally {
+            // 关闭OSSClient。
+            ossClient.shutdown();
+        }
+    }
+
+    @Override
+    public boolean deleteImg(String url, HttpServletRequest request) {
+        OSS ossClient = null;
+        try {
+            // 创建OSSClient实例
+            ossClient = new OSSClientBuilder().build(AliYunOssProperties.ENDPOINT, AliYunOssProperties.KEY_ID, AliYunOssProperties.KEY_SECRET);
+            //文件名（服务器上的文件路径）
+            String host = "https://" + AliYunOssProperties.BUCKET_NAME + "." + AliYunOssProperties.ENDPOINT + "/";
+            String objectName = url.substring(host.length());
+            // 删除文件。
+            ossClient.deleteObject(AliYunOssProperties.BUCKET_NAME, objectName);
+            return true;
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UPLOAD_DELETE_ERROR);
+        } finally {
+            // 关闭OSSClient。
+            ossClient.shutdown();
         }
     }
 }

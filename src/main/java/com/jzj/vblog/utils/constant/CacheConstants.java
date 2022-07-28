@@ -36,4 +36,9 @@ public class CacheConstants {
      * 限流 redis key
      */
     public static final String RATE_LIMIT_KEY = "rate_limit:";
+
+    /**
+     * 阿里云存储开关 redis key
+     */
+    public static final String A_LI_YUN_ENABLE_CODE = "sys.oss.enable";
 }

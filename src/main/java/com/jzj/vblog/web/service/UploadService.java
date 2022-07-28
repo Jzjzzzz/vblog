@@ -19,5 +19,20 @@ public interface UploadService {
      */
     UploadCode getCode();
 
+    /**
+     * 文件上传
+     * @param photo
+     * @param name
+     * @param request
+     * @return
+     */
     String uploadImg(MultipartFile photo, String name, HttpServletRequest request);
+
+    /**
+     * 文件删除
+     * @param url
+     * @param request
+     * @return
+     */
+    boolean deleteImg( String url,HttpServletRequest request);
 }
