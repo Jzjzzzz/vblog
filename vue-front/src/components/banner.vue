@@ -6,11 +6,11 @@
                 <div class="focusinfo">
                     <!-- 头像 -->
                     <div class="header-tou">
-                        <router-link to="/"><img :src="websiteInfo.avatar"></router-link>
+                        <router-link to="/"><img :src="config.avatar"></router-link>
                     </div>
                     <!-- 简介 -->
                     <div class="header-info">
-                        <p>{{websiteInfo.slogan}}</p>
+                        <p>{{ config.details }}</p>
                     </div>
                     <!-- 社交信息 -->
                     <div class="top-social">
@@ -31,7 +31,11 @@
         data(){
             return{
                 websiteInfo: {},
-                socials: []
+                socials: [],
+              config:{
+                avatar: "",
+                details: ""
+              }
             }
         },
         props:{
@@ -47,8 +51,19 @@
         created(){
             this.getWebSiteInfo()
             this.getSocial()
+          this.getWebConfig()
         },
         methods:{
+          getWebConfig(){
+            //获取网站logo
+            this.getConfigKey("sys.web.logo").then(response => {
+              this.config.avatar = response.data;
+            });
+            //获取网站详情
+            this.getConfigKey("sys.web.details").then(response => {
+              this.config.details = response.data;
+            });
+          },
             getSocial(){
                 this.$store.dispatch('getSocials').then(data =>{
                     this.socials = data

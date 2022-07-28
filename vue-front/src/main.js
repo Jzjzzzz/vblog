@@ -8,7 +8,10 @@ require('./Mock')
 import {parseTime} from './utils'
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'	//样式
+import { getConfigKey } from "@/api/config";
 
+// 全局方法挂载
+Vue.prototype.getConfigKey = getConfigKey
 
 Vue.directive('highlight',function (el) {
   let blocks = el.querySelectorAll('pre code');
