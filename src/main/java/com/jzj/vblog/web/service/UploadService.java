@@ -1,9 +1,11 @@
 package com.jzj.vblog.web.service;
 
+import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.pojo.enums.UploadCode;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author Jzj
@@ -34,5 +36,10 @@ public interface UploadService {
      * @param request
      * @return
      */
-    boolean deleteImg( String url,HttpServletRequest request);
+    boolean deleteImg(String url,HttpServletRequest request);
+
+    /**
+     * 文件批量删除
+     */
+    void deleteBtnImg(List<WebsiteResource> list,HttpServletRequest request);
 }

@@ -3,6 +3,7 @@ package com.jzj.vblog.web.service.impl.upload;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.utils.uuid.IdUtils;
+import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.pojo.enums.UploadCode;
 import com.jzj.vblog.web.service.UploadService;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @Author Jzj
@@ -45,7 +47,7 @@ public class LocalUploadServiceImpl implements UploadService {
             File folder = new File(ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+name+'/'+ LocalDate.now().getYear()+'/');
             if (!folder.isDirectory()) {
                 boolean mkdirsResult = folder.mkdirs();
-                if(mkdirsResult) throw new BusinessException("文件夹创建失败！");
+                if(!mkdirsResult) throw new BusinessException("文件夹创建失败！");
             }
             // 对上传的文件重命名，避免文件重名
             String oldName = photo.getOriginalFilename();
@@ -84,5 +86,22 @@ public class LocalUploadServiceImpl implements UploadService {
         }
     }
 
+    @Override
+    public void deleteBtnImg(List<WebsiteResource> list,HttpServletRequest request) {
+        try {
+            //获取需要截取部分
+            String sub = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +"/";
+            list.forEach(s->{
+                String substring = s.getResourceImg().substring(sub.length());
+                String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+substring;
+                File file = new File(path);
+                if(file.exists()){
+                    file.delete();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

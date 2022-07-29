@@ -66,9 +66,8 @@ export default {
   methods: {
     //获取网站基本信息
     getWebConfig() {
-      //获取网站名称
-      this.getConfigKey("sys.web.name").then(response => {
-        this.config.name = response.data;
+      this.getInformation().then(response => {
+        this.config.name = response.data.webName;
       });
     },
     watchScroll() {

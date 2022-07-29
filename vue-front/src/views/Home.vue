@@ -52,7 +52,23 @@
         props: ['cate', 'words'],
         data() {
             return {
-                features: [],
+              features: [
+                {
+                  id: 1,
+                  title: 'Akina',
+                  img: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
+                },
+                {
+                  id: 2,
+                  title: '使用说明',
+                  img: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
+                },
+                {
+                  id: 3,
+                  title: '文章归档',
+                  img: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
+                }
+              ],
                 postList: [],
                 currPage: 1,
                 hasNextPage: false
@@ -77,7 +93,7 @@
                 return this.category || this.searchWords
             },
             notice() {
-                return this.$store.getters.notice
+                return '一个技术分享博客。'
             }
         },
         methods: {

@@ -40,5 +40,14 @@ public class SysWebInformationController extends BaseController {
     {
         return toAjax(sysWebInformationService.updateWebInformation(sysWebInformation));
     }
+
+    @Log(title = "网站信息",businessType = BusinessType.CLEAN)
+    @ApiOperation("刷新参数缓存")
+    @DeleteMapping("/refreshCache")
+    public R refreshCache()
+    {
+        sysWebInformationService.resetInformationCache();
+        return R.ok();
+    }
 }
 

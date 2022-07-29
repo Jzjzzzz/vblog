@@ -41,4 +41,9 @@ public class CacheConstants {
      * 阿里云存储开关 redis key
      */
     public static final String A_LI_YUN_ENABLE_CODE = "sys.oss.enable";
+
+    /**
+     * 网站基本信息
+     */
+    public static final String SYS_WEB_INFORMATION = "sys_web_information";
 }

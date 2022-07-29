@@ -1,18 +1,22 @@
 package com.jzj.vblog.web.service.impl;
 
-import com.jzj.vblog.utils.constant.UserConstants;
-import com.jzj.vblog.utils.sign.DictUtils;
-import com.jzj.vblog.utils.sign.StringUtils;
-import com.jzj.vblog.web.pojo.entity.SysDictType;
-import com.jzj.vblog.web.pojo.entity.WebsiteResource;
-import com.jzj.vblog.web.mapper.WebsiteResourceMapper;
-import com.jzj.vblog.web.service.WebsiteResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.factory.UploadFactory;
+import com.jzj.vblog.utils.constant.UserConstants;
+import com.jzj.vblog.utils.sign.StringUtils;
+import com.jzj.vblog.web.mapper.WebsiteResourceMapper;
+import com.jzj.vblog.web.pojo.entity.WebsiteResource;
+import com.jzj.vblog.web.service.SysConfigService;
+import com.jzj.vblog.web.service.UploadService;
+import com.jzj.vblog.web.service.WebsiteResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * <p>
@@ -26,7 +30,12 @@ import java.util.List;
 public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMapper, WebsiteResource> implements WebsiteResourceService {
 
     @Autowired
+    private SysConfigService sysConfigService;
+
+    @Autowired
     private WebsiteResourceMapper websiteResourceMapper;
+
+    private ExecutorService cacheThreadPool= Executors.newFixedThreadPool(1024);
 
     /**
      * 分页查询资源
@@ -81,7 +90,17 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
      * @return
      */
     @Override
-    public int deleteWebsiteByIds(List<String> ids) {
-        return websiteResourceMapper.deleteBatchIds(ids);
+    public int deleteWebsiteByIds(List<String> ids, HttpServletRequest request) {
+        //根据ids查询
+        List<WebsiteResource> list = websiteResourceMapper.selectBatchIds(ids);
+        int result = websiteResourceMapper.deleteBatchIds(ids);
+        //多线程执行批量删除图片操作
+        CompletableFuture.runAsync(()->{
+            UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
+            uploadService.deleteBtnImg(list,request); //批量删除图片
+        },cacheThreadPool);
+        return result;
     }
+
+
 }

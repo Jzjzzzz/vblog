@@ -3,6 +3,7 @@ package com.jzj.vblog.web.service;
 import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,5 +26,5 @@ public interface WebsiteResourceService extends IService<WebsiteResource> {
 
     int updateWebsite(WebsiteResource websiteResource);
 
-    int deleteWebsiteByIds(List<String> ids);
+    int deleteWebsiteByIds(List<String> ids, HttpServletRequest request);
 }

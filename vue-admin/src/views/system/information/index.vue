@@ -1,7 +1,7 @@
 <template>
   <div class="app-container" >
-    <el-row :gutter="20">
-      <el-col :span="16"><el-form ref="from" :model="formData" :rules="rules" size="small" label-width="100px">
+    <el-row  :gutter="120">
+      <el-col :span="19"><el-form ref="from" :model="formData" :rules="rules" size="small" label-width="100px">
         <el-divider content-position="left">社交</el-divider>
         <el-row type="flex" justify="start" align="top" >
           <el-form-item label="微信" prop="wechat">
@@ -15,7 +15,7 @@
         </el-row>
         <el-row >
           <el-form-item label="GitEE" prop="gitee">
-            <el-input v-model="formData.gitee" placeholder="请输入GitEE" clearable :style="{width: '100%'}">
+            <el-input v-model="formData.gitee" placeholder="请输入GitEE" prefix-icon='el-icon-position' clearable :style="{width: '100%'}">
             </el-input>
           </el-form-item>
           <el-form-item label="GitHub" prop="github">
@@ -35,22 +35,41 @@
           </el-form-item>
         </el-row>
         <el-form-item size="large">
-          <el-button type="primary" @click="submitForm">提交</el-button>
-          <el-button @click="resetForm">重置</el-button>
+          <el-button size="medium" type="primary" @click="submitForm">提交</el-button>
+          <el-button size="medium" @click="resetForm">重置</el-button>
+          <el-button size="medium" type="danger" @click="handleRefreshCache" icon="el-icon-refresh">刷新缓存</el-button>
         </el-form-item>
-      </el-form></el-col>
+      </el-form>
+      </el-col>
+      <el-col  :span="4">
+        <el-divider content-position="left">图片上传</el-divider>
+        <div   class="text item">
+          <ele-upload-image
+            action="http://localhost:8081/api/upload/uploadImg?name=webLogo"
+            v-model="formData.webAvatar"
+            :responseFn="handleResponse"
+            :isShowSuccessTip="false"
+            :fileSize="5"
+            :file-type="imgType"
+            :beforeRemove="beforeRemove"
+          ></ele-upload-image>
+        </div>
+      </el-col>
     </el-row>
 
   </div>
 </template>
 <script>
-import { getInformation,updateInformation } from "@/api/system/information";
-
+import { getInformation,updateInformation,refreshCache } from "@/api/system/information";
+import {deleteImg} from "@/api/upload";
 export default {
   components: {},
   props: [],
   data() {
     return {
+      imgPath:'',
+      //文件上传类型
+      imgType:['png', 'jpg', 'jpeg'],
       formData: {
         wechat: undefined,
         qq: undefined,
@@ -58,6 +77,7 @@ export default {
         github: undefined,
         webName: undefined,
         webDetails: undefined,
+        webAvatar:undefined,
         id: undefined
       },
       rules: {
@@ -76,9 +96,32 @@ export default {
   },
   mounted() {},
   methods: {
+    /** 刷新缓存按钮操作 */
+    handleRefreshCache() {
+      refreshCache().then(() => {
+        this.$modal.msgSuccess("刷新成功");
+        this.getInfo()
+      });
+    },
+    //图片回显
+    handleResponse(response) {
+      if(response.code===20000){
+        this.$modal.msgSuccess("上传文件成功")
+        this.imgPath = response.data.url
+        return response.data.url;
+      }
+      return this.$modal.msgError("上传文件失败");
+    },
+    //删除图片
+    beforeRemove(){
+      deleteImg(this.imgPath).then(response=>{
+        this.$modal.msgSuccess("删除成功")
+      })
+    },
     getInfo(){
       getInformation().then(response=>{
         this.formData = response.data
+        this.imgPath = this.formData.webAvatar
       })
     },
     submitForm() {
@@ -95,7 +138,6 @@ export default {
     },
   }
 }
-
 </script>
 <style>
 </style>

@@ -18,3 +18,10 @@ export function updateInformation(data) {
   })
 }
 
+// 刷新参数缓存
+export function refreshCache() {
+  return request({
+    url: '/sys/web/information/refreshCache',
+    method: 'delete'
+  })
+}

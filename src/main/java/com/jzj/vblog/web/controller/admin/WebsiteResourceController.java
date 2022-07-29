@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -77,9 +78,9 @@ public class WebsiteResourceController extends BaseController {
      */
     @Log(title = "资源站点", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public R remove(@PathVariable List<String> ids)
+    public R remove(@PathVariable List<String> ids, HttpServletRequest request)
     {
-        return toAjax(websiteResourceService.deleteWebsiteByIds(ids));
+        return toAjax(websiteResourceService.deleteWebsiteByIds(ids,request));
     }
 
 }
