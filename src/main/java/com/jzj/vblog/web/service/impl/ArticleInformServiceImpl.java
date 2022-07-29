@@ -1,12 +1,11 @@
 package com.jzj.vblog.web.service.impl;
 
-import com.jzj.vblog.web.pojo.entity.ArticleInform;
-import com.jzj.vblog.web.mapper.ArticleInformMapper;
-import com.jzj.vblog.web.pojo.entity.SysDictData;
-import com.jzj.vblog.web.pojo.entity.SysDictType;
-import com.jzj.vblog.web.service.ArticleInformService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.vblog.web.service.SysDictDataService;
+import com.jzj.vblog.web.mapper.ArticleInformMapper;
+import com.jzj.vblog.web.pojo.entity.ArticleInform;
+import com.jzj.vblog.web.pojo.entity.SysDictData;
+import com.jzj.vblog.web.pojo.vo.ArticleVo;
+import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.SysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,10 +33,8 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Override
     public List<ArticleInform> selectList(ArticleInform entity) {
-
         List<SysDictData> tagList = dictTypeService.selectDictDataByType(DICT_TAG_NAME); //获取标签列表
         List<ArticleInform> articleList = articleInformMapper.selectArticleList(entity);
-
         for (ArticleInform inform : articleList) {
             ArrayList<String> strings = new ArrayList<>();
             String[] tagArray = inform.getArticleTag().split(",");
@@ -51,6 +48,11 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             inform.setArticleTagList(strings);
         }
         return articleList;
+    }
+
+    @Override
+    public List<ArticleVo> listPage(Long page, Long limit) {
+        return null;
     }
 
 }

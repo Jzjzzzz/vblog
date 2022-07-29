@@ -1,8 +1,8 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jzj.vblog.web.pojo.entity.SysDictType;
+import com.jzj.vblog.web.pojo.entity.ArticleInform;
+import com.jzj.vblog.web.pojo.vo.ArticleVo;
 
 import java.util.List;
 
@@ -17,4 +17,6 @@ import java.util.List;
 public interface ArticleInformService extends IService<ArticleInform> {
 
     List<ArticleInform> selectList(ArticleInform entity);
+
+    List<ArticleVo> listPage(Long page, Long limit);
 }
