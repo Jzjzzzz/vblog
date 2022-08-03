@@ -45,8 +45,8 @@
     import Post from '@/components/post'
     import SmallIco from '@/components/small-ico'
     import Quote from '@/components/quote'
-    import {fetchFocus, fetchList} from '../api'
-
+    import {fetchFocus} from '../api'
+    import {fetchList} from '../api/article'
     export default {
         name: 'Home',
         props: ['cate', 'words'],
@@ -105,19 +105,19 @@
                 })
             },
             fetchList() {
-                fetchList().then(res => {
-                    this.postList = res.data.items || []
-                    this.currPage = res.data.page
-                    this.hasNextPage = res.data.hasNextPage
+                fetchList(this.currPage,1).then(res => {
+                    this.postList = res.data.map.items || []
+                    this.currPage = res.data.map.currPage
+                    this.hasNextPage = res.data.map.hasNextPage
                 }).catch(err => {
                     console.log(err)
                 })
             },
             loadMore() {
-                fetchList({page:this.currPage+1}).then(res => {
-                    this.postList = this.postList.concat(res.data.items || [])
-                    this.currPage = res.data.page
-                    this.hasNextPage = res.data.hasNextPage
+                fetchList(this.currPage+1,1).then(res => {
+                    this.postList = this.postList.concat(res.data.map.items || [])
+                    this.currPage = res.data.map.page
+                    this.hasNextPage = res.data.map.hasNextPage
                 })
             }
         },

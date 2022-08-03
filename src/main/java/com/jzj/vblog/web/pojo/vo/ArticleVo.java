@@ -3,8 +3,6 @@ package com.jzj.vblog.web.pojo.vo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @Author Jzj
  * @Date 2022/7/29 17:08
@@ -20,6 +18,12 @@ public class ArticleVo {
     //是否置顶
     private Boolean isTop;
 
+    //图片
+    private String logImg;
+
+    //标签id
+    private String tagIds;
+
     //轮播图
     private String [] banner;
 
@@ -27,7 +31,7 @@ public class ArticleVo {
     private Boolean isHot;
 
     //创建时间
-    private Date pubTime;
+    private String pubTime;
 
     //标题
     private String title;

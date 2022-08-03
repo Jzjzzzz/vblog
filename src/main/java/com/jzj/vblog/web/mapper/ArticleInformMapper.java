@@ -1,8 +1,10 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.jzj.vblog.web.pojo.entity.SysDictType;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jzj.vblog.web.pojo.entity.ArticleInform;
+import com.jzj.vblog.web.pojo.vo.ArticleVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +19,6 @@ import java.util.List;
 public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
 
     List<ArticleInform> selectArticleList(ArticleInform entity);
+
+    Page<ArticleVo> selectPageVo(@Param("page") Page<ArticleVo> page);
 }

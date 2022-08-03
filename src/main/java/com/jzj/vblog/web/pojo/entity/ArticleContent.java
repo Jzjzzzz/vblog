@@ -29,9 +29,6 @@ public class ArticleContent extends BaseEntity {
     @TableId(value = "id")
     private String id;
 
-    @ApiModelProperty(value = "文章id")
-    private String articleId;
-
     @ApiModelProperty(value = "文章内容")
     private String content;
 
