@@ -58,15 +58,22 @@ export const constantRoutes = [
     path: '/article',
     component: Layout,
     redirect: '/article/index',
-    name: 'Article',
+    name: 'sys_article',
     meta: { title: '文章管理', icon: 'el-icon-collection' },
     alwaysShow: true,
     children: [
       {
-        path: 'article',
+        path: 'index',
         name: 'Article',
         component: () => import('@/views/article/index'),
         meta: { title: '文章列表',icon: 'el-icon-receiving' }
+      },
+      {
+        path: 'add',
+        name: 'Add',
+        component: () => import('@/views/article/add'),
+        hidden: true,
+        meta: { title: '新增文章',icon: 'el-icon-receiving' }
       }
     ]
   },
@@ -74,12 +81,12 @@ export const constantRoutes = [
     path: '/website',
     component: Layout,
     redirect: '/website/index',
-    name: 'Website',
+    name: 'sys_website',
     meta: { title: '资源管理', icon: 'el-icon-folder-opened' },
     alwaysShow: true,
     children: [
       {
-        path: 'website',
+        path: 'index',
         name: 'Website',
         component: () => import('@/views/website/index'),
         meta: { title: '资源列表',icon: 'el-icon-receiving' }

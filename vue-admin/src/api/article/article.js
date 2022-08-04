@@ -8,3 +8,11 @@ export function listArticleInform(query) {
     params: query
   })
 }
+// 新增文章
+export function add(data) {
+  return request({
+    url: '/article/inform/add',
+    method: 'post',
+    data: data
+  })
+}

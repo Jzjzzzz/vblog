@@ -17,14 +17,13 @@
         <result property="originStatus" column="origin_status" />
         <result property="commentStatus" column="comment_status" />
         <result property="clickRate" column="click_rate" />
-        <result property="contentId" column="content_id" />
         <result property="numberLike" column="number_like" />
         <result property="aggregateId" column="aggregate_id" />
     </resultMap>
 
     <sql id="ArticleInformVo">
         SELECT id,create_time,update_time,create_by,status,article_title,introduce,log_img,article_type,
-            article_tag,top_status,origin_status,comment_status,click_rate,content_id,number_like
+            article_tag,top_status,origin_status,comment_status,click_rate,number_like
         FROM article_inform
     </sql>
 
@@ -60,8 +59,26 @@
             dict.dict_label typeName
         FROM
             article_inform ai
-                LEFT JOIN article_content ac ON ai.content_id = ac.id
+                LEFT JOIN article_content ac ON ai.id = ac.inform_id
                 LEFT JOIN sys_dict_data dict ON dict.dict_type = 'sys_article_type'
                 AND dict.dict_value = ai.article_type
+    </select>
+    <select id="selectArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleAddVo" parameterType="java.lang.String">
+        SELECT
+            ai.id,
+            ai.article_title,
+            ai.`status`,
+            ai.article_type,
+            ai.article_tag,
+            ai.top_status,
+            ai.origin_status,
+            ai.comment_status,
+            ai.log_img,
+            ai.introduce,
+            ac.content
+        FROM
+            article_inform ai
+                LEFT JOIN article_content ac ON ai.id = ac.inform_id
+        WHERE ai.id = #{id}
     </select>
 </mapper>

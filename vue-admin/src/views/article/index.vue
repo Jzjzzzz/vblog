@@ -61,7 +61,6 @@
         <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
       </el-col>
     </el-row>
-
     <el-table v-loading="loading" :data="articleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" :index="getIndex" />
@@ -69,6 +68,7 @@
       <el-table-column prop="logImg" label="标题图" align="center" >
         <template slot-scope="scope">
             <el-image
+              style="width:100px;height: 100px"
               :src="scope.row.logImg"
               :preview-src-list="[scope.row.logImg]">
             </el-image>
@@ -81,7 +81,7 @@
       </el-table-column>
       <el-table-column label="标签" align="center" prop="articleTagList">
         <template slot-scope="scope">
-          <el-tag style="margin-left: 5px" v-for="item in scope.row.articleTagList" type="success">{{ item }}</el-tag>
+          <el-tag style="margin-left: 5px" v-for="item in scope.row.articleTagList" :key="item.id" type="success">{{ item }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="是否置顶" align="center" prop="topStatus">
@@ -128,7 +128,6 @@
         </template>
       </el-table-column>
     </el-table>
-
     <pagination
       v-show="total>0"
       :total="total"
@@ -136,39 +135,10 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
-    <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="字典名称" prop="dictName">
-          <el-input v-model="form.dictName" placeholder="请输入字典名称" />
-        </el-form-item>
-        <el-form-item label="字典类型" prop="dictType">
-          <el-input v-model="form.dictType" placeholder="请输入字典类型" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="form.status">
-            <el-radio
-              v-for="dict in dict.type.sys_normal_disable"
-              :key="dict.value"
-              :label="dict.value"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
-
 <script>
-import {  getType, delType, addType, updateType, refreshCache } from "@/api/system/dict/type";
+import {  getType, delType} from "@/api/system/dict/type";
 import { listArticleInform } from "@/api/article/article";
 export default {
   name: "Dict",
@@ -189,10 +159,6 @@ export default {
       total: 0,
       // 文章表格数据
       articleList: [],
-      // 弹出层标题
-      title: "",
-      // 是否显示弹出层
-      open: false,
       // 日期范围
       dateRange: [],
       // 查询参数
@@ -201,17 +167,6 @@ export default {
         pageSize: 10,
         articleTitle: undefined,
       },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-        dictName: [
-          { required: true, message: "字典名称不能为空", trigger: "blur" }
-        ],
-        dictType: [
-          { required: true, message: "字典类型不能为空", trigger: "blur" }
-        ]
-      }
     };
   },
   created() {
@@ -258,9 +213,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加字典类型";
+      this.$router.push({ path: '/article/add' })
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -276,26 +229,6 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改字典类型";
-      });
-    },
-    /** 提交按钮 */
-    submitForm: function() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != undefined) {
-            updateType(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addType(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
       });
     },
     /** 删除按钮操作 */

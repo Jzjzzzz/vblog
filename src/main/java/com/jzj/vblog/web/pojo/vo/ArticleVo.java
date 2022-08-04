@@ -7,10 +7,10 @@ import lombok.Data;
  * @Author Jzj
  * @Date 2022/7/29 17:08
  * @Version 1.0
- * @Message: 文章vo
+ * @Message: 前台文章vo
  */
 @Data
-@ApiModel(description="文章vo")
+@ApiModel(description="前台文章vo")
 public class ArticleVo {
     //文章详细id
     private String id;

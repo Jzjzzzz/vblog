@@ -1,6 +1,7 @@
 package com.jzj.vblog.web.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
@@ -27,7 +28,7 @@ public class ArticleInform extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "文章id")
-    @TableId(value = "id")
+    @TableId(value = "id",type = IdType.ASSIGN_UUID)
     private String id;
 
     @ApiModelProperty(value = "创建时间")
@@ -72,8 +73,6 @@ public class ArticleInform extends BaseEntity {
     @ApiModelProperty(value = "文章点击量")
     private Long clickRate;
 
-    @ApiModelProperty(value = "文章内容id")
-    private Long contentId;
 
     @ApiModelProperty(value = "点赞数")
     private Long numberLike;
