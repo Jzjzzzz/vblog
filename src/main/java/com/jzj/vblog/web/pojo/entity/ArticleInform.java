@@ -80,7 +80,9 @@ public class ArticleInform extends BaseEntity {
     @ApiModelProperty(value = "归档id")
     private Long aggregateId;
 
+
     @ApiModelProperty(value = "文章标签列表")
+    @TableField(exist = false)
     private List<String>  articleTagList;
 
 }

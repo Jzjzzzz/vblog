@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -91,13 +92,15 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
      */
     @Override
     public int deleteWebsiteByIds(List<String> ids, HttpServletRequest request) {
+        List<String> imgList = new ArrayList<>();
         //根据ids查询
         List<WebsiteResource> list = websiteResourceMapper.selectBatchIds(ids);
+        list.forEach(s-> imgList.add(s.getResourceImg()));
         int result = websiteResourceMapper.deleteBatchIds(ids);
         //多线程执行批量删除图片操作
         CompletableFuture.runAsync(()->{
             UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
-            uploadService.deleteBtnImg(list,request); //批量删除图片
+            uploadService.deleteBtnImg(imgList,request); //批量删除图片
         },cacheThreadPool);
         return result;
     }

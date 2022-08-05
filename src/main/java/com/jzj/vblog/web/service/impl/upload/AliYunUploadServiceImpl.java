@@ -8,7 +8,6 @@ import com.jzj.vblog.utils.properties.AliYunOssProperties;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.utils.uuid.IdUtils;
-import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.pojo.enums.UploadCode;
 import com.jzj.vblog.web.service.UploadService;
 import lombok.extern.slf4j.Slf4j;
@@ -95,14 +94,14 @@ public class AliYunUploadServiceImpl implements UploadService {
     }
 
     @Override
-    public void deleteBtnImg(List<WebsiteResource> list,HttpServletRequest request) {
+    public void deleteBtnImg(List<String> list,HttpServletRequest request) {
         OSS ossClient = null;
         try {
             List<String> urls = new ArrayList<>(); //批量删除URL集合
             String host = "https://" + AliYunOssProperties.BUCKET_NAME + "." + AliYunOssProperties.ENDPOINT + "/"; //文件名前缀
             //封装文件绝对路径
             list.forEach(s->{
-                String url = s.getResourceImg().substring(host.length());
+                String url = s.substring(host.length());
                 urls.add(url);
             });
             ossClient = new OSSClientBuilder().build(AliYunOssProperties.ENDPOINT, AliYunOssProperties.KEY_ID, AliYunOssProperties.KEY_SECRET);

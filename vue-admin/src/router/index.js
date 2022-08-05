@@ -69,11 +69,18 @@ export const constantRoutes = [
         meta: { title: '文章列表',icon: 'el-icon-receiving' }
       },
       {
-        path: 'add',
+        path: 'add/',
         name: 'Add',
         component: () => import('@/views/article/add'),
         hidden: true,
         meta: { title: '新增文章',icon: 'el-icon-receiving' }
+      },
+      {
+        path: 'update/:id',
+        name: 'update',
+        component: () => import('@/views/article/add'),
+        hidden: true,
+        meta: { title: '修改文章',icon: 'el-icon-receiving' }
       }
     ]
   },

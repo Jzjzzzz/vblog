@@ -16,3 +16,27 @@ export function add(data) {
     data: data
   })
 }
+// 根据id查询文章
+export function getById(id) {
+  return request({
+    url: `/article/inform/getById/${id}`,
+    method: 'get'
+  })
+}
+// 根据id修改文章
+export function updateById(data) {
+  return request({
+    url: `/article/inform/updateById`,
+    method: 'put',
+    data: data
+  })
+}
+
+// 根据id批量删除文章
+export function deleteBthById(ids) {
+  return request({
+    url: `/article/inform/deleteById/${ids}`,
+    method: 'delete'
+  })
+}
+

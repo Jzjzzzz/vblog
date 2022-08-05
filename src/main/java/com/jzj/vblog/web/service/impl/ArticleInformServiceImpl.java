@@ -2,6 +2,9 @@ package com.jzj.vblog.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.factory.UploadFactory;
+import com.jzj.vblog.utils.result.BusinessException;
+import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.web.mapper.ArticleContentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleContent;
@@ -10,16 +13,23 @@ import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.pojo.vo.ArticleVo;
 import com.jzj.vblog.web.service.ArticleInformService;
+import com.jzj.vblog.web.service.SysConfigService;
 import com.jzj.vblog.web.service.SysDictTypeService;
+import com.jzj.vblog.web.service.UploadService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * <p>
@@ -42,6 +52,11 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Autowired
     private SysDictTypeService dictTypeService;
+
+    @Autowired
+    private SysConfigService sysConfigService;
+
+    private ExecutorService cacheThreadPool = Executors.newFixedThreadPool(1024);
 
     /**
      * 后台分页文章列表
@@ -123,16 +138,50 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         articleInformMapper.insert(inform);
         //文章内容
         ArticleContent content = new ArticleContent();
-        content.setInformId(inform.getId());
+        content.setId(inform.getId());
         content.setContent(vo.getContent());
         return articleContentMapper.insert(content);
     }
 
     @Override
     public ArticleAddVo getArticleById(String id) {
+        if(id==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         //文章基础信息
-        ArticleAddVo vo = articleInformMapper.selectArticleByIdVo(id);
-        return null;
+        ArticleAddVo model = articleInformMapper.selectArticleByIdVo(id);
+        return model;
+    }
+
+    @Transactional
+    @Override
+    public int updateArticleById(ArticleAddVo vo) {
+        if(vo == null || vo.getId()==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        //文章基本信息
+        ArticleInform inform = new ArticleInform();
+        BeanUtils.copyProperties(vo,inform);
+        articleInformMapper.updateById(inform);
+        //文章内容
+        ArticleContent content = new ArticleContent();
+        content.setContent(vo.getContent());
+        content.setId(vo.getId());
+        return articleContentMapper.updateById(content);
+    }
+
+    @Transactional
+    @Override
+    public void deleteArticleById(String [] ids,HttpServletRequest request) {
+        List<String> imgList = new ArrayList<>();
+        //根据ids批量查询图片地址和内容id
+        List<ArticleInform> list = articleInformMapper.selectBatchIds(Arrays.asList(ids));
+        list.forEach(s-> imgList.add(s.getLogImg()));
+        //批量删除图片
+        CompletableFuture.runAsync(()->{
+            UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
+            uploadService.deleteBtnImg(imgList,request); //批量删除图片
+        },cacheThreadPool);
+        //批量删除文章基础
+        articleInformMapper.deleteBatchIds(Arrays.asList(ids));
+        //批量删除文章内容
+        articleContentMapper.deleteBatchIds(Arrays.asList(ids));
     }
 
 }

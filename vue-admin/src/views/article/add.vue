@@ -5,7 +5,7 @@
       <el-step title="基础信息"></el-step>
       <el-step title="内容编辑"></el-step>
     </el-steps>
-    <el-row :gutter="20" >
+    <el-row :gutter="20">
       <el-col :span="12" :offset="6">
         <div class="grid-content bg-purple">
           <el-form ref="elForm" :model="form" :rules="rules" size="medium" label-width="100px">
@@ -16,33 +16,40 @@
               </el-form-item>
               <el-form-item label="状态" prop="status">
                 <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
-                  <el-option v-for="dict in dict.type.sys_article_status" :key="dict.value" :label="dict.label" :value="dict.value" ></el-option>
+                  <el-option v-for="dict in dict.type.sys_article_status" :key="dict.value" :label="dict.label"
+                             :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="分类" prop="articleType">
                 <el-select v-model="form.articleType" placeholder="请选择分类" clearable :style="{width: '100%'}">
-                  <el-option v-for="dict in dict.type.sys_article_type" :key="dict.value" :label="dict.label" :value="dict.value" ></el-option>
+                  <el-option v-for="dict in dict.type.sys_article_type" :key="dict.value" :label="dict.label"
+                             :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="标签" prop="articleTagArray">
                 <el-select v-model="form.articleTagArray" placeholder="请选择标签" multiple clearable
-                           :style="{width: '100%'}">
-                  <el-option v-for="dict in dict.type.sys_article_tag" :key="dict.value" :label="dict.label" :value="dict.value" ></el-option>
+                           :style="{width: '100%'}"
+                           @change="$forceUpdate()">
+                  <el-option v-for="dict in dict.type.sys_article_tag" :key="dict.value" :label="dict.label"
+                             :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="置顶" prop="topStatus">
                 <el-select v-model="form.topStatus" placeholder="请选择置顶" clearable :style="{width: '100%'}">
-                  <el-option v-for="dict in dict.type.sys_article_top" :key="dict.value" :label="dict.label" :value="dict.value" ></el-option>
+                  <el-option v-for="dict in dict.type.sys_article_top" :key="dict.value" :label="dict.label"
+                             :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="原创" prop="originStatus">
                 <el-select v-model="form.originStatus" placeholder="请选择原创" clearable :style="{width: '100%'}">
-                  <el-option v-for="dict in dict.type.sys_article_origin" :key="dict.value" :label="dict.label" :value="dict.value" ></el-option>
+                  <el-option v-for="dict in dict.type.sys_article_origin" :key="dict.value" :label="dict.label"
+                             :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="评论" prop="commentStatus">
                 <el-select v-model="form.commentStatus" placeholder="请选择评论" clearable :style="{width: '100%'}">
-                  <el-option v-for="dict in dict.type.sys_article_comment" :key="dict.value" :label="dict.label" :value="dict.value" ></el-option>
+                  <el-option v-for="dict in dict.type.sys_article_comment" :key="dict.value" :label="dict.label"
+                             :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="封面" prop="logImg">
@@ -83,18 +90,19 @@
 </template>
 <script>
 import {deleteImg} from "@/api/upload";
-import {add} from "@/api/article/article"
+import {add, getById, updateById} from "@/api/article/article"
+
 export default {
   components: {},
   props: [],
-  dicts: ['sys_article_type','sys_article_status','sys_article_top','sys_article_origin','sys_article_comment','sys_article_tag'],
+  dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment', 'sys_article_tag'],
   data() {
     return {
       //文件上传类型
-      imgType:['png', 'jpg', 'jpeg'],
+      imgType: ['png', 'jpg', 'jpeg'],
       active: 0,
       //图片url
-      imgPath:'',
+      imgPath: '',
       form: {
         articleTagArray: [], //标签数组列表
         articleTitle: undefined,
@@ -106,7 +114,8 @@ export default {
         commentStatus: undefined,
         introduce: undefined,
         logImg: undefined,
-        content: undefined
+        content: undefined,
+        id: undefined
       },
       rules: {
         articleTitle: [{
@@ -153,14 +162,23 @@ export default {
       }
     }
   },
-  computed: {},
-  watch: {},
-  created() {},
-  mounted() {},
+  created() {
+    this.init()
+  },
   methods: {
+    //文章回显
+    init() {
+      if (this.$route.params && this.$route.params.id) {
+        const id = this.$route.params.id
+        getById(id).then(response => {
+          this.form = response.data;
+          this.form.articleTagArray = this.form.articleTag.split(',')
+        })
+      }
+    },
     //图片回显
     handleResponse(response) {
-      if(response.code===20000){
+      if (response.code === 20000) {
         this.$modal.msgSuccess("上传文件成功")
         this.imgPath = response.data.url
         return response.data.url;
@@ -168,19 +186,28 @@ export default {
       return this.$modal.msgError("上传文件失败");
     },
     //删除图片
-    beforeRemove(){
-      deleteImg(this.imgPath).then(response=>{
+    beforeRemove() {
+      deleteImg(this.imgPath).then(response => {
         this.$modal.msgSuccess("删除成功")
       })
     },
     submitForm() {
       this.$refs['elForm'].validate(valid => {
         if (!valid) return
-        this.form.articleTag = this.form.articleTagArray.join(",")
-        add(this.form).then(response=>{
-          this.$modal.msgSuccess("新增成功")
-          this.$router.push({path: '/article/index'})
-        })
+        this.form.articleTag = this.form.articleTagArray.join(',')
+        if (this.form.id != null) {
+          //修改
+          updateById(this.form).then(response => {
+            this.$modal.msgSuccess("修改成功")
+            this.$router.push({path: '/article/index'})
+          })
+        } else {
+          //新增
+          add(this.form).then(response => {
+            this.$modal.msgSuccess("新增成功")
+            this.$router.push({path: '/article/index'})
+          })
+        }
       })
     },
     next() {

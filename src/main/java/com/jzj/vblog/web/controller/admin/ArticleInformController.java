@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -51,6 +52,21 @@ public class ArticleInformController extends BaseController {
     public R getById(@PathVariable String id){
         ArticleAddVo articleAddVo = articleInformService.getArticleById(id);
         return R.ok(articleAddVo);
+    }
+
+    @Log(title = "文章管理",businessType = BusinessType.UPDATE)
+    @ApiOperation("根据Id修改文章")
+    @PutMapping("/updateById")
+    public R updateById(@RequestBody ArticleAddVo vo){
+        return toAjax(articleInformService.updateArticleById(vo));
+    }
+
+    @Log(title = "文章管理",businessType = BusinessType.DELETE)
+    @ApiOperation("根据Id批量删除文章")
+    @DeleteMapping("/deleteById/{ids}")
+    public R deleteBthById(@PathVariable String [] ids,HttpServletRequest request){
+        articleInformService.deleteArticleById(ids,request);
+        return R.ok();
     }
 }
 

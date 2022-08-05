@@ -29,49 +29,31 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-        >删除</el-button>
+        <router-link :to="'/article/add/'">
+          <el-button
+            type="primary"
+            plain
+            icon="el-icon-plus"
+            size="mini"
+          >新增
+          </el-button>
+        </router-link>
       </el-col>
       <el-col :span="1.5">
         <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="articleList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column type="index" label="序号" align="center" :index="getIndex" />
-      <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true" />
-      <el-table-column prop="logImg" label="标题图" align="center" >
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column type="index" label="序号" align="center" :index="getIndex"/>
+      <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true"/>
+      <el-table-column prop="logImg" label="标题图" align="center">
         <template slot-scope="scope">
-            <el-image
-              style="width:100px;height: 100px"
-              :src="scope.row.logImg"
-              :preview-src-list="[scope.row.logImg]">
-            </el-image>
+          <el-image
+            style="width:100px;height: 100px"
+            :src="scope.row.logImg"
+            :preview-src-list="[scope.row.logImg]">
+          </el-image>
         </template>
       </el-table-column>
       <el-table-column label="分类" align="center" prop="articleType">
@@ -81,7 +63,10 @@
       </el-table-column>
       <el-table-column label="标签" align="center" prop="articleTagList">
         <template slot-scope="scope">
-          <el-tag style="margin-left: 5px" v-for="item in scope.row.articleTagList" :key="item.id" type="success">{{ item }}</el-tag>
+          <el-tag style="margin: 5px" v-for="item in scope.row.articleTagList" :key="item.id" type="success">{{
+              item
+            }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="是否置顶" align="center" prop="topStatus">
@@ -99,8 +84,8 @@
           <dict-tag :options="dict.type.sys_article_comment" :value="scope.row.commentStatus"/>
         </template>
       </el-table-column>
-      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true" />
-      <el-table-column label="点赞数" align="center" prop="numberLike" :show-overflow-tooltip="true" />
+      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true"/>
+      <el-table-column label="点赞数" align="center" prop="numberLike" :show-overflow-tooltip="true"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_article_status" :value="scope.row.status"/>
@@ -113,18 +98,21 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-          >修改</el-button>
+          <router-link :to="'/article/update/'+scope.row.id">
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+            >修改
+            </el-button>
+          </router-link>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -138,11 +126,12 @@
   </div>
 </template>
 <script>
-import {  getType, delType} from "@/api/system/dict/type";
-import { listArticleInform } from "@/api/article/article";
+import {getType, delType} from "@/api/system/dict/type";
+import {deleteBthById, listArticleInform} from "@/api/article/article";
+
 export default {
   name: "Dict",
-  dicts: ['sys_article_type','sys_article_status','sys_article_top','sys_article_origin','sys_article_comment'],
+  dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment'],
   data() {
     return {
       // 遮罩层
@@ -174,8 +163,8 @@ export default {
   },
   methods: {
     //设置序号
-    getIndex(index){
-      return index + (this.queryParams.pageNum - 1)*this.queryParams.pageSize + 1;
+    getIndex(index) {
+      return index + (this.queryParams.pageNum - 1) * this.queryParams.pageSize + 1;
     },
     /** 查询文章列表 */
     getList() {
@@ -211,35 +200,23 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.$router.push({ path: '/article/add' })
-    },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!=1
+      this.single = selection.length != 1
       this.multiple = !selection.length
     },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getType(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改字典类型";
-      });
-    },
+
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除字典编号为"' + ids + '"的数据项？').then(function() {
-        return delType(ids);
+      this.$modal.confirm('是否确认删除文章编号为"' + ids + '"的数据项？').then(function () {
+        return deleteBthById(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => {
+      });
     }
   }
 };
