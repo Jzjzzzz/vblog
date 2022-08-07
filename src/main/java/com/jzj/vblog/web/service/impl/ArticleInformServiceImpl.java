@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.ResponseEnum;
+import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.web.mapper.ArticleContentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleContent;
@@ -18,18 +19,16 @@ import com.jzj.vblog.web.service.SysDictTypeService;
 import com.jzj.vblog.web.service.UploadService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * <p>
@@ -56,7 +55,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     @Autowired
     private SysConfigService sysConfigService;
 
-    private ExecutorService cacheThreadPool = Executors.newFixedThreadPool(1024);
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
 
     /**
      * 后台分页文章列表
@@ -102,7 +101,6 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
                 String[] imgArray = s.getLogImg().split(",");
                 s.setBanner(imgArray); //封装轮播图
                 String[] tagArray = s.getTagIds().split(",");
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 //封装标签
                 for (String tag : tagArray) {
                     for (SysDictData sysDictData : tagList) {
@@ -169,19 +167,26 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     @Transactional
     @Override
     public void deleteArticleById(String [] ids,HttpServletRequest request) {
-        List<String> imgList = new ArrayList<>();
-        //根据ids批量查询图片地址和内容id
-        List<ArticleInform> list = articleInformMapper.selectBatchIds(Arrays.asList(ids));
-        list.forEach(s-> imgList.add(s.getLogImg()));
-        //批量删除图片
-        CompletableFuture.runAsync(()->{
-            UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
-            uploadService.deleteBtnImg(imgList,request); //批量删除图片
-        },cacheThreadPool);
-        //批量删除文章基础
-        articleInformMapper.deleteBatchIds(Arrays.asList(ids));
-        //批量删除文章内容
-        articleContentMapper.deleteBatchIds(Arrays.asList(ids));
+        try {
+            List<String> imgList = new ArrayList<>();
+            //根据ids批量查询图片地址和内容id
+            List<ArticleInform> list = articleInformMapper.selectBatchIds(Arrays.asList(ids));
+            list.forEach(s -> imgList.add(s.getLogImg()));
+            //批量删除图片
+            CompletableFuture.runAsync(() -> {
+                UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
+                uploadService.deleteBtnImg(imgList, request); //批量删除图片
+            }, threadPoolTaskExecutor);
+            //批量删除文章基础
+            articleInformMapper.deleteBatchIds(Arrays.asList(ids));
+            //批量删除文章内容
+            articleContentMapper.deleteBatchIds(Arrays.asList(ids));
+        } catch (Exception e) {
+            log.error("批量删除错误:" + e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            threadPoolTaskExecutor.shutdown();
+        }
     }
 
 }
