@@ -93,7 +93,6 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
      */
     @Override
     public int deleteWebsiteByIds(List<String> ids, HttpServletRequest request) {
-        //TODO 线程池关闭导致异步方法没执行
         try {
             List<String> imgList = new ArrayList<>();
             //根据ids查询
@@ -109,8 +108,6 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
         } catch (Exception e) {
             log.error("批量删除错误:" + e.getMessage());
             throw new RuntimeException(e);
-        } finally {
-            threadPoolTaskExecutor.shutdown();
         }
     }
 }

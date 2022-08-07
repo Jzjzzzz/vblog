@@ -68,6 +68,7 @@ public class AliYunUploadServiceImpl implements UploadService {
             throw new BusinessException(ResponseEnum.UPLOAD_ERROR);
         } finally {
             // 关闭OSSClient。
+            assert ossClient != null;
             ossClient.shutdown();
         }
     }
@@ -89,6 +90,7 @@ public class AliYunUploadServiceImpl implements UploadService {
             throw new BusinessException(ResponseEnum.UPLOAD_DELETE_ERROR);
         } finally {
             // 关闭OSSClient。
+            assert ossClient != null;
             ossClient.shutdown();
         }
     }
@@ -111,6 +113,7 @@ public class AliYunUploadServiceImpl implements UploadService {
             throw new BusinessException(ResponseEnum.UPLOAD_DELETE_ERROR);
         } finally {
             // 关闭OSSClient。
+            assert ossClient != null;
             ossClient.shutdown();
         }
     }

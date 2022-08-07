@@ -56,7 +56,6 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     private SysConfigService sysConfigService;
 
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
-
     /**
      * 后台分页文章列表
      * @param entity
@@ -184,8 +183,6 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         } catch (Exception e) {
             log.error("批量删除错误:" + e.getMessage());
             throw new RuntimeException(e);
-        } finally {
-            threadPoolTaskExecutor.shutdown();
         }
     }
 
