@@ -33,6 +33,12 @@
             <if test="articleTitle != null and articleTitle != ''">
                 AND article_title like concat('%', #{articleTitle}, '%')
             </if>
+            <if test="articleType != null and articleType != ''">
+                AND article_type = #{articleType}
+            </if>
+            <if test="articleTag != null and articleTag != ''">
+                AND article_tag like concat('%',#{articleTag},'%')
+            </if>
             <if test="status != null and status != ''">
                 AND status = #{status}
             </if>

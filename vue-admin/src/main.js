@@ -13,10 +13,9 @@ import '@/permission' // permission control
 import { getDicts } from "@/api/system/dict/data";
 import plugins from './plugins' // plugins
 import './assets/styles/element-variables.scss'
-
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/ruoyi.scss' // ruoyi css
-
+import 'mavon-editor/dist/css/index.css'
 
 // 分页组件
 import Pagination from "@/components/Pagination";
@@ -30,7 +29,8 @@ import RightToolbar from "@/components/RightToolbar"
 import Editor from "@/components/Editor"
 //普通图片上传组件
 import EleUploadImage from "vue-ele-upload-image";
-
+//Markdown
+import mavonEditor from 'mavon-editor'
 
 /**
  * If you don't want to use mock-server
@@ -54,7 +54,7 @@ Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.handleTree = handleTree
 Vue.component('Editor', Editor)
-Vue.component(EleUploadImage.name, EleUploadImage);
+Vue.component(EleUploadImage.name, EleUploadImage)
 
 Vue.component('DictTag', DictTag)
 Vue.component('Pagination', Pagination)
@@ -66,6 +66,7 @@ Vue.component('RightToolbar', RightToolbar)
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
 Vue.use(plugins)
+Vue.use(mavonEditor)
 DictData.install()
 
 Vue.config.productionTip = false

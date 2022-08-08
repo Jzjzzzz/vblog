@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="标题内容" prop="dictName">
+      <el-form-item label="标题内容" prop="articleTitle">
         <el-input
           v-model="queryParams.articleTitle"
           placeholder="请输入标题内容"
@@ -9,6 +9,36 @@
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item label="文章类别" prop="articleType">
+        <el-select
+          v-model="queryParams.articleType"
+          placeholder="文章类别"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in dict.type.sys_article_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="文章标签" prop="articleTag">
+        <el-select
+          v-model="queryParams.articleTag"
+          placeholder="文章标签"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in dict.type.sys_article_tag"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="创建时间">
         <el-date-picker
@@ -137,12 +167,11 @@
   </div>
 </template>
 <script>
-import {getType, delType} from "@/api/system/dict/type";
 import {deleteBthById, listArticleInform} from "@/api/article/article";
 
 export default {
   name: "Dict",
-  dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment'],
+  dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment','sys_article_tag'],
   data() {
     return {
       // 遮罩层
@@ -186,19 +215,6 @@ export default {
           this.loading = false;
         }
       );
-    },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: undefined,
-        articleTitle: undefined,
-      };
-      this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery() {

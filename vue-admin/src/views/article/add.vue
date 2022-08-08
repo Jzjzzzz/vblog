@@ -5,10 +5,10 @@
       <el-step title="基础信息"></el-step>
       <el-step title="内容编辑"></el-step>
     </el-steps>
-    <el-row :gutter="20">
-      <el-col :span="12" :offset="6">
-        <div class="grid-content bg-purple">
-          <el-form ref="elForm" :model="form" :rules="rules" size="medium" label-width="100px">
+    <div class="grid-content bg-purple">
+      <el-form ref="elForm" :model="form" :rules="rules" size="medium" label-width="100px">
+        <el-row :gutter="20">
+          <el-col :span="12" :offset="6">
             <div v-show="active === 0">
               <el-form-item label="标题" prop="articleTitle">
                 <el-input v-model="form.articleTitle" placeholder="请输入标题" :maxlength="100" clearable
@@ -72,19 +72,27 @@
                 <el-button @click="resetForm">重置</el-button>
               </el-form-item>
             </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="20" :offset="2">
             <div v-show="active === 1">
               <el-form-item label="内容" prop="content">
-                <editor v-model="form.content" :min-height="192"/>
+                <div>
+                  <mavon-editor v-model="form.content"/>
+                </div>
               </el-form-item>
               <el-form-item size="large">
                 <el-button type="primary" @click="next">上一步</el-button>
                 <el-button type="success" @click="submitForm">提交</el-button>
               </el-form-item>
             </div>
-          </el-form>
-        </div>
-      </el-col>
-    </el-row>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+
+
 
   </div>
 </template>
