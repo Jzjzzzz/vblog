@@ -5,18 +5,23 @@ import store from './store'
 import './assets/css/style.less'
 import './assets/font/iconfont.css'
 import 'mavon-editor/dist/css/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 require('./Mock')
 import {parseTime} from './utils'
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'	//样式
-import { getInformation } from "@/api/webInformation";
+import { getInformation } from "@/api/webInformation"
 //Markdown
 import mavonEditor from 'mavon-editor'
+//Element-UI
+import ElementUI from 'element-ui';
 
 // 全局方法挂载
 Vue.prototype.getInformation = getInformation
 
 Vue.use(mavonEditor)
+Vue.use(ElementUI);
+
 
 Vue.directive('highlight',function (el) {
   let blocks = el.querySelectorAll('pre code');
