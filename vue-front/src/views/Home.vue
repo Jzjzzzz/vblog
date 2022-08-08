@@ -116,7 +116,7 @@
             loadMore() {
                 fetchList(this.currPage+1,1).then(res => {
                     this.postList = this.postList.concat(res.data.map.items || [])
-                    this.currPage = res.data.map.page
+                    this.currPage = res.data.map.currPage
                     this.hasNextPage = res.data.map.hasNextPage
                 })
             }

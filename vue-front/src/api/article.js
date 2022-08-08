@@ -6,3 +6,10 @@ export function fetchList(page,limit) {
         method: 'get'
     })
 }
+
+export function getById(id) {
+    return request({
+        url: `/article/inform/getById/${id}`,
+        method: 'get'
+    })
+}

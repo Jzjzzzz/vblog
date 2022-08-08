@@ -10,7 +10,7 @@
           </div>
           <!-- 简介 -->
           <div class="header-info">
-            <p>{{ config.webDetails }}</p>
+            <p v-html="config.webDetails"></p>
           </div>
           <!-- 社交信息 -->
           <div class="top-social">

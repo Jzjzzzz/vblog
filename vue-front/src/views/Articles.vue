@@ -8,63 +8,16 @@
             </div>
             <main class="site-main">
                 <article class="hentry">
-                    <!-- 文章头部 -->
-                    <header class="entry-header">
-                        <!-- 标题输出 -->
-                        <h1 class="entry-title">看一遍闭着眼都会安装Lua了</h1>
-                        <hr>
-                        <div class="breadcrumbs">
-                            <div id="crumbs">最后更新时间：2020年04月21日</div>
-                        </div>
-                    </header>
                     <!-- 正文输出 -->
-                    <div class="entry-content" v-highlight>
-                        <p>@[TOC]</p>
-                        <h4 id="引言：">引言：</h4>
-                        <p>Lua 是一种轻量小巧的脚本语言，能为应用程序提供灵活的扩展和定制功能。</p>
-                        <h4 id="lua-应用场景">Lua 应用场景</h4>
-                        <ul>
-                            <li>游戏开发</li>
-                            <li>独立应用脚本</li>
-                            <li>Web 应用脚本</li>
-                            <li>扩展和数据库插件如：MySQL Proxy 和 MySQL WorkBench</li>
-                            <li>安全系统，如入侵检测系统</li>
-                        </ul>
-                        <hr>
-                        <h4 id="安装">安装</h4>
-                        <pre class="lang-shell"><code> curl -R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz #下载
- tar zxf lua-5.3.5.tar.gz #解压
- cd lua-5.3.3 #进入解压文件夹
- make linux test #安装&amp;测试</code></pre>
-                        <hr>
-                        <h4 id="安装过程可能出现的问题">安装过程可能出现的问题</h4>
-                        <ol>
-                            <li>没有gcc命令(lua是C语言编写的，安装时依赖gcc)
-                                <blockquote>
-                                    <p>使用<code>which gcc</code>命令可以查看是否有gcc，如果没有使用下面命令进行安装gcc 与gcc-c++，</p>
-                                    <pre class="lang-shell"><code>yum -y install gcc
-yum -y install gcc-c++</code></pre>
-                                </blockquote>
-                            </li>
-                        </ol>
-                        <hr>
-                        <ol start="2">
-                            <li>致命错误：readline/readline.h：没有那个文件或目录
-                                <blockquote>
-                                    <p>执行如下命令即可:</p>
-                                    <pre class="lang-shell"><code>yum install libtermcap-devel ncurses-devel libevent-devel readline-devel</code></pre>
-                                </blockquote>
-                            </li>
-                        </ol>
-                        <hr>
-                        <h4 id="安装成功验证">安装成功验证</h4>
-                        <blockquote>
-                            <p>执行<code>lua -v</code>,出现如下信息代表安装成功<br/>
-                                Lua 5.1.4 Copyright (C) 1994-2008 Lua.org, PUC-Rio</p>
-                        </blockquote>
-                        <pre class="lang-shell"><code>lua -v</code></pre>
-
-                    </div>
+                  <mavon-editor
+                      class="md"
+                      :value="article.content"
+                      :subfield="prop.subfield"
+                      :defaultOpen="prop.defaultOpen"
+                      :toolbarsFlag="prop.toolbarsFlag"
+                      :editable="prop.editable"
+                      :scrollStyle="prop.scrollStyle"
+                  ></mavon-editor>
                     <!-- 文章底部 -->
                     <section-title>
                         <footer class="post-footer">
@@ -113,13 +66,15 @@ yum -y install gcc-c++</code></pre>
     import comment from '@/components/comment'
     import menuTree from '@/components/menu-tree'
     import {fetchComment} from '../api'
+    import {getById} from '../api/article'
     export default {
         name: 'articles',
         data(){
           return{
               showDonate: false,
               comments: [],
-              menus: []
+              menus: [],
+              article:{}
           }
         },
         components: {
@@ -129,6 +84,11 @@ yum -y install gcc-c++</code></pre>
             menuTree
         },
         methods: {
+          getArticle(){
+            getById('3cfe1514b1571fb8818d9463309162d1').then(res=>{
+              this.article = res.data
+            })
+          },
           getComment(){
               fetchComment().then(res => {
                   this.comments = res.data || []
@@ -169,8 +129,20 @@ yum -y install gcc-c++</code></pre>
         mounted(){
             this.createMenus()
         },
+      computed:{
+        prop(){
+          return{
+            subfield: false, // 单双栏模式
+            defaultOpen: "preview", //edit： 默认展示编辑区域 ， preview： 默认展示预览区域
+            editable: false,
+            toolbarsFlag: false,
+            scrollStyle: true
+          }
+        }
+      },
         created() {
             this.getComment()
+          this.getArticle()
         }
     }
 </script>
