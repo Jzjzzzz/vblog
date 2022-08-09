@@ -9,7 +9,7 @@ export function fetchList(page,limit) {
 
 export function getById(id) {
     return request({
-        url: `/article/inform/getById/${id}`,
+        url: `/front/article/getById/${id}`,
         method: 'get'
     })
 }

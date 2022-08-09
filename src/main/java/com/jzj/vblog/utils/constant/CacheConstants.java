@@ -46,4 +46,14 @@ public class CacheConstants {
      * 网站基本信息
      */
     public static final String SYS_WEB_INFORMATION = "sys_web_information";
+
+    /**
+     * 文章标签
+     */
+    public static final String SYS_ARTICLE_TAG = "sys_article_tag";
+
+    /**
+     * 文章分类
+     */
+    public static final String SYS_ARTICLE_TYPE = "sys_article_type";
 }

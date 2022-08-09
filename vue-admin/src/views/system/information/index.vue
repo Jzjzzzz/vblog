@@ -36,13 +36,24 @@
               :beforeRemove="beforeRemove"
             ></ele-upload-image>
           </el-form-item>
-          <el-form-item label="首页背景" prop="homeBanner">
+          <el-form-item label="首页背景图" prop="homeBanner">
             <ele-upload-image
               action="http://localhost:8081/api/upload/uploadImg?name=webLogo"
               v-model="formData.homeBanner"
               :responseFn="handleResponse"
               :isShowSuccessTip="false"
-              :fileSize="5"
+              :fileSize="20"
+              :file-type="imgType"
+              :beforeRemove="beforeRemove"
+            ></ele-upload-image>
+          </el-form-item>
+          <el-form-item label="文章背景图" prop="articleBanner">
+            <ele-upload-image
+              action="http://localhost:8081/api/upload/uploadImg?name=webLogo"
+              v-model="formData.articleBanner"
+              :responseFn="handleResponse"
+              :isShowSuccessTip="false"
+              :fileSize="20"
               :file-type="imgType"
               :beforeRemove="beforeRemove"
             ></ele-upload-image>
@@ -81,7 +92,8 @@ export default {
         webDetails: undefined,
         webAvatar: undefined,
         id: undefined,
-        homeBanner: undefined
+        homeBanner: undefined,
+        articleBanner: undefined
       },
       rules: {
         webName: [{

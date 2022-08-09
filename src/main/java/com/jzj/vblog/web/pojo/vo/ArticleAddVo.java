@@ -3,6 +3,8 @@ package com.jzj.vblog.web.pojo.vo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @Author Jzj
  * @Date 2022/8/4 10:36
@@ -68,4 +70,14 @@ public class ArticleAddVo {
      * 内容
      */
     private String content;
+
+    /**
+     * 修改时间
+     */
+    private String updateTime;
+
+    /**
+     * 访问量
+     */
+    private String clickRate;
 }

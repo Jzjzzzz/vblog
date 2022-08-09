@@ -1,6 +1,6 @@
 <template>
     <div id="layout-footer">
-        <div class="copyright">Copyright © 2022 by <a target="_blank" class="out-link" href="https://www.Jzjzzzz.icu">Jzjzzzz.icu</a> . All rights reserved. | <a target="_blank" class="out-link" href="http://www.beian.miit.gov.cn">渝ICP备17015355号-1</a></div>
+        <div class="copyright">Copyright © 2022 by <a target="_blank" class="out-link" href="https://www.Jzjzzzz.icu">Jzjzzzz.icu</a> . All rights reserved. | <a target="_blank" class="out-link" href="http://www.beian.miit.gov.cn">粤ICP备17015355号-1</a></div>
     </div>
 </template>
 

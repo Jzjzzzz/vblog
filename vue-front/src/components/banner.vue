@@ -1,7 +1,53 @@
 <template>
   <div id="banner" :class="{'home-banner':isHome}">
-    <div class="banner-img" :style="{'background-image': `url(${src})`}">
-      <template v-if="isHome">
+
+    <template v-if="!isHome">
+      <div class="banner-img" :style="{'background-image': `url(${config.homeBanner})`}">
+        <!--博主信息-->
+        <div class="focusinfo">
+          <!-- 头像 -->
+          <div class="header-tou">
+            <el-row>
+              <el-col :span="24"><h1 style="font-size: 60px;padding-top: 50px;color: white">{{
+                  article.articleTitle
+                }}</h1></el-col>
+            </el-row>
+          </div>
+          <!-- 简介 -->
+          <div class="header-info">
+            <el-row>
+              <el-col :span="7">
+                <div>文章类别:</div>
+              </el-col>
+              <el-col :span="17"><p>{{ article.articleType }}</p></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="7">
+                <div>文章标签:</div>
+              </el-col>
+              <el-col :span="17"><p>{{ article.articleTag }}</p></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="7">
+                <div>是否原创:</div>
+              </el-col>
+              <el-col :span="17"><p>{{ article.originStatus }}</p></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="7">
+                <div>创建时间:</div>
+              </el-col>
+              <el-col :span="17"><p>{{ article.updateTime }}</p></el-col>
+            </el-row>
+          </div>
+        </div>
+        <!--左右倾斜-->
+        <div class="slant-left"></div>
+        <div class="slant-right"></div>
+      </div>
+    </template>
+    <template v-if="isHome">
+      <div class="banner-img" :style="{'background-image': `url(${config.homeBanner})`}">
         <!--博主信息-->
         <div class="focusinfo">
           <!-- 头像 -->
@@ -14,19 +60,19 @@
           </div>
           <!-- 社交信息 -->
           <div class="top-social">
-            <div  key="1" title="github">
-              <a :href="config.github" target="_blank" >
-                <i class="iconfont icongithub" ></i>
+            <div key="1" title="github">
+              <a :href="config.github" target="_blank">
+                <i class="iconfont icongithub"></i>
               </a>
             </div>
-            <div  key="2" title="gitee">
-              <a :href="config.gitee" target="_blank"  style="color: #d81e06">
-                <i class="iconfont icongitee" ></i>
+            <div key="2" title="gitee">
+              <a :href="config.gitee" target="_blank" style="color: #d81e06">
+                <i class="iconfont icongitee"></i>
               </a>
             </div>
-            <div  key="3" title="qq">
-              <a :href="config.qq" target="_blank"  style="color: #1AB6FF">
-                <i class="iconfont iconqq" ></i>
+            <div key="3" title="qq">
+              <a :href="config.qq" target="_blank" style="color: #1AB6FF">
+                <i class="iconfont iconqq"></i>
               </a>
             </div>
           </div>
@@ -34,8 +80,9 @@
         <!--左右倾斜-->
         <div class="slant-left"></div>
         <div class="slant-right"></div>
-      </template>
-    </div>
+      </div>
+    </template>
+
   </div>
 </template>
 
@@ -52,6 +99,7 @@ export default {
         wechat: '',
         github: '',
         gitee: '',
+        homeBanner: '',
         data: {
           avatar: undefined,
           slogan: undefined,
@@ -64,13 +112,17 @@ export default {
     }
   },
   props: {
-    src: {
-      type: String,
-      default: 'https://s1.ax1x.com/2020/05/23/YxaLMq.jpg'
-    },
     isHome: {
       type: [Boolean, String],
       default: false
+    },
+    article: {
+      type: Object
+    }
+  },
+  watch: {
+    msg(newMsg, oldMsg) {
+      this.article = newMsg
     }
   },
   created() {
@@ -82,11 +134,11 @@ export default {
     getWebConfig() {
       this.getInformation().then(response => {
         this.config = response.data;
-        this.config.qq = 'http://wpa.qq.com/msgrd?v=3&uin='+this.config.qq+'&site=qq&menu=yes'
+        this.config.qq = 'https://wpa.qq.com/msgrd?v=3&uin=' + this.config.qq + '&site=qq&menu=yes'
       });
     },
     getWebSiteInfo() {
-      this.$store.dispatch('getSiteInfo').then(data => {
+      this.$store.dispatch('getSiteInfo').then(response => {
         this.websiteInfo = this.data
       })
     }

@@ -57,4 +57,11 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * 根据ID删除文章
      */
     void deleteArticleById(String [] ids,HttpServletRequest request);
+
+    /**
+     * 前台根据文章Id获取文章信息
+     * @param id
+     * @return
+     */
+    ArticleAddVo getFrontArticleById(String id);
 }

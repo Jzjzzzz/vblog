@@ -39,4 +39,6 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
      * @return
      */
     ArticleAddVo selectArticleByIdVo(@Param("id") String id);
+
+    ArticleAddVo selectFrontArticleByIdVo(String id);
 }

@@ -3,6 +3,7 @@ package com.jzj.vblog.web.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.factory.UploadFactory;
+import com.jzj.vblog.utils.constant.CacheConstants;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.utils.sign.SpringUtils;
@@ -41,7 +42,6 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, ArticleInform> implements ArticleInformService {
 
-    private static final String DICT_TAG_NAME = "sys_article_tag";
 
     @Autowired
     private ArticleInformMapper articleInformMapper;
@@ -63,19 +63,12 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
      */
     @Override
     public List<ArticleInform> selectList(ArticleInform entity) {
-        List<SysDictData> tagList = dictTypeService.selectDictDataByType(DICT_TAG_NAME); //获取标签列表
+        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
         List<ArticleInform> articleList = articleInformMapper.selectArticleList(entity);
         for (ArticleInform inform : articleList) {
-            List<String> strings = new ArrayList<>();
-            String[] tagArray = inform.getArticleTag().split(",");
-            for (String tag : tagArray) {
-                for (SysDictData sysDictData : tagList) {
-                    if(tag.equals(sysDictData.getDictValue())){
-                        strings.add(sysDictData.getDictLabel());
-                    }
-                }
-            }
-            inform.setArticleTagList(strings);
+            //封装标签
+            List<String> tags = getTags(tagList, inform.getArticleTag());
+            inform.setArticleTagList(tags);
         }
         return articleList;
     }
@@ -92,22 +85,14 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         HashMap<String, Object> map = new HashMap<>();
         Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit)); //分页查询
         if(articleVoPage.getTotal()>0){
-            List<SysDictData> tagList = dictTypeService.selectDictDataByType(DICT_TAG_NAME); //获取标签列表
+            List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
             List<ArticleVo> list = articleVoPage.getRecords(); //获取列表
             list.forEach(s->{
-                List<String> tags = new ArrayList<>();
                 s.setCommentsCount(0); //封装评论数
                 String[] imgArray = s.getLogImg().split(",");
                 s.setBanner(imgArray); //封装轮播图
-                String[] tagArray = s.getTagIds().split(",");
                 //封装标签
-                for (String tag : tagArray) {
-                    for (SysDictData sysDictData : tagList) {
-                        if(tag.equals(sysDictData.getDictValue())){
-                            tags.add(sysDictData.getDictLabel());
-                        }
-                    }
-                }
+                List<String> tags = getTags(tagList, s.getTagIds());
                 s.setTagNameArray(tags.toArray(new String[tags.size()]));
             });
             map.put("items",list);
@@ -184,6 +169,36 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             log.error("批量删除错误:" + e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public ArticleAddVo getFrontArticleById(String id) {
+        if(id==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        ArticleAddVo model = articleInformMapper.selectFrontArticleByIdVo(id);
+        //封装标签
+        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
+        List<String> tags = getTags(tagList, model.getArticleTag());
+        model.setArticleTag(String.join(",",tags));
+        return model;
+    }
+
+    /**
+     *  根据标签编号获取中文名称
+     * @param tagList
+     * @return
+     */
+    private List<String> getTags(List<SysDictData> tagList, String tagIds) {
+        String[] tagArray = tagIds.split(",");
+        List<String> tags = new ArrayList<>();
+        //封装标签
+        for (String tag : tagArray) {
+            for (SysDictData sysDictData : tagList) {
+                if(tag.equals(sysDictData.getDictValue())){
+                    tags.add(sysDictData.getDictLabel());
+                }
+            }
+        }
+        return tags;
     }
 
 }
