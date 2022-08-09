@@ -55,7 +55,7 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.watchScroll)
-    this.fetchCategory()
+    // this.fetchCategory()
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.watchScroll)

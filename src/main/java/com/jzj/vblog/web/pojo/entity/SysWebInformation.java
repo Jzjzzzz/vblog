@@ -39,6 +39,13 @@ public class SysWebInformation extends BaseEntity {
     @ApiModelProperty(value = "头像")
     private String webAvatar;
 
+    @ApiModelProperty(value = "首页背景图")
+    private String homeBanner;
+
+    @ApiModelProperty(value = "文章背景图")
+    private String articleBanner;
+
+
     @ApiModelProperty(value = "qq")
     private String qq;
 
@@ -58,6 +65,7 @@ public class SysWebInformation extends BaseEntity {
     @ApiModelProperty(value = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+
 
 
 }

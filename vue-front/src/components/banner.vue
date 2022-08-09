@@ -53,12 +53,12 @@ export default {
         github: '',
         gitee: '',
         data: {
-          avatar: 'https://s2.ax1x.com/2020/01/17/1SCadg.png',
-          slogan: 'The way up is not crowded, and most chose ease.',
-          name: 'FZY′blog',
-          domain: 'https://www.fengziy.cn',
-          notice: '本博客的Demo数据由Mockjs生成',
-          desc: '一个It技术的探索者'
+          avatar: undefined,
+          slogan: undefined,
+          name: undefined,
+          domain: undefined,
+          notice: undefined,
+          desc: undefined,
         }
       }
     }
@@ -74,7 +74,7 @@ export default {
     }
   },
   created() {
-    this.getWebSiteInfo()
+    // this.getWebSiteInfo()
     this.getWebConfig()
   },
   methods: {

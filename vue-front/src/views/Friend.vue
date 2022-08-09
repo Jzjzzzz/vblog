@@ -57,7 +57,7 @@
             }
         },
         mounted() {
-            this.getWebSiteInfo();
+            // this.getWebSiteInfo();
             this.fetchFriend();
         }
     }

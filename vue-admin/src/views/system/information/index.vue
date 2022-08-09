@@ -36,8 +36,19 @@
               :beforeRemove="beforeRemove"
             ></ele-upload-image>
           </el-form-item>
+          <el-form-item label="首页背景" prop="homeBanner">
+            <ele-upload-image
+              action="http://localhost:8081/api/upload/uploadImg?name=webLogo"
+              v-model="formData.homeBanner"
+              :responseFn="handleResponse"
+              :isShowSuccessTip="false"
+              :fileSize="5"
+              :file-type="imgType"
+              :beforeRemove="beforeRemove"
+            ></ele-upload-image>
+          </el-form-item>
           <el-form-item label="网站详情" prop="webDetails" >
-            <editor v-model="formData.webDetails"  :min-height="192"></editor>
+            <editor v-model="formData.webDetails"  :min-height="192" ></editor>
           </el-form-item>
           <el-form-item size="large">
             <el-button size="medium" type="primary" @click="submitForm">提交</el-button>
@@ -69,7 +80,8 @@ export default {
         webName: undefined,
         webDetails: undefined,
         webAvatar: undefined,
-        id: undefined
+        id: undefined,
+        homeBanner: undefined
       },
       rules: {
         webName: [{

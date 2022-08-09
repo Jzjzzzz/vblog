@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @Author Jzj
  * @Date 2022/7/27 17:08
  * @Version 1.0
- * @Message: 阿里云OSS配置类
+ * @Message: 阿里云OSS配置参数类
  */
 @Setter
 @Getter

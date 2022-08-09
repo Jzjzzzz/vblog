@@ -105,7 +105,7 @@
                 })
             },
             fetchList() {
-                fetchList(this.currPage,1).then(res => {
+                fetchList(this.currPage,10).then(res => {
                     this.postList = res.data.map.items || []
                     this.currPage = res.data.map.currPage
                     this.hasNextPage = res.data.map.hasNextPage
@@ -114,7 +114,7 @@
                 })
             },
             loadMore() {
-                fetchList(this.currPage+1,1).then(res => {
+                fetchList(this.currPage+1,10).then(res => {
                     this.postList = this.postList.concat(res.data.map.items || [])
                     this.currPage = res.data.map.currPage
                     this.hasNextPage = res.data.map.hasNextPage
@@ -122,13 +122,12 @@
             }
         },
         mounted() {
-            this.fetchFocus();
+            // this.fetchFocus();
             this.fetchList();
         }
     }
 </script>
 <style scoped lang="less">
-
     .site-content {
         .notify {
             margin: 60px 0;
@@ -137,8 +136,6 @@
                 padding: 20px;
             }
         }
-
-
         .search-result {
             padding: 15px 20px;
             text-align: center;
@@ -165,7 +162,6 @@
             }
         }
     }
-
     .site-main {
         padding-top: 80px;
 
@@ -173,7 +169,6 @@
             padding-top: 0;
         }
     }
-
     .more{
         margin: 50px 0;
         .more-btn{
@@ -192,7 +187,6 @@
             }
         }
     }
-
     /******/
     @media (max-width: 800px) {
         .top-feature {

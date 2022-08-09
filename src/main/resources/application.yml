@@ -2,15 +2,9 @@ server:
   port: 8081
 spring:
   profiles:
-    active: dev # 环境设置
+    active: druid # 环境设置
   application:
     name: vblog
-  datasource: # mysql数据库连接
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://110.42.224.240:3306/vblog?serverTimezone=GMT%2B8&characterEncoding=utf-8
-    username: root
-    password: cla14UY5JhfTH0gfFkG83ymDugWvSitE
   servlet:
     multipart:
       enabled: true #是否启用http上传处理
