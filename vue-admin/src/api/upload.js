@@ -7,3 +7,12 @@ export function deleteImg(url) {
     method: 'delete'
   })
 }
+
+// 上传图片
+export function uploadImg(file,name) {
+  return request({
+    url: `/api/upload/uploadImg?name=`+name ,
+    method: 'post',
+    data: file
+  })
+}

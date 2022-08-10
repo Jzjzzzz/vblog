@@ -77,9 +77,20 @@
         <el-row :gutter="20">
           <el-col :span="20" :offset="2">
             <div v-show="active === 1">
-              <el-form-item label="内容" prop="content">
+              <el-form-item prop="content">
                 <div>
-                  <mavon-editor v-model="form.content"/>
+                  <mavon-editor
+                    @imgAdd="imgAdd"
+                    @imgDel="imgDel"
+                    :externalLink="externalLink"
+                    ref="md"
+                    v-model="form.content">
+                    <!-- 左工具栏前加入自定义按钮 -->
+                    <template slot="left-toolbar-before">
+                      <input id="upload" type="file" accept=".md" @change="importMd($event)" v-show="false" />
+                      <label  type="button" for="upload" class="op-icon fa fa-mavon-align-left" title="导入md文档"></label>
+                    </template>
+                  </mavon-editor>
                 </div>
               </el-form-item>
               <el-form-item size="large">
@@ -91,13 +102,10 @@
         </el-row>
       </el-form>
     </div>
-
-
-
   </div>
 </template>
 <script>
-import {deleteImg} from "@/api/upload";
+import {deleteImg, uploadImg} from "@/api/upload";
 import {add, getById, updateById} from "@/api/article/article"
 
 export default {
@@ -106,6 +114,32 @@ export default {
   dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment', 'sys_article_tag'],
   data() {
     return {
+      externalLink: {
+        markdown_css: function () {
+          // 这是你的markdown css文件路径
+          return '/mavon-editor/markdown/github-markdown.min.css'
+        },
+        hljs_js: function () {
+          // 这是你的hljs文件路径
+          return '/mavon-editor/highlightjs/highlight.min.js'
+        },
+        hljs_css: function (css) {
+          // 这是你的代码高亮配色文件路径
+          return '/mavon-editor/highlightjs/styles/' + css + '.min.css'
+        },
+        hljs_lang: function (lang) {
+          // 这是你的代码高亮语言解析路径
+          return '/mavon-editor/highlightjs/languages/' + lang + '.min.js'
+        },
+        katex_css: function () {
+          // 这是你的katex配色方案路径路径
+          return '/mavon-editor/katex/katex.min.css'
+        },
+        katex_js: function () {
+          // 这是你的katex.js路径
+          return '/mavon-editor/katex/katex.min.js'
+        }
+      },
       //文件上传类型
       imgType: ['png', 'jpg', 'jpeg'],
       active: 0,
@@ -174,6 +208,41 @@ export default {
     this.init()
   },
   methods: {
+    //导入md文档
+    importMd(e){
+      const file=e.target.files[0];
+      if (!file.name.endsWith(".md")){
+        this.$message.warning("文件扩展名必须为.md！")
+        return;
+      }
+      const reader=new FileReader;
+      reader.readAsText(file);
+      reader.onload=(res)=>{
+        this.form.content = res.target.result
+      }
+      e.target.value=null;
+    },
+    //MarkDown图片上传
+    imgAdd(pos,file){
+      var _this = this;
+      var formData = new FormData();
+      formData.append('file',file)
+      uploadImg(formData,'article').then(response=>{
+        var url = response.data.url
+        if(response.success){
+          _this.$refs.md.$imglst2Url([[pos,url]])
+        }else {
+          _this.$message({type: response.code, message: response.msg});
+        }
+      })
+    },
+    //MarkDown图片删除
+    imgDel(pos){
+      var url = pos[0]
+      deleteImg(url).then(response => {
+        this.$modal.msgSuccess("删除成功")
+      })
+    },
     //文章回显
     init() {
       if (this.$route.params && this.$route.params.id) {
