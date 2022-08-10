@@ -68,6 +68,11 @@
                 LEFT JOIN article_content ac ON ai.id = ac.id
                 LEFT JOIN sys_dict_data dict ON dict.dict_type = 'sys_article_type'
                 AND dict.dict_value = ai.article_type
+            <where>
+                <if test="type!=null and type!=''">
+                 ai.article_type = #{type}
+                </if>
+            </where>
     </select>
     <select id="selectArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleAddVo" parameterType="java.lang.String">
         SELECT
@@ -92,8 +97,8 @@
             ai.id,
             ai.article_title,
             ai.`status`,
-            dict.dict_label article_type,
-            dict2.dict_label origin_status,
+            ai.article_type,
+            ai.origin_status,
             ai.article_tag,
             ai.top_status,
             ai.comment_status,
@@ -105,10 +110,6 @@
         FROM
             article_inform ai
                 LEFT JOIN article_content ac ON ai.id = ac.id
-                LEFT JOIN sys_dict_data dict ON dict.dict_type = 'sys_article_type'
-                AND dict.dict_value = ai.article_type
-                LEFT JOIN sys_dict_data dict2 ON dict2.dict_type = 'sys_article_origin'
-                AND dict2.dict_value = ai.origin_status
         WHERE
             ai.id = #{id}
     </select>

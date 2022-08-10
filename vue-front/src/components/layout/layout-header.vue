@@ -17,15 +17,10 @@
         <router-link to="/">首页</router-link>
       </div>
       <div class="menu-item hasChild">
-        <a href="#">文章</a>
-        <div class="childMenu" v-if="category.length">
-          <div class="sub-menu" v-for="item in category" :key="item.title">
-            <router-link :to="`/category/${item.title}`">{{ item.title }}</router-link>
-          </div>
-        </div>
+        <router-link :to="'/category'">文章</router-link>
       </div>
-      <div class="menu-item">
-        <router-link to="/friend">友链</router-link>
+      <div class="menu-item hasChild">
+        <router-link :to="'/'">资源</router-link>
       </div>
       <div class="menu-item">
         <router-link to="/about">关于</router-link>
@@ -36,7 +31,6 @@
 
 <script>
 import HeaderSearch from '@/components/header-search'
-import {fetchCategory} from '../../api'
 
 export default {
   name: "layout-header",
@@ -55,7 +49,6 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.watchScroll)
-    // this.fetchCategory()
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.watchScroll)
@@ -82,13 +75,6 @@ export default {
         this.hidden = false
       }
       this.lastScrollTop = scrollTop
-    },
-    fetchCategory() {
-      fetchCategory().then(res => {
-        this.category = res.data
-      }).catch(err => {
-        console.log(err)
-      })
     }
   }
 }

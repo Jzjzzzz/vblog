@@ -4,29 +4,19 @@
     <div class="site-content animate">
       <!--通知栏-->
       <div class="notify">
-        <quote>{{ notice }}</quote>
-      </div>
-      <!--焦点图-->
-      <div class="top-feature">
-        <section-title>
-          <div style="display: flex;align-items: flex-end;">聚焦
-            <small-ico></small-ico>
-          </div>
-        </section-title>
-        <div class="feature-content">
-          <div class="feature-item" v-for="item in features" :key="item.title">
-            <Feature :data="item"></Feature>
-          </div>
+        <div class="search-result">
+          <p style="padding-bottom: 15px">文章分类</p>
+          <button @click="queryList(dict.value)" class="btn" style="margin: 5px"
+                  v-for="dict in dict.type.sys_article_type"> {{ dict.label }}
+          </button>
         </div>
       </div>
       <!--文章列表-->
       <main class="site-main">
-        <section-title>推荐</section-title>
         <template v-for="item in postList">
           <post :post="item" :key="item.id"></post>
         </template>
       </main>
-
       <!--加载更多-->
       <div class="more" v-show="hasNextPage">
         <div class="more-btn" @click="loadMore">更多</div>
@@ -38,70 +28,45 @@
 <script>
 import Banner from '@/components/banner'
 import Feature from '@/components/feature'
-import sectionTitle from '@/components/section-title'
 import Post from '@/components/post'
 import SmallIco from '@/components/small-ico'
 import Quote from '@/components/quote'
-import {fetchFocus} from '@/api'
-import {fetchList} from '@/api/article'
+import {fetchList} from '../api/article'
 
 export default {
   name: 'Home',
+  dicts: ['sys_article_type'],
   data() {
     return {
+      postList: [],
+      hasNextPage: false,
       articleQuery: {
         type: '',
-        tag: undefined,
         currPage: 1,
         limit: 1
-      },
-      features: [
-        {
-          id: 1,
-          title: 'Jzj',
-          img: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
-        },
-        {
-          id: 2,
-          title: '使用说明',
-          img: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
-        },
-        {
-          id: 3,
-          title: '文章归档',
-          img: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
-        }
-      ],
-      postList: [],
-      hasNextPage: false
+      }
     }
   },
   components: {
     Banner,
     Feature,
-    sectionTitle,
     Post,
     SmallIco,
     Quote
   },
-  computed: {
-    notice() {
-      return '一个技术分享博客。'
-    }
-  },
+  computed: {},
   methods: {
-    fetchFocus() {
-      fetchFocus().then(res => {
-        this.features = res.data || []
-      }).catch(err => {
-        console.log(err)
-      })
+    queryList(type) {
+      this.articleQuery.currPage = 1
+      this.articleQuery.type = type
+      this.fetchList()
     },
     fetchList() {
       fetchList(this.articleQuery).then(res => {
         this.postList = res.data.map.items || []
         this.articleQuery.currPage = res.data.map.currPage
         this.hasNextPage = res.data.map.hasNextPage
+        this.articleQuery.type = res.data.map.type
       }).catch(err => {
         console.log(err)
       })
@@ -112,11 +77,11 @@ export default {
         this.postList = this.postList.concat(res.data.map.items || [])
         this.articleQuery.currPage = res.data.map.currPage
         this.hasNextPage = res.data.map.hasNextPage
+        this.articleQuery.type = res.data.map.type
       })
     }
   },
   mounted() {
-    // this.fetchFocus();
     this.fetchList();
   }
 }
@@ -130,6 +95,15 @@ export default {
     & > div {
       padding: 20px;
     }
+  }
+
+  .search-result {
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    color: white;
+    background-image: url("../assets/img/bg.jpg");
   }
 }
 
@@ -190,10 +164,62 @@ export default {
   }
 
   .site-content {
-    .notify {
-      margin: 30px 0 0 0;
+    .search-result {
+      margin-bottom: 20px;
+      font-size: 16px;
     }
   }
+}
+
+//button样式
+/* From uiverse.io by @adamgiebl */
+/* From uiverse.io */
+.btn {
+  position: relative;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1em 2.5em;
+  display: inline-block;
+  border-radius: 6em;
+  transition: all .2s;
+  border: none;
+  font-family: inherit;
+  font-weight: 500;
+  color: black;
+  background-color: white;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all .4s;
+}
+
+.btn::after {
+  background-color: #fff;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
 }
 
 /******/

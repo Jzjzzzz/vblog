@@ -7,6 +7,7 @@ import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,11 +28,9 @@ public interface ArticleInformService extends IService<ArticleInform> {
 
     /**
      * 前台分页显示文章
-     * @param page
-     * @param limit
      * @return
      */
-    HashMap<String, Object> listPage(Long page, Long limit);
+    HashMap<String, Object> listPage(Map<String,Object> queryMap);
 
     /**
      * 新增文章

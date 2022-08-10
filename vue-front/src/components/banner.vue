@@ -1,8 +1,7 @@
 <template>
   <div id="banner" :class="{'home-banner':isHome}">
-
     <template v-if="!isHome">
-      <div class="banner-img" :style="{'background-image': `url(${config.homeBanner})`}">
+      <div class="banner-img" :style="{'background-image': `url(${config.articleBanner})`}">
         <!--博主信息-->
         <div class="focusinfo">
           <!-- 头像 -->
@@ -19,7 +18,9 @@
               <el-col :span="7">
                 <div>文章类别:</div>
               </el-col>
-              <el-col :span="17"><p>{{ article.articleType }}</p></el-col>
+              <el-col :span="17">
+                <dict-tag :options="dict.type.sys_article_type" :value="article.articleType"/>
+              </el-col>
             </el-row>
             <el-row>
               <el-col :span="7">
@@ -31,7 +32,9 @@
               <el-col :span="7">
                 <div>是否原创:</div>
               </el-col>
-              <el-col :span="17"><p>{{ article.originStatus }}</p></el-col>
+              <el-col :span="17">
+                <dict-tag :options="dict.type.sys_article_origin" :value="article.originStatus"/>
+              </el-col>
             </el-row>
             <el-row>
               <el-col :span="7">
@@ -89,6 +92,7 @@
 <script>
 export default {
   name: "banner",
+  dicts: ['sys_article_type', 'sys_article_origin'],
   data() {
     return {
       websiteInfo: {},
@@ -100,14 +104,7 @@ export default {
         github: '',
         gitee: '',
         homeBanner: '',
-        data: {
-          avatar: undefined,
-          slogan: undefined,
-          name: undefined,
-          domain: undefined,
-          notice: undefined,
-          desc: undefined,
-        }
+        articleBanner: ''
       }
     }
   },
@@ -126,7 +123,6 @@ export default {
     }
   },
   created() {
-    // this.getWebSiteInfo()
     this.getWebConfig()
   },
   methods: {
@@ -136,11 +132,6 @@ export default {
         this.config = response.data;
         this.config.qq = 'https://wpa.qq.com/msgrd?v=3&uin=' + this.config.qq + '&site=qq&menu=yes'
       });
-    },
-    getWebSiteInfo() {
-      this.$store.dispatch('getSiteInfo').then(response => {
-        this.websiteInfo = this.data
-      })
     }
   }
 }

@@ -1,13 +1,15 @@
 <template>
     <div class="about">
+     <div>
+       <banner isHome="true"></banner>
+     </div>
         <div class="site-content">
             <div class="content-warp">
                 <div class="about-site about-info">
                     <section-title><span>❤</span>关于博客</section-title>
                     <div class="info-card">
-                        <p>偶然之间看见了<a target="_blank" class="out-link" href="https://zhebk.cn/Web/Akina.html">Akina For Typecho</a>博客的主题，风格很是喜欢。</p>
-                        <p>然后就开始用Vue搭建这种风格的博客，在此呢也将这套模板开放给大家。</p>
-                        <p><a target="_blank" href="https://gitee.com/fengziy/Gblog" style="color: #ff6d6d;">Gitee仓库</a> | <a target="_blank" href="https://github.com/fengziye/Gblog" style="color: #ff6d6d;">Github仓库</a>记得star★哟</p>
+                        <p>本博客是采用了<a target="_blank" class="out-link" href="https://zhebk.cn/Web/Akina.html">Akina For Typecho</a>博客的主题，作为二次开发，后端使用SpringBoot。</p>
+                        <p><a target="_blank" href="https://gitee.com/jzjzz" style="color: #ff6d6d;">Gitee仓库</a> | <a target="_blank" href="https://github.com/Jzjzzzz" style="color: #ff6d6d;">Github仓库</a>记得Star哟</p>
                     </div>
                 </div>
                 <div class="about-me about-info">
@@ -35,9 +37,7 @@
 </template>
 <script>
     import sectionTitle from '@/components/section-title'
-    import {getTime,getTimeInterval} from '@/utils'
-    // import Quote from "@/components/quote";
-    // import {fetchFriend} from '../api'
+    import Banner from '@/components/banner'
     export default {
         name: "About",
         data() {
@@ -46,7 +46,7 @@
             }
         },
         components: {
-            // Quote,
+            Banner,
             sectionTitle
         },
         methods: {},

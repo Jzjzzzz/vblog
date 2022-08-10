@@ -6,12 +6,10 @@ import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.service.ArticleInformService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author Jzj
@@ -27,9 +25,9 @@ public class ArticleController extends BaseController {
     private ArticleInformService articleInformService;
 
     @ApiOperation("获取文章列表")
-    @GetMapping("/listPage/{page}/{limit}")
-    public R listPage(@PathVariable Long page, @PathVariable Long limit){
-        HashMap<String, Object> map = articleInformService.listPage(page,limit);
+    @PostMapping("/listPage")
+    public R listPage(@RequestBody Map<String,Object> queryMap){
+        HashMap<String, Object> map = articleInformService.listPage(queryMap);
         return R.ok("map",map);
     }
 

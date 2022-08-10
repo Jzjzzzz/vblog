@@ -25,10 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -76,14 +73,15 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     /**
      * 前台分页显示文章
-     * @param page
-     * @param limit
      * @return
      */
     @Override
-    public HashMap<String, Object> listPage(Long page, Long limit) {
+    public HashMap<String, Object> listPage(Map<String,Object> queryMap) {
         HashMap<String, Object> map = new HashMap<>();
-        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit)); //分页查询
+        Integer page = (Integer) queryMap.get("currPage");
+        Integer limit = (Integer) queryMap.get("limit");
+        String type = (String) queryMap.get("type");
+        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit),type); //分页查询
         if(articleVoPage.getTotal()>0){
             List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
             List<ArticleVo> list = articleVoPage.getRecords(); //获取列表
@@ -98,6 +96,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             map.put("items",list);
             map.put("currPage",page);
             map.put("hasNextPage",page * limit < articleVoPage.getTotal());
+            map.put("type",type);
         }
         return map;
     }

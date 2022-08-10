@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function fetchList(page,limit) {
+export function fetchList(data) {
     return request({
-        url: `/front/article/listPage/${page}/${limit}`,
-        method: 'get'
+        url: `/front/article/listPage`,
+        method: 'post',
+        data: data
     })
 }
 

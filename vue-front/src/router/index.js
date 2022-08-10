@@ -12,28 +12,16 @@ const routes = [
         meta: { title: '首页'}
     },
     {
-        path: '/category/:cate',
+        path: '/category/',
         name: 'category',
-        component: () => import('../views/Home.vue'),
-        meta: { title: '分类', params: 'cate'}
-    },
-    {
-        path: '/search/:words',
-        name: 'search',
-        component: () => import('../views/Home.vue'),
-        meta: { title: '搜索', params: 'words'}
+        component: () => import('../views/Category.vue'),
+        meta: { title: '分类'}
     },
     {
         path: '/about',
         name: 'about',
         component: () => import('../views/About.vue'),
         meta: { title: '关于'}
-    },
-    {
-        path: '/friend',
-        name: 'friend',
-        component: () => import('../views/Friend.vue'),
-        meta: { title: '友链'}
     },
     {
         path: '/article/:id',

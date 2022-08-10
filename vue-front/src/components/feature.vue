@@ -15,7 +15,7 @@
                 type: Object,
                 default: () =>{
                     return{
-                        title: 'Akina',
+                        title: 'Jzj',
                         img: 'https://cdn.zhebk.cn/usr/themes/Akina//images/feature/feature1.jpg',
                         href: 'https://zhebk.cn/Web/Akina.html'
                     }
