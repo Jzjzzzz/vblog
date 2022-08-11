@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.vblog.web.mapper.ArticleSummaryMapper">
+
+    <resultMap id="ArticleSummaryResult" type="com.jzj.vblog.web.pojo.entity.ArticleSummary">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="banner" column="banner"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time" />
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="ArticleSummaryVo">
+        SELECT
+            id,
+            NAME,
+            banner,
+            create_time,
+            update_time,
+            `status`
+        FROM
+            article_summary
+    </sql>
+
+    <select id="selectSummaryList" resultType="com.jzj.vblog.web.pojo.entity.ArticleSummary" parameterType="com.jzj.vblog.web.pojo.entity.ArticleSummary">
+        <include refid="ArticleSummaryVo" />
+        <where>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="name != null and name !=''">
+                AND name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="checkSummaryUnique" resultType="com.jzj.vblog.web.pojo.entity.ArticleSummary" parameterType="java.lang.String">
+        <include refid="ArticleSummaryVo"/>
+        where name = #{name} limit 1
+    </select>
+</mapper>

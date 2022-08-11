@@ -69,6 +69,12 @@ export const constantRoutes = [
         meta: { title: '文章列表',icon: 'el-icon-receiving' }
       },
       {
+        path: 'summary',
+        name: 'Summary',
+        component: () => import('@/views/article/summary'),
+        meta: { title: '文章归档',icon: 'el-icon-folder-opened' }
+      },
+      {
         path: 'add/',
         name: 'Add',
         component: () => import('@/views/article/add'),
