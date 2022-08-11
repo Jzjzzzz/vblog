@@ -44,7 +44,7 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * @param id
      * @return
      */
-    ArticleAddVo getArticleById(String id);
+    Map<String,Object> getArticleById(String id);
 
     /**
      * 根据ID修改文章

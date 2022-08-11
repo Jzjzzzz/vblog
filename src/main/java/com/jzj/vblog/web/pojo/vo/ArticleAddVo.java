@@ -80,4 +80,9 @@ public class ArticleAddVo {
      * 访问量
      */
     private String clickRate;
+
+    /**
+     * 归档id
+     */
+    private String aggregateId;
 }

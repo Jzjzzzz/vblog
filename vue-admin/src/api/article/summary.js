@@ -25,3 +25,19 @@ export function del(id) {
     method: 'delete'
   })
 }
+// 根据Id查询归档详细
+export function getInfo(id) {
+  return request({
+    url: '/article/summary/' + id,
+    method: 'get'
+  })
+}
+
+// 修改归档
+export function update(data) {
+  return request({
+    url: '/article/summary/',
+    method: 'put',
+    data: data
+  })
+}

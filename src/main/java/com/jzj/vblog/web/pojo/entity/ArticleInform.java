@@ -78,7 +78,7 @@ public class ArticleInform extends BaseEntity {
     private Long numberLike;
 
     @ApiModelProperty(value = "归档id")
-    private Long aggregateId;
+    private String aggregateId;
 
 
     @ApiModelProperty(value = "文章标签列表")

@@ -90,6 +90,7 @@
             ai.comment_status,
             ai.log_img,
             ai.introduce,
+            ai.aggregate_id,
             ac.content
         FROM
             article_inform ai

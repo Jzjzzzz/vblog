@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -50,8 +51,8 @@ public class ArticleInformController extends BaseController {
     @ApiOperation("根据Id获取文章")
     @GetMapping("/getById/{id}")
     public R getById(@PathVariable String id){
-        ArticleAddVo articleAddVo = articleInformService.getArticleById(id);
-        return R.ok(articleAddVo);
+        Map<String,Object> map = articleInformService.getArticleById(id);
+        return R.ok(map);
     }
 
     @Log(title = "文章管理",businessType = BusinessType.UPDATE)

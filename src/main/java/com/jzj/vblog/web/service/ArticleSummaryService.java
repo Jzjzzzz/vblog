@@ -23,4 +23,8 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
     int insertSummary(ArticleSummary articleSummary);
 
     int deleteSummaryByIds(List<String> ids, HttpServletRequest request);
+
+    ArticleSummary selectSummaryById(String id);
+
+    int updateSummary(ArticleSummary articleSummary);
 }

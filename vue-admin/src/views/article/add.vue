@@ -46,6 +46,12 @@
                              :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item label="归档" prop="aggregateId">
+                <el-select v-model="form.aggregateId" placeholder="请选择归档" clearable :style="{width: '100%'}">
+                  <el-option v-for="summary in summaryList" :key="summary.id" :label="summary.name"
+                             :value="summary.id"></el-option>
+                </el-select>
+              </el-form-item>
               <el-form-item label="评论" prop="commentStatus">
                 <el-select v-model="form.commentStatus" placeholder="请选择评论" clearable :style="{width: '100%'}">
                   <el-option v-for="dict in dict.type.sys_article_comment" :key="dict.value" :label="dict.label"
@@ -140,6 +146,7 @@ export default {
           return '/mavon-editor/katex/katex.min.js'
         }
       },
+      summaryList: [], //归档列表
       //文件上传类型
       imgType: ['png', 'jpg', 'jpeg'],
       active: 0,
@@ -157,7 +164,8 @@ export default {
         introduce: undefined,
         logImg: undefined,
         content: undefined,
-        id: undefined
+        id: undefined,
+        aggregateId: undefined
       },
       rules: {
         articleTitle: [{
@@ -210,13 +218,13 @@ export default {
   methods: {
     //导入md文档
     importMd(e){
-      const file=e.target.files[0];
+      const file=e.target.files[0]
       if (!file.name.endsWith(".md")){
         this.$message.warning("文件扩展名必须为.md！")
         return;
       }
-      const reader=new FileReader;
-      reader.readAsText(file);
+      const reader=new FileReader
+      reader.readAsText(file)
       reader.onload=(res)=>{
         this.form.content = res.target.result
       }
@@ -225,14 +233,14 @@ export default {
     //MarkDown图片上传
     imgAdd(pos,file){
       var _this = this;
-      var formData = new FormData();
+      var formData = new FormData()
       formData.append('file',file)
       uploadImg(formData,'article').then(response=>{
         var url = response.data.url
         if(response.success){
           _this.$refs.md.$imglst2Url([[pos,url]])
         }else {
-          _this.$message({type: response.code, message: response.msg});
+          _this.$message({type: response.code, message: response.msg})
         }
       })
     },
@@ -248,7 +256,8 @@ export default {
       if (this.$route.params && this.$route.params.id) {
         const id = this.$route.params.id
         getById(id).then(response => {
-          this.form = response.data;
+          this.form = response.data.model
+          this.summaryList = response.data.summaryList
           this.form.articleTagArray = this.form.articleTag.split(',')
         })
       }
@@ -258,9 +267,9 @@ export default {
       if (response.code === 20000) {
         this.$modal.msgSuccess("上传文件成功")
         this.imgPath = response.data.url
-        return response.data.url;
+        return response.data.url
       }
-      return this.$modal.msgError("上传文件失败");
+      return this.$modal.msgError("上传文件失败")
     },
     //删除图片
     beforeRemove() {

@@ -81,4 +81,14 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public ArticleSummary selectSummaryById(String id) {
+        return articleSummaryMapper.selectById(id);
+    }
+
+    @Override
+    public int updateSummary(ArticleSummary articleSummary) {
+        return articleSummaryMapper.updateById(articleSummary);
+    }
 }

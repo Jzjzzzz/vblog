@@ -134,7 +134,7 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
-            <el-option v-for="dict in dict.type.sys_website_status" :key="dict.value" :label="dict.label"
+            <el-option v-for="dict in dict.type.sys_summary_status" :key="dict.value" :label="dict.label"
                        :value="dict.value" ></el-option>
           </el-select>
         </el-form-item>
@@ -159,8 +159,7 @@
 </template>
 
 <script>
-import { getInfo,updateWebsite} from "@/api/website/website";
-import { listArticleSummary,add,del } from "@/api/article/summary";
+import { listArticleSummary,add,del,getInfo,update } from "@/api/article/summary";
 import { deleteImg } from "@/api/upload";
 export default {
   name: "Dict",
@@ -293,7 +292,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
-            updateWebsite(this.form).then(response => {
+            update(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();

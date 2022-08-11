@@ -6,6 +6,7 @@ import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
+import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.ArticleSummaryService;
@@ -51,6 +52,28 @@ public class ArticleSummaryController extends BaseController {
             return R.error("新增归档'" + articleSummary.getName() + "'失败，归档已存在");
         }
         return toAjax(articleSummaryService.insertSummary(articleSummary));
+    }
+
+    /**
+     * 根据资源id获取归档详细信息
+     */
+    @GetMapping(value = "/{id}")
+    public R getInfo(@PathVariable String id)
+    {
+        return R.ok(articleSummaryService.selectSummaryById(id));
+    }
+
+    /**
+     * 修改归档
+     */
+    @Log(title = "归档管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public R edit(@Validated @RequestBody ArticleSummary articleSummary)
+    {
+        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))){
+            return R.error("修改归档'" + articleSummary.getName() + "'失败，归档已存在");
+        }
+        return toAjax(articleSummaryService.updateSummary(articleSummary));
     }
 
     /**

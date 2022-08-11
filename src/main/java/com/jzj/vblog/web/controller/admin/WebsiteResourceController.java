@@ -70,6 +70,10 @@ public class WebsiteResourceController extends BaseController {
     @PutMapping
     public R edit(@Validated @RequestBody WebsiteResource websiteResource)
     {
+        if (UserConstants.NOT_UNIQUE.equals(websiteResourceService.checkWebsiteUnique(websiteResource)))
+        {
+            return R.error("修改资源'" + websiteResource.getResourceName() + "'失败，资源已存在");
+        }
         return toAjax(websiteResourceService.updateWebsite(websiteResource));
     }
 

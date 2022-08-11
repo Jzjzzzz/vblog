@@ -9,8 +9,10 @@ import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.web.mapper.ArticleContentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
+import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleContent;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
+import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.pojo.vo.ArticleVo;
@@ -45,6 +47,9 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Autowired
     private ArticleContentMapper articleContentMapper;
+
+    @Autowired
+    private ArticleSummaryMapper articleSummaryMapper;
 
     @Autowired
     private SysDictTypeService dictTypeService;
@@ -125,11 +130,16 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     }
 
     @Override
-    public ArticleAddVo getArticleById(String id) {
+    public Map<String,Object> getArticleById(String id) {
+        Map<String, Object> map = new HashMap<>();
         if(id==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         //文章基础信息
         ArticleAddVo model = articleInformMapper.selectArticleByIdVo(id);
-        return model;
+        //归档列表
+        List<ArticleSummary> summaryList = articleSummaryMapper.selectList(null);
+        map.put("model",model);
+        map.put("summaryList",summaryList);
+        return map;
     }
 
     @Transactional
