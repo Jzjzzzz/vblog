@@ -126,6 +126,9 @@ export default {
     comment,
     menuTree
   },
+  updated() {
+    window.scroll(0, 0)
+  },
   methods: {
     getArticle() {
       getById(this.$route.params.id).then(res => {

@@ -81,7 +81,8 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         Integer page = (Integer) queryMap.get("currPage");
         Integer limit = (Integer) queryMap.get("limit");
         String type = (String) queryMap.get("type");
-        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit),type); //分页查询
+        String title = (String) queryMap.get("title");
+        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit),type,title); //分页查询
         if(articleVoPage.getTotal()>0){
             List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
             List<ArticleVo> list = articleVoPage.getRecords(); //获取列表
@@ -96,7 +97,6 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             map.put("items",list);
             map.put("currPage",page);
             map.put("hasNextPage",page * limit < articleVoPage.getTotal());
-            map.put("type",type);
         }
         return map;
     }

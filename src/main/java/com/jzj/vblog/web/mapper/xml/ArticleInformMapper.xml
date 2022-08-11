@@ -69,8 +69,12 @@
                 LEFT JOIN sys_dict_data dict ON dict.dict_type = 'sys_article_type'
                 AND dict.dict_value = ai.article_type
             <where>
+                ai.`status` = '1'
                 <if test="type!=null and type!=''">
-                 ai.article_type = #{type}
+                 AND ai.article_type = #{type}
+                </if>
+                <if test="title!=null and title!=''">
+                 AND ai.article_title like concat('%',#{title},'%')
                 </if>
             </where>
     </select>
@@ -111,6 +115,6 @@
             article_inform ai
                 LEFT JOIN article_content ac ON ai.id = ac.id
         WHERE
-            ai.id = #{id}
+            ai.id = #{id} AND ai.`status` ='1'
     </select>
 </mapper>

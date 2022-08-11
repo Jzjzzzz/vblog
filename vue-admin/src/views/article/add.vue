@@ -88,7 +88,7 @@
                     <!-- 左工具栏前加入自定义按钮 -->
                     <template slot="left-toolbar-before">
                       <input id="upload" type="file" accept=".md" @change="importMd($event)" v-show="false" />
-                      <label  type="button" for="upload" class="op-icon fa fa-mavon-align-left" title="导入md文档"></label>
+                      <label  type="button" for="upload" class="op-icon fa el-icon-folder-add" title="导入md文档"></label>
                     </template>
                   </mavon-editor>
                 </div>

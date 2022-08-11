@@ -25,8 +25,7 @@
         },
         methods:{
             search(){
-                // console.log(this.searchValue)
-                this.$router.push({name:'search',params:{words:this.searchValue}});
+                this.$router.push('/search/'+this.searchValue);
                 this.close()
             },
             click(){

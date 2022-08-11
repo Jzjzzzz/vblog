@@ -48,7 +48,8 @@ export default {
       articleQuery: {
         type: '',
         currPage: 1,
-        limit: 1
+        limit: 1,
+        title: ''
       }
     }
   },
@@ -71,7 +72,7 @@ export default {
         this.postList = res.data.map.items || []
         this.articleQuery.currPage = res.data.map.currPage
         this.hasNextPage = res.data.map.hasNextPage
-        this.articleQuery.type = res.data.map.type
+
       }).catch(err => {
         console.log(err)
       })
@@ -82,11 +83,18 @@ export default {
         this.postList = this.postList.concat(res.data.map.items || [])
         this.articleQuery.currPage = res.data.map.currPage
         this.hasNextPage = res.data.map.hasNextPage
-        this.articleQuery.type = res.data.map.type
       })
     }
   },
-  mounted() {
+  watch:{
+    $route() {
+      window.location.reload(); //监测到路由发生跳转时刷新一次页面
+    }
+  },
+  created() {
+    if(this.$route.params.title!=null){
+      this.articleQuery.title = this.$route.params.title
+    }
     this.fetchList();
   }
 }

@@ -86,7 +86,7 @@
     </el-row>
     <el-table v-loading="loading" :data="articleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column type="index" label="序号" align="center" :index="getIndex"/>
+      <el-table-column type="index" label="序号" align="center" />
       <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true"/>
       <el-table-column prop="logImg" label="标题图" align="center">
         <template slot-scope="scope">
@@ -202,10 +202,6 @@ export default {
     this.getList();
   },
   methods: {
-    //设置序号
-    getIndex(index) {
-      return index + (this.queryParams.pageNum - 1) * this.queryParams.pageSize + 1;
-    },
     /** 查询文章列表 */
     getList() {
       this.loading = true;
