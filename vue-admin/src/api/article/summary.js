@@ -9,6 +9,15 @@ export function listArticleSummary(query) {
     params: query
   })
 }
+
+// 查询所有归档列表
+export function listAll() {
+  return request({
+    url: '/article/summary/listAll',
+    method: 'get'
+  })
+}
+
 // 新增归档
 export function add(data) {
   return request({

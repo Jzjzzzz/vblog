@@ -1,8 +1,8 @@
 <template>
     <div class="feature">
         <router-link :to="`/article/${data.id}`">
-            <div class="feature-title"><span class="foverlay">{{data.title}}</span></div>
-            <img :src="data.img">
+            <div class="feature-title"><span class="foverlay">{{data.name}}</span></div>
+            <img :src="data.banner"  style="width: 257px;height: 160px">
         </router-link>
     </div>
 </template>

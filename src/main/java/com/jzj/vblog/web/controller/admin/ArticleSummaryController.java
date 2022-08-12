@@ -6,7 +6,6 @@ import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
-import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.ArticleSummaryService;
@@ -42,6 +41,12 @@ public class ArticleSummaryController extends BaseController {
         return getDataTable(list);
     }
 
+    @ApiOperation("查询归档列表")
+    @GetMapping("/listAll")
+    public R listAll(){
+        return R.ok(articleSummaryService.list());
+    }
+
     @Log(title = "归档管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增归档")
     @PostMapping("/add")
@@ -53,6 +58,7 @@ public class ArticleSummaryController extends BaseController {
         }
         return toAjax(articleSummaryService.insertSummary(articleSummary));
     }
+
 
     /**
      * 根据资源id获取归档详细信息

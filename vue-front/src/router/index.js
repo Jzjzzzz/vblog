@@ -18,6 +18,12 @@ const routes = [
         meta: { title: '分类'}
     },
     {
+        path: '/summary/',
+        name: 'summary',
+        component: () => import('../views/Summary.vue'),
+        meta: { title: '归档'}
+    },
+    {
         path: '/search/:title',
         name: 'search',
         component: () => import('../views/Category.vue'),

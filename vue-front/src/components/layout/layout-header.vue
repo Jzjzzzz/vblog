@@ -20,7 +20,7 @@
         <router-link :to="'/category'">文章</router-link>
       </div>
       <div class="menu-item hasChild">
-        <router-link :to="'/'">资源</router-link>
+        <router-link :to="'/summary'">资源</router-link>
       </div>
       <div class="menu-item">
         <router-link to="/about">关于</router-link>

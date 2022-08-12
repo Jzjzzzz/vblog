@@ -4,7 +4,9 @@ import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,4 +29,11 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
     ArticleSummary selectSummaryById(String id);
 
     int updateSummary(ArticleSummary articleSummary);
+
+    /**
+     * 前台分页获取归档
+     * @param queryMap
+     * @return
+     */
+    HashMap<String, Object> summaryPage(Map<String, Object> queryMap);
 }

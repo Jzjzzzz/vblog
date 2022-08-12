@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.constant.UserConstants;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -90,5 +93,19 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     @Override
     public int updateSummary(ArticleSummary articleSummary) {
         return articleSummaryMapper.updateById(articleSummary);
+    }
+
+    @Override
+    public HashMap<String, Object> summaryPage(Map<String, Object> queryMap) {
+        HashMap<String, Object> map = new HashMap<>();
+        Integer page = (Integer) queryMap.get("currPage");
+        Integer limit = (Integer) queryMap.get("limit");
+        Page<ArticleSummary> summaryPage = articleSummaryMapper.selectPage(new Page<>(page, limit), null);
+        if(summaryPage.getTotal()>0){
+            map.put("items",summaryPage.getRecords());
+            map.put("currPage",page);
+            map.put("hasNextPage",page * limit < summaryPage.getTotal());
+        }
+        return map;
     }
 }

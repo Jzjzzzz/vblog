@@ -4,6 +4,7 @@ import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.service.ArticleInformService;
+import com.jzj.vblog.web.service.ArticleSummaryService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,10 @@ public class ArticleController extends BaseController {
     @Autowired
     private ArticleInformService articleInformService;
 
-    @ApiOperation("获取文章列表")
+    @Autowired
+    private ArticleSummaryService articleSummaryService;
+
+    @ApiOperation("分页获取文章列表")
     @PostMapping("/listPage")
     public R listPage(@RequestBody Map<String,Object> queryMap){
         HashMap<String, Object> map = articleInformService.listPage(queryMap);
@@ -36,5 +40,12 @@ public class ArticleController extends BaseController {
     public R getById(@PathVariable String id){
         ArticleAddVo articleAddVo = articleInformService.getFrontArticleById(id);
         return R.ok(articleAddVo);
+    }
+
+    @ApiOperation("分页获取归档列表")
+    @PostMapping("/summaryPage")
+    public R summaryPage(@RequestBody Map<String,Object> queryMap){
+        HashMap<String, Object> map = articleSummaryService.summaryPage(queryMap);
+        return R.ok("map",map);
     }
 }

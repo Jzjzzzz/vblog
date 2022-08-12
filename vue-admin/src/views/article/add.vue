@@ -46,7 +46,7 @@
                              :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="归档" prop="aggregateId">
+              <el-form-item label="归档">
                 <el-select v-model="form.aggregateId" placeholder="请选择归档" clearable :style="{width: '100%'}">
                   <el-option v-for="summary in summaryList" :key="summary.id" :label="summary.name"
                              :value="summary.id"></el-option>

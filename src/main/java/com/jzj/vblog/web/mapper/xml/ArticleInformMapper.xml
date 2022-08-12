@@ -48,6 +48,9 @@
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
+            <if test="aggregateId != null and aggregateId !=''">
+                AND aggregate_id = #{aggregateId}
+            </if>
         </where>
     </select>
 

@@ -40,6 +40,21 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="归档目录" prop="aggregateId">
+        <el-select
+          v-model="queryParams.aggregateId"
+          placeholder="归档目录"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="summary in summaryList"
+            :key="summary.id"
+            :label="summary.name"
+            :value="summary.id"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="创建时间">
         <el-date-picker
           v-model="dateRange"
@@ -168,7 +183,7 @@
 </template>
 <script>
 import {deleteBthById, listArticleInform} from "@/api/article/article";
-
+import {listAll} from "@/api/article/summary"
 export default {
   name: "Dict",
   dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment','sys_article_tag'],
@@ -196,12 +211,20 @@ export default {
         pageSize: 10,
         articleTitle: undefined,
       },
+      //归档列表
+      summaryList: []
     };
   },
   created() {
     this.getList();
+    this.getSummaryList();
   },
   methods: {
+    getSummaryList(){
+      listAll().then(response=>{
+        this.summaryList = response.data
+      })
+    },
     /** 查询文章列表 */
     getList() {
       this.loading = true;

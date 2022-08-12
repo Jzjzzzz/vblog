@@ -67,8 +67,8 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     public List<ArticleInform> selectList(ArticleInform entity) {
         List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
         List<ArticleInform> articleList = articleInformMapper.selectArticleList(entity);
+        //封装标签
         for (ArticleInform inform : articleList) {
-            //封装标签
             List<String> tags = getTags(tagList, inform.getArticleTag());
             inform.setArticleTagList(tags);
         }
@@ -133,10 +133,8 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     public Map<String,Object> getArticleById(String id) {
         Map<String, Object> map = new HashMap<>();
         if(id==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
-        //文章基础信息
-        ArticleAddVo model = articleInformMapper.selectArticleByIdVo(id);
-        //归档列表
-        List<ArticleSummary> summaryList = articleSummaryMapper.selectList(null);
+        ArticleAddVo model = articleInformMapper.selectArticleByIdVo(id); //文章基础信息
+        List<ArticleSummary> summaryList = articleSummaryMapper.selectList(null); //归档列表
         map.put("model",model);
         map.put("summaryList",summaryList);
         return map;
@@ -168,7 +166,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             //批量删除图片
             CompletableFuture.runAsync(() -> {
                 UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
-                uploadService.deleteBtnImg(imgList, request); //批量删除图片
+                uploadService.deleteBtnImg(imgList, request);
             }, threadPoolTaskExecutor);
             //批量删除文章基础
             articleInformMapper.deleteBatchIds(Arrays.asList(ids));
