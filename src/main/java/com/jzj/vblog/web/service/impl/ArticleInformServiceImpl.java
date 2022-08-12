@@ -83,11 +83,13 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     @Override
     public HashMap<String, Object> listPage(Map<String,Object> queryMap) {
         HashMap<String, Object> map = new HashMap<>();
+        //获取查询条件
         Integer page = (Integer) queryMap.get("currPage");
         Integer limit = (Integer) queryMap.get("limit");
-        String type = (String) queryMap.get("type");
-        String title = (String) queryMap.get("title");
-        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit),type,title); //分页查询
+        String type = queryMap.get("type").toString();
+        String title = queryMap.get("title").toString();
+        String aggregateId = queryMap.get("aggregateId").toString();
+        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit),type,title,aggregateId); //分页查询
         if(articleVoPage.getTotal()>0){
             List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
             List<ArticleVo> list = articleVoPage.getRecords(); //获取列表

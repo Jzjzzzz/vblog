@@ -79,6 +79,9 @@
                 <if test="title!=null and title!=''">
                  AND ai.article_title like concat('%',#{title},'%')
                 </if>
+                <if test="aggregateId!=null and aggregateId!=''">
+                    AND ai.aggregate_id = #{aggregateId}
+                </if>
             </where>
     </select>
     <select id="selectArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleAddVo" parameterType="java.lang.String">

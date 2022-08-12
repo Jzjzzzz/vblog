@@ -31,6 +31,33 @@
                         </div>
                     </div>
                 </div>
+              <div class="about-site about-info">
+                <section-title><span>❤</span>更新计划</section-title>
+                <div class="info-card">
+                  <div class="block">
+                    <el-timeline>
+                      <el-timeline-item timestamp="2022/8/01" placement="top">
+                        <el-card>
+                          <h4>构建后端架构</h4>
+                          <p>漫漫长路 提交于 2022/8/01 10:22</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/05" placement="top">
+                        <el-card>
+                          <h4>添加新增博客</h4>
+                          <p>漫漫长路 提交于 2022/8/05 12:46</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item type="success" timestamp="2018/4/2" placement="top">
+                        <el-card>
+                          <h4>添加归档功能</h4>
+                          <p>漫漫长路 提交于 2022/8/06 20:46</p>
+                        </el-card>
+                      </el-timeline-item>
+                    </el-timeline>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     </div>

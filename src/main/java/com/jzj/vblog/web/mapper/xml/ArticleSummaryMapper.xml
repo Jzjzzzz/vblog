@@ -9,6 +9,7 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time" />
         <result property="status" column="status"/>
+        <result property="topStatus" column="top_status"/>
     </resultMap>
 
     <sql id="ArticleSummaryVo">
@@ -18,7 +19,8 @@
             banner,
             create_time,
             update_time,
-            `status`
+            `status`,
+            top_status
         FROM
             article_summary
     </sql>
@@ -31,6 +33,9 @@
             </if>
             <if test="name != null and name !=''">
                 AND name like concat('%',#{name},'%')
+            </if>
+            <if test="topStatus != null and topStatus !=''">
+                AND top_status like concat('%',#{topStatus},'%')
             </if>
         </where>
     </select>

@@ -22,6 +22,12 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
 
     String checkSummaryUnique(ArticleSummary articleSummary);
 
+    /**
+     * 检查置顶数是否已超过3
+     * @return
+     */
+    boolean checkSummaryTop(String topStatus);
+
     int insertSummary(ArticleSummary articleSummary);
 
     int deleteSummaryByIds(List<String> ids, HttpServletRequest request);

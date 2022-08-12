@@ -25,6 +25,21 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="首页展示" prop="topStatus">
+        <el-select
+          v-model="queryParams.topStatus"
+          placeholder="首页展示"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in dict.type.sys_summary_top"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="创建时间">
         <el-date-picker
           v-model="dateRange"
@@ -95,6 +110,11 @@
           <dict-tag :options="dict.type.sys_summary_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
+      <el-table-column label="首页展示" align="center" prop="topStatus">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.sys_summary_top" :value="scope.row.topStatus"/>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -138,6 +158,12 @@
                        :value="dict.value" ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="首页显示" prop="topStatus">
+          <el-select v-model="form.topStatus" placeholder="请选择是否展示" clearable :style="{width: '100%'}">
+            <el-option v-for="dict in dict.type.sys_summary_top" :key="dict.value" :label="dict.label"
+                       :value="dict.value" ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="归档图" prop="banner">
           <ele-upload-image
             action="http://localhost:8081/api/upload/uploadImg?name=articleSummary"
@@ -163,7 +189,7 @@ import { listArticleSummary,add,del,getInfo,update } from "@/api/article/summary
 import { deleteImg } from "@/api/upload";
 export default {
   name: "Dict",
-  dicts: ['sys_summary_status'],
+  dicts: ['sys_summary_status','sys_summary_top'],
   data() {
     return {
       //文件上传类型
@@ -205,7 +231,13 @@ export default {
           { required: true, message: "归档标题不能为空", trigger: "blur" }
         ],
         status: [
-          { required: true, message: "资源状态不能为空", trigger: "blur" }
+          { required: true, message: "归档状态不能为空", trigger: "blur" }
+        ],
+        topStatus: [
+          { required: true, message: "归档是否展示不能为空", trigger: "blur" }
+        ],
+        banner: [
+          { required: true, message: "归档图不能为空", trigger: "blur" }
         ]
       }
     };

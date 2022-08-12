@@ -47,5 +47,8 @@ public class ArticleSummary extends BaseEntity {
     @ApiModelProperty(value = "状态")
     private String status;
 
+    @ApiModelProperty(value = "是否显示在首页")
+    private String topStatus;
+
 
 }

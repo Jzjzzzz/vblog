@@ -9,7 +9,7 @@
       <!--焦点图-->
       <div class="top-feature">
         <section-title>
-          <div style="display: flex;align-items: flex-end;">聚焦
+          <div style="display: flex;align-items: flex-end;">归档
             <small-ico></small-ico>
           </div>
         </section-title>
@@ -42,7 +42,7 @@ import sectionTitle from '@/components/section-title'
 import Post from '@/components/post'
 import SmallIco from '@/components/small-ico'
 import Quote from '@/components/quote'
-import {fetchFocus} from '@/api'
+import {summaryTop} from  '@/api/summary'
 import {fetchList} from '@/api/article'
 
 export default {
@@ -51,25 +51,27 @@ export default {
     return {
       articleQuery: {
         type: '',
+        aggregateId: '',
         tag: undefined,
+        title: '',
         currPage: 1,
         limit: 1
       },
       features: [
         {
           id: 1,
-          title: 'Jzj',
-          img: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
+          name: 'Jzj',
+          banner: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
         },
         {
           id: 2,
-          title: '使用说明',
-          img: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
+          name: '使用说明',
+          banner: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
         },
         {
           id: 3,
-          title: '文章归档',
-          img: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
+          name: '文章归档',
+          banner: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
         }
       ],
       postList: [],
@@ -90,8 +92,8 @@ export default {
     }
   },
   methods: {
-    fetchFocus() {
-      fetchFocus().then(res => {
+    summaryTop() {
+      summaryTop().then(res => {
         this.features = res.data || []
       }).catch(err => {
         console.log(err)
@@ -116,7 +118,7 @@ export default {
     }
   },
   mounted() {
-    // this.fetchFocus();
+    this.summaryTop();
     this.fetchList();
   }
 }

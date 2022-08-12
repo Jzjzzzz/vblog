@@ -1,6 +1,6 @@
 <template>
     <div class="feature">
-        <router-link :to="`/article/${data.id}`">
+        <router-link :to="`/summarySearch/${data.id}/${data.name}`">
             <div class="feature-title"><span class="foverlay">{{data.name}}</span></div>
             <img :src="data.banner"  style="width: 257px;height: 160px">
         </router-link>
@@ -17,7 +17,7 @@
                     return{
                         title: 'Jzj',
                         img: 'https://cdn.zhebk.cn/usr/themes/Akina//images/feature/feature1.jpg',
-                        href: 'https://zhebk.cn/Web/Akina.html'
+                        href: 'https://Jzjzzzz.icu'
                     }
                 }
             }

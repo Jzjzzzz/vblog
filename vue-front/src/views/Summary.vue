@@ -33,12 +33,12 @@ import SmallIco from '@/components/small-ico'
 import {fetchList} from  '@/api/summary'
 
 export default {
-  name: 'Home',
+  name: 'Summary',
   data() {
     return {
       summaryQuery: {
         currPage: 1,
-        limit: 1
+        limit: 6
       },
       features: [
       ],

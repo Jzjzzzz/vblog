@@ -7,3 +7,10 @@ export function fetchList(data) {
         data: data
     })
 }
+
+export function summaryTop() {
+    return request({
+        url: `/front/article/summaryTop`,
+        method: 'get'
+    })
+}

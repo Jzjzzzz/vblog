@@ -3,17 +3,20 @@
     <banner isHome="true"></banner>
     <div class="site-content animate">
       <!--通知栏-->
-      <div class="notify">
+      <div  class="notify">
         <div class="search-result">
-          <p style="padding-bottom: 15px">文章分类</p>
-          <el-button @click="queryList(dict.value)" style="margin: 5px"
-                     type="primary"
-                     plain
-                     size="mini"
-                     :key="dict.value"
-                     v-for="dict in dict.type.sys_article_type">
-            {{ dict.label }}
-          </el-button>
+          <div v-show="articleQuery.aggregateId==''">
+            <p style="padding-bottom: 15px">文章分类</p>
+            <el-button @click="queryList(dict.value)" style="margin: 5px"
+                       type="primary"
+                       plain
+                       size="mini"
+                       :key="dict.value"
+                       v-for="dict in dict.type.sys_article_type">
+              {{ dict.label }}
+            </el-button>
+          </div>
+          <p v-show="summaryTitle!=''" style="padding-bottom: 15px">{{ summaryTitle }}</p>
         </div>
       </div>
       <!--文章列表-->
@@ -43,13 +46,15 @@ export default {
   dicts: ['sys_article_type'],
   data() {
     return {
+      summaryTitle: '',
       postList: [],
       hasNextPage: false,
       articleQuery: {
         type: '',
         currPage: 1,
         limit: 1,
-        title: ''
+        title: '',
+        aggregateId: ''
       }
     }
   },
@@ -60,7 +65,9 @@ export default {
     SmallIco,
     Quote
   },
-  computed: {},
+  computed: {
+
+  },
   methods: {
     queryList(type) {
       this.articleQuery.currPage = 1
@@ -94,6 +101,12 @@ export default {
   created() {
     if(this.$route.params.title!=null){
       this.articleQuery.title = this.$route.params.title
+    }
+    if(this.$route.params.aggregateId!=null){
+      this.articleQuery.aggregateId = this.$route.params.aggregateId
+    }
+    if(this.$route.params.name!=null){
+      this.summaryTitle = this.$route.params.name
     }
     this.fetchList();
   }

@@ -3,7 +3,9 @@ package com.jzj.vblog.web.controller.admin;
 
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.constant.UserConstants;
+import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
+import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
@@ -52,10 +54,8 @@ public class ArticleSummaryController extends BaseController {
     @PostMapping("/add")
     public R add(@Validated @RequestBody ArticleSummary articleSummary)
     {
-        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary)))
-        {
-            return R.error("新增归档'" + articleSummary.getName() + "'失败，归档已存在");
-        }
+        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))) throw new BusinessException("新增归档'" + articleSummary.getName() + "'失败，归档已存在");
+        if(articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
         return toAjax(articleSummaryService.insertSummary(articleSummary));
     }
 
@@ -76,9 +76,8 @@ public class ArticleSummaryController extends BaseController {
     @PutMapping
     public R edit(@Validated @RequestBody ArticleSummary articleSummary)
     {
-        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))){
-            return R.error("修改归档'" + articleSummary.getName() + "'失败，归档已存在");
-        }
+        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary)))throw new BusinessException("修改归档'" + articleSummary.getName() + "'失败，归档已存在");
+        if(articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
         return toAjax(articleSummaryService.updateSummary(articleSummary));
     }
 

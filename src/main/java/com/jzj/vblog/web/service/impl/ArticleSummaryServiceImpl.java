@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.factory.UploadFactory;
@@ -58,6 +59,14 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
+    }
+
+    @Override
+    public boolean checkSummaryTop(String topStatus) {
+        if("1".equals(topStatus)) {
+            return articleSummaryMapper.selectCount(new QueryWrapper<ArticleSummary>().eq("top_status",1))>=3;
+        }
+        return false;
     }
 
     @Override

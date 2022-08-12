@@ -1,7 +1,9 @@
 package com.jzj.vblog.web.controller.front;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
+import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.ArticleSummaryService;
@@ -47,5 +49,11 @@ public class ArticleController extends BaseController {
     public R summaryPage(@RequestBody Map<String,Object> queryMap){
         HashMap<String, Object> map = articleSummaryService.summaryPage(queryMap);
         return R.ok("map",map);
+    }
+
+    @ApiOperation("获取首页归档列表")
+    @GetMapping("/summaryTop")
+    public R summaryPage(){
+        return R.ok(articleSummaryService.list(new QueryWrapper<ArticleSummary>().eq("top_status","1")));
     }
 }

@@ -30,6 +30,12 @@ const routes = [
         meta: { title: '查找'}
     },
     {
+        path: '/summarySearch/:aggregateId/:name',
+        name: 'summarySearch',
+        component: () => import('../views/Category.vue'),
+        meta: { title: '归档详情'}
+    },
+    {
         path: '/about',
         name: 'about',
         component: () => import('../views/About.vue'),
