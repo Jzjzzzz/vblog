@@ -21,13 +21,13 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="ArticleContent对象", description="文章内容")
+@ApiModel(value = "ArticleContent对象", description = "文章内容")
 public class ArticleContent extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "文章内容id")
-    @TableId(value = "id",type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.INPUT)
     private String id;
 
     @ApiModelProperty(value = "文章内容")

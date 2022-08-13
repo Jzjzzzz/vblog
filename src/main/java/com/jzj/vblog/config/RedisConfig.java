@@ -6,6 +6,13 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.jzj.vblog.utils.redis.FastJson2JsonRedisSerializer;
+import io.lettuce.core.resource.ClientResources;
+import io.lettuce.core.resource.NettyCustomizer;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -17,17 +24,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * redis配置
- * 
+ *
  * @author Jzj
  */
 @Configuration
 @EnableCaching
-public class RedisConfig extends CachingConfigurerSupport
-{
+public class RedisConfig extends CachingConfigurerSupport {
     @Bean
-    @SuppressWarnings(value = { "unchecked", "rawtypes" })
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory)
-    {
+    @SuppressWarnings(value = {"unchecked", "rawtypes"})
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
@@ -51,8 +56,7 @@ public class RedisConfig extends CachingConfigurerSupport
     }
 
     @Bean
-    public DefaultRedisScript<Long> limitScript()
-    {
+    public DefaultRedisScript<Long> limitScript() {
         DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
         redisScript.setScriptText(limitScriptText());
         redisScript.setResultType(Long.class);
@@ -60,10 +64,35 @@ public class RedisConfig extends CachingConfigurerSupport
     }
 
     /**
+     * Netty心跳解决断连问题
+     *
+     * @return
+     */
+    @Bean
+    public ClientResources clientResources() {
+        NettyCustomizer nettyCustomizer = new NettyCustomizer() {
+            @Override
+            public void afterChannelInitialized(Channel channel) {
+                channel.pipeline().addLast(
+                        //此处事件必须小于超时时间
+                        new IdleStateHandler(5, 0, 0));
+                channel.pipeline().addLast(new ChannelDuplexHandler() {
+                    @Override
+                    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
+                        if (evt instanceof IdleStateEvent) {
+                            ctx.disconnect();
+                        }
+                    }
+                });
+            }
+        };
+        return ClientResources.builder().nettyCustomizer(nettyCustomizer).build();
+    }
+
+    /**
      * 限流脚本
      */
-    private String limitScriptText()
-    {
+    private String limitScriptText() {
         return "local key = KEYS[1]\n" +
                 "local count = tonumber(ARGV[1])\n" +
                 "local time = tonumber(ARGV[2])\n" +

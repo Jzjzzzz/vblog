@@ -13,8 +13,19 @@ import com.jzj.vblog.web.pojo.entity.SysWebInformation;
  */
 public interface SysWebInformationService extends IService<SysWebInformation> {
 
+    /**
+     * 根据id查询网站基本信息
+     *
+     * @return
+     */
     SysWebInformation selectWebInformationById();
 
+    /**
+     * 修改网站基本信息
+     *
+     * @param sysWebInformation
+     * @return
+     */
     int updateWebInformation(SysWebInformation sysWebInformation);
 
     /**

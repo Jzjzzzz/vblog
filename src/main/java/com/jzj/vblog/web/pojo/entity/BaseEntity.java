@@ -14,14 +14,18 @@ import java.util.Map;
  * @Message: Entity基类
  */
 
-@ApiModel(value="Entity基类", description="Entity基类")
+@ApiModel(value = "Entity基类", description = "Entity基类")
 public class BaseEntity implements Serializable {
 
-    /** 搜索值 */
+    /**
+     * 搜索值
+     */
     @TableField(exist = false)
     private String searchValue;
 
-    /** 请求参数 */
+    /**
+     * 请求参数
+     */
     @TableField(exist = false)
     private Map<String, Object> params;
 
@@ -33,17 +37,14 @@ public class BaseEntity implements Serializable {
         this.searchValue = searchValue;
     }
 
-    public Map<String, Object> getParams()
-    {
-        if (params == null)
-        {
+    public Map<String, Object> getParams() {
+        if (params == null) {
             params = new HashMap<>();
         }
         return params;
     }
 
-    public void setParams(Map<String, Object> params)
-    {
+    public void setParams(Map<String, Object> params) {
         this.params = params;
     }
 }

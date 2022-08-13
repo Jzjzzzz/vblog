@@ -22,20 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/admin")
 public class SysLoginController {
 
-
     @Autowired
     AdminUserService adminUserService;
 
     @ApiOperation("管理员登录")
     @PostMapping("/login")
-    public R login(@RequestBody LoginVo vo){
+    public R login(@RequestBody LoginVo vo) {
         String token = adminUserService.login(vo);
-        return R.ok("token",token);
+        return R.ok("token", token);
     }
 
     @ApiOperation("退出登录")
     @PostMapping("/logout")
-    public R logout(){
+    public R logout() {
         return R.ok();
     }
 

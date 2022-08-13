@@ -36,8 +36,7 @@ public class SysDictDataController extends BaseController {
     private SysDictTypeService dictTypeService;
 
     @GetMapping("/list")
-    public TableDataInfo list(SysDictData dictData)
-    {
+    public TableDataInfo list(SysDictData dictData) {
         startPage();
         List<SysDictData> list = dictDataService.selectDictDataList(dictData);
         return getDataTable(list);
@@ -45,11 +44,9 @@ public class SysDictDataController extends BaseController {
 
     @ApiOperation("根据字典类型查询字典数据信息")
     @GetMapping(value = "/type/{dictType}")
-    public R dictType(@PathVariable String dictType)
-    {
+    public R dictType(@PathVariable String dictType) {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
-        if (StringUtils.isNull(data))
-        {
+        if (StringUtils.isNull(data)) {
             data = new ArrayList<SysDictData>();
         }
         return R.ok(data);
@@ -57,34 +54,30 @@ public class SysDictDataController extends BaseController {
 
     @ApiOperation("查询字典数据详细")
     @GetMapping(value = "/{dictCode}")
-    public R getInfo(@PathVariable Long dictCode)
-    {
+    public R getInfo(@PathVariable Long dictCode) {
         return R.ok(dictDataService.selectDictDataById(dictCode));
     }
 
-    @Log(title = "字典类型",businessType = BusinessType.INSERT)
+    @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @ApiOperation("新增字典类型")
     @PostMapping
-    public R add(@Validated @RequestBody SysDictData dict)
-    {
+    public R add(@Validated @RequestBody SysDictData dict) {
         dict.setCreateBy(getUsername());
         return toAjax(dictDataService.insertDictData(dict));
     }
 
-    @Log(title = "字典类型",businessType = BusinessType.UPDATE)
+    @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @ApiOperation("修改保存字典类型")
     @PutMapping
-    public R edit(@Validated @RequestBody SysDictData dict)
-    {
+    public R edit(@Validated @RequestBody SysDictData dict) {
         dict.setUpdateBy(getUsername());
         return toAjax(dictDataService.updateDictData(dict));
     }
 
-    @Log(title = "字典类型",businessType = BusinessType.DELETE)
+    @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @ApiOperation("删除字典类型")
     @DeleteMapping("/{dictCodes}")
-    public R remove(@PathVariable Long[] dictCodes)
-    {
+    public R remove(@PathVariable Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);
         return success();
     }

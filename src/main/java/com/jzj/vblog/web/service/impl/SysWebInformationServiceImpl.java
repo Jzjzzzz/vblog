@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 public class SysWebInformationServiceImpl extends ServiceImpl<SysWebInformationMapper, SysWebInformation> implements SysWebInformationService {
 
     @Autowired
-    SysWebInformationMapper sysWebInformationMappereb;
+    private SysWebInformationMapper sysWebInformationMappereb;
 
     @Autowired
     private RedisCache redisCache;
@@ -32,7 +32,7 @@ public class SysWebInformationServiceImpl extends ServiceImpl<SysWebInformationM
      * 项目启动时，初始化参数到缓存
      */
     @PostConstruct
-    public void init(){
+    public void init() {
         loadingWebInformationCache();
     }
 
@@ -64,15 +64,16 @@ public class SysWebInformationServiceImpl extends ServiceImpl<SysWebInformationM
 
     /**
      * 获取网站基本信息
+     *
      * @return
      */
     @Override
     public SysWebInformation selectWebInformationById() {
         SysWebInformation information;
         information = redisCache.getCacheObject(CacheConstants.SYS_WEB_INFORMATION);
-        if(information==null){
+        if (information == null) {
             information = sysWebInformationMappereb.selectById(1);
-            if(information==null) {
+            if (information == null) {
                 return new SysWebInformation();
             }
         }
@@ -82,16 +83,17 @@ public class SysWebInformationServiceImpl extends ServiceImpl<SysWebInformationM
     @Override
     public int updateWebInformation(SysWebInformation sysWebInformation) {
         int result = sysWebInformationMappereb.updateById(sysWebInformation);
-        resetInformationCache(); //刷新缓存
+        //刷新缓存
+        resetInformationCache();
         return result;
     }
 
     /**
      * 设置cache keY
+     *
      * @return 缓存键key
      */
-    private String getCacheKey()
-    {
+    private String getCacheKey() {
         return CacheConstants.SYS_WEB_INFORMATION;
     }
 }

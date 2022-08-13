@@ -117,7 +117,7 @@
           <dict-tag :options="dict.type.sys_article_type" :value="scope.row.articleType"/>
         </template>
       </el-table-column>
-      <el-table-column label="标签" align="center" prop="articleTagList">
+      <el-table-column label="标签" align="center" prop="articleTagList" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <el-tag style="margin: 5px" v-for="item in scope.row.articleTagList" :key="item.id" type="success">{{
               item
@@ -184,6 +184,7 @@
 <script>
 import {deleteBthById, listArticleInform} from "@/api/article/article";
 import {listAll} from "@/api/article/summary"
+
 export default {
   name: "Dict",
   dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment','sys_article_tag'],

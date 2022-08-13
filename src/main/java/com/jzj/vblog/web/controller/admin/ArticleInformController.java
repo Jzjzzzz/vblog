@@ -34,39 +34,38 @@ public class ArticleInformController extends BaseController {
 
     @ApiOperation("分页列表")
     @GetMapping("/list")
-    public TableDataInfo list(ArticleInform entity)
-    {
+    public TableDataInfo list(ArticleInform entity) {
         startPage();
         List<ArticleInform> list = articleInformService.selectList(entity);
         return getDataTable(list);
     }
 
-    @Log(title = "文章管理",businessType = BusinessType.INSERT)
+    @Log(title = "文章管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增文章")
     @PostMapping("/add")
-    public R add(@RequestBody ArticleAddVo vo){
+    public R add(@RequestBody ArticleAddVo vo) {
         return toAjax(articleInformService.articleAdd(vo));
     }
 
     @ApiOperation("根据Id获取文章")
     @GetMapping("/getById/{id}")
-    public R getById(@PathVariable String id){
-        Map<String,Object> map = articleInformService.getArticleById(id);
+    public R getById(@PathVariable String id) {
+        Map<String, Object> map = articleInformService.getArticleById(id);
         return R.ok(map);
     }
 
-    @Log(title = "文章管理",businessType = BusinessType.UPDATE)
+    @Log(title = "文章管理", businessType = BusinessType.UPDATE)
     @ApiOperation("根据Id修改文章")
     @PutMapping("/updateById")
-    public R updateById(@RequestBody ArticleAddVo vo){
+    public R updateById(@RequestBody ArticleAddVo vo) {
         return toAjax(articleInformService.updateArticleById(vo));
     }
 
-    @Log(title = "文章管理",businessType = BusinessType.DELETE)
+    @Log(title = "文章管理", businessType = BusinessType.DELETE)
     @ApiOperation("根据Id批量删除文章")
     @DeleteMapping("/deleteById/{ids}")
-    public R deleteBthById(@PathVariable String [] ids,HttpServletRequest request){
-        articleInformService.deleteArticleById(ids,request);
+    public R deleteBthById(@PathVariable String[] ids, HttpServletRequest request) {
+        articleInformService.deleteArticleById(ids, request);
         return R.ok();
     }
 }

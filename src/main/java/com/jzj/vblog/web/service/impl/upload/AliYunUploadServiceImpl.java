@@ -96,13 +96,15 @@ public class AliYunUploadServiceImpl implements UploadService {
     }
 
     @Override
-    public void deleteBtnImg(List<String> list,HttpServletRequest request) {
+    public void deleteBtnImg(List<String> list, HttpServletRequest request) {
         OSS ossClient = null;
         try {
-            List<String> urls = new ArrayList<>(); //批量删除URL集合
-            String host = "https://" + AliYunOssProperties.BUCKET_NAME + "." + AliYunOssProperties.ENDPOINT + "/"; //文件名前缀
-            //封装文件绝对路径
-            list.forEach(s->{
+            //批量删除URL集合
+            List<String> urls = new ArrayList<>();
+            //文件名前缀
+            String host = "https://" + AliYunOssProperties.BUCKET_NAME + "." + AliYunOssProperties.ENDPOINT + "/";
+            /*封装文件绝对路径*/
+            list.forEach(s -> {
                 String url = s.substring(host.length());
                 urls.add(url);
             });
@@ -112,7 +114,7 @@ public class AliYunUploadServiceImpl implements UploadService {
             log.error("阿里云oss存储批量删除错误：" + e.getMessage());
             throw new BusinessException(ResponseEnum.UPLOAD_DELETE_ERROR);
         } finally {
-            // 关闭OSSClient。
+            // 关闭OSSClient
             assert ossClient != null;
             ossClient.shutdown();
         }

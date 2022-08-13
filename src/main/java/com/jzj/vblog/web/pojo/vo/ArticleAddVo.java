@@ -1,9 +1,8 @@
 package com.jzj.vblog.web.pojo.vo;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * @Author Jzj
@@ -12,77 +11,48 @@ import java.util.Date;
  * @Message: 文章新增修改Vo
  */
 @Data
-@ApiModel(description="文章新增修改vo")
+@ApiModel(description = "文章新增修改vo")
 public class ArticleAddVo {
 
-    /**
-     * 文章id
-     */
+    @ApiModelProperty(value = "文章id")
     private String id;
 
-
-    /**
-     * 文章标题
-     */
+    @ApiModelProperty(value = "文章标题")
     private String articleTitle;
 
-    /**
-     * 文章状态
-     */
+    @ApiModelProperty(value = "文章状态")
     private String status;
 
-    /**
-     * 文章分类
-     */
+    @ApiModelProperty(value = "文章分类")
     private String articleType;
 
-    /**
-     * 文章标签
-     */
+    @ApiModelProperty(value = "文章标签")
     private String articleTag;
 
-    /**
-     * 是否置顶
-     */
+    @ApiModelProperty(value = "是否置顶")
     private String topStatus;
 
-    /**
-     * 是否原创
-     */
+    @ApiModelProperty(value = "是否原创")
     private String originStatus;
 
-    /**
-     * 是否开启评论
-     */
+    @ApiModelProperty(value = "是否开启评论")
     private String commentStatus;
 
-    /**
-     * 封面
-     */
+    @ApiModelProperty(value = "封面")
     private String logImg;
 
-    /**
-     * 简介
-     */
+    @ApiModelProperty(value = "简介")
     private String introduce;
 
-    /**
-     * 内容
-     */
+    @ApiModelProperty(value = "内容")
     private String content;
 
-    /**
-     * 修改时间
-     */
+    @ApiModelProperty(value = "修改时间")
     private String updateTime;
 
-    /**
-     * 访问量
-     */
+    @ApiModelProperty(value = "访问量")
     private String clickRate;
 
-    /**
-     * 归档id
-     */
+    @ApiModelProperty(value = "归档id")
     private String aggregateId;
 }

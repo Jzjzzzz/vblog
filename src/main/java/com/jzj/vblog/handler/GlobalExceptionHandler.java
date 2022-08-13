@@ -20,24 +20,26 @@ public class GlobalExceptionHandler {
 
     /**
      * 全局异常处理
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public R error(Exception e){
+    public R error(Exception e) {
         e.printStackTrace();
         return R.error().message("执行了全局异常处理");
     }
 
     /**
      * 特定异常处理
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(ArithmeticException.class)
     @ResponseBody
-    public R error(ArithmeticException e){
+    public R error(ArithmeticException e) {
         e.printStackTrace();
         return R.error().message("执行了ArithmeticException异常处理");
     }
@@ -45,12 +47,13 @@ public class GlobalExceptionHandler {
 
     /**
      * 自定义异常处理
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    public R error(BusinessException e){
+    public R error(BusinessException e) {
         log.error(ExceptionUtil.getMessage(e));
         e.printStackTrace();
         return R.error().code(e.getCode()).message(e.getMessage());

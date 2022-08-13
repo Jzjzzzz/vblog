@@ -32,8 +32,7 @@ public class SysNoticeController extends BaseController {
      * 获取通知公告列表
      */
     @GetMapping("/list")
-    public TableDataInfo list(SysNotice notice)
-    {
+    public TableDataInfo list(SysNotice notice) {
         startPage();
         List<SysNotice> list = noticeService.selectNoticeList(notice);
         return getDataTable(list);
@@ -43,8 +42,7 @@ public class SysNoticeController extends BaseController {
      * 根据通知公告编号获取详细信息
      */
     @GetMapping(value = "/{noticeId}")
-    public R getInfo(@PathVariable Long noticeId)
-    {
+    public R getInfo(@PathVariable Long noticeId) {
         return R.ok(noticeService.selectNoticeById(noticeId));
     }
 
@@ -53,8 +51,7 @@ public class SysNoticeController extends BaseController {
      */
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
-    public R add(@Validated @RequestBody SysNotice notice)
-    {
+    public R add(@Validated @RequestBody SysNotice notice) {
         notice.setCreateBy(getUsername());
         return toAjax(noticeService.insertNotice(notice));
     }
@@ -64,8 +61,7 @@ public class SysNoticeController extends BaseController {
      */
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
-    public R edit(@Validated @RequestBody SysNotice notice)
-    {
+    public R edit(@Validated @RequestBody SysNotice notice) {
         notice.setUpdateBy(getUsername());
         return toAjax(noticeService.updateNotice(notice));
     }
@@ -75,8 +71,7 @@ public class SysNoticeController extends BaseController {
      */
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
-    public R remove(@PathVariable Long[] noticeIds)
-    {
+    public R remove(@PathVariable Long[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));
     }
 }

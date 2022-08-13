@@ -27,15 +27,20 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
 
     @Override
     public String login(LoginVo vo) {
-        String username = vo.getUsername(); //账号
+        //账号
+        String username = vo.getUsername();
         Assert.notEmpty(username, ResponseEnum.LOGIN_USER_NULL_ERROR);
-        String password =vo.getPassword(); //密码
+        //密码
+        String password = vo.getPassword();
         Assert.notEmpty(password, ResponseEnum.LOGIN_PASSWORD_NULL_ERROR);
 
         AdminUser user = baseMapper.login(username, MD5Utils.encrypt(password));
-        if(user==null) throw new BusinessException(ResponseEnum.LOGIN_USER_ERROR); //账号密码错误
+        //账号密码错误
+        if (user == null) {
+            throw new BusinessException(ResponseEnum.LOGIN_USER_ERROR);
+        }
         UserInfoVo userinfo = new UserInfoVo();
-        BeanUtils.copyProperties(user,userinfo);
+        BeanUtils.copyProperties(user, userinfo);
         userinfo.setName(user.getUsername());
 
         //封装token

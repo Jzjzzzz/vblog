@@ -29,8 +29,7 @@ public class SysOperLogController extends BaseController {
     private SysOperLogService operLogService;
 
     @GetMapping("/list")
-    public TableDataInfo list(SysOperLog operLog)
-    {
+    public TableDataInfo list(SysOperLog operLog) {
         startPage();
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
         return getDataTable(list);
@@ -38,15 +37,13 @@ public class SysOperLogController extends BaseController {
 
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{operIds}")
-    public R remove(@PathVariable Long[] operIds)
-    {
+    public R remove(@PathVariable Long[] operIds) {
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
 
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
-    public R clean()
-    {
+    public R clean() {
         operLogService.cleanOperLog();
         return R.ok();
     }

@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,7 +22,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="AdminUser对象", description="管理员用户表")
+@ApiModel(value = "AdminUser对象", description = "管理员用户表")
 public class AdminUser extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

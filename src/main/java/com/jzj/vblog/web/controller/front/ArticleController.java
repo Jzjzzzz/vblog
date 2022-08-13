@@ -32,28 +32,28 @@ public class ArticleController extends BaseController {
 
     @ApiOperation("分页获取文章列表")
     @PostMapping("/listPage")
-    public R listPage(@RequestBody Map<String,Object> queryMap){
+    public R listPage(@RequestBody Map<String, Object> queryMap) {
         HashMap<String, Object> map = articleInformService.listPage(queryMap);
-        return R.ok("map",map);
+        return R.ok("map", map);
     }
 
     @ApiOperation("根据Id获取文章")
     @GetMapping("/getById/{id}")
-    public R getById(@PathVariable String id){
+    public R getById(@PathVariable String id) {
         ArticleAddVo articleAddVo = articleInformService.getFrontArticleById(id);
         return R.ok(articleAddVo);
     }
 
     @ApiOperation("分页获取归档列表")
     @PostMapping("/summaryPage")
-    public R summaryPage(@RequestBody Map<String,Object> queryMap){
+    public R summaryPage(@RequestBody Map<String, Object> queryMap) {
         HashMap<String, Object> map = articleSummaryService.summaryPage(queryMap);
-        return R.ok("map",map);
+        return R.ok("map", map);
     }
 
     @ApiOperation("获取首页归档列表")
     @GetMapping("/summaryTop")
-    public R summaryPage(){
-        return R.ok(articleSummaryService.list(new QueryWrapper<ArticleSummary>().eq("top_status","1")));
+    public R summaryPage() {
+        return R.ok(articleSummaryService.list(new QueryWrapper<ArticleSummary>().eq("top_status", "1")));
     }
 }

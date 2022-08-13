@@ -34,6 +34,8 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper, ArticleSummary> implements ArticleSummaryService {
 
+    private static final String TOP_STATUS = "1";
+
     @Autowired
     private ArticleSummaryMapper articleSummaryMapper;
 
@@ -54,8 +56,7 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     public String checkSummaryUnique(ArticleSummary articleSummary) {
         String summaryId = StringUtils.isNull(articleSummary.getId()) ? "-1L" : articleSummary.getId();
         ArticleSummary model = articleSummaryMapper.checkSummaryUnique(articleSummary.getName());
-        if (StringUtils.isNotNull(model) && !model.getId().equals(summaryId) )
-        {
+        if (StringUtils.isNotNull(model) && !model.getId().equals(summaryId)) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -63,8 +64,8 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
 
     @Override
     public boolean checkSummaryTop(String topStatus) {
-        if("1".equals(topStatus)) {
-            return articleSummaryMapper.selectCount(new QueryWrapper<ArticleSummary>().eq("top_status",1))>=3;
+        if (TOP_STATUS.equals(topStatus)) {
+            return articleSummaryMapper.selectCount(new QueryWrapper<ArticleSummary>().eq("top_status", 1)) >= 3;
         }
         return false;
     }
@@ -106,14 +107,14 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
 
     @Override
     public HashMap<String, Object> summaryPage(Map<String, Object> queryMap) {
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>(3);
         Integer page = (Integer) queryMap.get("currPage");
         Integer limit = (Integer) queryMap.get("limit");
         Page<ArticleSummary> summaryPage = articleSummaryMapper.selectPage(new Page<>(page, limit), null);
-        if(summaryPage.getTotal()>0){
-            map.put("items",summaryPage.getRecords());
-            map.put("currPage",page);
-            map.put("hasNextPage",page * limit < summaryPage.getTotal());
+        if (summaryPage.getTotal() > 0) {
+            map.put("items", summaryPage.getRecords());
+            map.put("currPage", page);
+            map.put("hasNextPage", (long) page * limit < summaryPage.getTotal());
         }
         return map;
     }

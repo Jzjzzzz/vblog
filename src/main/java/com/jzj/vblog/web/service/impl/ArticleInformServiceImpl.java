@@ -58,16 +58,19 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     private SysConfigService sysConfigService;
 
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
+
     /**
      * 后台分页文章列表
+     *
      * @param entity
      * @return
      */
     @Override
     public List<ArticleInform> selectList(ArticleInform entity) {
-        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
+        //获取标签列表
+        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
         List<ArticleInform> articleList = articleInformMapper.selectArticleList(entity);
-        //封装标签
+        /* 封装标签 */
         for (ArticleInform inform : articleList) {
             List<String> tags = getTags(tagList, inform.getArticleTag());
             inform.setArticleTagList(tags);
@@ -78,47 +81,54 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     /**
      * 前台分页显示文章
+     *
      * @return
      */
     @Override
-    public HashMap<String, Object> listPage(Map<String,Object> queryMap) {
-        HashMap<String, Object> map = new HashMap<>();
+    public HashMap<String, Object> listPage(Map<String, Object> queryMap) {
+        HashMap<String, Object> map = new HashMap<>(3);
         //获取查询条件
         Integer page = (Integer) queryMap.get("currPage");
         Integer limit = (Integer) queryMap.get("limit");
         String type = queryMap.get("type").toString();
         String title = queryMap.get("title").toString();
         String aggregateId = queryMap.get("aggregateId").toString();
-        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit),type,title,aggregateId); //分页查询
-        if(articleVoPage.getTotal()>0){
-            List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
-            List<ArticleVo> list = articleVoPage.getRecords(); //获取列表
-            list.forEach(s->{
-                s.setCommentsCount(0); //封装评论数
+        //分页查询
+        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit), type, title, aggregateId);
+        if (articleVoPage.getTotal() > 0) {
+            //获取标签列表
+            List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
+            //获取列表
+            List<ArticleVo> list = articleVoPage.getRecords();
+            list.forEach(s -> {
+                //封装评论数
+                s.setCommentsCount(0);
                 String[] imgArray = s.getLogImg().split(",");
-                s.setBanner(imgArray); //封装轮播图
+                //封装轮播图
+                s.setBanner(imgArray);
                 //封装标签
                 List<String> tags = getTags(tagList, s.getTagIds());
                 s.setTagNameArray(tags.toArray(new String[tags.size()]));
             });
-            map.put("items",list);
-            map.put("currPage",page);
-            map.put("hasNextPage",page * limit < articleVoPage.getTotal());
+            map.put("items", list);
+            map.put("currPage", page);
+            map.put("hasNextPage", page * limit < articleVoPage.getTotal());
         }
         return map;
     }
 
     /**
      * 新增文章
+     *
      * @param vo
      * @return
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int articleAdd(ArticleAddVo vo) {
         //文章基础信息
         ArticleInform inform = new ArticleInform();
-        BeanUtils.copyProperties(vo,inform);
+        BeanUtils.copyProperties(vo, inform);
         //初始化值
         inform.setClickRate(0L);
         inform.setCreateBy("admin");
@@ -132,23 +142,29 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     }
 
     @Override
-    public Map<String,Object> getArticleById(String id) {
-        Map<String, Object> map = new HashMap<>();
-        if(id==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
-        ArticleAddVo model = articleInformMapper.selectArticleByIdVo(id); //文章基础信息
-        List<ArticleSummary> summaryList = articleSummaryMapper.selectList(null); //归档列表
-        map.put("model",model);
-        map.put("summaryList",summaryList);
+    public Map<String, Object> getArticleById(String id) {
+        Map<String, Object> map = new HashMap<>(2);
+        if (id == null) {
+            throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        }
+        //文章基础信息
+        ArticleAddVo model = articleInformMapper.selectArticleByIdVo(id);
+        //归档列表
+        List<ArticleSummary> summaryList = articleSummaryMapper.selectList(null);
+        map.put("model", model);
+        map.put("summaryList", summaryList);
         return map;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateArticleById(ArticleAddVo vo) {
-        if(vo == null || vo.getId()==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        if (vo == null || vo.getId() == null) {
+            throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        }
         //文章基本信息
         ArticleInform inform = new ArticleInform();
-        BeanUtils.copyProperties(vo,inform);
+        BeanUtils.copyProperties(vo, inform);
         articleInformMapper.updateById(inform);
         //文章内容
         ArticleContent content = new ArticleContent();
@@ -157,9 +173,9 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         return articleContentMapper.updateById(content);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteArticleById(String [] ids,HttpServletRequest request) {
+    public void deleteArticleById(String[] ids, HttpServletRequest request) {
         try {
             List<String> imgList = new ArrayList<>();
             //根据ids批量查询图片地址和内容id
@@ -182,17 +198,20 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Override
     public ArticleAddVo getFrontArticleById(String id) {
-        if(id==null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        if (id == null) {
+            throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        }
         ArticleAddVo model = articleInformMapper.selectFrontArticleByIdVo(id);
-        //封装标签
-        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG); //获取标签列表
+        //获取标签列表
+        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
         List<String> tags = getTags(tagList, model.getArticleTag());
-        model.setArticleTag(String.join(",",tags));
+        model.setArticleTag(String.join(",", tags));
         return model;
     }
 
     /**
-     *  根据标签编号获取中文名称
+     * 根据标签编号获取中文名称
+     *
      * @param tagList
      * @return
      */
@@ -202,7 +221,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         //封装标签
         for (String tag : tagArray) {
             for (SysDictData sysDictData : tagList) {
-                if(tag.equals(sysDictData.getDictValue())){
+                if (tag.equals(sysDictData.getDictValue())) {
                     tags.add(sysDictData.getDictLabel());
                 }
             }

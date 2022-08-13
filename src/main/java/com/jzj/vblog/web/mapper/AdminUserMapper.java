@@ -14,5 +14,12 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface AdminUserMapper extends BaseMapper<AdminUser> {
 
-    AdminUser login(@Param("username") String username,@Param("password") String password);
+    /**
+     * 登录
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return
+     */
+    AdminUser login(@Param("username") String username, @Param("password") String password);
 }

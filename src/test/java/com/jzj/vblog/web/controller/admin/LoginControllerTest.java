@@ -26,6 +26,5 @@ public class LoginControllerTest {
         loginVo.setPassword("111111");
         adminUserService.login(loginVo);
         AdminUser user = new AdminUser();
-        
     }
 }

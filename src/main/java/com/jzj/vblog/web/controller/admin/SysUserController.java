@@ -29,9 +29,9 @@ public class SysUserController {
 
     @GetMapping("/info")
     @ApiOperation("根据token获取用户信息")
-    public R Info(String token){
+    public R info(String token) {
         UserInfoVo user = adminUserService.info(token);
-        return R.ok("data",user);
+        return R.ok("data", user);
     }
 
 }

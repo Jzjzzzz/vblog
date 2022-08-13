@@ -28,24 +28,21 @@ public class SysWebInformationController extends BaseController {
 
     @ApiOperation("获取网站基础信息")
     @GetMapping(value = "/getInfo")
-    public R getInfo()
-    {
+    public R getInfo() {
         return R.ok(sysWebInformationService.selectWebInformationById());
     }
 
     @Log(title = "网站信息", businessType = BusinessType.UPDATE)
     @ApiOperation("修改网站信息")
     @PutMapping
-    public R edit(@Validated @RequestBody SysWebInformation sysWebInformation)
-    {
+    public R edit(@Validated @RequestBody SysWebInformation sysWebInformation) {
         return toAjax(sysWebInformationService.updateWebInformation(sysWebInformation));
     }
 
-    @Log(title = "网站信息",businessType = BusinessType.CLEAN)
+    @Log(title = "网站信息", businessType = BusinessType.CLEAN)
     @ApiOperation("刷新参数缓存")
     @DeleteMapping("/refreshCache")
-    public R refreshCache()
-    {
+    public R refreshCache() {
         sysWebInformationService.resetInformationCache();
         return R.ok();
     }

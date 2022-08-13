@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="WebsiteResource对象", description="资源站点")
+@ApiModel(value = "WebsiteResource对象", description = "资源站点")
 public class WebsiteResource extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

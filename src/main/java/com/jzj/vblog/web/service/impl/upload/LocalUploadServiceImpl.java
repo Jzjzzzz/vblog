@@ -26,6 +26,7 @@ public class LocalUploadServiceImpl implements UploadService {
 
     /**
      * 获取当前实现类编码
+     *
      * @return
      */
     @Override
@@ -35,18 +36,21 @@ public class LocalUploadServiceImpl implements UploadService {
 
     /**
      * 文件上传本地
-     * @param photo 文件
-     * @param name 文件模块名
+     *
+     * @param photo   文件
+     * @param name    文件模块名
      * @param request
      * @return
      */
     @Override
     public String uploadImg(MultipartFile photo, String name, HttpServletRequest request) {
         try {
-            File folder = new File(ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+name+'/'+ LocalDate.now().getYear()+'/');
+            File folder = new File(ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static" + '/' + name + '/' + LocalDate.now().getYear() + '/');
             if (!folder.isDirectory()) {
                 boolean mkdirsResult = folder.mkdirs();
-                if(!mkdirsResult) throw new BusinessException("文件夹创建失败！");
+                if (!mkdirsResult) {
+                    throw new BusinessException("文件夹创建失败！");
+                }
             }
             // 对上传的文件重命名，避免文件重名
             String oldName = photo.getOriginalFilename();
@@ -54,7 +58,7 @@ public class LocalUploadServiceImpl implements UploadService {
             // 文件保存
             photo.transferTo(new File(folder, newName));
             // 返回上传文件的访问路径
-            return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +"/"+name+"/"+LocalDate.now().getYear()+"/"+ newName;
+            return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + name + "/" + LocalDate.now().getYear() + "/" + newName;
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UPLOAD_ERROR);
         }
@@ -62,6 +66,7 @@ public class LocalUploadServiceImpl implements UploadService {
 
     /**
      * 本地文件删除
+     *
      * @param url
      * @param request
      * @return
@@ -70,14 +75,14 @@ public class LocalUploadServiceImpl implements UploadService {
     public boolean deleteImg(String url, HttpServletRequest request) {
         try {
             //获取需要截取部分
-            String s = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +"/";
+            String s = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/";
             String substring = url.substring(s.length());
             //文件位置
-            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+substring;
+            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static" + '/' + substring;
             File file = new File(path);
-            if(file.exists()){
+            if (file.exists()) {
                 return file.delete();
-            }else {
+            } else {
                 throw new BusinessException(ResponseEnum.UPLOAD_DELETE_NOT);
             }
         } catch (Exception e) {
@@ -86,15 +91,15 @@ public class LocalUploadServiceImpl implements UploadService {
     }
 
     @Override
-    public void deleteBtnImg(List<String> list,HttpServletRequest request) {
+    public void deleteBtnImg(List<String> list, HttpServletRequest request) {
         try {
             //获取需要截取部分
-            String sub = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +"/";
-            list.forEach(s->{
+            String sub = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/";
+            list.forEach(s -> {
                 String substring = s.substring(sub.length());
-                String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static"+'/'+substring;
+                String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static" + '/' + substring;
                 File file = new File(path);
-                if(file.exists()){
+                if (file.exists()) {
                     file.delete();
                 }
             });

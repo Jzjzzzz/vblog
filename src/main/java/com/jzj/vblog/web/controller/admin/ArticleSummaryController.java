@@ -36,8 +36,7 @@ public class ArticleSummaryController extends BaseController {
 
     @ApiOperation("分页列表")
     @GetMapping("/list")
-    public TableDataInfo list(ArticleSummary articleSummary)
-    {
+    public TableDataInfo list(ArticleSummary articleSummary) {
         startPage();
         List<ArticleSummary> list = articleSummaryService.selectSummaryList(articleSummary);
         return getDataTable(list);
@@ -45,17 +44,20 @@ public class ArticleSummaryController extends BaseController {
 
     @ApiOperation("查询归档列表")
     @GetMapping("/listAll")
-    public R listAll(){
+    public R listAll() {
         return R.ok(articleSummaryService.list());
     }
 
     @Log(title = "归档管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增归档")
     @PostMapping("/add")
-    public R add(@Validated @RequestBody ArticleSummary articleSummary)
-    {
-        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))) throw new BusinessException("新增归档'" + articleSummary.getName() + "'失败，归档已存在");
-        if(articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
+    public R add(@Validated @RequestBody ArticleSummary articleSummary) {
+        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))) {
+            throw new BusinessException("新增归档'" + articleSummary.getName() + "'失败，归档已存在");
+        }
+        if (articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) {
+            throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
+        }
         return toAjax(articleSummaryService.insertSummary(articleSummary));
     }
 
@@ -64,8 +66,7 @@ public class ArticleSummaryController extends BaseController {
      * 根据资源id获取归档详细信息
      */
     @GetMapping(value = "/{id}")
-    public R getInfo(@PathVariable String id)
-    {
+    public R getInfo(@PathVariable String id) {
         return R.ok(articleSummaryService.selectSummaryById(id));
     }
 
@@ -74,10 +75,13 @@ public class ArticleSummaryController extends BaseController {
      */
     @Log(title = "归档管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public R edit(@Validated @RequestBody ArticleSummary articleSummary)
-    {
-        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary)))throw new BusinessException("修改归档'" + articleSummary.getName() + "'失败，归档已存在");
-        if(articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
+    public R edit(@Validated @RequestBody ArticleSummary articleSummary) {
+        if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))) {
+            throw new BusinessException("修改归档'" + articleSummary.getName() + "'失败，归档已存在");
+        }
+        if (articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) {
+            throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
+        }
         return toAjax(articleSummaryService.updateSummary(articleSummary));
     }
 
@@ -86,9 +90,8 @@ public class ArticleSummaryController extends BaseController {
      */
     @Log(title = "归档管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public R remove(@PathVariable List<String> ids, HttpServletRequest request)
-    {
-        return toAjax(articleSummaryService.deleteSummaryByIds(ids,request));
+    public R remove(@PathVariable List<String> ids, HttpServletRequest request) {
+        return toAjax(articleSummaryService.deleteSummaryByIds(ids, request));
     }
 
 }

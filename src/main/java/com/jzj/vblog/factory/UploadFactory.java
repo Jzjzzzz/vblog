@@ -12,8 +12,16 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 文件上传工厂类
+ *
+ * @author Jzj
+ */
 @Component
 public class UploadFactory implements ApplicationContextAware {
+
+
+    private static final String OPEN = "true";
     private static Map<UploadCode, UploadService> uploadServiceMap;
 
 
@@ -21,15 +29,18 @@ public class UploadFactory implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Map<String, UploadService> map = applicationContext.getBeansOfType(UploadService.class);
         uploadServiceMap = new HashMap<>();
-        map.forEach((k,v)-> uploadServiceMap.put(v.getCode(),v));
+        map.forEach((k, v) -> uploadServiceMap.put(v.getCode(), v));
     }
 
-    public static <T extends UploadService> T getUploadService(SysConfigService sysConfigService){
-        String enable = sysConfigService.selectConfigByKey(CacheConstants.A_LI_YUN_ENABLE_CODE); //获取阿里云oss是否开启
-        if(enable.equals("true")){
-            return (T)uploadServiceMap.get(UploadCode.A_LI_YUN); //阿里云存储
-        }else {
-            return (T)uploadServiceMap.get(UploadCode.LOCAL);  //本地存储
+    public static <T extends UploadService> T getUploadService(SysConfigService sysConfigService) {
+        //获取阿里云oss是否开启
+        String enable = sysConfigService.selectConfigByKey(CacheConstants.A_LI_YUN_ENABLE_CODE);
+        if (OPEN.equals(enable)) {
+            //阿里云存储
+            return (T) uploadServiceMap.get(UploadCode.A_LI_YUN);
+        } else {
+            //本地存储
+            return (T) uploadServiceMap.get(UploadCode.LOCAL);
         }
 
     }

@@ -30,14 +30,11 @@ public class BaseController {
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
      */
     @InitBinder
-    public void initBinder(WebDataBinder binder)
-    {
+    public void initBinder(WebDataBinder binder) {
         // Date 类型转换
-        binder.registerCustomEditor(Date.class, new PropertyEditorSupport()
-        {
+        binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
             @Override
-            public void setAsText(String text)
-            {
+            public void setAsText(String text) {
                 setValue(DateUtils.parseDate(text));
             }
         });
@@ -46,19 +43,16 @@ public class BaseController {
     /**
      * 设置请求分页数据
      */
-    protected void startPage()
-    {
+    protected void startPage() {
         PageUtils.startPage();
     }
 
     /**
      * 设置请求排序数据
      */
-    protected void startOrderBy()
-    {
+    protected void startOrderBy() {
         PageDomain pageDomain = TableSupport.buildPageRequest();
-        if (StringUtils.isNotEmpty(pageDomain.getOrderBy()))
-        {
+        if (StringUtils.isNotEmpty(pageDomain.getOrderBy())) {
             String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
             PageHelper.orderBy(orderBy);
         }
@@ -67,9 +61,8 @@ public class BaseController {
     /**
      * 响应请求分页数据
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    protected TableDataInfo getDataTable(List<?> list)
-    {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    protected TableDataInfo getDataTable(List<?> list) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(ResultCode.SUCCESS);
         rspData.setMsg("查询成功");
@@ -81,8 +74,7 @@ public class BaseController {
     /**
      * 清理分页的线程变量
      */
-    protected void clearPage()
-    {
+    protected void clearPage() {
         PageUtils.clearPage();
     }
 
@@ -92,32 +84,28 @@ public class BaseController {
      * @param rows 影响行数
      * @return 操作结果
      */
-    protected  R toAjax(int rows)
-    {
+    protected R toAjax(int rows) {
         return rows > 0 ? R.ok() : R.error();
     }
 
     /**
      * 返回成功
      */
-    public R success()
-    {
+    public R success() {
         return R.ok();
     }
 
     /**
      * 返回失败消息
      */
-    public R error()
-    {
+    public R error() {
         return R.error();
     }
 
     /**
      * 获取登录用户名
      */
-    public String getUsername()
-    {
+    public String getUsername() {
         return "admin";
     }
 }

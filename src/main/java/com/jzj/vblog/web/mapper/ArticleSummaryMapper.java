@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 
 import java.util.List;
 
@@ -15,7 +15,19 @@ import java.util.List;
  */
 public interface ArticleSummaryMapper extends BaseMapper<ArticleSummary> {
 
+    /**
+     * 条件查询归档列表
+     *
+     * @param articleSummary
+     * @return
+     */
     List<ArticleSummary> selectSummaryList(ArticleSummary articleSummary);
 
+    /**
+     * 唯一性检查
+     *
+     * @param name
+     * @return
+     */
     ArticleSummary checkSummaryUnique(String name);
 }

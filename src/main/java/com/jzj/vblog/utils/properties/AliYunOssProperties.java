@@ -25,9 +25,12 @@ public class AliYunOssProperties implements InitializingBean {
     public static String KEY_ID;
     public static String KEY_SECRET;
     public static String BUCKET_NAME;
-    //当私有成员被赋值后，此方法自动被调用，从而初始化常量
+
+    /**
+     * 当私有成员被赋值后，此方法自动被调用，从而初始化常量
+     */
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         ENDPOINT = endpoint;
         KEY_ID = keyId;
         KEY_SECRET = keySecret;

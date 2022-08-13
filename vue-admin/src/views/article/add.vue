@@ -257,6 +257,7 @@ export default {
         const id = this.$route.params.id
         getById(id).then(response => {
           this.form = response.data.model
+          this.imgPath = this.form.logImg
           this.summaryList = response.data.summaryList
           this.form.articleTagArray = this.form.articleTag.split(',')
         })

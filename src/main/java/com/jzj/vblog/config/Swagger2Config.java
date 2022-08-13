@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Swagger2Config {
     @Bean
-    public Docket adminApiConfig(){
+    public Docket adminApiConfig() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("adminApi")
                 .apiInfo(adminApiInfo())
@@ -30,7 +30,7 @@ public class Swagger2Config {
                 .build();
     }
 
-    private ApiInfo adminApiInfo(){
+    private ApiInfo adminApiInfo() {
         return new ApiInfoBuilder()
                 .title("个人博客后台管理系统API文档")
                 .description("本文档描述了个人博客后台管理系统的各个模块的接口的调用方式")

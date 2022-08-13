@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="SysWebInformation对象", description="网站基本信息")
+@ApiModel(value = "SysWebInformation对象", description = "网站基本信息")
 public class SysWebInformation extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -65,7 +65,6 @@ public class SysWebInformation extends BaseEntity {
     @ApiModelProperty(value = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-
 
 
 }

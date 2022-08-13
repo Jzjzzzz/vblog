@@ -35,8 +35,7 @@ public class SysDictTypeController extends BaseController {
 
     @ApiOperation("分页列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysDictType dictType)
-    {
+    public TableDataInfo list(SysDictType dictType) {
         startPage();
         List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
         return getDataTable(list);
@@ -44,18 +43,15 @@ public class SysDictTypeController extends BaseController {
 
     @ApiOperation("查询字典类型详细")
     @GetMapping(value = "/{dictId}")
-    public R getInfo(@PathVariable Long dictId)
-    {
+    public R getInfo(@PathVariable Long dictId) {
         return R.ok(dictTypeService.selectDictTypeById(dictId));
     }
 
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @ApiOperation("新增字典类型")
     @PostMapping
-    public R add(@Validated @RequestBody SysDictType dict)
-    {
-        if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict)))
-        {
+    public R add(@Validated @RequestBody SysDictType dict) {
+        if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
             return R.error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dict.setCreateBy(getUsername());
@@ -65,10 +61,8 @@ public class SysDictTypeController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @ApiOperation("修改字典类型")
     @PutMapping
-    public R edit(@Validated @RequestBody SysDictType dict)
-    {
-        if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict)))
-        {
+    public R edit(@Validated @RequestBody SysDictType dict) {
+        if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
             return R.error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dict.setUpdateBy(getUsername());
@@ -78,8 +72,7 @@ public class SysDictTypeController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @ApiOperation("删除字典类型")
     @DeleteMapping("/{dictIds}")
-    public R remove(@PathVariable Long[] dictIds)
-    {
+    public R remove(@PathVariable Long[] dictIds) {
         dictTypeService.deleteDictTypeByIds(dictIds);
         return success();
     }
@@ -87,16 +80,14 @@ public class SysDictTypeController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.CLEAN)
     @ApiOperation("刷新字典缓存")
     @DeleteMapping("/refreshCache")
-    public R refreshCache()
-    {
+    public R refreshCache() {
         dictTypeService.resetDictCache();
         return R.ok();
     }
 
     @ApiOperation("获取字典选择框列表")
     @GetMapping("/optionselect")
-    public R optionselect()
-    {
+    public R optionselect() {
         List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
         return R.ok(dictTypes);
     }

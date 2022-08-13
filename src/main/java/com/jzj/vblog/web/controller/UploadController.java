@@ -27,24 +27,21 @@ public class UploadController {
     @Autowired
     private SysConfigService sysConfigService;
 
-    @Log(title = "文件管理",businessType = BusinessType.INSERT)
+    @Log(title = "文件管理", businessType = BusinessType.INSERT)
     @PostMapping("/uploadImg")
-    public R uploadImg(@RequestParam("file") MultipartFile photo,String name,HttpServletRequest request) {
-        String url = ""; //回显URL
+    public R uploadImg(@RequestParam("file") MultipartFile photo, String name, HttpServletRequest request) {
+        //回显URL
+        String url = "";
         UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
         url = uploadService.uploadImg(photo, name, request);
-        return R.ok("url",url);
+        return R.ok("url", url);
     }
 
-
-    @Log(title = "文件管理",businessType = BusinessType.DELETE)
+    @Log(title = "文件管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/deleteImg")
-    public R deleteImg(@RequestParam("url") String url,HttpServletRequest request){
+    public R deleteImg(@RequestParam("url") String url, HttpServletRequest request) {
         UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
         uploadService.deleteImg(url, request);
         return R.ok("删除成功");
     }
-
-
-
 }

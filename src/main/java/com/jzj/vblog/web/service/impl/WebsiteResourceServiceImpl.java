@@ -54,8 +54,7 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
     public String checkWebsiteUnique(WebsiteResource websiteResource) {
         String websiteId = StringUtils.isNull(websiteResource.getId()) ? "-1L" : websiteResource.getId();
         WebsiteResource model = websiteResourceMapper.checkwebSiteUnique(websiteResource.getResourceName());
-        if (StringUtils.isNotNull(model) && !model.getId().equals(websiteId) )
-        {
+        if (StringUtils.isNotNull(model) && !model.getId().equals(websiteId)) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -73,6 +72,7 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
 
     /**
      * 根据id获取资源
+     *
      * @param id
      * @return
      */
@@ -88,6 +88,7 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
 
     /**
      * 批量删除
+     *
      * @param ids
      * @return
      */
@@ -99,7 +100,7 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
             List<WebsiteResource> list = websiteResourceMapper.selectBatchIds(ids);
             list.forEach(s -> imgList.add(s.getResourceImg()));
             int result = websiteResourceMapper.deleteBatchIds(ids);
-            //多线程执行批量删除图片操作
+            /*多线程执行批量删除图片操作*/
             CompletableFuture.runAsync(() -> {
                 UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
                 uploadService.deleteBtnImg(imgList, request); //批量删除图片
