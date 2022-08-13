@@ -110,10 +110,9 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
         HashMap<String, Object> map = new HashMap<>(3);
         Integer page = (Integer) queryMap.get("currPage");
         Integer limit = (Integer) queryMap.get("limit");
-        Page<ArticleSummary> summaryPage = articleSummaryMapper.selectPage(new Page<>(page, limit), null);
+        Page<ArticleSummary> summaryPage = articleSummaryMapper.selectPage(new Page<>(page, limit), new QueryWrapper<ArticleSummary>().eq("status", "1"));
         if (summaryPage.getTotal() > 0) {
             map.put("items", summaryPage.getRecords());
-            map.put("currPage", page);
             map.put("hasNextPage", (long) page * limit < summaryPage.getTotal());
         }
         return map;

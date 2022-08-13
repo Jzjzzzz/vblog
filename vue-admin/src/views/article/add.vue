@@ -113,6 +113,7 @@
 <script>
 import {deleteImg, uploadImg} from "@/api/upload";
 import {add, getById, updateById} from "@/api/article/article"
+import {listAll} from "@/api/article/summary"
 
 export default {
   components: {},
@@ -251,14 +252,18 @@ export default {
         this.$modal.msgSuccess("删除成功")
       })
     },
-    //文章回显
+
     init() {
+      //归档列表
+      listAll().then(response => {
+        this.summaryList = response.data
+      })
+      //文章回显
       if (this.$route.params && this.$route.params.id) {
         const id = this.$route.params.id
         getById(id).then(response => {
           this.form = response.data.model
           this.imgPath = this.form.logImg
-          this.summaryList = response.data.summaryList
           this.form.articleTagArray = this.form.articleTag.split(',')
         })
       }

@@ -44,10 +44,11 @@ public interface ArticleInformService extends IService<ArticleInform> {
 
     /**
      * 根据ID获取文章详细
+     *
      * @param id 文章id
      * @return 归档列表，文章详细
      */
-    Map<String,Object> getArticleById(String id);
+    ArticleAddVo getArticleById(String id);
 
     /**
      * 根据ID修改文章

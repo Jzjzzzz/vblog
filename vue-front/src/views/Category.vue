@@ -26,8 +26,9 @@
         </template>
       </main>
       <!--加载更多-->
-      <div class="more" v-show="hasNextPage">
-        <div class="more-btn" @click="loadMore">更多</div>
+      <div class="more">
+        <div v-show="articleQuery.currPage!=1" class="more-btn" @click="fetchList(1)">上一页</div>
+        <div v-show="hasNextPage" class="more-btn" @click="fetchList(2)">下一页</div>
       </div>
     </div>
   </div>
@@ -65,30 +66,17 @@ export default {
     SmallIco,
     Quote
   },
-  computed: {
-
-  },
   methods: {
     queryList(type) {
       this.articleQuery.currPage = 1
       this.articleQuery.type = type
       this.fetchList()
     },
-    fetchList() {
+    fetchList(type) {
+      if (type === 1) this.articleQuery.currPage = this.articleQuery.currPage - 1
+      if (type === 2) this.articleQuery.currPage = this.articleQuery.currPage + 1
       fetchList(this.articleQuery).then(res => {
         this.postList = res.data.map.items || []
-        this.articleQuery.currPage = res.data.map.currPage
-        this.hasNextPage = res.data.map.hasNextPage
-
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    loadMore() {
-      this.articleQuery.currPage = this.articleQuery.currPage + 1
-      fetchList(this.articleQuery).then(res => {
-        this.postList = this.postList.concat(res.data.map.items || [])
-        this.articleQuery.currPage = res.data.map.currPage
         this.hasNextPage = res.data.map.hasNextPage
       })
     }
@@ -99,16 +87,10 @@ export default {
     }
   },
   created() {
-    if(this.$route.params.title!=null){
-      this.articleQuery.title = this.$route.params.title
-    }
-    if(this.$route.params.aggregateId!=null){
-      this.articleQuery.aggregateId = this.$route.params.aggregateId
-    }
-    if(this.$route.params.name!=null){
-      this.summaryTitle = this.$route.params.name
-    }
-    this.fetchList();
+    if (this.$route.params.title != null) this.articleQuery.title = this.$route.params.title
+    if (this.$route.params.aggregateId != null) this.articleQuery.aggregateId = this.$route.params.aggregateId
+    if (this.$route.params.name != null) this.summaryTitle = this.$route.params.name
+    this.fetchList(0);
   }
 }
 </script>
@@ -159,7 +141,9 @@ export default {
 }
 
 .more {
-  margin: 50px 0;
+  padding: 45px 0;
+  display: flex;
+  justify-content: center;
 
   .more-btn {
     width: 100px;
@@ -169,8 +153,9 @@ export default {
     color: #ADADAD;
     border: 1px solid #ADADAD;
     border-radius: 20px;
-    margin: 0 auto;
     cursor: pointer;
+    flex-shrink: 0;
+    margin: 5px;
 
     &:hover {
       color: #8fd0cc;

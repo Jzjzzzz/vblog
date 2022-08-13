@@ -6,11 +6,9 @@
         <div class="focusinfo">
           <!-- 头像 -->
           <div class="header-tou">
-            <el-row>
-              <el-col :span="24"><h1 style="font-size: 60px;padding-top: 50px;color: white">{{
-                  article.articleTitle
-                }}</h1></el-col>
-            </el-row>
+            <h1 style="font-size: 50px;padding-top: 50px;color: white;word-wrap:break-word;word-break:normal;">{{
+                article.articleTitle
+              }}</h1>
           </div>
           <!-- 简介 -->
           <div class="header-info">

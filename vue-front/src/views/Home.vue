@@ -42,7 +42,7 @@ import sectionTitle from '@/components/section-title'
 import Post from '@/components/post'
 import SmallIco from '@/components/small-ico'
 import Quote from '@/components/quote'
-import {summaryTop} from  '@/api/summary'
+import {summaryTop} from '@/api/summary'
 import {fetchList} from '@/api/article'
 
 export default {
@@ -55,7 +55,7 @@ export default {
         tag: undefined,
         title: '',
         currPage: 1,
-        limit: 1
+        limit: 5
       },
       features: [
         {
@@ -95,24 +95,18 @@ export default {
     summaryTop() {
       summaryTop().then(res => {
         this.features = res.data || []
-      }).catch(err => {
-        console.log(err)
       })
     },
     fetchList() {
       fetchList(this.articleQuery).then(res => {
         this.postList = res.data.map.items || []
-        this.articleQuery.currPage = res.data.map.currPage
         this.hasNextPage = res.data.map.hasNextPage
-      }).catch(err => {
-        console.log(err)
       })
     },
     loadMore() {
       this.articleQuery.currPage = this.articleQuery.currPage + 1
       fetchList(this.articleQuery).then(res => {
         this.postList = this.postList.concat(res.data.map.items || [])
-        this.articleQuery.currPage = res.data.map.currPage
         this.hasNextPage = res.data.map.hasNextPage
       })
     }

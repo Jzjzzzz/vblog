@@ -54,6 +54,6 @@ public class ArticleController extends BaseController {
     @ApiOperation("获取首页归档列表")
     @GetMapping("/summaryTop")
     public R summaryPage() {
-        return R.ok(articleSummaryService.list(new QueryWrapper<ArticleSummary>().eq("top_status", "1")));
+        return R.ok(articleSummaryService.list(new QueryWrapper<ArticleSummary>().eq("top_status", "1").eq("status", "1")));
     }
 }
