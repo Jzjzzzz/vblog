@@ -2,21 +2,19 @@ import Vue from 'vue'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree } from "@/utils/ruoyi";
+import {addDateRange, handleTree, parseTime, resetForm, selectDictLabel, selectDictLabels} from "@/utils/vblog";
 import '@/icons' // icon
 import '@/permission' // permission control
-import { getDicts } from "@/api/system/dict/data";
+import {getDicts} from "@/api/system/dict/data";
 import plugins from './plugins' // plugins
 import './assets/styles/element-variables.scss'
 import '@/assets/styles/index.scss' // global css
-import '@/assets/styles/ruoyi.scss' // ruoyi css
+import '@/assets/styles/vblog.scss' // vblog css
 import 'mavon-editor/dist/css/index.css'
-
 // 分页组件
 import Pagination from "@/components/Pagination";
 // 字典数据组件

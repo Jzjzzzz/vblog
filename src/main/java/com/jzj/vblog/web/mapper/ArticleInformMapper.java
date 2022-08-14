@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
+import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
 import com.jzj.vblog.web.pojo.vo.ArticleVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,14 +32,22 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
      * @param page
      * @return
      */
-    Page<ArticleVo> selectPageVo(@Param("page") Page<ArticleVo> page,@Param("type") String type,@Param("title") String title,@Param("aggregateId") String aggregateId);
+    Page<ArticleVo> selectPageVo(@Param("page") Page<ArticleVo> page, @Param("type") String type, @Param("title") String title, @Param("aggregateId") String aggregateId);
 
     /**
      * 根据id获取文章
+     *
      * @param id
      * @return
      */
     ArticleAddVo selectArticleByIdVo(@Param("id") String id);
 
     ArticleAddVo selectFrontArticleByIdVo(String id);
+
+    /**
+     * 获取文章点击率前7条数据
+     *
+     * @return
+     */
+    List<ArticleRankVo> selectArticleRank();
 }

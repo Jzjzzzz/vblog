@@ -3,6 +3,7 @@ package com.jzj.vblog.web.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
+import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -62,12 +63,20 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * @param ids id数组
      * @param request
      */
-    void deleteArticleById(String [] ids,HttpServletRequest request);
+    void deleteArticleById(String[] ids, HttpServletRequest request);
 
     /**
      * 前台根据文章Id获取文章信息
+     *
      * @param id 文章id
      * @return 文章详细
      */
     ArticleAddVo getFrontArticleById(String id);
+
+    /**
+     * 后台文章排行榜列表
+     *
+     * @return
+     */
+    List<ArticleRankVo> getRank();
 }

@@ -14,6 +14,7 @@ import com.jzj.vblog.web.pojo.entity.ArticleContent;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
+import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
 import com.jzj.vblog.web.pojo.vo.ArticleVo;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.SysConfigService;
@@ -201,6 +202,16 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         List<String> tags = getTags(tagList, model.getArticleTag());
         model.setArticleTag(String.join(",", tags));
         return model;
+    }
+
+    /**
+     * 获取后台文章排行榜
+     *
+     * @return
+     */
+    @Override
+    public List<ArticleRankVo> getRank() {
+        return articleInformMapper.selectArticleRank();
     }
 
     /**

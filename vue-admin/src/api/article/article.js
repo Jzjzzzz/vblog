@@ -40,3 +40,10 @@ export function deleteBthById(ids) {
   })
 }
 
+// 后台文章排行榜数据
+export function getRankList() {
+  return request({
+    url: `/article/inform/getRank`,
+    method: 'get'
+  })
+}

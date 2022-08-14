@@ -66,5 +66,11 @@ public class ArticleInformController extends BaseController {
         articleInformService.deleteArticleById(ids, request);
         return R.ok();
     }
+
+    @ApiOperation("获取文章后台排行榜")
+    @GetMapping("/getRank")
+    public R getRank() {
+        return R.ok(articleInformService.getRank());
+    }
 }
 

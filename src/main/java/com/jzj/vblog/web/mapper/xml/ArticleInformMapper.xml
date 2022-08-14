@@ -118,10 +118,17 @@
             ai.update_time,
             ac.content,
             ai.click_rate
-        FROM
-            article_inform ai
-                LEFT JOIN article_content ac ON ai.id = ac.id
-        WHERE
-            ai.id = #{id} AND ai.`status` ='1'
+        FROM article_inform ai
+                 LEFT JOIN article_content ac ON ai.id = ac.id
+        WHERE ai.id = #{id}
+          AND ai.`status` = '1'
+    </select>
+    <select id="selectArticleRank" resultType="com.jzj.vblog.web.pojo.vo.ArticleRankVo">
+        SELECT article_title,
+               click_rate,
+               number_like
+        FROM article_inform
+        ORDER BY click_rate DESC
+        LIMIT 7
     </select>
 </mapper>
