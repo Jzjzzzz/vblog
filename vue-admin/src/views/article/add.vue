@@ -60,7 +60,7 @@
               </el-form-item>
               <el-form-item label="封面" prop="logImg">
                 <ele-upload-image
-                  action="http://localhost:8081/api/upload/uploadImg?name=articleLog"
+                  :action="BASE_API+uploadUrl"
                   v-model="form.logImg"
                   :responseFn="handleResponse"
                   :isShowSuccessTip="false"
@@ -147,6 +147,8 @@ export default {
           return '/mavon-editor/katex/katex.min.js'
         }
       },
+      BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
+      uploadUrl:'/api/upload/uploadImg?name=articleLog',
       summaryList: [], //归档列表
       //文件上传类型
       imgType: ['png', 'jpg', 'jpeg'],

@@ -173,7 +173,7 @@
         </el-form-item>
         <el-form-item label="资源图" prop="resourceImg">
           <ele-upload-image
-            action="http://localhost:8081/api/upload/uploadImg?name=website"
+            :action="BASE_API+uploadUrl"
             v-model="form.resourceImg"
             :responseFn="handleResponse"
             :isShowSuccessTip="false"
@@ -199,6 +199,8 @@ export default {
   dicts: ['sys_website_type','sys_website_status'],
   data() {
     return {
+      BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
+      uploadUrl:'/api/upload/uploadImg?name=website',
       //文件上传类型
       imgType:['png', 'jpg', 'jpeg'],
       // 遮罩层

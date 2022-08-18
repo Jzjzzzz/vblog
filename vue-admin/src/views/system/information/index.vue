@@ -27,7 +27,7 @@
           </el-form-item>
           <el-form-item label="首页头像" prop="logImg">
             <ele-upload-image
-              action="http://localhost:8081/api/upload/uploadImg?name=webLogo"
+              :action="BASE_API+uploadUrl"
               v-model="formData.webAvatar"
               :responseFn="handleResponse"
               :isShowSuccessTip="false"
@@ -38,7 +38,7 @@
           </el-form-item>
           <el-form-item label="首页背景图" prop="homeBanner">
             <ele-upload-image
-              action="http://localhost:8081/api/upload/uploadImg?name=webLogo"
+              :action="BASE_API+uploadUrl"
               v-model="formData.homeBanner"
               :responseFn="handleResponse"
               :isShowSuccessTip="false"
@@ -49,7 +49,7 @@
           </el-form-item>
           <el-form-item label="文章背景图" prop="articleBanner">
             <ele-upload-image
-              action="http://localhost:8081/api/upload/uploadImg?name=webLogo"
+              :action="BASE_API+uploadUrl"
               v-model="formData.articleBanner"
               :responseFn="handleResponse"
               :isShowSuccessTip="false"
@@ -80,6 +80,8 @@ export default {
   props: [],
   data() {
     return {
+      BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
+      uploadUrl:'/api/upload/uploadImg?name=webLogo',
       imgPath: '',
       //文件上传类型
       imgType: ['png', 'jpg', 'jpeg'],

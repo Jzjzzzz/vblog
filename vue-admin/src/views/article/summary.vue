@@ -166,7 +166,7 @@
         </el-form-item>
         <el-form-item label="归档图" prop="banner">
           <ele-upload-image
-            action="http://localhost:8081/api/upload/uploadImg?name=articleSummary"
+            :action="BASE_API+uploadUrl"
             v-model="form.banner"
             :responseFn="handleResponse"
             :isShowSuccessTip="false"
@@ -192,6 +192,8 @@ export default {
   dicts: ['sys_summary_status','sys_summary_top'],
   data() {
     return {
+      BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
+      uploadUrl:'/api/upload/uploadImg?name=articleSummary',
       //文件上传类型
       imgType:['png', 'jpg', 'jpeg'],
       // 遮罩层
