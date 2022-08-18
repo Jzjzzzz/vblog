@@ -18,6 +18,7 @@
     <properties>
         <java.version>1.8</java.version>
         <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
+        <sa-token>1.30.0</sa-token>
     </properties>
 
     <dependencies>
@@ -176,6 +177,24 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
 
+        <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot-starter</artifactId>
+            <version>${sa-token}</version>
+        </dependency>
+        <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-dao-redis-jackson</artifactId>
+            <version>${sa-token}</version>
+        </dependency>
+        <!-- Sa-Token 整合 jwt -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-jwt</artifactId>
+            <version>${sa-token}</version>
+        </dependency>
     </dependencies>
 
     <build>

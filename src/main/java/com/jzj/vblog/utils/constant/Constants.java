@@ -9,6 +9,12 @@ import io.jsonwebtoken.Claims;
  * @Message: 通用常量信息
  */
 public class Constants {
+
+    /**
+     * MD5加密盐
+     */
+    public static final String MD5_SALT = "Jzj&Vblog";
+
     /**
      * UTF-8 字符集
      */

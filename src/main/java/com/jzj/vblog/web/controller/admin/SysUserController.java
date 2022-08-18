@@ -1,6 +1,7 @@
 package com.jzj.vblog.web.controller.admin;
 
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.pojo.vo.UserInfoVo;
 import com.jzj.vblog.web.service.AdminUserService;
@@ -22,15 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin/user")
 @Api("后台管理员控制器")
+@SaCheckLogin
 public class SysUserController {
 
     @Autowired
     AdminUserService adminUserService;
 
     @GetMapping("/info")
-    @ApiOperation("根据token获取用户信息")
-    public R info(String token) {
-        UserInfoVo user = adminUserService.info(token);
+    @ApiOperation("获取用户信息")
+    public R info() {
+        UserInfoVo user = adminUserService.info();
         return R.ok("data", user);
     }
 

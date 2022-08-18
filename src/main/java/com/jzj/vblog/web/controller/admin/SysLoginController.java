@@ -1,5 +1,7 @@
 package com.jzj.vblog.web.controller.admin;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.pojo.vo.LoginVo;
 import com.jzj.vblog.web.service.AdminUserService;
@@ -28,13 +30,14 @@ public class SysLoginController {
     @ApiOperation("管理员登录")
     @PostMapping("/login")
     public R login(@RequestBody LoginVo vo) {
-        String token = adminUserService.login(vo);
-        return R.ok("token", token);
+        SaTokenInfo tokenInfo = adminUserService.login(vo);
+        return R.ok(tokenInfo.tokenName, tokenInfo.tokenValue);
     }
 
     @ApiOperation("退出登录")
     @PostMapping("/logout")
     public R logout() {
+        StpUtil.logout();
         return R.ok();
     }
 

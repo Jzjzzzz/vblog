@@ -1,6 +1,7 @@
 package com.jzj.vblog.web.controller.admin;
 
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sys/web/information")
+
 public class SysWebInformationController extends BaseController {
     @Autowired
     private SysWebInformationService sysWebInformationService;
@@ -35,6 +37,7 @@ public class SysWebInformationController extends BaseController {
     @Log(title = "网站信息", businessType = BusinessType.UPDATE)
     @ApiOperation("修改网站信息")
     @PutMapping
+    @SaCheckLogin
     public R edit(@Validated @RequestBody SysWebInformation sysWebInformation) {
         return toAjax(sysWebInformationService.updateWebInformation(sysWebInformation));
     }
@@ -42,6 +45,7 @@ public class SysWebInformationController extends BaseController {
     @Log(title = "网站信息", businessType = BusinessType.CLEAN)
     @ApiOperation("刷新参数缓存")
     @DeleteMapping("/refreshCache")
+    @SaCheckLogin
     public R refreshCache() {
         sysWebInformationService.resetInformationCache();
         return R.ok();

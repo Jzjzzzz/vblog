@@ -1,6 +1,7 @@
 package com.jzj.vblog.web.controller.admin;
 
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.utils.sign.StringUtils;
@@ -36,6 +37,7 @@ public class SysDictDataController extends BaseController {
     private SysDictTypeService dictTypeService;
 
     @GetMapping("/list")
+    @SaCheckLogin
     public TableDataInfo list(SysDictData dictData) {
         startPage();
         List<SysDictData> list = dictDataService.selectDictDataList(dictData);
@@ -61,6 +63,7 @@ public class SysDictDataController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @ApiOperation("新增字典类型")
     @PostMapping
+    @SaCheckLogin
     public R add(@Validated @RequestBody SysDictData dict) {
         dict.setCreateBy(getUsername());
         return toAjax(dictDataService.insertDictData(dict));
@@ -69,6 +72,7 @@ public class SysDictDataController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @ApiOperation("修改保存字典类型")
     @PutMapping
+    @SaCheckLogin
     public R edit(@Validated @RequestBody SysDictData dict) {
         dict.setUpdateBy(getUsername());
         return toAjax(dictDataService.updateDictData(dict));
@@ -77,6 +81,7 @@ public class SysDictDataController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @ApiOperation("删除字典类型")
     @DeleteMapping("/{dictCodes}")
+    @SaCheckLogin
     public R remove(@PathVariable Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);
         return success();
