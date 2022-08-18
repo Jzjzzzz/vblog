@@ -12,6 +12,8 @@ import com.jzj.vblog.web.pojo.enums.UploadCode;
 import com.jzj.vblog.web.service.UploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,6 +75,7 @@ public class AliYunUploadServiceImpl implements UploadService {
         }
     }
 
+    @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
     @Override
     public boolean deleteImg(String url, HttpServletRequest request) {
         OSS ossClient = null;
@@ -95,6 +98,7 @@ public class AliYunUploadServiceImpl implements UploadService {
         }
     }
 
+    @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
     @Override
     public void deleteBtnImg(List<String> list, HttpServletRequest request) {
         OSS ossClient = null;

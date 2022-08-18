@@ -38,6 +38,7 @@
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
+        ORDER BY create_time DESC
     </select>
     <select id="checkwebSiteUnique" resultType="com.jzj.vblog.web.pojo.entity.WebsiteResource" parameterType="java.lang.String">
         <include refid="selectWebsiteResourceVo"/>

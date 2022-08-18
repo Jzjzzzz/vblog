@@ -5,6 +5,8 @@ import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.utils.uuid.IdUtils;
 import com.jzj.vblog.web.pojo.enums.UploadCode;
 import com.jzj.vblog.web.service.UploadService;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,6 +73,7 @@ public class LocalUploadServiceImpl implements UploadService {
      * @param request
      * @return
      */
+    @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
     @Override
     public boolean deleteImg(String url, HttpServletRequest request) {
         try {
@@ -90,6 +93,7 @@ public class LocalUploadServiceImpl implements UploadService {
         }
     }
 
+    @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
     @Override
     public void deleteBtnImg(List<String> list, HttpServletRequest request) {
         try {

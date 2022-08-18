@@ -38,6 +38,7 @@
                 AND top_status like concat('%',#{topStatus},'%')
             </if>
         </where>
+        ORDER BY create_time DESC
     </select>
     <select id="checkSummaryUnique" resultType="com.jzj.vblog.web.pojo.entity.ArticleSummary" parameterType="java.lang.String">
         <include refid="ArticleSummaryVo"/>

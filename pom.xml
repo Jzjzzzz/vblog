@@ -170,6 +170,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--轮询重试-->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

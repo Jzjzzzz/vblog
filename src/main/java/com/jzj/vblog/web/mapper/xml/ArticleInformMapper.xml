@@ -52,6 +52,7 @@
                 AND aggregate_id = #{aggregateId}
             </if>
         </where>
+        ORDER BY create_time DESC
     </select>
 
     <select id="selectPageVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleVo">
