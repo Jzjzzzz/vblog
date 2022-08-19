@@ -47,17 +47,6 @@
               :beforeRemove="beforeRemove"
             ></ele-upload-image>
           </el-form-item>
-          <el-form-item label="文章背景图" prop="articleBanner">
-            <ele-upload-image
-              :action="BASE_API+uploadUrl"
-              v-model="formData.articleBanner"
-              :responseFn="handleResponse"
-              :isShowSuccessTip="false"
-              :fileSize="20"
-              :file-type="imgType"
-              :beforeRemove="beforeRemove"
-            ></ele-upload-image>
-          </el-form-item>
           <el-form-item label="网站详情" prop="webDetails" >
             <editor v-model="formData.webDetails"  :min-height="192" ></editor>
           </el-form-item>
@@ -72,7 +61,7 @@
   </div>
 </template>
 <script>
-import {getInformation, updateInformation, refreshCache} from "@/api/system/information";
+import {getInformation, refreshCache, updateInformation} from "@/api/system/information";
 import {deleteImg} from "@/api/upload";
 
 export default {

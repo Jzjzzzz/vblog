@@ -8,29 +8,12 @@
                 <div class="about-site about-info">
                     <section-title><span>❤</span>关于博客</section-title>
                     <div class="info-card">
-                        <p>本博客是采用了<a target="_blank" class="out-link" href="https://zhebk.cn/Web/Akina.html">Akina For Typecho</a>博客的主题，作为二次开发，后端使用SpringBoot。</p>
+                        <p>本博客前台采用了<a target="_blank" class="out-link" href="https://gitee.com/fengziy/Gblog">Gblog</a>博客的主题，作为二次开发，后端使用SpringBoot。
+                        </p>
                         <p><a target="_blank" href="https://gitee.com/jzjzz" style="color: #ff6d6d;">Gitee仓库</a> | <a target="_blank" href="https://github.com/Jzjzzzz" style="color: #ff6d6d;">Github仓库</a>记得Star哟</p>
                     </div>
                 </div>
-                <div class="about-me about-info">
-                    <section-title id="Guestbook"><span>❤</span>给我留言</section-title>
-                    <div class="info-card">
-                        <div class="contactForm">
-                            <div class="form-item">
-                                <label for="mail">邮箱</label>
-                                <input class="v" type="email" name="mail" id="mail">
-                            </div>
-                            <div class="form-item">
-                                <label for="content">内容</label>
-                                <textarea class="v" id="content" name="content"></textarea>
-                            </div>
-                            <div class="form-item">
-                                <label></label>
-                                <button>提交</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
               <div class="about-site about-info">
                 <section-title><span>❤</span>更新计划</section-title>
                 <div class="info-card">
@@ -63,19 +46,20 @@
     </div>
 </template>
 <script>
-    import sectionTitle from '@/components/section-title'
-    import Banner from '@/components/banner'
-    export default {
-        name: "About",
-        data() {
-            return {
-                list: []
-            }
-        },
-        components: {
-            Banner,
-            sectionTitle
-        },
+import sectionTitle from '@/components/section-title'
+import Banner from '@/components/banner'
+
+export default {
+  name: "About",
+  data() {
+    return {
+      list: []
+    }
+  },
+  components: {
+    Banner,
+    sectionTitle
+  },
         methods: {},
         mounted() {
         }

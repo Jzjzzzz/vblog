@@ -103,7 +103,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column type="index" label="序号" align="center" />
       <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true"/>
-      <el-table-column prop="logImg" label="标题图" align="center">
+      <el-table-column prop="logImg" label="背景" align="center">
         <template slot-scope="scope">
           <el-image
             style="width:100px;height: 100px"

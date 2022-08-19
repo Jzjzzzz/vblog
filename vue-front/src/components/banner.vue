@@ -1,7 +1,7 @@
 <template>
   <div id="banner" :class="{'home-banner':isHome}">
     <template v-if="!isHome">
-      <div class="banner-img" :style="{'background-image': `url(${config.articleBanner})`}">
+      <div class="banner-img" :style="{'background-image': `url(${article.logImg})`}">
         <!--博主信息-->
         <div class="focusinfo">
           <!-- 头像 -->
