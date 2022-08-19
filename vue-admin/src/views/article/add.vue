@@ -99,7 +99,7 @@
                   </mavon-editor>
                 </div>
               </el-form-item>
-              <el-form-item size="large">
+              <el-form-item size="large" >
                 <el-button type="primary" @click="next">上一步</el-button>
                 <el-button type="success" @click="submitForm">提交</el-button>
               </el-form-item>
@@ -264,7 +264,7 @@ export default {
       if (this.$route.params && this.$route.params.id) {
         const id = this.$route.params.id
         getById(id).then(response => {
-          this.form = response.data.model
+          this.form = response.data
           this.imgPath = this.form.logImg
           this.form.articleTagArray = this.form.articleTag.split(',')
         })

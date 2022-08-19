@@ -53,7 +53,7 @@ export default {
       articleQuery: {
         type: '',
         currPage: 1,
-        limit: 1,
+        limit: 10,
         title: '',
         aggregateId: ''
       }

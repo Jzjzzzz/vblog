@@ -21,3 +21,12 @@ export function logout() {
     method: 'post'
   })
 }
+
+// 修改资料
+export function updateUser(data) {
+  return request({
+    url: '/admin/user',
+    method: 'put',
+    data: data
+  })
+}

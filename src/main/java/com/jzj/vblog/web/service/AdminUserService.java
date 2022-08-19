@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.AdminUser;
 import com.jzj.vblog.web.pojo.vo.LoginVo;
 import com.jzj.vblog.web.pojo.vo.UserInfoVo;
+import com.jzj.vblog.web.pojo.vo.UserUpdateVo;
 
 /**
  * <p>
@@ -29,4 +30,6 @@ public interface AdminUserService extends IService<AdminUser> {
      * @return 返回用户信息
      */
     UserInfoVo info();
+
+    int updateUser(UserUpdateVo vo);
 }

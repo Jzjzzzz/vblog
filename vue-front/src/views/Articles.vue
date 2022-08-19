@@ -10,13 +10,17 @@
           <el-col :span="14" :offset="5">
             <div >
               <mavon-editor
-                  :value="article.content"
+                  style="max-height:90000px"
+                  v-model ="article.content"
                   :subfield="prop.subfield"
                   :defaultOpen="prop.defaultOpen"
                   :toolbarsFlag="prop.toolbarsFlag"
                   :editable="prop.editable"
                   :scrollStyle="prop.scrollStyle"
                   :externalLink="externalLink"
+                  :navigation="prop.navigation"
+                  @navigationToggle="addUrl"
+                  :toolbars="markdownOption"
               ></mavon-editor>
             </div>
           </el-col>
@@ -40,15 +44,6 @@
               </div>
               <div class="donate" @click="showDonate=!showDonate">
                 <span>赞</span>
-                <ul class="donate_inner" :class="{'show':showDonate}">
-                  <li class="wedonate"><img src="http://cdn.fengziy.cn/gblog/wexin_pay.png"><p>微信</p></li>
-                  <li class="alidonate"><img src="http://cdn.fengziy.cn/gblog/ali_pay.jpg"><p>支付宝</p></li>
-                </ul>
-              </div>
-              <!-- 文章标签 -->
-              <div class="post-tags">
-                <i class="iconfont iconcategory"></i>
-                <router-link to="/category/web">更多</router-link>
               </div>
             </footer>
           </section-title>
@@ -117,6 +112,12 @@ export default {
         articleTag: undefined,
         originStatus: undefined,
         clickRate: undefined
+      },
+      markdownOption: {
+        fullscreen: true, // 全屏编辑
+        readmodel: true, // 沉浸式阅读
+        /* 1.4.2 */
+        navigation: true, // 导航目录
       }
     }
   },
@@ -130,6 +131,22 @@ export default {
     window.scroll(0, 0)
   },
   methods: {
+    addUrl() {
+      this.$nextTick(function () {
+        let _aList = document.querySelectorAll(".v-note-navigation-content a");
+        for (let i = 0; i < _aList.length; i++) {
+          let _aParent = _aList[i].parentNode;
+          let _a = _aParent.firstChild;
+          if (!_a.id) continue; // 把不属于导航中的a标签去掉，否则会报错
+          let _text = _aParent.lastChild;
+          let text = _text.textContent;
+          _a.href = "#" + _a.id;
+          _a.innerText = text;
+          _aParent.removeChild(_text);
+          // _a.style.color = "red";
+        }
+      });
+    },
     getArticle() {
       getById(this.$route.params.id).then(res => {
         this.article = res.data
@@ -146,7 +163,7 @@ export default {
         subfield: false, // 单双栏模式
         defaultOpen: "preview", //edit： 默认展示编辑区域 ， preview： 默认展示预览区域
         editable: false,
-        toolbarsFlag: false,
+        toolbarsFlag: true,
         scrollStyle: true,
         navigation: true
       }

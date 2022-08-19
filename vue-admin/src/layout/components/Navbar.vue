@@ -16,9 +16,9 @@
               主页
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/Jzjzzzz/vblog">
-            <el-dropdown-item>个人资料</el-dropdown-item>
-          </a>
+          <el-dropdown-item  @click.native="dialogFormVisible = true">
+            <span style="display:block;">个人资料</span>
+          </el-dropdown-item>
           <a target="_blank" href="https://github.com/Jzjzzzz/vblog">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
@@ -31,15 +31,75 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <!--  dialog  -->
+    <el-dialog title="个人资料" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="修改头像" name="first">
+            <el-form-item label="头像" label-width="44%" >
+              <ele-upload-image
+                :action="BASE_API+uploadUrl"
+                v-model="form.avatar"
+                :responseFn="handleResponse"
+                :isShowSuccessTip="false"
+                :fileSize="5"
+                :file-type="imgType"
+                :beforeRemove="beforeRemove"
+              ></ele-upload-image>
+            </el-form-item>
+          </el-tab-pane>
+          <el-tab-pane label="修改密码" name="second">
+            <el-form-item label="旧密码" :label-width="formLabelWidth">
+              <el-input type="password" v-model="form.oldpassword" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="新密码" :label-width="formLabelWidth">
+              <el-input type="password" v-model="form.newpassword1" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="新密码" :label-width="formLabelWidth">
+              <el-input type="password" v-model="form.newpassword2" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-tab-pane>
+        </el-tabs>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!--  dialog  -->
   </div>
+
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import {deleteImg} from "@/api/upload";
+import {updateUser} from "@/api/user"
+import {addWebSite, updateWebsite} from "@/api/website/website";
 
 export default {
+  data(){
+    return{
+      activeName: 'second',
+      dialogFormVisible: false,
+      form: {
+        oldpassword: '',
+        newpassword1:'',
+        newpassword2:'',
+        avatar:''
+      },
+      //图片url
+      imgPath:'',
+      formLabelWidth: '120px',
+      BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
+      uploadUrl:'/api/upload/uploadImg?name=adminAvatar',
+      //文件上传类型
+      imgType:['png', 'jpg', 'jpeg']
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger
@@ -51,6 +111,31 @@ export default {
     ])
   },
   methods: {
+    /** 提交按钮 */
+    submitForm: function() {
+      updateUser(this.form).then(response => {
+        this.$modal.msgSuccess("修改成功");
+        this.logout();
+      });
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    //图片回显
+    handleResponse(response) {
+      if(response.code===20000){
+        this.$modal.msgSuccess("上传文件成功")
+        this.imgPath = response.data.url
+        return response.data.url;
+      }
+      return this.$modal.msgError("上传文件失败");
+    },
+    //删除图片
+    beforeRemove(){
+      deleteImg(this.imgPath).then(response=>{
+        this.$modal.msgSuccess("删除成功")
+      })
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },

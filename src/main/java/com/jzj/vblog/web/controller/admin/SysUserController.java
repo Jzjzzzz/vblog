@@ -2,15 +2,18 @@ package com.jzj.vblog.web.controller.admin;
 
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
+import com.jzj.vblog.web.controller.BaseController;
+import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.vo.UserInfoVo;
+import com.jzj.vblog.web.pojo.vo.UserUpdateVo;
 import com.jzj.vblog.web.service.AdminUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -24,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/admin/user")
 @Api("后台管理员控制器")
 @SaCheckLogin
-public class SysUserController {
+public class SysUserController extends BaseController {
 
     @Autowired
     AdminUserService adminUserService;
@@ -34,6 +37,13 @@ public class SysUserController {
     public R info() {
         UserInfoVo user = adminUserService.info();
         return R.ok("data", user);
+    }
+
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @ApiOperation("修改个人信息")
+    @PutMapping
+    public R edit(@Validated @RequestBody UserUpdateVo vo) {
+        return toAjax(adminUserService.updateUser(vo));
     }
 
 }
