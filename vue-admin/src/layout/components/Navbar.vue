@@ -16,7 +16,10 @@
               主页
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+          <a target="_blank" href="https://github.com/Jzjzzzz/vblog">
+            <el-dropdown-item>个人资料</el-dropdown-item>
+          </a>
+          <a target="_blank" href="https://github.com/Jzjzzzz/vblog">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
@@ -32,7 +35,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
