@@ -1,11 +1,9 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
       <div class="title-container">
-        <h3 class="title">登录</h3>
+        <h3 class="title">VBlog后台管理系统</h3>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -20,7 +18,6 @@
           auto-complete="on"
         />
       </el-form-item>
-
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
@@ -40,13 +37,7 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">账号: admin</span>
-        <span> 密码: any</span>
-      </div>
 
     </el-form>
   </div>
@@ -135,7 +126,7 @@ $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
-    color: $cursor;
+    color: white;
   }
 }
 
@@ -152,13 +143,13 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: white;
       height: 47px;
-      caret-color: $cursor;
+      caret-color: white;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        -webkit-text-fill-color: white !important;
       }
     }
   }
@@ -180,14 +171,16 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-image: url("../../../public/img/login_bg.jpg");
+  background-attachment: fixed;
+  background-size: 100% 100%;
   overflow: hidden;
 
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 500px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -206,7 +199,7 @@ $light_gray:#eee;
 
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: $dark_gray;
+    color: white;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -217,7 +210,7 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: white;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
@@ -229,7 +222,7 @@ $light_gray:#eee;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: $dark_gray;
+    color: white;
     cursor: pointer;
     user-select: none;
   }
