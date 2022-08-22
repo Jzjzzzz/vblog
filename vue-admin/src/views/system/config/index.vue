@@ -100,7 +100,7 @@
 
     <el-table v-loading="loading" :data="configList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" align="center" :index="getIndex" type="index" />
+      <el-table-column label="序号" align="center"  type="index" />
       <el-table-column label="参数名称" align="center" prop="configName" :show-overflow-tooltip="true" />
       <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true" />
       <el-table-column label="参数键值" align="center" prop="configValue" />
@@ -230,10 +230,7 @@ export default {
     this.getList();
   },
   methods: {
-    //设置序号
-    getIndex(index){
-      return index + (this.queryParams.pageNum - 1)*this.queryParams.pageSize + 1;
-    },
+
     /** 查询参数列表 */
     getList() {
       this.loading = true;

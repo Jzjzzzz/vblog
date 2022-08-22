@@ -195,6 +195,12 @@
             <artifactId>sa-token-jwt</artifactId>
             <version>${sa-token}</version>
         </dependency>
+
+        <!--定时计划quartz-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

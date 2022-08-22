@@ -134,6 +134,12 @@ export const constantRoutes = [
         meta: { title: '参数设置',icon: 'el-icon-s-tools' }
       },
       {
+        path: 'job',
+        name: 'Job',
+        component: () => import('@/views/system/job/index'),
+        meta: { title: '定时任务',icon: 'el-icon-postcard' }
+      },
+      {
         path: 'information',
         name: 'Information',
         component: () => import('@/views/system/information/index'),

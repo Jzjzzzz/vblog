@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   profiles:
-    active: druid # 环境设置
+    active: druid,job # 环境设置
   application:
     name: vBlog
   servlet:
