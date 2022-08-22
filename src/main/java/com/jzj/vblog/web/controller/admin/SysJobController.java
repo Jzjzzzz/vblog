@@ -63,8 +63,8 @@ public class SysJobController extends BaseController {
     /**
      * 删除定时任务
      */
-    @DeleteMapping
-    public R deleteJob(JobVo form) throws SchedulerException {
+    @DeleteMapping("/del")
+    public R deleteJob(@RequestBody JobVo form) throws SchedulerException {
         if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error();
         }
@@ -75,12 +75,11 @@ public class SysJobController extends BaseController {
     /**
      * 暂停定时任务
      */
-    @PutMapping(params = "pause")
-    public R pauseJob(JobVo form) throws SchedulerException {
+    @PutMapping("/pause")
+    public R pauseJob(@RequestBody JobVo form) throws SchedulerException {
         if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
-
         jobService.pauseJob(form);
         return R.ok("暂停成功");
     }
@@ -88,8 +87,8 @@ public class SysJobController extends BaseController {
     /**
      * 恢复定时任务
      */
-    @PutMapping(params = "resume")
-    public R resumeJob(JobVo form) throws SchedulerException {
+    @PutMapping("/resume")
+    public R resumeJob(@RequestBody JobVo form) throws SchedulerException {
         if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
@@ -101,17 +100,16 @@ public class SysJobController extends BaseController {
     /**
      * 修改定时任务，定时时间
      */
-    @PutMapping(params = "cron")
-    public R cronJob( JobVo form) {
+    @PutMapping("/update")
+    public R cronJob(@RequestBody JobVo form) {
         try {
-            if(StringUtils.isBlank(form.getCronExpression())){
+            if (StringUtils.isBlank(form.getCronExpression())) {
                 throw new BusinessException("表达式不能为空");
             }
             jobService.cronJob(form);
         } catch (Exception e) {
-            return R.error("修改定时任务出错");
+            return R.error(e.getMessage());
         }
-
         return R.ok("修改成功");
     }
 

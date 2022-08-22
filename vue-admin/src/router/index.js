@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-Vue.use(Router)
-
 /* Layout */
 import Layout from '@/layout'
+
+Vue.use(Router)
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -137,7 +136,7 @@ export const constantRoutes = [
         path: 'job',
         name: 'Job',
         component: () => import('@/views/system/job/index'),
-        meta: { title: '定时任务',icon: 'el-icon-postcard' }
+        meta: {title: '定时任务', icon: 'el-icon-alarm-clock'}
       },
       {
         path: 'information',

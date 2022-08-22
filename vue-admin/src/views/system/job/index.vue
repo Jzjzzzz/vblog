@@ -21,54 +21,30 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
         <el-button
           type="primary"
           plain
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-        >删除</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+        >新增
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
 
-    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" align="center" type="index" />
-      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true" />
-      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true" />
-      <el-table-column label="任务类名" align="center" prop="jobClassName" />
-      <el-table-column label="触发器名称" align="center" prop="triggerName" />
-      <el-table-column label="触发器所在组" align="center" prop="triggerGroup" />
-      <el-table-column label="表达式" align="center" prop="cronExpression" />
-      <el-table-column label="时区" align="center" prop="timeZoneId" />
-      <el-table-column label="状态" align="center" prop="triggerState" />
+      </el-form-item>
+    </el-form>
+
+    <el-table v-loading="loading" :data="list">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="序号" align="center" type="index"/>
+      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true"/>
+      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true"/>
+      <el-table-column label="任务类名" align="center" prop="jobClassName"/>
+      <el-table-column label="触发器名称" align="center" prop="triggerName"/>
+      <el-table-column label="触发器所在组" align="center" prop="triggerGroup"/>
+      <el-table-column label="表达式" align="center" prop="cronExpression"/>
+      <el-table-column label="时区" align="center" prop="timeZoneId"/>
+      <el-table-column label="状态" align="center" prop="triggerState"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -76,13 +52,29 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.$index, scope.row)"
-          >修改</el-button>
+          >修改
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-video-pause"
+            @click="handlePause(scope.$index, scope.row)"
+          >暂停
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-video-play"
+            @click="handleResume(scope.$index, scope.row)"
+          >恢复
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)"
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -121,7 +113,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="update">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -129,16 +121,14 @@
 </template>
 
 <script>
-import { delConfig, updateConfig } from "@/api/system/config";
-import { list,add,updateCron } from "@/api/system/job";
+import {add, del, handlePause, handleResume, list, updateCron} from "@/api/system/job";
+
 export default {
   name: "Config",
   data() {
     return {
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -240,12 +230,6 @@ export default {
       this.dialogFormVisible = true;
       this.title = "添加定时任务";
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!=1
-      this.multiple = !selection.length
-    },
     /** 修改按钮操作 */
     handleUpdate(index, row) {
       this.reset();
@@ -267,22 +251,49 @@ export default {
         }
       });
     },
-    updateForm: function (){
+    /** 修改按钮 **/
+    update: function () {
       updateCron(this.updateForm).then(response => {
-            this.$modal.msgSuccess("修改成功");
-            this.updateFormVisible = false;
-            this.getList();
-          });
+        this.$modal.msgSuccess("修改成功");
+        this.updateFormVisible = false;
+        this.getList();
+      });
+    },
+    /** 暂停任务 **/
+    handlePause: function (index, row) {
+      this.updateForm.jobClassName = row.jobName;
+      this.updateForm.jobGroupName = row.jobGroup;
+      handlePause(this.updateForm).then(res => {
+        this.$modal.msgSuccess("暂停任务成功");
+        this.getList();
+      })
+    },
+    /** 恢复任务 **/
+    handleResume: function (index, row) {
+      this.updateForm.jobClassName = row.jobName;
+      this.updateForm.jobGroupName = row.jobGroup;
+      handleResume(this.updateForm).then(res => {
+        this.$modal.msgSuccess("恢复任务成功");
+        this.getList();
+      })
     },
     /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除参数编号为"' + ids + '"的数据项？').then(function() {
-        return delConfig(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+    handleDelete(index, row) {
+      this.updateForm.jobClassName = row.jobName;
+      this.updateForm.jobGroupName = row.jobGroup;
+      this.$confirm('是否删除该定时任务', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          del(this.updateForm).then(res => {
+            this.$modal.msgSuccess("删除成功");
+            this.getList();
+          })
+        })
+        .catch(action => {
+        });
     }
   }
 };

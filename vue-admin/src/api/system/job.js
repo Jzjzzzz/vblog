@@ -20,8 +20,35 @@ export function add(data) {
 // 修改定时计划表达式
 export function updateCron(data) {
   return request({
-    url: '/sys/job?cron',
+    url: '/system/job/update',
     method: 'put',
+    data: data
+  })
+}
+
+// 暂停定时计划
+export function handlePause(data) {
+  return request({
+    url: '/system/job/pause',
+    method: 'put',
+    data: data
+  })
+}
+
+// 恢复定时计划
+export function handleResume(data) {
+  return request({
+    url: '/system/job/resume',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除定时任务
+export function del(data) {
+  return request({
+    url: '/system/job/del',
+    method: 'delete',
     data: data
   })
 }
