@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             文章数
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.articleCount" :duration="2600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             归档数
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.summaryCount" :duration="3000" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             点击数
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.clickCount" :duration="3200" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -46,9 +46,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            评论数
+            点赞数
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.likeCount" :duration="3600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -57,12 +57,32 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import {getCount} from '@/api/system/count'
 
 export default {
   components: {
     CountTo
   },
-  methods: {}
+  data() {
+    return {
+      model: {
+        articleCount: 0,
+        summaryCount: 0,
+        clickCount: 0,
+        likeCount: 0
+      }
+    }
+  },
+  created() {
+    this.getCount()
+  },
+  methods: {
+    getCount() {
+      getCount().then(res => {
+        this.model = res.data
+      })
+    }
+  }
 }
 </script>
 
