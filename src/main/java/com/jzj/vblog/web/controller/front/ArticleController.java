@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,5 +56,12 @@ public class ArticleController extends BaseController {
     @GetMapping("/summaryTop")
     public R summaryPage() {
         return R.ok(articleSummaryService.list(new QueryWrapper<ArticleSummary>().eq("top_status", "1").eq("status", "1")));
+    }
+
+    @ApiOperation("根据Id点赞文章")
+    @GetMapping("/getByIdLike/{id}")
+    public R getByIdLike(@PathVariable String id, HttpServletRequest request) {
+        articleInformService.getByIdLike(id, request);
+        return R.ok("点赞成功");
     }
 }

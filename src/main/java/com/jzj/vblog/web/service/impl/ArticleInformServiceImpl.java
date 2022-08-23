@@ -201,6 +201,12 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
         List<String> tags = getTags(tagList, model.getArticleTag());
         model.setArticleTag(String.join(",", tags));
+        //异步更新点击数
+        CompletableFuture.runAsync(() -> {
+            ArticleInform inform = articleInformMapper.selectById(id);
+            inform.setClickRate(inform.getClickRate() + 1);
+            articleInformMapper.updateById(inform);
+        }, threadPoolTaskExecutor);
         return model;
     }
 
@@ -212,6 +218,23 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     @Override
     public List<ArticleRankVo> getRank() {
         return articleInformMapper.selectArticleRank();
+    }
+
+    /**
+     * 文章点赞
+     *
+     * @param id      文章id
+     * @param request
+     */
+    @Override
+    public void getByIdLike(String id, HttpServletRequest request) {
+        if (id == null) {
+            throw new BusinessException("数据异常");
+        }
+        ArticleInform inform = articleInformMapper.selectById(id);
+        inform.setNumberLike(inform.getNumberLike() + 1);
+        articleInformMapper.updateById(inform);
+
     }
 
     /**

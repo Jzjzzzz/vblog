@@ -40,10 +40,10 @@
               <!-- 阅读次数 -->
               <div class="post-like">
                 <i class="iconfont iconeyes"></i>
-                <span class="count">685</span>
+                <span class="count">{{ article.clickRate }}</span>
               </div>
               <div class="donate" @click="showDonate=!showDonate">
-                <span>赞</span>
+                <span @click="numberLike">赞</span>
               </div>
             </footer>
           </section-title>
@@ -66,7 +66,7 @@ import sectionTitle from '@/components/section-title'
 import comment from '@/components/comment'
 import menuTree from '@/components/menu-tree'
 
-import {getById} from '../api/article'
+import {getById, getByIdLike} from '../api/article'
 
 export default {
   name: 'articles',
@@ -131,6 +131,11 @@ export default {
     window.scroll(0, 0)
   },
   methods: {
+    numberLike() {
+      getByIdLike(this.$route.params.id).then(res => {
+        this.$message('点赞成功');
+      })
+    },
     addUrl() {
       this.$nextTick(function () {
         let _aList = document.querySelectorAll(".v-note-navigation-content a");

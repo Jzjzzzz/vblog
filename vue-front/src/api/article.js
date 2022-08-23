@@ -14,3 +14,11 @@ export function getById(id) {
         method: 'get'
     })
 }
+
+//根据Id点赞文章
+export function getByIdLike(id) {
+    return request({
+        url: `/front/article/getByIdLike/${id}`,
+        method: 'get'
+    })
+}
