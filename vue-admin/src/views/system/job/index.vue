@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
       <el-form-item label="任务名称" prop="jobName">
         <el-input
           v-model="queryParams.jobName"
@@ -35,16 +35,16 @@
     </el-form>
 
     <el-table v-loading="loading" :data="list">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="序号" align="center" type="index"/>
-      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true"/>
-      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true"/>
-      <el-table-column label="任务类名" align="center" prop="jobClassName"/>
-      <el-table-column label="触发器名称" align="center" prop="triggerName"/>
-      <el-table-column label="触发器所在组" align="center" prop="triggerGroup"/>
-      <el-table-column label="表达式" align="center" prop="cronExpression"/>
-      <el-table-column label="时区" align="center" prop="timeZoneId"/>
-      <el-table-column label="状态" align="center" prop="triggerState"/>
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="序号" align="center" type="index" />
+      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true" />
+      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true" />
+      <el-table-column label="任务类名" align="center" prop="jobClassName" />
+      <el-table-column label="触发器名称" align="center" prop="triggerName" />
+      <el-table-column label="触发器所在组" align="center" prop="triggerGroup" />
+      <el-table-column label="表达式" align="center" prop="cronExpression" />
+      <el-table-column label="时区" align="center" prop="timeZoneId" />
+      <el-table-column label="状态" align="center" prop="triggerState" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -55,6 +55,7 @@
           >修改
           </el-button>
           <el-button
+            v-show="scope.row.triggerState === 'ACQUIRED' || scope.row.triggerState === 'WAITING'"
             size="mini"
             type="text"
             icon="el-icon-video-pause"
@@ -62,6 +63,7 @@
           >暂停
           </el-button>
           <el-button
+            v-show="scope.row.triggerState === 'PAUSED'"
             size="mini"
             type="text"
             icon="el-icon-video-play"
@@ -121,10 +123,10 @@
 </template>
 
 <script>
-import {add, del, handlePause, handleResume, list, updateCron} from "@/api/system/job";
+import { add, del, handlePause, handleResume, list, updateCron } from '@/api/system/job'
 
 export default {
-  name: "Config",
+  name: 'Config',
   data() {
     return {
       // 遮罩层
@@ -140,7 +142,7 @@ export default {
       // 参数表格数据
       list: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示新增弹出层
       dialogFormVisible: false,
       // 是否显示修改弹出层
@@ -168,119 +170,119 @@ export default {
       // 表单校验
       rules: {
         jobClassName: [
-          { required: true, message: "任务名称不能为空", trigger: "blur" }
+          { required: true, message: '任务名称不能为空', trigger: 'blur' }
         ],
         jobGroupName: [
-          { required: true, message: "任务分组不能为空", trigger: "blur" }
+          { required: true, message: '任务分组不能为空', trigger: 'blur' }
         ],
         cronExpression: [
-          { required: true, message: "表达式不能为空", trigger: "blur" }
+          { required: true, message: '表达式不能为空', trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询参数列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.list = response.rows;
-          this.total = response.total;
-          this.loading = false;
-        }
-      );
+        this.list = response.rows
+        this.total = response.total
+        this.loading = false
+      }
+      )
     },
     // 取消按钮
     cancel() {
-      this.dialogFormVisible = false;
-      this.updateFormVisible = false;
-      this.reset();
+      this.dialogFormVisible = false
+      this.updateFormVisible = false
+      this.reset()
     },
     // 表单重置
     reset() {
       this.form = {
         jobClassName: undefined,
         jobGroupName: undefined,
-        cronExpression: undefined,
-      };
+        cronExpression: undefined
+      }
       this.updateForm = {
         jobClassName: undefined,
         jobGroupName: undefined,
-        cronExpression: undefined,
+        cronExpression: undefined
       }
-      this.resetForm("form");
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.dateRange = [];
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.dateRange = []
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.dialogFormVisible = true;
-      this.title = "添加定时任务";
+      this.reset()
+      this.dialogFormVisible = true
+      this.title = '添加定时任务'
     },
     /** 修改按钮操作 */
     handleUpdate(index, row) {
-      this.reset();
-      this.updateFormVisible = true;
-      this.updateForm.jobClassName = row.jobName;
-      this.updateForm.jobGroupName = row.jobGroup;
-      this.updateForm.cronExpression = row.cronExpression;
-      this.title = "修改定时任务";
+      this.reset()
+      this.updateFormVisible = true
+      this.updateForm.jobClassName = row.jobName
+      this.updateForm.jobGroupName = row.jobGroup
+      this.updateForm.cronExpression = row.cronExpression
+      this.title = '修改定时任务'
     },
     /** 提交按钮 */
     submitForm: function() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           add(this.form).then(response => {
-            this.$modal.msgSuccess("新增成功");
-            this.dialogFormVisible = false;
-            this.getList();
-          });
+            this.$modal.msgSuccess('新增成功')
+            this.dialogFormVisible = false
+            this.getList()
+          })
         }
-      });
+      })
     },
     /** 修改按钮 **/
-    update: function () {
+    update: function() {
       updateCron(this.updateForm).then(response => {
-        this.$modal.msgSuccess("修改成功");
-        this.updateFormVisible = false;
-        this.getList();
-      });
+        this.$modal.msgSuccess('修改成功')
+        this.updateFormVisible = false
+        this.getList()
+      })
     },
     /** 暂停任务 **/
-    handlePause: function (index, row) {
-      this.updateForm.jobClassName = row.jobName;
-      this.updateForm.jobGroupName = row.jobGroup;
+    handlePause: function(index, row) {
+      this.updateForm.jobClassName = row.jobName
+      this.updateForm.jobGroupName = row.jobGroup
       handlePause(this.updateForm).then(res => {
-        this.$modal.msgSuccess("暂停任务成功");
-        this.getList();
+        this.$modal.msgSuccess('暂停任务成功')
+        this.getList()
       })
     },
     /** 恢复任务 **/
-    handleResume: function (index, row) {
-      this.updateForm.jobClassName = row.jobName;
-      this.updateForm.jobGroupName = row.jobGroup;
+    handleResume: function(index, row) {
+      this.updateForm.jobClassName = row.jobName
+      this.updateForm.jobGroupName = row.jobGroup
       handleResume(this.updateForm).then(res => {
-        this.$modal.msgSuccess("恢复任务成功");
-        this.getList();
+        this.$modal.msgSuccess('恢复任务成功')
+        this.getList()
       })
     },
     /** 删除按钮操作 */
     handleDelete(index, row) {
-      this.updateForm.jobClassName = row.jobName;
-      this.updateForm.jobGroupName = row.jobGroup;
+      this.updateForm.jobClassName = row.jobName
+      this.updateForm.jobGroupName = row.jobGroup
       this.$confirm('是否删除该定时任务', '确认信息', {
         distinguishCancelAndClose: true,
         confirmButtonText: '确定',
@@ -288,13 +290,13 @@ export default {
       })
         .then(() => {
           del(this.updateForm).then(res => {
-            this.$modal.msgSuccess("删除成功");
-            this.getList();
+            this.$modal.msgSuccess('删除成功')
+            this.getList()
           })
         })
         .catch(action => {
-        });
+        })
     }
   }
-};
+}
 </script>

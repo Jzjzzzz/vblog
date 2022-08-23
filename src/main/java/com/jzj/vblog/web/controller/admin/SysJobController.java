@@ -2,10 +2,12 @@ package com.jzj.vblog.web.controller.admin;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.hutool.core.util.StrUtil;
+import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.JobAndTrigger;
+import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.pojo.vo.JobVo;
 import com.jzj.vblog.web.service.JobService;
@@ -26,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/job")
 @Slf4j
+@SaCheckLogin
 public class SysJobController extends BaseController {
     private final JobService jobService;
 
@@ -51,6 +54,7 @@ public class SysJobController extends BaseController {
      * 保存定时任务
      */
     @PostMapping
+    @Log(title = "定时任务",businessType = BusinessType.INSERT)
     public R addJob(@RequestBody JobVo form) {
         try {
             jobService.addJob(form);
@@ -64,6 +68,7 @@ public class SysJobController extends BaseController {
      * 删除定时任务
      */
     @DeleteMapping("/del")
+    @Log(title = "定时任务",businessType = BusinessType.DELETE)
     public R deleteJob(@RequestBody JobVo form) throws SchedulerException {
         if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error();
@@ -76,6 +81,7 @@ public class SysJobController extends BaseController {
      * 暂停定时任务
      */
     @PutMapping("/pause")
+    @Log(title = "定时任务",businessType = BusinessType.UPDATE)
     public R pauseJob(@RequestBody JobVo form) throws SchedulerException {
         if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
@@ -88,6 +94,7 @@ public class SysJobController extends BaseController {
      * 恢复定时任务
      */
     @PutMapping("/resume")
+    @Log(title = "定时任务",businessType = BusinessType.UPDATE)
     public R resumeJob(@RequestBody JobVo form) throws SchedulerException {
         if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
@@ -101,6 +108,7 @@ public class SysJobController extends BaseController {
      * 修改定时任务，定时时间
      */
     @PutMapping("/update")
+    @Log(title = "定时任务",businessType = BusinessType.UPDATE)
     public R cronJob(@RequestBody JobVo form) {
         try {
             if (StringUtils.isBlank(form.getCronExpression())) {
