@@ -65,27 +65,27 @@ export const constantRoutes = [
         path: 'index',
         name: 'Article',
         component: () => import('@/views/article/index'),
-        meta: { title: '文章列表',icon: 'el-icon-receiving' }
+        meta: { title: '文章列表', icon: 'el-icon-receiving' }
       },
       {
         path: 'summary',
         name: 'Summary',
         component: () => import('@/views/article/summary'),
-        meta: { title: '文章归档',icon: 'el-icon-folder-opened' }
+        meta: { title: '文章归档', icon: 'el-icon-folder-opened' }
       },
       {
         path: 'add/',
         name: 'Add',
         component: () => import('@/views/article/add'),
         hidden: true,
-        meta: { title: '新增文章',icon: 'el-icon-receiving' }
+        meta: { title: '新增文章', icon: 'el-icon-receiving' }
       },
       {
         path: 'update/:id',
         name: 'update',
         component: () => import('@/views/article/add'),
         hidden: true,
-        meta: { title: '修改文章',icon: 'el-icon-receiving' }
+        meta: { title: '修改文章', icon: 'el-icon-receiving' }
       }
     ]
   },
@@ -101,7 +101,7 @@ export const constantRoutes = [
         path: 'index',
         name: 'Website',
         component: () => import('@/views/website/index'),
-        meta: { title: '资源列表',icon: 'el-icon-receiving' }
+        meta: { title: '资源列表', icon: 'el-icon-receiving' }
       }
     ]
   },
@@ -117,47 +117,47 @@ export const constantRoutes = [
         path: 'dict',
         name: 'Dict',
         component: () => import('@/views/system/dict/index'),
-        meta: { title: '字典分类',icon: 'el-icon-receiving' }
+        meta: { title: '字典分类', icon: 'el-icon-receiving' }
       },
       {
         path: 'data/:id(\\d+)',
         name: 'Data',
         hidden: true,
         component: () => import('@/views/system/dict/data'),
-        meta: { title: '字典数据',icon: 'el-icon-receiving' }
+        meta: { title: '字典数据', icon: 'el-icon-receiving' }
       },
       {
         path: 'config',
         name: 'Config',
         component: () => import('@/views/system/config/index'),
-        meta: { title: '参数设置',icon: 'el-icon-s-tools' }
+        meta: { title: '参数设置', icon: 'el-icon-s-tools' }
       },
       {
         path: 'job',
         name: 'Job',
         component: () => import('@/views/system/job/index'),
-        meta: {title: '定时任务', icon: 'el-icon-alarm-clock'}
+        meta: { title: '定时任务', icon: 'el-icon-alarm-clock' }
       },
       {
         path: 'information',
         name: 'Information',
         component: () => import('@/views/system/information/index'),
-        meta: { title: '网站信息',icon: 'el-icon-postcard' }
+        meta: { title: '网站信息', icon: 'el-icon-postcard' }
       },
       {
         path: 'notice',
         name: 'Notice',
         component: () => import('@/views/system/notice/index'),
-        meta: { title: '公告管理',icon: 'el-icon-s-comment' }
+        meta: { title: '公告管理', icon: 'el-icon-s-comment' }
       },
       {
         path: 'operlog',
         name: 'Operlog',
         component: () => import('@/views/monitor/operlog/index'),
-        meta: { title: '日志管理',icon: 'el-icon-s-order' }
+        meta: { title: '日志管理', icon: 'el-icon-s-order' }
       }
     ]
-},
+  },
   {
     path: 'external-link',
     component: Layout,

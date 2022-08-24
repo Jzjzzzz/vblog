@@ -55,7 +55,7 @@ export default {
         tag: undefined,
         title: '',
         currPage: 1,
-        limit: 5
+        limit: 4
       },
       features: [
         {
@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     notice() {
-      return '一个技术分享博客。'
+      return '凡作事，将成功之时，其困难最甚。行百里者半九十，有志当世之务者，不可不戒，不可不勉。'
     }
   },
   methods: {

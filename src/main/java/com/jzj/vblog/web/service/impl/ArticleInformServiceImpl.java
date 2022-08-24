@@ -4,9 +4,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.constant.CacheConstants;
+import com.jzj.vblog.utils.redis.RedisCache;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.ResponseEnum;
+import com.jzj.vblog.utils.sign.IpUtils;
+import com.jzj.vblog.utils.sign.ServletUtils;
 import com.jzj.vblog.utils.sign.SpringUtils;
+import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.mapper.ArticleContentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
@@ -20,6 +24,7 @@ import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.SysConfigService;
 import com.jzj.vblog.web.service.SysDictTypeService;
 import com.jzj.vblog.web.service.UploadService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -29,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -39,8 +45,10 @@ import java.util.concurrent.CompletableFuture;
  * @since 2022-07-23
  */
 @Service
+@Slf4j
 public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, ArticleInform> implements ArticleInformService {
 
+    private static final String LIKE_IP = "like_ip:";
 
     @Autowired
     private ArticleInformMapper articleInformMapper;
@@ -56,6 +64,9 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Autowired
     private SysConfigService sysConfigService;
+
+    @Autowired
+    private RedisCache redisCache;
 
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
 
@@ -223,18 +234,27 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     /**
      * 文章点赞
      *
-     * @param id      文章id
-     * @param request
+     * @param id 文章id
      */
     @Override
-    public void getByIdLike(String id, HttpServletRequest request) {
-        if (id == null) {
-            throw new BusinessException("数据异常");
+    public void getByIdLike(String id) {
+        try {
+            if (id == null) {
+                throw new BusinessException("数据异常");
+            }
+            //请求IP
+            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+            String redisIp = redisCache.getCacheObject(LIKE_IP + ip + "," + id);
+            if (StringUtils.isNotEmpty(redisIp)) {
+                throw new BusinessException(201, "该文章已点赞");
+            }
+            ArticleInform inform = articleInformMapper.selectById(id);
+            inform.setNumberLike(inform.getNumberLike() + 1);
+            articleInformMapper.updateById(inform);
+            //存入redis
+            redisCache.setCacheObject(LIKE_IP + ip + "," + id, ip, 30, TimeUnit.MINUTES);
+        } catch (Exception e) {
         }
-        ArticleInform inform = articleInformMapper.selectById(id);
-        inform.setNumberLike(inform.getNumberLike() + 1);
-        articleInformMapper.updateById(inform);
-
     }
 
     /**

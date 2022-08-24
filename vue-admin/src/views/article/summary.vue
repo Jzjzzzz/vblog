@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
       <el-form-item label="归档标题" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -49,7 +49,7 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-        ></el-date-picker>
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -88,7 +88,7 @@
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+        <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
       </el-col>
     </el-row>
 
@@ -96,23 +96,23 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" />
       <el-table-column label="归档标题" align="center" prop="name" :show-overflow-tooltip="true" />
-      <el-table-column prop="banner" label="归档图" align="center" >
+      <el-table-column prop="banner" label="归档图" align="center">
         <template slot-scope="scope">
-            <el-image
-              style="width:100px;height: 100px"
-              :src="scope.row.banner"
-              :preview-src-list="[scope.row.banner]">
-            </el-image>
+          <el-image
+            style="width:100px;height: 100px"
+            :src="scope.row.banner"
+            :preview-src-list="[scope.row.banner]"
+          />
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_summary_status" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.sys_summary_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="首页展示" align="center" prop="topStatus">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_summary_top" :value="scope.row.topStatus"/>
+          <dict-tag :options="dict.type.sys_summary_top" :value="scope.row.topStatus" />
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -154,26 +154,34 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
-            <el-option v-for="dict in dict.type.sys_summary_status" :key="dict.value" :label="dict.label"
-                       :value="dict.value" ></el-option>
+            <el-option
+              v-for="dict in dict.type.sys_summary_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="首页显示" prop="topStatus">
           <el-select v-model="form.topStatus" placeholder="请选择是否展示" clearable :style="{width: '100%'}">
-            <el-option v-for="dict in dict.type.sys_summary_top" :key="dict.value" :label="dict.label"
-                       :value="dict.value" ></el-option>
+            <el-option
+              v-for="dict in dict.type.sys_summary_top"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="归档图" prop="banner">
           <ele-upload-image
-            :action="BASE_API+uploadUrl"
             v-model="form.banner"
-            :responseFn="handleResponse"
-            :isShowSuccessTip="false"
-            :fileSize="5"
+            :action="BASE_API+uploadUrl"
+            :response-fn="handleResponse"
+            :is-show-success-tip="false"
+            :file-size="5"
             :file-type="imgType"
-            :beforeRemove="beforeRemove"
-          ></ele-upload-image>
+            :before-remove="beforeRemove"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -185,17 +193,17 @@
 </template>
 
 <script>
-import { listArticleSummary,add,del,getInfo,update } from "@/api/article/summary";
-import { deleteImg } from "@/api/upload";
+import { listArticleSummary, add, del, getInfo, update } from '@/api/article/summary'
+import { deleteImg } from '@/api/upload'
 export default {
-  name: "Dict",
-  dicts: ['sys_summary_status','sys_summary_top'],
+  name: 'Dict',
+  dicts: ['sys_summary_status', 'sys_summary_top'],
   data() {
     return {
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
-      uploadUrl:'/api/upload/uploadImg?name=articleSummary',
-      //文件上传类型
-      imgType:['png', 'jpg', 'jpeg'],
+      uploadUrl: '/api/upload/uploadImg?name=articleSummary',
+      // 文件上传类型
+      imgType: ['png', 'jpg', 'jpeg'],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -211,11 +219,11 @@ export default {
       // 表格数据
       list: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
-      //图片url
-      imgPath:'',
+      // 图片url
+      imgPath: '',
       // 日期范围
       dateRange: [],
       // 查询参数
@@ -230,127 +238,127 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "归档标题不能为空", trigger: "blur" }
+          { required: true, message: '归档标题不能为空', trigger: 'blur' }
         ],
         status: [
-          { required: true, message: "归档状态不能为空", trigger: "blur" }
+          { required: true, message: '归档状态不能为空', trigger: 'blur' }
         ],
         topStatus: [
-          { required: true, message: "归档是否展示不能为空", trigger: "blur" }
+          { required: true, message: '归档是否展示不能为空', trigger: 'blur' }
         ],
         banner: [
-          { required: true, message: "归档图不能为空", trigger: "blur" }
+          { required: true, message: '归档图不能为空', trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
-    //图片回显
+    // 图片回显
     handleResponse(response) {
-      if(response.success){
-        this.$modal.msgSuccess("上传文件成功")
+      if (response.success) {
+        this.$modal.msgSuccess('上传文件成功')
         this.imgPath = response.data.url
-        return response.data.url;
+        return response.data.url
       }
-      return this.$modal.msgError("上传文件失败");
+      return this.$modal.msgError('上传文件失败')
     },
-    //删除图片
-    beforeRemove(){
-      deleteImg(this.imgPath).then(response=>{
-        this.$modal.msgSuccess("删除成功")
+    // 删除图片
+    beforeRemove() {
+      deleteImg(this.imgPath).then(response => {
+        this.$modal.msgSuccess('删除成功')
       })
     },
 
     /** 查询文章列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listArticleSummary(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.list = response.rows;
-          this.total = response.total;
-          this.loading = false;
-        }
-      );
+        this.list = response.rows
+        this.total = response.total
+        this.loading = false
+      }
+      )
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
       this.form = {
         id: undefined,
-        articleTitle: undefined,
-      };
-      this.resetForm("form");
+        articleTitle: undefined
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.dateRange = [];
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.dateRange = []
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加资源";
+      this.reset()
+      this.open = true
+      this.title = '添加资源'
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!=1
+      this.single = selection.length != 1
       this.multiple = !selection.length
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
+      this.reset()
       const id = row.id || this.ids
       getInfo(id).then(response => {
-        this.form = response.data;
+        this.form = response.data
         this.imgPath = this.form.resourceImg
-        this.open = true;
-        this.title = "修改资源";
-      });
+        this.open = true
+        this.title = '修改资源'
+      })
     },
     /** 提交按钮 */
     submitForm: function() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
             update(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$modal.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             add(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$modal.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
+      const ids = row.id || this.ids
       this.$modal.confirm('是否确认删除归档编号为"' + ids + '"的数据项？').then(function() {
-        return del(ids);
+        return del(ids)
       }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
+      }).catch(() => {})
     }
   }
-};
+}
 </script>

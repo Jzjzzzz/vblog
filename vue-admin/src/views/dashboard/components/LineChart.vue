@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}"/>
+  <div :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -63,7 +63,7 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({expectedData, actualData} = {}) {
+    setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
         xAxis: {
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -110,26 +110,26 @@ export default {
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
         },
-          {
-            name: 'actual',
-            smooth: true,
-            type: 'line',
-            itemStyle: {
-              normal: {
+        {
+          name: 'actual',
+          smooth: true,
+          type: 'line',
+          itemStyle: {
+            normal: {
+              color: '#3888fa',
+              lineStyle: {
                 color: '#3888fa',
-                lineStyle: {
-                  color: '#3888fa',
-                  width: 2
-                },
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
+                width: 2
+              },
+              areaStyle: {
+                color: '#f3f8ff'
               }
-            },
-            data: actualData,
-            animationDuration: 2800,
-            animationEasing: 'quadraticOut'
-          }]
+            }
+          },
+          data: actualData,
+          animationDuration: 2800,
+          animationEasing: 'quadraticOut'
+        }]
       })
     }
   }

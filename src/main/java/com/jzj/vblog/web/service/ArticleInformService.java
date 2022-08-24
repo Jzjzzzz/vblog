@@ -84,7 +84,6 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * 文章点赞
      *
      * @param id      文章id
-     * @param request
      */
-    void getByIdLike(String id, HttpServletRequest request);
+    void getByIdLike(String id);
 }

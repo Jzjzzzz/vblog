@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
       <el-form-item label="标题内容" prop="articleTitle">
         <el-input
           v-model="queryParams.articleTitle"
@@ -64,7 +64,7 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-        ></el-date-picker>
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -96,55 +96,55 @@
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+        <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="articleList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" />
-      <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true"/>
+      <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true" />
       <el-table-column prop="logImg" label="背景" align="center">
         <template slot-scope="scope">
           <el-image
             style="width:100px;height: 100px"
             :src="scope.row.logImg"
-            :preview-src-list="[scope.row.logImg]">
-          </el-image>
+            :preview-src-list="[scope.row.logImg]"
+          />
         </template>
       </el-table-column>
       <el-table-column label="分类" align="center" prop="articleType">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_article_type" :value="scope.row.articleType"/>
+          <dict-tag :options="dict.type.sys_article_type" :value="scope.row.articleType" />
         </template>
       </el-table-column>
       <el-table-column label="标签" align="center" prop="articleTagList" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <el-tag style="margin: 5px" v-for="item in scope.row.articleTagList" :key="item.id" type="success">{{
-              item
-            }}
+          <el-tag v-for="item in scope.row.articleTagList" :key="item.id" style="margin: 5px" type="success">{{
+            item
+          }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="是否置顶" align="center" prop="topStatus">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_article_top" :value="scope.row.topStatus"/>
+          <dict-tag :options="dict.type.sys_article_top" :value="scope.row.topStatus" />
         </template>
       </el-table-column>
       <el-table-column label="是否原创" align="center" prop="originStatus">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_article_origin" :value="scope.row.originStatus"/>
+          <dict-tag :options="dict.type.sys_article_origin" :value="scope.row.originStatus" />
         </template>
       </el-table-column>
       <el-table-column label="评论" align="center" prop="commentStatus">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_article_comment" :value="scope.row.commentStatus"/>
+          <dict-tag :options="dict.type.sys_article_comment" :value="scope.row.commentStatus" />
         </template>
       </el-table-column>
-      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true"/>
-      <el-table-column label="点赞数" align="center" prop="numberLike" :show-overflow-tooltip="true"/>
+      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true" />
+      <el-table-column label="点赞数" align="center" prop="numberLike" :show-overflow-tooltip="true" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_article_status" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.sys_article_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -182,12 +182,12 @@
   </div>
 </template>
 <script>
-import {deleteBthById, listArticleInform} from "@/api/article/article";
-import {listAll} from "@/api/article/summary"
+import { deleteBthById, listArticleInform } from '@/api/article/article'
+import { listAll } from '@/api/article/summary'
 
 export default {
-  name: "Dict",
-  dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment','sys_article_tag'],
+  name: 'Dict',
+  dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment', 'sys_article_tag'],
   data() {
     return {
       // 遮罩层
@@ -210,42 +210,42 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        articleTitle: undefined,
+        articleTitle: undefined
       },
-      //归档列表
+      // 归档列表
       summaryList: []
-    };
+    }
   },
   created() {
-    this.getList();
-    this.getSummaryList();
+    this.getList()
+    this.getSummaryList()
   },
   methods: {
-    getSummaryList(){
-      listAll().then(response=>{
+    getSummaryList() {
+      listAll().then(response => {
         this.summaryList = response.data
       })
     },
     /** 查询文章列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listArticleInform(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.articleList = response.rows;
-          this.total = response.total;
-          this.loading = false;
-        }
-      );
+        this.articleList = response.rows
+        this.total = response.total
+        this.loading = false
+      }
+      )
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.dateRange = [];
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.dateRange = []
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -256,15 +256,15 @@ export default {
 
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除文章编号为"' + ids + '"的数据项？').then(function () {
-        return deleteBthById(ids);
+      const ids = row.id || this.ids
+      this.$modal.confirm('是否确认删除文章编号为"' + ids + '"的数据项？').then(function() {
+        return deleteBthById(ids)
       }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
       }).catch(() => {
-      });
+      })
     }
   }
-};
+}
 </script>

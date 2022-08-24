@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {getRankList} from '@/api/article/article'
+import { getRankList } from '@/api/article/article'
 
 export default {
   filters: {

@@ -4,35 +4,35 @@
       <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">
     </div>
     <div style="position:relative;">
-      <pan-thumb :image="avatar" class="panThumb"/>
-      <mallki class-name="mallki-text" text="vblog"/>
+      <pan-thumb :image="avatar" class="panThumb" />
+      <mallki class-name="mallki-text" text="vblog" />
       <div style="padding-top:35px;" class="progress-item">
         <span>SpringBoot</span>
-        <el-progress :percentage="70"/>
+        <el-progress :percentage="70" />
       </div>
       <div class="progress-item">
         <span>Vue</span>
-        <el-progress :percentage="18"/>
+        <el-progress :percentage="18" />
       </div>
       <div class="progress-item">
         <span>Mybatis</span>
-        <el-progress :percentage="12"/>
+        <el-progress :percentage="12" />
       </div>
       <div class="progress-item">
         <span>SpringMvc</span>
-        <el-progress :percentage="100" status="success"/>
+        <el-progress :percentage="100" status="success" />
       </div>
     </div>
   </el-card>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import PanThumb from '@/components/PanThumb'
 import Mallki from '@/components/TextHoverEffect/Mallki'
 
 export default {
-  components: {PanThumb, Mallki},
+  components: { PanThumb, Mallki },
 
   filters: {
     statusFilter(status) {
