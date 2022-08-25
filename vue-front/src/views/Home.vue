@@ -111,7 +111,7 @@ export default {
       })
     }
   },
-  mounted() {
+  created() {
     this.summaryTop();
     this.fetchList();
   }

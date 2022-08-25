@@ -163,8 +163,8 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'http://localhost:8888/',
+        meta: { title: '博客首页', icon: 'link' }
       }
     ]
   },

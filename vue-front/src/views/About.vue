@@ -15,26 +15,81 @@
                 </div>
 
               <div class="about-site about-info">
-                <section-title><span>❤</span>更新计划</section-title>
+                <section-title><span>❤</span>版本更新</section-title>
                 <div class="info-card">
                   <div class="block">
                     <el-timeline>
-                      <el-timeline-item timestamp="2022/8/01" placement="top">
+                      <el-timeline-item timestamp="2022/7/19" placement="top">
                         <el-card>
-                          <h4>构建后端架构</h4>
-                          <p>漫漫长路 提交于 2022/8/01 10:22</p>
+                          <h4>构建项目后端架构</h4>
+                          <p>漫漫长路 2022 年 7 月 19 日提交</p>
                         </el-card>
                       </el-timeline-item>
-                      <el-timeline-item timestamp="2022/8/05" placement="top">
+                      <el-timeline-item timestamp="2022/7/21" placement="top">
                         <el-card>
-                          <h4>添加新增博客</h4>
-                          <p>漫漫长路 提交于 2022/8/05 12:46</p>
+                          <h4>新增字典管理</h4>
+                          <p>漫漫长路 2022 年 7 月 21 日提交</p>
                         </el-card>
                       </el-timeline-item>
-                      <el-timeline-item type="success" timestamp="2018/4/2" placement="top">
+                      <el-timeline-item  timestamp="2022/7/22" placement="top">
                         <el-card>
-                          <h4>添加归档功能</h4>
-                          <p>漫漫长路 提交于 2022/8/06 20:46</p>
+                          <h4>系统设置,日志模块,公告管理</h4>
+                          <p>漫漫长路 2022 年 7 月 22 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/7/27" placement="top">
+                        <el-card>
+                          <h4>文件上传(本地上传,OSS上传)</h4>
+                          <p>漫漫长路 2022 年 7 月 27 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/5" placement="top">
+                        <el-card>
+                          <h4>博客管理</h4>
+                          <p>漫漫长路 2022 年 8 月 5 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/9" placement="top">
+                        <el-card>
+                          <h4>前台文章显示</h4>
+                          <p>漫漫长路 2022 年 8 月 9 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/11" placement="top">
+                        <el-card>
+                          <h4>文章归档管理</h4>
+                          <p>漫漫长路 2022 年 8 月 11 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/14" placement="top">
+                        <el-card>
+                          <h4>后台首页图表，新增备忘录</h4>
+                          <p>漫漫长路 2022 年 8 月 14 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/18" placement="top">
+                        <el-card>
+                          <h4>新增spring-retry轮询重试功能</h4>
+                          <p>漫漫长路 2022 年 8 月 18 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/19" placement="top">
+                        <el-card>
+                          <h4>整合sa-token,登录校验</h4>
+                          <p>漫漫长路 2022 年 8 月 19 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2022/8/22" placement="top">
+                        <el-card>
+                          <h4>新增定时计划管理，项目增加定时计划框架Quartz</h4>
+                          <p>漫漫长路 2022 年 8 月 22 日提交</p>
+                        </el-card>
+                      </el-timeline-item>
+
+                      <el-timeline-item type="success" timestamp="2022/8/25" placement="top">
+                        <el-card>
+                          <h4>后台登录添加AJ-Captcha行为验证码</h4>
+                          <p>漫漫长路 2022 年 8 月 25 日提交</p>
                         </el-card>
                       </el-timeline-item>
                     </el-timeline>
