@@ -55,7 +55,7 @@ aj:
   captcha:
     jigsaw: classpath:images/jigsaw
     pic-click: classpath:images/pic-click
-    cache-type: local
+    cache-type: redis
     # local缓存的阈值,达到这个值，清除缓存
     cache-number: 1000
     # local定时清除过期缓存(单位秒),设置为0代表不执行
@@ -68,9 +68,9 @@ aj:
     font-style: 1 #点选字体样式 默认Font.BOLD
     font-size: 25 #点选字体字体大小
     history-data-clear-enable: false
-    req-frequency-limit-enable: false # 接口请求次数一分钟限制是否开启 true|false
+    req-frequency-limit-enable: true # 接口请求次数一分钟限制是否开启 true|false
     req-get-lock-limit: 5 # 验证失败5次，get接口锁定
-    req-get-lock-seconds: 360 # 验证失败后，锁定时间间隔,s
+    req-get-lock-seconds: 120 # 验证失败后，锁定时间间隔,s
     req-get-minute-limit: 30 # get接口一分钟内请求数限制
     req-check-minute-limit: 60 # check接口一分钟内请求数限制
     req-verify-minute-limit: 60 # verify接口一分钟内请求数限制
