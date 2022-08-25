@@ -49,3 +49,28 @@ aliyun:
     keyId: LTAI5tPJqdTCFLCYhoBvApLN
     keySecret: tKfhKeOT3axaQhYLbpmznLXtVHZL7o
     bucketName: vue-vblog
+
+#行为验证码相关
+aj:
+  captcha:
+    jigsaw: classpath:images/jigsaw
+    pic-click: classpath:images/pic-click
+    cache-type: local
+    # local缓存的阈值,达到这个值，清除缓存
+    cache-number: 1000
+    # local定时清除过期缓存(单位秒),设置为0代表不执行
+    timing-clear: 180
+    type: default
+    water-mark: V-Blog
+    slip-offset: 5 # 校验滑动拼图允许误差偏移量(默认5像素)
+    aes-status: true # aes加密坐标开启或者禁用(true|false)
+    interference-options: 2 # 滑动干扰项(0/1/2)
+    font-style: 1 #点选字体样式 默认Font.BOLD
+    font-size: 25 #点选字体字体大小
+    history-data-clear-enable: false
+    req-frequency-limit-enable: false # 接口请求次数一分钟限制是否开启 true|false
+    req-get-lock-limit: 5 # 验证失败5次，get接口锁定
+    req-get-lock-seconds: 360 # 验证失败后，锁定时间间隔,s
+    req-get-minute-limit: 30 # get接口一分钟内请求数限制
+    req-check-minute-limit: 60 # check接口一分钟内请求数限制
+    req-verify-minute-limit: 60 # verify接口一分钟内请求数限制

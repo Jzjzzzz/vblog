@@ -19,4 +19,7 @@ public class LoginVo {
 
     @ApiModelProperty(value = "用户密码")
     private String password;
+
+    @ApiModelProperty(value = "行为验证码Code")
+    private String code;
 }

@@ -4,6 +4,14 @@
       <div class="title-container">
         <h3 class="title">VBlog后台管理系统</h3>
       </div>
+      <!-- 行为验证码 -->
+      <Verify
+        ref="verify"
+        :mode="'pop'"
+        :captcha-type="'blockPuzzle'"
+        :img-size="{ width: '330px', height: '155px' }"
+        @success="success"
+      />
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -37,17 +45,20 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
-
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="useVerify">登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import {validUsername} from '@/utils/validate'
-
+import { validUsername } from '@/utils/validate'
+import Verify from './../../components/verifition/Verify'
 export default {
   name: 'Login',
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    Verify
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -66,7 +77,8 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '123456'
+        password: '123456',
+        code: undefined
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -86,6 +98,13 @@ export default {
     }
   },
   methods: {
+    success(params) {
+      this.loginForm.code = params.captchaVerification
+      this.handleLogin()
+    },
+    useVerify() {
+      this.$refs.verify.show()
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -167,64 +186,64 @@ $cursor: #fff;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
-
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-image: url("../../../public/img/login_bg.jpg");
-  background-attachment: fixed;
-  background-size: 100% 100%;
+  background-color: $bg;
   overflow: hidden;
-
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 500px 35px 0;
+    padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
-
   .tips {
     font-size: 14px;
     color: #fff;
     margin-bottom: 10px;
-
     span {
       &:first-of-type {
         margin-right: 16px;
       }
     }
   }
-
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: white;
+    color: $dark_gray;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
   }
-
   .title-container {
     position: relative;
-
     .title {
       font-size: 26px;
-      color: white;
+      color: $light_gray;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
     }
   }
-
   .show-pwd {
     position: absolute;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: white;
+    color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .thirdparty-button {
+    position: absolute;
+    right: 0;
+    bottom: 6px;
+  }
+  @media only screen and (max-width: 470px) {
+    .thirdparty-button {
+      display: none;
+    }
   }
 }
 </style>
