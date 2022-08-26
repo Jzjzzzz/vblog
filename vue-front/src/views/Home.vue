@@ -29,7 +29,10 @@
 
       <!--加载更多-->
       <div class="more" v-show="hasNextPage">
-        <div class="more-btn" @click="loadMore">更多</div>
+        <router-link to="/category">
+          <div class="more-btn">更多</div>
+        </router-link>
+
       </div>
     </div>
   </div>
@@ -55,24 +58,9 @@ export default {
         tag: undefined,
         title: '',
         currPage: 1,
-        limit: 4
+        limit: 3
       },
       features: [
-        {
-          id: 1,
-          name: 'Jzj',
-          banner: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
-        },
-        {
-          id: 2,
-          name: '使用说明',
-          banner: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
-        },
-        {
-          id: 3,
-          name: '文章归档',
-          banner: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
-        }
       ],
       postList: [],
       hasNextPage: false
@@ -100,13 +88,6 @@ export default {
     fetchList() {
       fetchList(this.articleQuery).then(res => {
         this.postList = res.data.map.items || []
-        this.hasNextPage = res.data.map.hasNextPage
-      })
-    },
-    loadMore() {
-      this.articleQuery.currPage = this.articleQuery.currPage + 1
-      fetchList(this.articleQuery).then(res => {
-        this.postList = this.postList.concat(res.data.map.items || [])
         this.hasNextPage = res.data.map.hasNextPage
       })
     }
