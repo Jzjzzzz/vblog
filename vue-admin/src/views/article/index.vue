@@ -142,6 +142,7 @@
       </el-table-column>
       <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true" />
       <el-table-column label="点赞数" align="center" prop="numberLike" :show-overflow-tooltip="true" />
+      <el-table-column label="排序" align="center" prop="sort" :show-overflow-tooltip="true" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_article_status" :value="scope.row.status" />

@@ -37,10 +37,9 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
     /**
      * 检查置顶数是否已超过3
      *
-     * @param topStatus 该条纪录是否置顶
      * @return true/false
      */
-    boolean checkSummaryTop(String topStatus);
+    boolean checkSummaryTop(ArticleSummary articleSummary);
 
     /**
      * 新增归档

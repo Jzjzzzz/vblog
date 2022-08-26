@@ -55,4 +55,7 @@ public class ArticleAddVo {
 
     @ApiModelProperty(value = "归档id")
     private String aggregateId;
+
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
 }

@@ -96,6 +96,9 @@
                   />
                 </el-select>
               </el-form-item>
+              <el-form-item label="排序" prop="sort">
+                <el-input-number v-model="form.sort" :min="0" :max="10" label="排序" />
+              </el-form-item>
               <el-form-item label="封面" prop="logImg">
                 <ele-upload-image
                   v-model="form.logImg"
@@ -214,7 +217,8 @@ export default {
         logImg: undefined,
         content: undefined,
         id: undefined,
-        aggregateId: undefined
+        aggregateId: undefined,
+        sort: 0
       },
       rules: {
         articleTitle: [{

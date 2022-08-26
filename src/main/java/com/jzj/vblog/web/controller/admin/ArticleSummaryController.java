@@ -57,7 +57,7 @@ public class ArticleSummaryController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))) {
             throw new BusinessException("新增归档'" + articleSummary.getName() + "'失败，归档已存在");
         }
-        if (articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) {
+        if (articleSummaryService.checkSummaryTop(articleSummary)) {
             throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
         }
         return toAjax(articleSummaryService.insertSummary(articleSummary));
@@ -81,7 +81,7 @@ public class ArticleSummaryController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))) {
             throw new BusinessException("修改归档'" + articleSummary.getName() + "'失败，归档已存在");
         }
-        if (articleSummaryService.checkSummaryTop(articleSummary.getTopStatus())) {
+        if (articleSummaryService.checkSummaryTop(articleSummary)) {
             throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
         }
         return toAjax(articleSummaryService.updateSummary(articleSummary));

@@ -63,8 +63,14 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     }
 
     @Override
-    public boolean checkSummaryTop(String topStatus) {
-        if (TOP_STATUS.equals(topStatus)) {
+    public boolean checkSummaryTop(ArticleSummary articleSummary) {
+        if (TOP_STATUS.equals(articleSummary.getTopStatus())) {
+            if(articleSummary.getId()!=null){
+                ArticleSummary summary = articleSummaryMapper.selectById(articleSummary.getId());
+                if(summary.getTopStatus().equals(articleSummary.getTopStatus())){
+                    return false;
+                }
+            }
             return articleSummaryMapper.selectCount(new QueryWrapper<ArticleSummary>().eq("top_status", 1)) >= 3;
         }
         return false;
