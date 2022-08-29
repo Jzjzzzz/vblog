@@ -1,3 +1,3 @@
 spring:
   profiles:
-    active: dev,druid,job # 环境设置
+    active: dev,job # 环境设置
