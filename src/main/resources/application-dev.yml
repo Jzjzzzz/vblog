@@ -1,5 +1,6 @@
 server:
   port: 8081
+  address: 0.0.0.0
 spring:
   application:
     name: vBlog
@@ -16,7 +17,7 @@ spring:
     # 数据库索引
     database: 0
     # 密码
-    password: 1410357039
+    password: ncG3QLrjtQCmzTgs
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -34,7 +35,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://110.42.224.240:3306/vblog?serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
-    password: 5qxdxDw6MjZfrrUF
+    password: uqmDUurMPevyHPMp
     druid:
       # 初始连接数
       initialSize: 5

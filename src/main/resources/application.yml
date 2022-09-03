@@ -1,3 +1,3 @@
 spring:
   profiles:
-    active: dev,job # 环境设置
+    active: prod,job # 环境设置
