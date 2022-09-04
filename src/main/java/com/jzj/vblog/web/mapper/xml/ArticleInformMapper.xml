@@ -57,22 +57,24 @@
 
     <select id="selectPageVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleVo">
         SELECT
-            ai.id id,
-            ai.top_status isTop,
-            ai.log_img logImg,
-            ai.create_time pubTime,
-            ai.article_title title,
-            ai.introduce summary,
-            ai.click_rate viewsCount,
-            ai.article_tag tagIds,
-            ac.content content,
-            dict.dict_label typeName
+        ai.id id,
+        ai.top_status isTop,
+        ai.log_img logImg,
+        ai.create_time pubTime,
+        ai.article_title title,
+        ai.introduce summary,
+        ai.click_rate viewsCount,
+        ai.article_tag tagIds,
+        ai.create_by createBy,
+        ai.number_like numberLike,
+        ac.content content,
+        dict.dict_label typeName
         FROM
-            article_inform ai
-                LEFT JOIN article_content ac ON ai.id = ac.id
-                LEFT JOIN sys_dict_data dict ON dict.dict_type = 'sys_article_type'
-                AND dict.dict_value = ai.article_type
-            <where>
+        article_inform ai
+        LEFT JOIN article_content ac ON ai.id = ac.id
+        LEFT JOIN sys_dict_data dict ON dict.dict_type = 'sys_article_type'
+        AND dict.dict_value = ai.article_type
+        <where>
                 ai.`status` = '1'
                 <if test="type!=null and type!=''">
                  AND ai.article_type = #{type}

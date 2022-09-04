@@ -142,7 +142,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         BeanUtils.copyProperties(vo, inform);
         //初始化值
         inform.setClickRate(0L);
-        inform.setCreateBy("admin");
+        inform.setCreateBy("漫漫长路");
         inform.setNumberLike(0L);
         articleInformMapper.insert(inform);
         //文章内容

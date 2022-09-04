@@ -55,4 +55,10 @@ public class ArticleVo {
 
     @ApiModelProperty(value = "标签名称数组")
     private String[] tagNameArray;
+
+    @ApiModelProperty(value = "作者")
+    private String createBy;
+
+    @ApiModelProperty(value = "点赞数")
+    private Long numberLike;
 }
