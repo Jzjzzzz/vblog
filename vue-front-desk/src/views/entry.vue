@@ -24,6 +24,7 @@
 
 <script>
 import config from '@/config/blog-config.json'
+import {getInformation} from '@/api/webInformation'
 
 export default {
   name: 'entryPage',
@@ -58,6 +59,9 @@ export default {
     // 获取config的各个数据配置
     getConfig () {
       this.textMessage = config.page.entryPage;
+      getInformation().then(res => {
+        this.textMessage[0].title = res.data.webName
+      })
       this.navList = config.nav.mainNav;
     },
     init () {

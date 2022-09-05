@@ -39,12 +39,12 @@
 	"page": {
 		"entryPage": [
 	  	{
-		    "name": "index",
-		    "title": "我是唐益达",
-		    "desc": "很高兴能遇见你",
-		    "backgroundImage": "assets/image/background/9.jpg",
-		    "isOpacityFull": true
-		  }, {
+        "name": "index",
+        "title": "Vblog",
+        "desc": "很高兴能遇见你",
+        "backgroundImage": "assets/image/background/9.jpg",
+        "isOpacityFull": true
+      }, {
 		    "name": "contact",
 		    "title": "关于我",
 		    "desc": "和我的博客",

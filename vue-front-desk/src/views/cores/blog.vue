@@ -14,7 +14,8 @@
           </transition>
           <div class="row-content">
                 <article-item v-on:thumbclick="thumbSubmit" :article-list="rowitem"></article-item>
-                <article-page :current-page="currentPage" :page-all="currentPageAll" v-on:pageprocss="pageProcss"></article-page>
+                <article-page :current-page="articleQuery.currPage" :page-all="articleQuery.limit"
+                              v-on:pageprocss="pageProcss"></article-page>
           </div>
         </div>
       </div>
@@ -26,7 +27,7 @@
 import blogFoot from '@/views/components/blog-foot';
 import articleItem from '@/views/components/article-item';
 import articlePage from '@/views/components/article-page';
-
+import {fetchList} from '@/api/article';
 import config from '@/config/blog-config.json';
 
 export default {
@@ -38,9 +39,15 @@ export default {
   },
   data () {
     return {
+      articleQuery: {
+        currPage: 1, // 当前页
+        limit: 5, // 总页数
+        type: '',
+        aggregateId: '',
+        tag: undefined,
+        title: ''
+      },
       tagShowFlag: false,
-      currentPage: 1, // 当前页
-      currentPageAll: 3, // 总页数
       tagList: [],
       rowitem: []
     }
@@ -51,15 +58,17 @@ export default {
   methods: {
     init () {
       this.tagList = config.data.detail['tagList'].concat();
-      this.rowitem = JSON.parse(JSON.stringify(config.data.article['articleList']));
-      this.rowitem.forEach(item => {
-        item.photoUrl = require('../../' + item.photoUrl);
-      });
+      fetchList(this.articleQuery).then(res => {
+        console.log(res.data.map.items)
+        this.rowitem = res.data.map.items
+      })
     },
     thumbSubmit () {
       alert('您点赞了');
     },
     pageProcss (data) {
+      this.articleQuery.currPage = data.current
+      this.init();
       alert(`消息是：${data.message}
         您使用了分页功能，点击后当前页数为${data.current}，您可以在这里写翻页的逻辑。`);
     }

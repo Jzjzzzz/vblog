@@ -67,28 +67,39 @@ export default {
     pageClick: function (item) {
       const id = item.id;
       let message;
+      let type;
       switch (id) {
         case 'home':
-          this.current = 1; message = '您点击了首页'; break;
+          this.current = 1;
+          message = '您点击了首页';
+          type = id;
+          break;
         case 'last':
-          this.current = this.pageAll; message = '您点击了最后一页'; break;
+          this.current = this.pageAll;
+          message = '您点击了最后一页';
+          type = id;
+          break;
         case 'previous':
           message = '已经是第一页啦，无法在往前了';
           if (this.current > 1) {
             message = '您点击的上一页';
             this.current = this.current - 1;
-          };
+            type = id;
+          }
+          ;
           break;
         case 'next':
           message = '已经是最后一页啦，无法在往后了';
           if (this.current < this.pageAll) {
             message = '您点击的下一页';
             this.current = this.current + 1;
+            type = id;
           }; break;
       };
       this.$emit('pageprocss', {
         current: this.current,
-        message: message
+        message: message,
+        type: type,
       });
     }
   }
