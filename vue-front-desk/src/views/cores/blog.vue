@@ -13,8 +13,8 @@
             </div>
           </transition>
           <div class="row-content">
-                <article-item v-on:thumbclick="thumbSubmit" :article-list="rowitem"></article-item>
-                <article-page :current-page="articleQuery.currPage" :page-all="articleQuery.limit"
+                <article-item  :article-list="rowitem"></article-item>
+                <article-page :current-page="articleQuery.currPage" :page-all="totalPage"
                               v-on:pageprocss="pageProcss"></article-page>
           </div>
         </div>
@@ -47,6 +47,7 @@ export default {
         tag: undefined,
         title: ''
       },
+      totalPage: 0,
       tagShowFlag: false,
       tagList: [],
       rowitem: []
@@ -59,18 +60,17 @@ export default {
     init () {
       this.tagList = config.data.detail['tagList'].concat();
       fetchList(this.articleQuery).then(res => {
-        console.log(res.data.map.items)
+        this.totalPage = res.data.map.totalPage
         this.rowitem = res.data.map.items
       })
-    },
-    thumbSubmit () {
-      alert('您点赞了');
     },
     pageProcss (data) {
       this.articleQuery.currPage = data.current
       this.init();
-      alert(`消息是：${data.message}
-        您使用了分页功能，点击后当前页数为${data.current}，您可以在这里写翻页的逻辑。`);
+      console.log(data)
+      if (data.type == null) {
+        alert(data.message);
+      }
     }
   }
 }

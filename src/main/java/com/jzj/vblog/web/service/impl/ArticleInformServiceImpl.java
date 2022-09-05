@@ -105,12 +105,12 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         String title = queryMap.get("title").toString();
         String aggregateId = queryMap.get("aggregateId").toString();
         //分页查询
-        Page<ArticleVo> articleVoPage = articleInformMapper.selectPageVo(new Page<>(page, limit), type, title, aggregateId);
-        if (articleVoPage.getTotal() > 0) {
+        Page<ArticleVo> pageList = articleInformMapper.selectPageVo(new Page<>(page, limit), type, title, aggregateId);
+        if (pageList.getTotal() > 0) {
             //获取标签列表
             List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
             //获取列表
-            List<ArticleVo> list = articleVoPage.getRecords();
+            List<ArticleVo> list = pageList.getRecords();
             list.forEach(s -> {
                 //封装评论数
                 s.setCommentsCount(0);
@@ -123,7 +123,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             });
             map.put("items", list);
             map.put("currPage", page);
-            map.put("hasNextPage", page * limit < articleVoPage.getTotal());
+            map.put("totalPage",(pageList.getTotal()+limit-1)/limit);
         }
         return map;
     }
