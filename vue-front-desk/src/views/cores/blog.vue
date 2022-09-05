@@ -8,13 +8,13 @@
             <div v-show="tagShowFlag" class="tag-wall shadow">
               <div class="tag-wall-head">标签墙</div>
               <div class="tag-wall-body">
-                <a v-for="tagItem in tagList" class="tag" :href="'/blog/'+tagItem.tagName">{{tagItem.tagName}}</a>
+                <a v-for="tagItem in tagList" class="tag" @click="clickTag(tagItem.dictValue)">{{tagItem.dictLabel}}</a>
               </div>
             </div>
           </transition>
           <div class="row-content">
                 <article-item  :article-list="rowitem"></article-item>
-                <article-page :current-page="articleQuery.currPage" :page-all="totalPage"
+                <article-page :current-page="query.currPage" :page-all="totalPage"
                               v-on:pageprocss="pageProcss"></article-page>
           </div>
         </div>
@@ -39,13 +39,10 @@ export default {
   },
   data () {
     return {
-      articleQuery: {
+      query: {
         currPage: 1, // 当前页
         limit: 5, // 总页数
-        type: '',
-        aggregateId: '',
-        tag: undefined,
-        title: ''
+        tagId: undefined,
       },
       totalPage: 0,
       tagShowFlag: false,
@@ -57,17 +54,21 @@ export default {
     this.init();
   },
   methods: {
+    clickTag(tagId){
+      console.log(tagId)
+      this.query.tagId = tagId
+      this.init()
+    },
     init () {
-      this.tagList = config.data.detail['tagList'].concat();
-      fetchList(this.articleQuery).then(res => {
+      fetchList(this.query).then(res => {
         this.totalPage = res.data.map.totalPage
         this.rowitem = res.data.map.items
+        this.tagList = res.data.map.tagList
       })
     },
     pageProcss (data) {
-      this.articleQuery.currPage = data.current
+      this.query.currPage = data.current
       this.init();
-      console.log(data)
       if (data.type == null) {
         alert(data.message);
       }

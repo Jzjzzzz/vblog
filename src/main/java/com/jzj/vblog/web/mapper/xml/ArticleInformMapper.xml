@@ -76,14 +76,8 @@
         AND dict.dict_value = ai.article_type
         <where>
                 ai.`status` = '1'
-                <if test="type!=null and type!=''">
-                 AND ai.article_type = #{type}
-                </if>
-                <if test="title!=null and title!=''">
-                 AND ai.article_title like concat('%',#{title},'%')
-                </if>
-                <if test="aggregateId!=null and aggregateId!=''">
-                    AND ai.aggregate_id = #{aggregateId}
+                <if test="tagId!=null and tagId!=''">
+                    AND article_tag LIKE concat('%',#{tagId},'%')
                 </if>
             </where>
             ORDER BY ai.sort DESC
