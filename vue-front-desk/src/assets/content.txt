@@ -1,0 +1,739 @@
+
+
+### 前言
+
+> 闲来无事，想自己开发一个简单的Vue懒加载插件，能力的提升我觉得是可以通过编写插件实现，研究了一下官网的[Vue插件](https://cn.vuejs.org/v2/guide/plugins.html)编写。马上自己独立开始编写懒加载插件。
+
+### 一、写在前面
+
+在这阐述一下本人的观念，我一直推崇一些高度定制化的插件，一些小Demo，是需要自己写的，不能崇尚“拿来主义”。有些插件网上都有，但是你用了会发现谁都会用，而且有时候对于自己的需求又不够贴合。
+
+等到自己需要写一个插件的时候，却无从下手。但是如果你练习了插件编写后，收获往小了讲，就是可以自己写一个小插件，往大了讲，你能力到达一定地步你是可以写一个框架的。
+
+所以，练习写插件和小框架能力非常重要！也就基本注定了你的代码生涯。
+
+### 二、前期准备
+
+#### 2.1 选择合适的打包工具
+
+合适的打包工具可以达到事半功倍的效果。一开始我的首选有两个，一个是webpack，一个是rollup。下面简单介绍一下我为什么选择了rollup。
+
+众所周知，webpack是一个几乎囊括了所有**静态资源**，可以**动态按需加载**的一个包工具。而rollup也是一个模块打包器，可以把一个大块复杂的代码拆分成各个小模块。
+
+深思熟虑后，我觉得webpack也可以打包，但是首先，有点“杀鸡焉用牛刀”的感觉。而我的这个懒加载插件则需要提供给别人使用，同时又要保证整个插件的“轻量性”（打包完大概6KB，而webpack则比较大），不喜欢像webpack那样在这插件上臃肿的表现。
+
+对于非应用级的程序，我比较倾向于使用rollup.js。
+
+#### 2.2 确认项目结构
+
+```json
+|——package.json
+|——config
+|	|——rollup.config.js
+|——dist
+|	|——bundle.js
+|——src
+|	|——index.js
+|	|——directive.js
+|	|——mixin.js
+|	|——utils
+|	|	|——utils.js
+|	|——cores
+|		|——lazyload.js
+|		|——imagebox.js
+```
+
+config文件夹下放置rollup的配置文件。src为源文件夹，cores下面的文件夹为主要的模块，utils为工具类，主要是一些可以通用的模块方法。大概的结构就是这样。
+
+#### 2.3 编写思路
+
+懒加载的实现过程，我们这里先精简化。具体思路如下：
+
+=》**把所有用指令绑定的元素添加数组初始化** 
+
+=》**监听滚动条滚动**	
+
+=》**判断元素是否进入可视范围** 
+
+=》**如果进入可视范围，进行src预加载（存入缓存数组）** 
+
+=》**对于pending的图片，进行正在加载赋值，对于finsh完的图片，加载预加载src里面的值，对于error的图片，进行错误图片src赋值**
+
+### 三、主要代码的编写
+
+#### 3.1 确认入口文件
+
+[Vue](https://cn.vuejs.org/v2/guide/plugins.html)插件里面介绍是这样的
+
+```javascript
+MyPlugin.install = function (Vue, options) {
+  // 1. 添加全局方法或属性
+  Vue.myGlobalMethod = function () {
+    // 逻辑...
+  }
+
+  // 2. 添加全局资源
+  Vue.directive('my-directive', {
+    bind (el, binding, vnode, oldVnode) {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 3. 注入组件
+  Vue.mixin({
+    created: function () {
+      // 逻辑...
+    }
+    ...
+  })
+
+  // 4. 添加实例方法
+  Vue.prototype.$myMethod = function (methodOptions) {
+    // 逻辑...
+  }
+}
+```
+
+在外面暴露的方法就是install,使用的时候直接Vue.use("插件名称")直接可以使用。我们在install方法里面填写关于指令（directive）和[混合](https://cn.vuejs.org/v2/guide/mixins.html)（mixin），然后对外公开这个方法，option没填写的话就是默认空对象。
+
+```javascript
+import directive from './cores/directive';
+import mixin from './cores/mixin';
+
+const install = ( Vue,options = {} )=>{
+	Vue.mixin(mixin);
+	
+	Vue.directive('lazy',directive);
+
+}
+
+export default {
+	install
+};
+```
+
+混合主要是为了混入vue内部属性，是除了以上全局方法后又可以在**全局使用**的一种方式。
+
+#### 3.2 编写配置文件
+
+rollup.config.js
+
+```javascript
+import buble from 'rollup-plugin-buble';
+import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+
+export default {
+  input: 'src/index.js',//入口
+  output: {
+    file: 'dist/bundle.js',//输出的出口
+    format: 'umd',//格式：表示通用格式
+  },
+  moduleName: 'LazyLoad',//打包的模块名称，可以再Vue.use()方法使用
+  plugins:[
+  	resolve(),
+  	commonjs(),//支持commonJS
+  	buble(),
+  	babel({//关于ES6
+  		exclude: 'src/**' // 只编译我们的源代码
+  	})
+  ]
+};
+```
+
+package.json
+
+```javascript
+{
+  "name": "lazyload",
+  "version": "1.0.0",
+  "description": "vue懒加载插件",
+  "main": "index.js",
+  "scripts": {
+    "main": "rollup -c config/rollup.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TangHy",
+  "license": "MIT",
+  "dependencies": {
+    "path": "^0.12.7",
+    "rollup": "^0.57.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0"
+  }
+}
+
+```
+
+注意其中的命令：
+
+```javascript
+rollup -c config/rollup.config.js
+```
+
+后面的config/...是路径，这里注意一下，我们只需要运行
+
+```javascript
+npm run main
+```
+
+就可以进行打包了。
+
+#### 3.3 编写主程序代码
+
+##### 3.3.1 directive.js
+
+```javascript
+import eventlistener from './cores/eventlistener'
+
+export default {
+	inserted: function (el,binding, vnode, oldVnode) {
+		var EventListener = new eventlistener(el,binding, vnode);
+		EventListener.init();
+		EventListener.startListen();
+  },
+	update: function(){
+		
+	},
+	unbind: function(){
+		
+	}
+}
+```
+
+先写生命周期中inserted的时候绑定监听。加入的时候new一个监听对象保存所有包括所有dom的，关于监听的函数如下：
+
+##### 3.3.2 eventlistener.js
+
+```javascript
+import {isSeen} from '../utils/utils'//引入工具类的里面的是否看得见元素这个方法判断
+
+export default class EventListener {
+  constructor(el,binding,vnode) {
+    this.el = el;//初始化各种需要的属性
+    this.binding = binding;
+    this.vnode = vnode;
+    this.imagebox = null;
+    this.$vm = vnode.context;
+    this.$lazyload = vnode.context.$lazyload//混合mixin进去的选项
+  }
+
+  init(){
+  	this.imagebox = this.vnode.context.imagebox;
+      this.imagebox.add(this.el,this.binding.value);//这里每次一个insert加入一个item
+  }
+
+  startListen(){
+  	const _self = this;
+  	document.addEventListener('scroll',(e)=>{
+	  	_self.listenProcess(e);//这里开始操作
+  	})
+  }
+}
+```
+
+上面主要初始化了很多属性，包括vue的虚拟dom和各种包括el元素dom，binding指令传过来的值等等初始化。
+
+此文件主要为了处理监听页面滚动的，监听**是否图片进入到可视范围内**，然后进行一系列下方的各种操作。
+
+其次加入process的函数`listenProcess`：
+
+```javascript
+const _self = this;
+  	this.imagebox.item.forEach((item)=>{
+        if(isSeen(item)){//这里判断元素是否看得见
+            var image = new Image();//这里在赋值src前new一个image对象进行缓存，缓冲一下，可以做后续的加载或失败的函数处理
+            image.src = item.src;
+            _self._imageStyle(item);//改变item的样式
+
+            _self.imagebox.addPending(item.ele,item.src);//在对象imagebox中加入了正在pending请求的item(后续会介绍imagebox类)
+
+            image.onload = function(){//加载成功的处理
+                if(image.complete){
+                    _self.imageOnload(item);
+                }
+            }
+
+            image.onerror = function(){//加载失败的处理
+                _self.imageOnerror(item);
+            }
+        }
+    })
+```
+
+还有其余的一些方法：
+
+```javascript
+imageOnload(item){//图片加载完的操作
+  	this._removeImageStyle(item.ele);
+    this.imagebox.addAlready(item.ele,item.src);//添加到已经加载完的item数组里面
+    this._imageSet(item.ele,item.src)
+  }
+
+  imageOnerror(item){//出现错误的时候
+  	this._removeImageStyle(item.ele);
+    this.imagebox.addFailed(item.ele,item.src);//添加到出现错误item数组里面
+    this._imageSet(item.ele,this.$lazyload.options.errorUrl)//把配置中的错误图片url填入
+  }
+
+  _imageStyle(item){
+    this._imageSet(item.ele,this.$lazyload.options.loadUrl)//正在加载的url图片
+    item.ele.style.padding = '80px';
+    item.ele.style.boxSizing = 'border-box';
+  }
+
+  _removeImageStyle(ele){
+  	ele.style = '';
+  }
+
+  _imageSet(ele,value){//关于图片赋值src的操作
+    ele.src = value;
+  }
+```
+
+所有的解释都已经写在上面的代码块里面了。
+
+##### 3.3.3 mixin.js
+
+```javascript
+import imagebox from './imagebox'
+
+const mixin = {
+	data () {
+      return {
+          imagebox: new imagebox()//这里声明一个new对象，存在全局的变量中，混入vue内部，可以全局使用
+      }
+  }
+}
+
+export default mixin;
+```
+
+#### 3.4 核心代码
+
+##### 3.4.1 imagebox.js类
+
+```javascript
+export default class ImageBox {
+  constructor() {
+    this.item = [];
+    this.itemAlready = [];
+    this.itemPending = [];
+    this.itemFailed = [];
+  }
+
+  add(ele,src) {//insert插入的时候把所有的dom加入到数组中去初始化
+  	const index = this.itemAlready.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	})
+  	if(index === -1){
+  		this.item.push({
+	    	ele:ele,
+	    	src:src
+	    })
+  	}
+  }
+
+  addFailed(ele,src){//失败的时候添加到数组
+  	this._addFailed(ele,src);
+  	this._removeFromPending(ele);
+  }
+
+  addPending(ele,src){//正在加载的时候添加到数组
+  	
+  }
+
+  addAlready(ele,src){//加载完的图片dom添加到数组
+  	
+  }
+
+  _addAlready(ele,src) {//私有方法（仅在名称上），添加到数组，下面同理
+  	const index = this.itemAlready.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	})
+  	if(index === -1){
+  		this.itemAlready.push({
+	    	ele:ele,
+	    	src:src
+	    })
+  	}
+  }
+
+  _addPending(ele,src) {
+  	
+  }
+
+  _addFailed(ele,src) {
+  	
+  }
+
+  _remove(ele) {//移除某个dom
+  	
+  }
+
+  _removeFromPending(ele) {
+  	
+  }
+}
+
+```
+
+上述是一个图片的box，用于存取页面加载时候，image图片对象的box存取。主要思路是分了三个数组，**一个存储所有的图片**，**一个存储正在加载的图片**，**一个存储加载失败的图片**，然后最重要的是！！！
+
+**把这个imagebox要混入到全局，使其可以当做全局变量在全局使用。**
+
+##### 3.4.2 lazyload.js
+
+```javascript
+const DEFAULT_ERROR_URL = './404.svg';
+const DEFAULT_LOAD_URL = './loading-spin.svg';
+
+export default class LazyLoad {
+	constructor() {
+    this.options = {
+    	loadUrl: DEFAULT_LOAD_URL,
+    	errorUrl: DEFAULT_ERROR_URL
+    };
+  }
+
+  register(options){
+  	Object.assign(this.options, options);
+  }
+} 
+```
+
+此类暂时用来存**储各种配置**和lazy的预定默认值，options里面存加载的时候的图片地址和错误加载的时候的图片地址。
+
+默认值是最上面两个值，是不传数据默认的配置。
+
+### 四、2018年6月17号更新
+
+#### 4.1 指令的更新（update）生命周期
+
+之前编写的代码有很多瑕疵，比如insert之后，如果图片的源值改变后，你会发现无法改变视图，因为update里面没有写相关程序。
+
+思路很简单，就是如果你指令的值改变了后，就进行一个数组遍历，遍历所有insert进去的元素，一个个对比，如果值改变了，只需要把他们加到item(总item数组)就可以了。
+
+因为之前的思路是遍历item的数组进行请求，所以只要item里面有值，就会去进行请求。改变后代码如下：
+
+directive.js
+
+```javascript
+import eventlistener from './cores/eventlistener'
+
+var listener = null;
+
+export default {
+
+	inserted: function (el,binding, vnode, oldVnode) {
+		var EventListener = new eventlistener(el,binding, vnode);
+		listener = EventListener;
+		EventListener.init();
+		EventListener.startListen();
+  },
+	update: function(el,{name,value,oldValue,expression}, vnode, oldVnode){
+		if(value === oldValue){
+			return;
+		}
+		listener.update(el,value);
+	},
+	unbind: function(){
+		listener.removeListen();
+	}
+}
+```
+
+imagebox.js
+
+```javascript
+export default class ImageBox {
+  constructor() {
+    this.eleAll = [];
+    this.item = [];
+    this.itemAlready = [];
+    this.itemPending = [];
+    this.itemFailed = [];
+  }
+
+  add(ele,src) {
+  	const index = this.itemAlready.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	})
+  	if(index === -1){
+  		this.item.push({
+	    	ele:ele,
+	    	src:src
+	    })
+  	}
+  }
+
+  update(ele,src){
+    let index = this.itemAlready.findIndex(item=>{
+      return item.ele === ele;
+    });
+
+    if(index != -1){
+      this.itemAlready.splice(index,1);
+      this.add(ele,src);
+      return;
+    };
+
+    let _index = this.itemFailed.findIndex(item=>{
+      return item.ele === ele;
+    });
+
+    if(_index !=-1){
+      this.itemFailed.splice(_index,1);
+      this.add(ele,src);
+      return;
+    };
+
+  }
+
+  addFailed(ele,src){
+  	this._addFailed(ele,src);
+  	this._removeFromPending(ele);
+  }
+
+  addPending(ele,src){
+  	this._addPending(ele,src);
+  	this._remove(ele);
+  }
+
+  addAlready(ele,src){
+  	this._addAlready(ele,src);
+  	this._removeFromPending(ele);
+  }
+
+  _addAlready(ele,src) {
+  	const index = this.itemAlready.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	})
+  	if(index === -1){
+  		this.itemAlready.push({
+	    	ele:ele,
+	    	src:src
+	    })
+  	}
+  }
+
+  _addPending(ele,src) {
+  	const index = this.itemPending.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	})
+  	if(index === -1){
+  		this.itemPending.push({
+	    	ele:ele,
+	    	src:src
+	    })
+  	}
+  }
+
+  _addFailed(ele,src) {
+  	const index = this.itemFailed.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	})
+  	if(index === -1){
+  		this.itemFailed.push({
+	    	ele:ele,
+	    	src:src
+	    })
+  	}
+  }
+
+  _remove(ele) {
+  	const index = this.item.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	});
+  	if(index!=-1){
+  		this.item.splice(index,1);
+  	}
+  }
+
+  _removeFromPending(ele) {
+  	const index = this.itemPending.findIndex((_item)=>{
+  		return _item.ele === ele;
+  	});
+  	if(index!=-1){
+  		this.itemPending.splice(index,1);
+  	}
+  }
+}
+
+```
+
+eventlistener.js
+
+```javascript
+import {isSeen} from '../utils/utils'
+
+export default class EventListener {
+  constructor(el,binding,vnode) {
+    this.el = el;
+    this.binding = binding;
+    this.vnode = vnode;
+    this.imagebox = null;
+    this.$vm = vnode.context;
+    this.$lazyload = vnode.context.$lazyload
+  }
+
+  init(){
+  	this.imagebox = this.vnode.context.imagebox;
+		this.imagebox.add(this.el,this.binding.value);
+    this.listenProcess();
+  }
+
+  startListen(){
+    var listenProcess = this.listenProcess;
+  	window.addEventListener('scroll',listenProcess.bind(this),false);
+  }
+
+  removeListen(){
+    var listenProcess = this.listenProcess;
+    window.removeEventListener('scroll',listenProcess.bind(this),false);
+  }
+
+  listenProcess(){
+  	const _self = this;
+    if(this.imagebox.item.length == 0){
+      return;
+    }
+
+  	this.imagebox.item.forEach((item)=>{
+			if(isSeen(item)){
+
+				var image = new Image();
+	      image.src = item.src;
+	      _self._imageStyle(item);
+	      
+	      _self.imagebox.addPending(item.ele,item.src);
+
+	      image.onload = function(){
+	        if(image.complete){
+	        	_self.imageOnload(item);
+	        }
+	      }
+
+	      image.onerror = function(){
+	        _self.imageOnerror(item);
+	      }
+			}
+		})
+  }
+
+  update(ele,src){
+    this.imagebox.update(ele,src);
+    this.listenProcess();
+  }
+
+  imageOnload(item){
+  	this._removeImageStyle(item.ele);
+    this.imagebox.addAlready(item.ele,item.src);
+    this._imageSet(item.ele,item.src)
+  }
+
+  imageOnerror(item){
+  	this._removeImageStyle(item.ele);
+    this.imagebox.addFailed(item.ele,item.src);
+    this._imageSet(item.ele,this.$lazyload.options.errorUrl)
+  }
+
+  _imageStyle(item){
+    // this._imageSet(item.ele,this.$lazyload.options.loadUrl);
+    item.ele.style.background = `url(${this.$lazyload.options.loadUrl}) no-repeat center`;
+  }
+
+  _removeImageStyle(ele){
+  	ele.style.background = '';
+  }
+
+  _imageSet(ele,value){
+    ele.src = value;
+  }
+}
+
+```
+
+utils.js
+
+```javascript
+const isSeen = function(item,imagebox){
+  var ele = item.ele;
+  var src = item.src;
+  //图片距离页面顶部的距离
+  var top = ele.getBoundingClientRect().top;
+  //页面可视区域的高度
+  var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+  //top + 10 已经进入了可视区域10像素
+  if(top + 10 < windowHeight){
+      return true;
+  }else{
+      return false;
+  }
+}
+
+export {
+  isSeen
+};
+```
+
+
+
+### 五、打包成.js可以外部直接引用
+
+打包后的代码：**[lazyload.js](http://www.tangyida.top/static/study/lazyload.js)**
+
+#### 使用方法
+
+```javascript
+Vue.use(LazyLoad,{
+    loadUrl:'./loading-spin.svg',//这里写你的加载时候的图片配置
+    errorUrl:'./404.svg'//错误加载的图片配置
+});
+```
+
+#### 元素中使用指令
+
+```javascript
+<img v-lazy="item" v-for="(item,$key) in imageArr">
+```
+
+#### imageArr测试数据
+
+```javascript
+imageArr:[
+	'http://covteam.u.qiniudn.com/test16.jpg?imageView2/2/format/webp',
+	'http://covteam.u.qiniudn.com/test14.jpg?imageView2/2/format/webp',
+	'http://covteam.u.qiniudn.com/test15.jpg?imageView2/2/format/webp',
+	'http://covteam.u.qiniudn.com/test17.jpg?imageView2/2/format/webp',
+	'http://hilongjw.github.io/vue-lazyload/dist/test9.jpg',
+	'http://hilongjw.github.io/vue-lazyload/dist/test10.jpg',
+	'http://hilongjw.github.io/vue-lazyload/dist/test14.jpg'
+]
+```
+
+测试地址：[戳我戳我](http://www.tangyida.top/static/study/lazyload/test.html)
+
+### 五、后记
+
+其实这些代码的编写还是比较简单的，写完过后进行总结，你会发现，其中最难的是：
+
+**整个项目的结构，和代码模块之间的逻辑关系**。
+
+这个才是最难掌握的，如果涉及到大一点的项目，好一点的项目结构能让整个项目进度等等因素发生巨大的变化，提升巨大的效率。而写插件最难的就是在这。
+
+**如何有效地拆分代码？如何有效地进行项目结构的构造?** 这才是整个插件编写的核心。
+
+之前写过一个vue关于表单验证的插件，也是被项目结构搞得焦头烂额。还有写过一个cordova的插件，遵循它的插件规范。
+
+所以我深知写插件的时候，它结构和模块化的重要性。而结构和模块化的优秀，会让你事半功倍。当你经验积累到一定程度的时候，你会发现，你也可以写框架了。

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>XX系统登录</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/framework/bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/plguins/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/dist/css/login.min.css" rel="stylesheet" type="text/css">
+    <link href="/framework/vue/custom/markdown.css" rel="stylesheet" type="text/css">
+    <link href="/plguins/cropper-3.1.2/dist/cropper.min.css" rel="stylesheet" type="text/css">
+    <!-- <link href="/plguins/highlight/styles/monokai-sublime.css" rel="stylesheet" type="text/css"> -->
+    <style type="text/css">
+        .list-group{
+            margin-top: 50px;
+        }
+        img{
+            width: 100%;
+            height: auto;
+        }
+        .form-row{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .preview{
+            padding: 20px;
+        }
+        .preview canvas{
+            width: 100%;
+        }
+        .tagDiv{
+            height: 34px;
+            position: absolute;
+            bottom: 30px;
+        }
+        .tagSelect{
+            margin:10px;
+            min-height: 20px;
+        }
+        .form-tag{
+            position: relative;
+        }
+        .tagItem{
+            padding: 8px;
+            margin-right: 10px;
+            background-color: #fbcd4b;
+            font-size: 10px;
+            border-radius: 10px;
+        }
+        .tagDiv .tagItem{
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="title" style="width: auto;max-width:1200px;display: block; margin: 0 auto" class="container">
+        <div class="row">
+            <div style="margin: 0 auto">
+                <div v-show="showflag1" class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-lg fa-weibo"></i> 文章管理</h3>
+                    </div>
+                    <div class="panel-body">
+                    <button class="btn btn-primary" @click="add" type="button">添加文章</button>
+                    <button class="btn btn-primary" @click="edit" type="button">编辑文章</button>
+                    <button class="btn btn-primary" @click="del" type="button">删除文章</button>
+                    <button class="btn btn-primary" @click="fresh" type="button">刷新</button>
+                    <button class="btn btn-primary" @click="addVideo" type="button">添加视频</button>
+                    <button class="btn btn-primary" @click="delVideo" type="button">删除视频</button>
+                    <button style="float: right;" class="btn btn-warning" @click="out" type="button">登出</button>
+                        <div class="list-group">
+                        <h2>文章列表</h2>
+                          <a v-for="(item,$index) in articleList" href="javaScript:void(0)" class="list-group-item"><input v-model="selectCheckbox" :value="item.id" type="checkbox" :id="$index"> <label :for="$index">标题： </label> {{item.title}} <label>最后编辑时间：</label> {{item.time}} <i style="float: right;" @click="detail(item.id)" class="fa fa-hand-o-left" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="list-group">
+                        <h2>视频列表</h2>
+                          <a v-for="(videoItem,$index) in videoList" href="javaScript:void(0)" class="list-group-item"><input v-model="selectCheckboxVideo" :value="videoItem.videoId" type="checkbox" :id="'video'+$index"> <label :for="'video'+$index">标题： </label> {{videoItem.videoTitle}} <label>最后编辑时间：</label> {{videoItem.date}} <i style="float: right;" class="fa fa-hand-o-left" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div v-show="showflag2" class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-lg fa-weibo"></i> 文章编辑</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" method="post" enctype="multipart/form-data" action="javascript:;">
+                          <div  class="form-group">
+                            <label for="title-main">输入你的文章标题</label>
+                            <input type="text" class="form-control" id="title-main" placeholder="文章标题">
+                          </div>
+                          <div  class="form-group">
+                            <label for="author">输入作者名</label>
+                            <input type="text" class="form-control" id="author" placeholder="作者">
+                          </div>
+                          <div  class="form-group row form-row">
+                            <label for="photo">上传您的封面图</label>
+                            <input v-focus v-on:change="showflag2?selectPhoto($event):''" type="file" id="photo">
+                            <div class="col-md-6 col-sm-6 col-lg-6 preview" id='show'><img id="image" :src="choosePhoto" alt="图片在这"></div><div class="col-md-6 col-sm-6 col-lg-6 preview"><canvas id="preview"></canvas></div>
+                          </div><br>
+                          <div class="form-group form-tag">
+                            <label for="tag">选择您的文章标签</label>
+                            <input v-model="tagInput" @blur="tagSet($event)" :style="tagInputLeft" type="text" class="form-control" id="tag" placeholder="标签">
+                            <div ref="tagDivSet" class="tagDiv"><span v-for="(tagItemAdd,$index) in tagListAdd" class="tagItem" @click="tagRemove($index,$event)" >{{tagItemAdd.tagName}}</span></div>
+                            <div class="tagSelect"><span @click="tagAdd(item.tagId,$event)" v-for="item in tagList" class="tagItem">{{item.tagName}}</span></div>
+                          </div>
+                          <div class="form-group">
+                            <label for="summary">输入您的文章简介</label>
+                            <textarea id="summary" class="form-control" rows="3"></textarea>
+                          </div>
+                          <div id="editor" class="form-group">
+                            <label for="content">正文</label><br>
+                            <textarea id="content" style="height: 100%" :value="input" @input="update"></textarea>
+                          </div>
+                          <button type="button" @click="sub" class="btn btn-default">提交</button>
+                          <button type="button" @click="add" class="btn btn-default">取消</button>
+                        </form>
+                    </div>
+                </div>
+                <div v-show="showflag3" class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-lg fa-weibo"></i> 文章修改</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form >
+                          <div  class="form-group">
+                            <label for="title-main">修改你的文章标题</label>
+                            <input type="text" :value="editReturn.title" class="form-control" id="title-mainEdit" placeholder="文章标题">
+                          </div>
+                          <div  class="form-group">
+                            <label for="author">修改作者名</label>
+                            <input type="text" :value="editReturn.authorEdit" class="form-control" id="authorEdit" placeholder="作者">
+                          </div>
+                          <div  class="form-group">
+                            <label for="summaryEdit">输入您的文章简介</label>
+                            <textarea :value="editReturn.summary" id="summaryEdit" class="form-control" rows="3"></textarea>
+                          </div>
+                          <div id="editor" class="form-group">
+                            <label for="content">修改正文</label><br>
+                            <textarea id="contentEdit" style="height: 100%" :value="editReturn.content" ></textarea>
+                          </div>
+                          <button type="button" @click="editUpdate" class="btn btn-default">提交</button>
+                          <button type="button" @click="showflag1 = !showflag1;showflag3 = !showflag3;" class="btn btn-default">取消</button>
+                        </form>
+                    </div>
+                </div>
+                <div v-show="showflag4" class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><a @click="showflag4 = !showflag4,showflag1 = !showflag1" href="javaScript:void(0)"><i class="fa fa-lg fa-weibo"></i></a> 文章预览</h3>
+                    </div>
+                    <div v-html="contentDetail" class="panel-body">
+
+                    </div>
+                </div>
+                <div v-show="showflag5" class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-lg fa-weibo"></i> 视频编辑</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" method="post" enctype="multipart/form-data" action="javascript:;">
+                          <div  class="form-group">
+                            <label for="title-video">输入你的视频标题</label>
+                            <input type="text" v-model="videoTitle" class="form-control" id="title-video" placeholder="视频标题">
+                          </div>
+                          <div  class="form-group">
+                            <label for="video-author">输入作者名</label>
+                            <input type="text" v-model="videoAuthor" class="form-control" id="video-author" placeholder="作者">
+                          </div>
+                          <div  class="form-group row form-row">
+                            <label for="videoPhoto">上传您的封面图</label>
+                            <input v-on:change="showflag5?selectPhotoVideo($event):''" type="file" id="videoPhoto">
+                            <div class="col-md-6 col-sm-6 col-lg-6 preview" id='videoShow'><img id="compressImage" :src="choosePhoto" alt="图片在这"></div><div class="col-md-6 col-sm-6 col-lg-6 preview"><canvas id="compressVideo"></canvas></div>
+                          </div><br>
+                          <div class="form-group form-tag">
+                            <label for="classification">选择您的视频分类</label>
+                            <select v-model="videoClassification" class="form-control">
+                              <option v-for="name in classificationName">{{name.classificationName}}</option>
+                            </select>
+                            <div style="padding: 0px;margin-top: 10px;margin-bottom: 10px;" class="col-sm-10">
+                              <input v-model="addClassificationVal" type="text" class="form-control" id="Newclassification" placeholder="增加分类">
+                            </div>
+                            <div style="padding: 0px;margin-top: 10px;margin-bottom: 10px;" class="col-sm-2"> <button @click="addClassification" class="btn btn-primary">增加分类</button></div>
+                          </div>
+                          <div class="form-group">
+                            <label for="video-summary">输入您的视频简介</label>
+                            <textarea v-model="videoSummary" id="video-summary" class="form-control" rows="3"></textarea>
+                          </div>
+                          <div id="video-content" class="form-group">
+                            <label for="video">视频链接</label><br>
+                            <input v-model="videoHref" type="text" class="form-control" id="video" placeholder="视频链接">
+                          </div>
+                          <button type="button" @click="subVideo" class="btn btn-default">提交</button>
+                          <button type="button" @click="addVideo" class="btn btn-default">取消</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/plguins/lib/jquery/jquery-3.2.1.min.js"></script>
+    <!--阿里云OSS授权上传图片所需js-->
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/crypto1/crypto/crypto.js"></script>
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/crypto1/hmac/hmac.js"></script>
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/crypto1/sha1/sha1.js"></script>
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/base64.js"></script>
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/plupload-2.1.2/js/plupload.full.min.js"></script>
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/promise-6.1.0/promise.js"></script>
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/aliyun-oss/aliyun-oss-sdk.min.js"></script>
+    <!--自己封装的上传代码-->
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/upload.js"></script>
+    <script type="text/javascript" src="/plguins/OSScontrol/lib/uploadFun/uploadFun.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/framework/bootstrap3.3.7/js/bootstrap.min.js"></script>
+    <!-- vue markdown编辑器js代码 -->
+    <script src="/framework/vue/custom/marked.js"></script>
+    <script src="/framework/vue/custom/lodash.js"></script>
+    <script src="/framework/vue/vue.min.js"></script>
+    <!-- 截图代码 -->
+    <script src="/plguins/cropper-3.1.2/dist/cropper.min.js"></script>
+    <script type="text/javascript">
+        Vue.directive('focus', {
+          // 当绑定元素插入到 DOM 中。
+          inserted: function (el) {
+            // 聚焦元素
+            el.focus()
+          }
+        })
+        var container = new Vue({
+            el:"#title",
+            data:{
+                showflag1:true,
+                showflag2:false,
+                showflag3:false,
+                showflag4:false,
+                showflag5:false,
+                choosePhoto:'',
+                editFlag:'',
+                input: '![](http://www.lovediscuz.com/demo/32/data/attachment/forum/201612/28/205259f4cccfzv55flvf55.jpg)',
+                articleList:[],
+                selectCheckbox:[],
+                selectCheckboxVideo:[],
+                tagList:[],
+                tagListAdd:[],
+                classificationName:[],
+                videoList:[],
+                editReturn:{
+                    title:"",
+                    author:"",
+                    content:"",
+                    summary:""
+                },
+                tagInputLeft:{
+                    paddingLeft:0
+                },
+                contentDetail:"",
+                tagInput:'',
+                videoTitle:'',
+                videoAuthor:'',
+                videoClassification:'',
+                videoSummary:'',
+                videoHref:'',
+                addClassificationVal:''
+            },
+            watch:{
+                choosePhoto:function(newVal,oldVal){
+                    if(this.showflag2){
+                        this.resetCropper();
+                    }
+                    if(this.showflag5){
+                        var img=document.getElementById("compressImage");
+                        var cvs=document.getElementById('compressVideo');
+                        var ctx=cvs.getContext("2d");
+                        img.onload = function() {
+                            cvs.width=this.naturalWidth;
+                            cvs.height=this.naturalHeight;
+                            ctx.drawImage(img,0,0);
+                        }
+                    }
+                }
+            },
+            created:function(){
+                this.fresh();
+                this.getVideoList();
+            },
+            mounted:function(){
+                this.initCropper();
+            },
+            updated:function(){
+                this.tagInputSetStyle();
+            },
+            methods:{
+                add:function(val, oldVal){
+                    this.showflag2 = !this.showflag2;
+                    this.showflag1 = !this.showflag1;
+                    this.getTagList();
+                },
+                sub:function(){
+                    var _self = this;
+                    var cvs=document.getElementById('preview');
+                    var title = $("#title-main").val();
+                    var author = $("#author").val();
+                    var content = $("#content").val();
+                    var summary = $("#summary").val();
+                    var photoBase64 = dataURLtoBlob(cvs.toDataURL('image/jpeg', 0.92));
+                    var tagArr = JSON.stringify(_self.tagListAdd);
+                    // var filename = 'http://xdnloveme.oss-cn-shanghai.aliyuncs.com/article/coverImag/'+document.getElementById('photo').files[0].name;
+                    var filename = 'article/'+document.getElementById('photo').files[0].name;;
+                    var filePathName = document.getElementById('photo').files[0].name;
+                    console.log(filePathName);
+                    var file = photoBase64;
+                    if (title!='' && author !='' && content!='') {
+                        $.ajax({
+                            type:'POST',
+                            url:'/article/submit',
+                            data:{title:title,author:author,content:content,summary:summary,tag:tagArr,filename:filename},
+                            success:function(result){
+                                if (result.status == 200) {
+                                  OSSControl.applyTokenDo(file,filename,function(result){
+                                      if(result == 'success'){
+                                        alert("文章增加成功");
+                                        _self.add();
+                                      }
+                                  });
+                                }else{
+                                    alert("出现错误")
+                                }
+                            },
+                            error:function(result){
+                                console.log(result);
+                                alert("出现错误")
+                            }
+                        })
+                    }else{
+                        alert("输入不能为空");
+                    }
+
+                },
+                del:function(){
+                    var arr = [];
+                    let _self = this;
+                    arr = this.selectCheckbox.toString();
+                    if (arr.length >0 ) {
+                       $.post("/article/del",{articleID:arr},function(result){
+                            if (result.status == 200) {
+                                alert("删除成功");
+                                _self.fresh();
+                            }
+                        });
+                    }else{
+                        alert("必须选择一个");
+                    }
+
+                },
+                delVideo:function(){
+                    var arr = JSON.stringify(this.selectCheckboxVideo);
+                    if (arr.length >0 ) {
+                       $.post("/videoControl/delVideo",{videoId:arr},function(result){
+                        });
+                    }else{
+                        alert("必须选择一个");
+                    }
+                },
+                fresh:function(){
+                    let _self = this;
+                    $.get("/article/articleList",function(result){
+                        if (result.status == 200) {
+                            _self.articleList = result.data;
+                        }
+                    });
+                },
+                getVideoList:function(){
+                    let _self = this;
+                    $.get("/videoControl/getVideoList",function(result){
+                        if (result.status == 200) {
+                            _self.videoList = result.data;
+                        }
+                    });
+                },
+                update: function(e) {
+                    this.input = e.target.value;
+                },
+                edit: function(){
+                    let _self = this;
+                    _self.editFlag = '';
+                    var id = this.selectCheckbox[0];
+                    if (this.selectCheckbox.length !=1) {
+                        alert("只能一次选择一个");
+                    }else{
+                        $.post("/article/editDetail",{articleID:id},function(result){
+                            _self.editReturn.title = result.title;
+                            _self.editReturn.summary = result.summary;
+                            _self.editReturn.authorEdit = result.authorEdit;
+                            _self.editReturn.content = result.content;
+                            _self.editFlag = id;
+                        });
+                        this.showflag1 = !this.showflag1;
+                        this.showflag3 = !this.showflag3;
+                    }
+                },
+                editUpdate: function(){
+                    var _self = this;
+                    var title = $("#title-mainEdit").val();
+                    var author = $("#authorEdit").val();
+                    var content = $("#contentEdit").val();
+                    var summary = $("#summaryEdit").val();
+                    var id = _self.editFlag;
+                    if (title!='' && author !='' && content!='') {
+                        $.post("/article/edit",{articleID:id,title:title,author:author,content:content,summary:summary},function(result){
+                            if (result.status == 200) {
+                                alert(result.message)
+                               _self.showflag1 = !_self.showflag1;
+                                _self.showflag3 = !_self.showflag3;
+                            }
+                        });
+                    }else{
+                        alert("输入不能为空");
+                    }
+                },
+                detail: function(id){
+                    let _self = this;
+                    $.post("/article/detail",{articleID:id},function(result){
+                        _self.contentDetail = result;
+                        _self.showflag4=true;
+                        _self.showflag1=false;
+                    });
+                },
+                out: function(){
+                    let _self = this;
+                    $.get("/article/logout",function(result){
+                        if(result.status == 200 && result.message == true){
+                            window.location.href="/login";
+                        }
+                    });
+                },
+                selectPhoto:function(e){
+                    var _self = this;
+                    if(!(window.FileReader && window.File && window.FileList && window.Blob)){
+                        _self.choosePhoto = '<p>您的浏览器不支持fileReader</p>';
+                        return false;
+                    }
+                    var files = e.srcElement.files;
+                        if(files.length){
+                            var file = files[0];
+                            var reader = new FileReader();
+                            if(!/image\/\w+/.test(file.type)){
+                                _self.choosePhoto = "<p>请确保文件为图像类型</p>";
+                                return false;
+                            }
+                            // onload是异步操作
+                            reader.onload = function(e){
+                                _self.choosePhoto = e.target.result;
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                },
+                initCropper:function(){
+                    var _self = this;
+                    var $img = $("#image");
+                    $img.cropper({
+                      aspectRatio: 16 / 9,
+                      // mouseWheelZoom: false,
+                      zoomable:false,
+                      crop: function(e) {
+                        // Output the result data for cropping image.
+                        var cvs=document.getElementById('preview');
+                        var img=$img[0];
+                        var width=img.naturalWidth;
+                        var height=img.naturalHeight;
+                        cvs.width=width;
+                        cvs.height=height;
+                        var ctx=cvs.getContext("2d");
+                        var destX=0;
+                        var destY=0;
+                        ctx.drawImage(img,destX,destY);
+                        //把选中框里的图片内容存起来
+                        var imageData=ctx.getImageData(e.x,e.y,e.width,e.height);
+                        cvs.height=e.height;
+                        cvs.width=e.width;
+                        //然后再画上去
+                        ctx.putImageData(imageData,0,0);
+                      }
+                    });
+                },
+                getTagList:function(){
+                    var _self = this;
+                    _self.tagList =[];
+                    var url = "/blogContent/getTagList";
+                    $.get(url,function(result){
+                        for(var index in result){
+                         _self.tagList.push(result[index]);
+                        }
+                    })
+                },
+                tagInsert:function(obj){
+                    var _self = this;
+                    var flag = false;
+                    for(var index in _self.tagListAdd){
+                        if(_self.tagListAdd[index].tagName == obj.tagName) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(!flag && _self.tagListAdd.length < 5){
+                        _self.tagListAdd.push(obj)
+                    }
+                },
+                tagAdd:function(id,event){
+                    var _self = this;
+                    var tagObj = {tagName:event.target.innerText};
+                    _self.tagInsert(tagObj);
+                },
+                tagRemove:function(index,event){
+                    var _self = this;
+                    var list  = _self.tagListAdd;
+                    list.splice(index,1);
+                    _self.tagListAdd = list;
+                },
+                tagSet:function(e){
+                    var _self = this;
+                    var idMax = -1;
+                    var tagObj = {tagName:_self.tagInput};
+                    if (_self.tagInput=='') {
+                        return;
+                    }
+                    _self.tagInsert(tagObj);
+                    _self.tagInput = "";//清空input的值
+                },
+                tagInputSetStyle:function(){
+                    var _self = this;
+                    _self.tagInputLeft.paddingLeft = parseInt(_self.$refs.tagDivSet.offsetWidth)+'px';
+                },
+                resetCropper:function(){
+                    $('#image').cropper('replace', this.choosePhoto);
+                },
+                addVideo:function(){
+                    var _self = this;
+                    _self.showflag5 = !_self.showflag5;
+                    _self.showflag1 = !_self.showflag1;
+                    var url = "/videoControl/getClassification";
+                    $.get(url,function(result){
+                        _self.classificationName = result;
+                    });
+                },
+                selectPhotoVideo:function(e){
+                    this.selectPhoto(e);
+                },
+                subVideo:function(){
+                    var _self = this;
+                    var cvs=document.getElementById('compressVideo');
+                    var videoTitle = _self.videoTitle;
+                    var videoAuthor = _self.videoAuthor;
+                    var videoSummary = _self.videoSummary;
+                    var videoHref = _self.videoHref;
+                    var videoClassification = _self.videoClassification;
+                    var photoBase64 = dataURLtoBlob(cvs.toDataURL('image/jpg', 0.90));
+                    let formData = new FormData();
+                    formData.append("videoPhoto", photoBase64);//设置key为avartar,value为上述的File对象
+                    formData.append("videoTitle", videoTitle);
+                    formData.append("videoAuthor", videoAuthor);
+                    formData.append("videoClassification", videoClassification);
+                    formData.append("videoHref", videoHref);
+                    formData.append("videoSummary",videoSummary);
+                    // console.log(formData.get('tag'));
+                    if (videoHref!='' && videoTitle !='' && videoAuthor!='') {
+                        $.ajax({
+                            type:'POST',
+                            url:'/videoControl/videoSubmit',
+                            data:formData,
+                            processData: false, // 必须
+                            contentType: false, // 必须
+                            success:function(result){
+                                if (result.status == 200) {
+                                    alert("视频增加成功");
+                                    _self.showflag5 = !_self.showflag5;
+                                    _self.showflag1 = !_self.showflag1;
+                                }else{
+                                    alert("出现错误")
+                                }
+                            },
+                            error:function(result){
+                                alert("出现错误")
+                            }
+                        })
+                    }else{
+                        alert("输入不能为空");
+                    }
+                },
+                addClassification:function(){
+                    var _self = this;
+                    var url = "/videoControl/addNewClassification";
+                    if(_self.addClassificationVal!=''){
+                        $.post(url,{newClassification:_self.addClassificationVal},function(result){
+                            _self.classificationName.push(result);
+                            alert('分类增加成功');
+                            _self.addClassificationVal=  '';
+                        });
+                    }
+                }
+            }
+        })
+        function dataURLtoBlob(dataurl){//dataURL转blob对象
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], {type:mime});
+        }
+    </script>
+</body>
+
+</html>

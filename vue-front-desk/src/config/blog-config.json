@@ -1,0 +1,440 @@
+{
+  "nav": {
+    "mainNav": [
+    	{
+  	    "name": "留言墙",
+  	    "router": "/contact#leave_message"
+  	  }, {
+  	    "name": "技术杂谈",
+  	    "router": "/blog"
+  	  }, {
+  	    "name": "生活",
+  	    "router": "/life"
+  	  }, {
+  	    "name": "关于我",
+  	    "router": "/contact"
+  	  }
+  	],
+    "navList": [{
+      "name": "主页",
+      "href": "/",
+      "icon": "assets/image/icon/home.svg"
+    },
+    {
+      "name": "技术分享",
+      "href": "/blog",
+      "icon": "assets/image/icon/article.svg"
+    },
+    {
+      "name": "关于生活",
+      "href": "/life",
+      "icon": "assets/image/icon/video.svg"
+    },
+    {
+      "name": "联系我",
+      "href": "/contact",
+      "icon": "assets/image/icon/phone.svg"
+    }]
+  },
+	"page": {
+		"entryPage": [
+	  	{
+		    "name": "index",
+		    "title": "我是唐益达",
+		    "desc": "很高兴能遇见你",
+		    "backgroundImage": "assets/image/background/9.jpg",
+		    "isOpacityFull": true
+		  }, {
+		    "name": "contact",
+		    "title": "关于我",
+		    "desc": "和我的博客",
+		    "backgroundImage": "assets/image/background/9.jpg",
+		    "isOpacityFull": true,
+		    "titleClass": "title-contact"
+		  }, {
+		    "name": "blog",
+		    "title": "技术杂谈",
+		    "desc": "保持谦逊",
+		    "backgroundImage": "assets/image/background/30.jpg",
+		    "isOpacityFull": false,
+		    "titleClass": "title-blog"
+		  },{
+		    "name": "life",
+		    "title": "生活",
+		    "desc": "滋润一点",
+		    "backgroundImage": "assets/image/background/27.jpg",
+		    "isOpacityFull": false,
+		    "titleClass": "title-blog"
+		  }
+		],
+    "detail": [
+      {
+        "id": "blog-detail",
+        "name": "博文",
+        "router": "/",
+        "class": "view-detail"
+      }, {
+        "id": "life-detail",
+        "name": "生活博文",
+        "router": "/life",
+        "class": "view-detail-life"
+      }
+    ]
+	},
+  "data": {
+    "article": {
+      "articleList": [{
+        "id": 151,
+        "title": "从零开始学习Rollup.js的前端打包利器",
+        "time": "2018-06-26 16:50",
+        "author": "唐益达",
+        "photoUrl": "assets/image/article/rollupimg.jpg",
+        "summary": "Rollup 是一个 JavaScript 模块打包器，可以将小块代码编译成大块复杂的代码，例如 library 或应用程序,之前的vue的插件就是用rollup打包的",
+        "thumbUp": 2,
+        "articleRead": 23,
+        "commentCount": 1,
+        "tag": "javascript,rollup.js",
+        "thumbUpStatus": 1
+      }, {
+        "id": 150,
+        "title": "Vue原理解析——自己写个Vue",
+        "time": "2018-05-24 15:58",
+        "author": "唐益达",
+        "photoUrl": "assets/image/article/Vuejs1.jpg",
+        "summary": "Vue由于其高效的性能和灵活入门简单、轻量的特点下变得火热 在当今前端越来越普遍的使用，今天来剖析一下Vue的深入响应式原理。",
+        "thumbUp": 1,
+        "articleRead": 43,
+        "commentCount": 1,
+        "tag": "vue,javascript",
+        "thumbUpStatus": 0
+      }, {
+        "id": 149,
+        "title": "Vue插件开发初体验——（懒加载）",
+        "time": "2018-04-08 10:28",
+        "author": "唐益达",
+        "photoUrl": "assets/image/article/vuePlugin.jpeg",
+        "summary": "我一直推崇一些高度定制化的插件，一些小Demo，是需要自己写的，不能崇尚“拿来主义”。有些插件网上都有，但是你用了会发现谁都会用，而且有时候对于自己的需求又不够贴合。所以会写插件是一个必备的技能。",
+        "thumbUp": 0,
+        "articleRead": 41,
+        "commentCount": 0,
+        "tag": "javascript,vue,插件开发",
+        "thumbUpStatus": 0
+      }, {
+        "id": 148,
+        "title": "Javascript基础设计(四)——不可忽视的细节",
+        "time": "2018-02-06 22:28",
+        "author": "唐益达",
+        "photoUrl": "assets/image/article/jsjs2.jpeg",
+        "summary": "虽然随着ES6的出现，Javascript语言变得越来越规范化，但是不容忽视的是：JS还有许许多多的细节需要重视，这篇博文主要记录那些容易忽视又不可以忽视的语言细节，持续更新",
+        "thumbUp": 0,
+        "articleRead": 36,
+        "commentCount": 1,
+        "tag": "javascript",
+        "thumbUpStatus": 0
+      }, {
+        "id": 147,
+        "title": "Node入门——爬虫获取\"虎扑步行街\"的活跃用户数据与结构",
+        "time": "2018-01-30 22:47",
+        "author": "唐益达",
+        "photoUrl": "assets/image/article/nodeJS.jpeg",
+        "summary": "最近利用闲暇时间想要爬取虎扑的一些用户数据，大致可以统计现在发帖回帖的用户的公开信息，看看现在步行街用户群体是怎么样一个‘背景’。",
+        "thumbUp": 4,
+        "articleRead": 111,
+        "commentCount": 1,
+        "tag": "node.js,javascript,爬虫",
+        "thumbUpStatus": 0
+      }]
+    },
+    "life": {
+      "lifeList": [
+        {
+          "id": 1,
+          "author": "唐益达",
+          "comment": 3,
+          "time": "2018-04-10 14:38",
+          "photo": "assets/image/life/saierdafengmian.jpg",
+          "read": 38,
+          "thumb": 1,
+          "title": "我的海拉鲁世界"
+        }, {
+          "id": 2,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/life/banwagong.jpeg",
+          "read": 47,
+          "thumb": 2,
+          "title": "用搬瓦工给自己搭建一个shadowsocks服务器"
+        }, {
+          "id": 3,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/53b8d6afdeef5.jpg",
+          "read": 47,
+          "thumb": 2,
+          "title": "这是我的标题，最好不要超过30个字节，会造成排版错乱"
+        }, {
+          "id": 4,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/tangyida.jpeg",
+          "read": 47,
+          "thumb": 2,
+          "title": "这是瀑布墙的流式分布"
+        }, {
+          "id": 5,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/background2.jpg",
+          "read": 47,
+          "thumb": 2,
+          "title": "这是测试数据"
+        }, {
+          "id": 6,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/background5.jpg",
+          "read": 47,
+          "thumb": 2,
+          "title": "这是测试数据，仅供参考，为了排版"
+        }, {
+          "id": 7,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/headimag2.jpg",
+          "read": 47,
+          "thumb": 2,
+          "title": "这是测试数据，仅供参考，为了排版"
+        }
+      ]
+    },
+    "detail": {
+      "detailComment": [
+        {
+          "id": 63,
+          "message": "测试",
+          "nickname": "唐益达",
+          "date": "2018-06-26 17:35",
+          "userPhoto": "assets/image/headimag2.jpg",
+          "response": null,
+          "responseName": null,
+          "responseTime": null,
+          "area": "浙江杭州"
+        }, {
+          "id": 64,
+          "message": "测试222",
+          "nickname": "唐益达",
+          "date": "2018-06-26 17:35",
+          "userPhoto": "assets/image/headimag2.jpg",
+          "response": null,
+          "responseName": null,
+          "responseTime": null,
+          "area": "浙江宁波"
+        }
+      ],
+      "tagList": [
+        {
+          "tagId": 1,
+          "tagName": "Android"
+        }, {
+          "tagId": 2,
+          "tagName": "javascript"
+        }, {
+          "tagId": 3,
+          "tagName": "angularJS"
+        }, {
+          "tagId": 28,
+          "tagName": "ip"
+        }, {
+          "tagId": 29,
+          "tagName": "node.js"
+        }, {
+          "tagId": 30,
+          "tagName": "闭包"
+        }, {
+          "tagId": 31,
+          "tagName": "阿里云"
+        }, {
+          "tagId": 32,
+          "tagName": "OSS"
+        }, {
+          "tagId": 33,
+          "tagName": "canvas"
+        }, {
+          "tagId": 34,
+          "tagName": "game"
+        }, {
+          "tagId": 35,
+          "tagName": "爬虫"
+        }, {
+          "tagId": 36,
+          "tagName": "vue"
+        }, {
+          "tagId": 37,
+          "tagName": "插件开发"
+        }
+      ],
+      "articleMostView": [
+        {
+          "articleId": 151,
+          "photo": "assets/image/article/alibaba.png",
+          "title": "阿里云OSS之node.Js表单临时授权Token上传"
+        }, {
+          "articleId": 149,
+          "photo": "assets/image/article/nodeJS.jpeg",
+          "title": "Node.js express框架如何记录访问IP?"
+        }, {
+          "articleId": 148,
+          "photo": "assets/image/article/Vuejs1.jpg",
+          "title": "JavaScript基础设计（二）——什么是闭包？"
+        }
+      ]
+    },
+    "contact": {
+      "timeLine": [
+        {
+          "title": "JULY 2017",
+          "date": "2",
+          "text": "2",
+          "class": "period",
+          "isSlide": false
+        }, {
+          "title": "学习",
+          "date": "JULY 1, 2017",
+          "text": "学习基础的JS,CSS,HTML元素和jquery,前端框架Vue.js,后端node.js,数据库,服务器.",
+          "class": "",
+          "isSlide": false
+        }, {
+          "title": "进行网站搭建",
+          "date": "OCT 7, 2017",
+          "text": "进行了数据库结构的设计,和后台nodejs框架的搭建,前端模型设计,排除了N多初稿和设计,直到选定这个设计配色,包括后台管理界面的设计和代码编写",
+          "class": "",
+          "isSlide": false
+        }, {
+          "title": "增加文章功能",
+          "date": "OCT 22, 2017",
+          "text": "增加了博客文章的功能,包括文章的留言功能,文章的点赞功能,和文章的标签分类和文章热度,时间的排名功能.",
+          "class": "1",
+          "isSlide": false
+        }, {
+          "title": "增加视频功能",
+          "date": "NOV 15, 2017",
+          "text": "增加了视频分享的版面，包括留言功能和分类,由于经费限制,采用了youku等网站嵌入代码的形式.",
+          "class": "1",
+          "isSlide": false
+        }, {
+          "title": "选定阿里云OSS存储和服务器",
+          "date": "NOV 27, 2017",
+          "text": "阿里云ECS作为网站服务器,OSS云盘作为我的图片存储,当初写了很多上传的代码,考虑到安全性,最终实现从了Nodejs端获取临时TOKEN授权,通过阿里云权限接口系统,进行web端签名直传的功能.",
+          "class": "2",
+          "isSlide": false
+        }, {
+          "title": "网站上线",
+          "date": "DEC 5, 2017",
+          "text": "经过近两周的管局公安备案,成功部署项目到域名,网站v1.0第一个版本上线.",
+          "class": "2",
+          "isSlide": false
+        }, {
+          "title": "增加人数统计",
+          "date": "DEC 30, 2017",
+          "text": "通过截取IP，获得访问量，同时修正了一些适配手机端的做法，优化了样式",
+          "class": "1",
+          "isSlide": false
+        }
+      ],
+      "commentList": [
+        {
+          "id": 70,
+          "message": "<img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\"> <img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\">  <img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\"> 谢谢，因为想搭建博客的时候顺便学一下框架",
+          "nickname": "唐益达",
+          "date": "2018-06-28 9:35",
+          "userPhoto": "assets/image/headimag2.jpg",
+          "response": "小哥用的是Vue哦，厉害。:smile: ",
+          "responseName": "雾仙",
+          "responseTime": "2018-06-25 20:36",
+          "area": "浙江杭州"
+        }, {
+          "id": 69,
+          "message": "小哥用的是Vue哦，厉害。 <img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\">",
+          "nickname": "雾仙",
+          "date": "2018-06-25 20:36",
+          "userPhoto": "assets/image/headimag2.jpg",
+          "response": null,
+          "responseName": null,
+          "responseTime": null,
+          "area": "广东广州"
+        }, {
+          "id": 68,
+          "message": "路过",
+          "nickname": "FUNKYEYES",
+          "date": "2018-06-25 13:18",
+          "userPhoto": "assets/image/headimag2.jpg",
+          "response": null,
+          "responseName": null,
+          "responseTime": null,
+          "area": "浙江宁波"
+        }, {
+          "id": 67,
+          "message": "。。。你究竟对我的网站做了什么？ <img width=\"20px\" height=\"20px\" alt=\"scream\" src=\"assets/image/emotions/emoji/scream.png\">",
+          "nickname": "唐益达",
+          "date": "2018-06-09 17:17",
+          "userPhoto": "assets/image/headimag2.jpg",
+          "response": "闪讯直连测试",
+          "responseName": "宁大通信狗",
+          "responseTime": "2018-06-08 15:55",
+          "area": "浙江宁波"
+        }, {
+          "id": 66,
+          "message": "闪讯直连测试",
+          "nickname": "宁大通信狗",
+          "date": "2018-06-08 15:55",
+          "userPhoto": "assets/image/headimag2.jpg",
+          "response": null,
+          "responseName": null,
+          "responseTime": null,
+          "area": "浙江宁波"
+        }
+      ],
+      "introduceList": [{
+        "title": "关于学习。",
+        "section": [{
+          "content": "从小开始就迷上了电脑。一早接触到的WIN98系统，到现在的Mac OS和Linux系统，可以说电脑一直伴随着我的成长。高考考砸了后，没放弃兴趣，依旧开始了信息技术的学习。"
+        }, {
+          "content": "2017年6月毕业后，也许是喜欢设计从无到有的过程，机缘巧合加入了前端攻城狮这个行列（其实还只是一个入门coder）"
+        }, {
+          "content": "毕业后3个月内，凭着自己的喜好和超强的学（fu）习（zhi）能（zhan）力（tie），接触了从JS到Vue.js，AngularJS的框架，再到后面的复杂的Webpack，还有略懂的后台NodeJS，数据库，被折磨死的Linux命令行，服务器等。"
+        }, {
+          "content": "每天就是花天酒地...呸！昏天黑地的学习，所以个人博客就这么诞生了..."
+        }]
+      }, {
+        "title": "关于生活。",
+        "section": [{
+          "content": "从当初的WIN98上的暴力摩托和网游石器时代开始，到现在的GTA5、巫师3等，就注定是一个游戏迷。接触大大小小游戏，有烧钱的梦幻西游，也有竞技的LOL，还有迷人的时空幻境、Inside等。最近的梦想就是一个PS4和一个4K显示器咔咔咔！"
+        }, {
+          "content": "喜欢跳舞，大学的所有课余时间基本献给了街舞，曾一度因跳舞差点错过毕业工作。毕业后还是选择作为一个爱好，现在放弃了半年多跳舞，只为了能有更棒的物质基础来支撑我的梦想和爱好。"
+        }, {
+          "content": "喜欢电影，虽然我是个95后，但是很喜欢上世纪90年代的电影和电视，从霸王别姬、辛德勒的名单、情书开始，一直喜欢高质量的电影电视，虽然不如一些专业的电影人，但作为一个爱好，电影给了我正直的三观和健康的成长空间。"
+        }, {
+          "content": "喜欢运动，喜欢了一段时间的长跑，一段时间的游泳，还有一直喜爱的篮球。现在整天在电脑面前敲代码，做技术，也不忘多骑着自己6年的爱车出去逛逛，去一个陌生的球场投投篮。健康的身体是最好的财富。"
+        }]
+      }, {
+        "title": "关于本站。",
+        "section": [{
+          "content": "本站从9月底选择前后端框架，到网站外形风格样式设计，从一个个模型淘汰再淘汰最后选定，再到网站组件化设计，都由本人独自完成。11月中旬完成整个网站系统。"
+        }, {
+          "content": "本站是基于<a href=\"https://cn.vuejs.org/\">Vue.js</a>（非单文件开发）前端框架+借鉴BootStrap原型UI,后台框架用的<a href=\"https://nodejs.org/en/\">Node.js</a>的express框架，数据库用的Mysql，云服务器用的<a href=\"https://www.aliyun.com/\">阿里云</a>的ECS，图片存储用的阿里云的OSS云盘。"
+        }]
+      }, {
+        "title": "友情链接。",
+        "section": [{
+          "content": "<a href=\"https://aoaoao.me/\">树洞</a>&nbsp;&nbsp;<a href=\"https://www.ailoli.org/\">Ailoli</a>"
+        }]
+      }]
+    }
+  }
+}
