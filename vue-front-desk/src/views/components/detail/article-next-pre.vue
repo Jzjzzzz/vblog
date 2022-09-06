@@ -2,12 +2,12 @@
   <div class="article-next-pre">
     <ul>
       <li class="apre">
-        <router-link :to="preNext[0].route">
+        <router-link :to="preNext[0].route" @click.native="flushCom">
           <font class="title-font">← PREVIOUS</font><br /><span>{{preNext[0].name}}</span>
         </router-link>
       </li>
       <li class="anext">
-        <router-link :to="preNext[1].route">
+        <router-link :to="preNext[1].route" @click.native="flushCom">
           <font class="title-font">NEXT →</font><br /><span>{{preNext[1].name}}</span>
         </router-link>
       </li>
@@ -29,6 +29,9 @@ export default {
     }
   },
   methods: {
+    flushCom() {
+      this.$router.go(0);
+    }
   }
 }
 </script>

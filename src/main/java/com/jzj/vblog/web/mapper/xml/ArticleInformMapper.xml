@@ -19,11 +19,12 @@
         <result property="clickRate" column="click_rate" />
         <result property="numberLike" column="number_like" />
         <result property="aggregateId" column="aggregate_id" />
+        <result property="commentNumber" column="comment_number" />
     </resultMap>
 
     <sql id="ArticleInformVo">
         SELECT id,create_time,update_time,create_by,status,article_title,introduce,log_img,article_type,
-            article_tag,top_status,origin_status,comment_status,click_rate,number_like,sort
+            article_tag,top_status,origin_status,comment_status,click_rate,number_like,sort,comment_number
         FROM article_inform
     </sql>
 
@@ -102,7 +103,7 @@
                 LEFT JOIN article_content ac ON ai.id = ac.id
         WHERE ai.id = #{id}
     </select>
-    <select id="selectFrontArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleAddVo" parameterType="java.lang.String">
+    <select id="selectFrontArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleFrontVo" parameterType="java.lang.String">
         SELECT
             ai.id,
             ai.article_title,
@@ -116,7 +117,12 @@
             ai.introduce,
             ai.update_time,
             ac.content,
-            ai.click_rate
+            ai.click_rate,
+            ai.comment_number,
+            ai.create_by,
+            ai.comment_number,
+            ai.number_like,
+            ai.create_time
         FROM article_inform ai
                  LEFT JOIN article_content ac ON ai.id = ac.id
         WHERE ai.id = #{id}

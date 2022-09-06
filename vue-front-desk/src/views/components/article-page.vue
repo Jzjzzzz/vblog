@@ -99,7 +99,7 @@ export default {
       this.$emit('pageprocss', {
         current: this.current,
         message: message,
-        type: type,
+        type: type
       });
     }
   }

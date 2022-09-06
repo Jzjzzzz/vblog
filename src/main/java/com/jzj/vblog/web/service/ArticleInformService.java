@@ -3,6 +3,7 @@ package com.jzj.vblog.web.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
+import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
 import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,10 +32,10 @@ public interface ArticleInformService extends IService<ArticleInform> {
     /**
      * 前台分页显示文章
      *
-     * @param queryMap 查询条件
+     * @param query 查询条件
      * @return 列表
      */
-    HashMap<String, Object> listPage(Map<String,Object> queryMap);
+    HashMap<String, Object> listPage(Map<String,Object> query);
 
     /**
      * 新增文章
@@ -71,7 +72,7 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * @param id 文章id
      * @return 文章详细
      */
-    ArticleAddVo getFrontArticleById(String id);
+    ArticleFrontVo getFrontArticleById(String id);
 
     /**
      * 后台文章排行榜列表

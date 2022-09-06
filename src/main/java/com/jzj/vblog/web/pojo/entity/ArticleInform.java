@@ -83,6 +83,8 @@ public class ArticleInform extends BaseEntity {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "评论数")
+    private Integer commentNumber;
 
     @ApiModelProperty(value = "文章标签列表")
     @TableField(exist = false)

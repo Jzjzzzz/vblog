@@ -6,7 +6,7 @@
           <detail-nav-bar></detail-nav-bar>
           <div class="detail-head">
             <div class="detail-title">
-              <h1>Vue插件开发初体验——（懒加载）</h1>
+              <h1>{{article.articleTitle}}</h1>
             </div>
             <hr />
           </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="thumb-for">
           <!-- thumbs-count传递的是点赞的数量，thumbs-up-flag传递的是当前用户是否点赞的标识 -->
-          <thumb-up :thumbs-count="1" :thumbs-up-flag="true"></thumb-up>
+          <thumb-up :thumbs-count="article.numberLike" :thumbs-up-flag="false" ></thumb-up>
         </div>
         <article-share :signature-author="signatureAuthor"></article-share>
         <hr style="margin-top:8px;" />
@@ -51,14 +51,11 @@ import articleShare from '@/views/components/detail/article-share.vue';
 import detailNavBar from '@/views/components/detail-nav-bar.vue';
 import blogComment from '@/views/components/blog-comment';
 import commentList from '@/views/components/comment-list';
-
-// 这里异步加载本地文章，模拟从服务器请求
-import content from '../../assets/content.txt';
 // 可以由外部引入您的markdown样式，这里引入的是我自己博客的markdown文章的样式。
 // 需要更改的可以注释掉，引入自己需要的比如富文本的样式或者自己在markdown.CSS里面修改
 import markdown from '../../assets/css/markdown/markdown.css';
 import config from '@/config/blog-config.json';
-
+import { getById } from '@/api/article'
 export default {
   name: 'blog-detail',
   components: {
@@ -73,11 +70,26 @@ export default {
   },
   data () {
     return {
-      content: content,
+      article: {
+        content: undefined,
+        updateTime: undefined,
+        articleTitle: undefined,
+        introduce: undefined,
+        articleType: undefined,
+        articleTag: undefined,
+        originStatus: undefined,
+        clickRate: undefined,
+        tagList: [],
+        createBy:undefined,
+        commentNumber: undefined,
+        logImg: undefined,
+        numberLike: undefined,
+        articleNextPreDataList:[]
+      },
       markdownHtmlTest: '',
       thumbsUpFlag: false,
       thumbsUpCount: 0,
-      signatureAuthor: '2018-07-24 8:00 By Leon',
+      signatureAuthor: '2018-07-24 8:00 By Jzj',
       isGetComment: false,
       userData: {
         nickname: '唐益达',
@@ -86,28 +98,29 @@ export default {
       articleMostView: [],
       commentList: [],
       // 默认第一个是pre，第二个是next
-      articleNextPreData: [
-        {
-          type: 'pre',
-          name: 'Javascript基础设计(四)——不可忽视的细节',
-          route: '/detail/12'
-        }, {
-          type: 'next',
-          name: '没有更多了',
-          route: 'javascript:;'
-        }
-      ],
+      articleNextPreData: [],
       tagList: []
     }
   },
   created () {
-    let converter = new showdown.Converter();
-    this.markdownHtmlTest = converter.makeHtml(this.content);
     this.init();
   },
   methods: {
     init () {
       this.getConfig();
+      this.getArticleDetail();
+    },
+    getArticleDetail () {
+      getById(this.$route.params.articleId).then(res => {
+        this.article = res.data
+        // 内容封装
+        let converter = new showdown.Converter();
+        this.markdownHtmlTest = converter.makeHtml(this.article.content);
+        // 作者签名
+        this.signatureAuthor = this.article.updateTime + ' By ' + this.article.createBy
+        // 封装上一页下一页
+        this.articleNextPreData = this.article.articleNextPreDataList
+      })
     },
     getConfig () {
       this.tagList = config.data.detail['tagList'];

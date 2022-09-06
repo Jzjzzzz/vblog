@@ -42,7 +42,7 @@ export default {
       query: {
         currPage: 1, // 当前页
         limit: 5, // 总页数
-        tagId: undefined,
+        tagId: undefined
       },
       totalPage: 0,
       tagShowFlag: false,

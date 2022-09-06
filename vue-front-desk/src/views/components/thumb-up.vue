@@ -7,8 +7,9 @@
     {{isThumbsUp?'已点赞':''}}&nbsp;&nbsp;{{count}}
   </a>
 </template>
-
 <script>
+import { getByIdLike } from '@/api/article';
+
 export default {
   props: {
     thumbsCount: {
@@ -29,7 +30,9 @@ export default {
   },
   methods: {
     setArticleThumbUpById () {
-      alert(`您点击了点赞按钮，当前文章${this.isThumbsUp ? '已点赞' : '未点赞'}，开始${this.isThumbsUp ? '取消点赞' : '点赞加一'}`);
+      getByIdLike(this.$route.params.articleId).then(res => {
+        this.$message('点赞成功');
+      })
       this.isThumbsUp = !this.isThumbsUp;
       this.isThumbsUp ? this.count++
       : this.count--;
@@ -37,6 +40,11 @@ export default {
         count: this.count,
         isThumbsUp: this.isThumbsUp
       })
+    }
+  },
+  watch:{
+    thumbsCount(val){
+      this.count = val
     }
   }
 }

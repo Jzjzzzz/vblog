@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.factory.UploadFactory;
@@ -17,9 +18,7 @@ import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleContent;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
-import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
-import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
-import com.jzj.vblog.web.pojo.vo.ArticleVo;
+import com.jzj.vblog.web.pojo.vo.*;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.SysConfigService;
 import com.jzj.vblog.web.service.SysDictTypeService;
@@ -96,12 +95,12 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
      * @return
      */
     @Override
-    public HashMap<String, Object> listPage(Map<String, Object> queryMap) {
-        HashMap<String, Object> map = new HashMap<>(3);
+    public HashMap<String, Object> listPage(Map<String, Object> query) {
+        HashMap<String, Object> map = new HashMap<>();
         //获取查询条件
-        Integer page = (Integer) queryMap.get("currPage");
-        Integer limit = (Integer) queryMap.get("limit");
-        String tagId = (String) queryMap.get("tagId");
+        Integer page = (Integer) query.get("currPage");
+        Integer limit = (Integer) query.get("limit");
+        String tagId = (String) query.get("tagId");
         //分页查询
         Page<ArticleVo> pageList = articleInformMapper.selectPageVo(new Page<>(page, limit), tagId);
         if (pageList.getTotal() > 0) {
@@ -143,6 +142,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         inform.setClickRate(0L);
         inform.setCreateBy("漫漫长路");
         inform.setNumberLike(0L);
+        inform.setCommentNumber(0);
         articleInformMapper.insert(inform);
         //文章内容
         ArticleContent content = new ArticleContent();
@@ -202,15 +202,17 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     }
 
     @Override
-    public ArticleAddVo getFrontArticleById(String id) {
-        if (id == null) {
+    public ArticleFrontVo getFrontArticleById(String id) {
+        if (StringUtils.isEmpty(id)) {
             throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         }
-        ArticleAddVo model = articleInformMapper.selectFrontArticleByIdVo(id);
-        //获取标签列表
+        ArticleFrontVo model = articleInformMapper.selectFrontArticleByIdVo(id);
+        //封装标签列表
         List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
         List<String> tags = getTags(tagList, model.getArticleTag());
-        model.setArticleTag(String.join(",", tags));
+        model.setTagList(tags);
+        List<ArticleNextPreData> preNextList = getPreNextList(model);
+        model.setArticleNextPreDataList(preNextList);
         //异步更新点击数
         CompletableFuture.runAsync(() -> {
             ArticleInform inform = articleInformMapper.selectById(id);
@@ -218,6 +220,45 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             articleInformMapper.updateById(inform);
         }, threadPoolTaskExecutor);
         return model;
+    }
+
+    /**
+     * 获取上一条下一条集合
+     * @param model
+     */
+    private List<ArticleNextPreData> getPreNextList(ArticleFrontVo model) {
+        //封装上一条
+        List<ArticleNextPreData> nextPreList = new ArrayList<>();
+        ArticleNextPreData preData = new ArticleNextPreData();
+        List<ArticleInform> preArticle = articleInformMapper.selectList(new QueryWrapper<ArticleInform>()
+                .ne("id", model.getId())
+                .le("create_time", model.getCreateTime())
+                .select("article_title", "id")
+                .last("limit 1"));
+        preData.setType("pre");
+        preData.setName("没有更多了");
+        preData.setRoute("#");
+        if(preArticle!=null && preArticle.size()>0){
+            preData.setName(preArticle.get(0).getArticleTitle());
+            preData.setRoute(preArticle.get(0).getId());
+        }
+        nextPreList.add(preData);
+        //封装下一条
+        ArticleNextPreData nextData = new ArticleNextPreData();
+        List<ArticleInform> nextArticle = articleInformMapper.selectList(new QueryWrapper<ArticleInform>()
+                .ne("id", model.getId())
+                .ge("create_time", model.getCreateTime())
+                .select("article_title", "id")
+                .last("limit 1"));
+        nextData.setType("next");
+        nextData.setName("没有更多了");
+        nextData.setRoute("#");
+        if(nextArticle!=null && nextArticle.size()>0){
+            nextData.setName(nextArticle.get(0).getArticleTitle());
+            nextData.setRoute(nextArticle.get(0).getId());
+        }
+        nextPreList.add(nextData);
+        return nextPreList;
     }
 
     /**

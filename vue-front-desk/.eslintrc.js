@@ -34,5 +34,8 @@ module.exports = {
     'camelcase': 'off',
     'no-unused-vars': 'off',
     "semi": [0, "always"],
+    "space-before-blocks":0,
+    "key-spacing":0,
+    "space-before-function-paren":0
   }
 }

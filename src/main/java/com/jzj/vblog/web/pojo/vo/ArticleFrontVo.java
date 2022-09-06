@@ -8,14 +8,13 @@ import java.util.List;
 
 /**
  * @Author Jzj
- * @Date 2022/8/4 10:36
+ * @Date 2022/9/6 16:00
  * @Version 1.0
- * @Message: 文章新增修改Vo
+ * @Message: 前台文章详细vo
  */
 @Data
-@ApiModel(description = "文章新增修改vo")
-public class ArticleAddVo {
-
+@ApiModel(description = "前台文章详细vo")
+public class ArticleFrontVo {
     @ApiModelProperty(value = "文章id")
     private String id;
 
@@ -58,6 +57,9 @@ public class ArticleAddVo {
     @ApiModelProperty(value = "修改时间")
     private String updateTime;
 
+    @ApiModelProperty(value = "创建时间")
+    private String createTime;
+
     @ApiModelProperty(value = "访问量")
     private String clickRate;
 
@@ -72,4 +74,8 @@ public class ArticleAddVo {
 
     @ApiModelProperty(value = "点赞数")
     private Long numberLike;
+
+    @ApiModelProperty(value = "Pre,Next集合")
+    private List<ArticleNextPreData> articleNextPreDataList;
+
 }

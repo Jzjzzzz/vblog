@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
-import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
+import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.ArticleSummaryService;
 import io.swagger.annotations.ApiOperation;
@@ -32,16 +32,16 @@ public class ArticleController extends BaseController {
 
     @ApiOperation("分页获取文章列表")
     @PostMapping("/listPage")
-    public R listPage(@RequestBody Map<String, Object> queryMap) {
-        HashMap<String, Object> map = articleInformService.listPage(queryMap);
+    public R listPage(@RequestBody Map<String, Object> query) {
+        HashMap<String, Object> map = articleInformService.listPage(query);
         return R.ok("map", map);
     }
 
     @ApiOperation("根据Id获取文章")
     @GetMapping("/getById/{id}")
     public R getById(@PathVariable String id) {
-        ArticleAddVo articleAddVo = articleInformService.getFrontArticleById(id);
-        return R.ok(articleAddVo);
+        ArticleFrontVo article = articleInformService.getFrontArticleById(id);
+        return R.ok(article);
     }
 
     @ApiOperation("分页获取归档列表")

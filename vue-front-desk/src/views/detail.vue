@@ -1,22 +1,22 @@
 <template>
   <div>
     <div :style="viewBackstyle" :class="current.class">
-      <div class="title"><h1>{{title}}</h1>
+      <div class="title"><h1>{{article.articleTitle}}</h1>
         <h2 v-if="current.id === 'blog-detail'" class="title-h2 tagsArr">
-          <a v-for="item in tagsArr" href="javascript:;" class="tag">{{item}}</a>
+          <a v-for="item in article.tagList" href="javascript:;" class="tag">{{item}}</a>
         </h2>
         <h2 class="title-h2">
-          <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{author}}</span><br /><br />
+          <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{article.createBy}}</span><br /><br />
           <span class="title-h2-date">
-            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{time}}</span>
+            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{article.updateTime}}</span>
         </h2>
         <h3 class="title-h3">
           <span class="title-h3-view">
-            <i class="fa fa-eye" aria-hidden="true"></i> view {{readCount}}
+            <i class="fa fa-eye" aria-hidden="true"></i> view {{article.clickRate}}
           </span>
           <span>
             <a class="title-h3-comment" href="#comment">
-              <i class="fa fa-comments-o" aria-hidden="true"></i> comment {{commentCount}}
+              <i class="fa fa-comments-o" aria-hidden="true"></i> comment {{article.commentNumber}}
             </a>
           </span>
           <br>
@@ -29,13 +29,27 @@
 
 <script>
 import config from '@/config/blog-config.json'
-
+import { getById } from '@/api/article'
 export default {
   name: 'detail',
   data () {
     return {
       viewBackstyle: {
         backgroundImage: ''
+      },
+      article: {
+        content: undefined,
+        updateTime: undefined,
+        articleTitle: undefined,
+        introduce: undefined,
+        articleType: undefined,
+        articleTag: undefined,
+        originStatus: undefined,
+        clickRate: undefined,
+        tagList: [],
+        createBy:undefined,
+        commentNumber: undefined,
+        logImg: undefined
       },
       currentType: '',
       detailList: [],
@@ -52,9 +66,6 @@ export default {
   },
   created () {
     this.init();
-  },
-  mounted () {
-
   },
   methods: {
     init () {
@@ -79,17 +90,10 @@ export default {
       return current;
     },
     getArticleDetail () {
-      let articleId = this.$route.params.articleId;
-      let article = this.articleList.find(item => {
-        return item.id == articleId
-      });
-      this.title = article.title;
-      this.viewBackstyle.backgroundImage = `url(${require('../' + article.photoUrl)})`;
-      this.tagsArr = article.tag.split(',');
-      this.author = article.author;
-      this.time = article.time;
-      this.readCount = article.articleRead;
-      this.commentCount = article.commentCount;
+      getById(this.$route.params.articleId).then(res => {
+        this.article = res.data
+        this.viewBackstyle.backgroundImage = `url(${this.article.logImg})`;
+      })
     },
     getLifeDetail () {
       let lifeId = this.$route.params.lifeId;
