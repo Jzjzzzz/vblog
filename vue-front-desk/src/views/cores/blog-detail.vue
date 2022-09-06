@@ -79,6 +79,7 @@ export default {
         articleTag: undefined,
         originStatus: undefined,
         clickRate: undefined,
+        articleTagList: [],
         tagList: [],
         createBy:undefined,
         commentNumber: undefined,
@@ -92,8 +93,8 @@ export default {
       signatureAuthor: '2018-07-24 8:00 By Jzj',
       isGetComment: false,
       userData: {
-        nickname: '唐益达',
-        email: '530063113@qq.com'
+        nickname: '漫漫长路',
+        email: '946232976@qq.com'
       },
       articleMostView: [],
       commentList: [],
@@ -120,6 +121,8 @@ export default {
         this.signatureAuthor = this.article.updateTime + ' By ' + this.article.createBy
         // 封装上一页下一页
         this.articleNextPreData = this.article.articleNextPreDataList
+        //封装全部标签列表
+        this.tagList = this.article.tagList
       })
     },
     getConfig () {

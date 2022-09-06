@@ -55,11 +55,14 @@ export default {
   },
   methods: {
     clickTag(tagId){
-      console.log(tagId)
       this.query.tagId = tagId
       this.init()
     },
     init () {
+      if(this.$route.query.tagId!=null){
+        console.log(this.$route.query.tagId)
+        this.query.tagId = this.$route.query.tagId
+      }
       fetchList(this.query).then(res => {
         this.totalPage = res.data.map.totalPage
         this.rowitem = res.data.map.items

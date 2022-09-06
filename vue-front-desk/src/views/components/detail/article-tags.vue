@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-lg-12 article-tags">
       <div class="detail-tags-title">ARTICLE TAGS</div>
       <div class="detail-tags-body">
-        <a v-for="tagItem in tagList" class="tags-detail" :href="'/blog/'+tagItem.tagName">{{tagItem.tagName}}</a>
+        <a v-for="tagItem in tagList" class="tags-detail" @click="onSubmit(tagItem.dictValue)">{{tagItem.dictLabel}}</a>
       </div>
     </div>
   </div>
@@ -26,6 +26,12 @@ export default {
     this.init();
   },
   methods: {
+    onSubmit(id){
+      this.$router.push({
+        path:'/blog',
+        query:{tagId:id}
+      })
+    },
     init () {
       this.assert();
     },
