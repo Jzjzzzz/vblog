@@ -3,7 +3,7 @@
     <div :style="viewBackstyle" :class="current.class">
       <div class="title"><h1>{{article.articleTitle}}</h1>
         <h2 v-if="current.id === 'blog-detail'" class="title-h2 tagsArr">
-          <a v-for="item in article.tagList" href="javascript:;" class="tag">{{item}}</a>
+          <a v-for="item in article.articleTagList" href="javascript:;" class="tag">{{item}}</a>
         </h2>
         <h2 class="title-h2">
           <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{article.createBy}}</span><br /><br />
@@ -47,6 +47,7 @@ export default {
         originStatus: undefined,
         clickRate: undefined,
         tagList: [],
+        articleTagList: [],
         createBy:undefined,
         commentNumber: undefined,
         logImg: undefined

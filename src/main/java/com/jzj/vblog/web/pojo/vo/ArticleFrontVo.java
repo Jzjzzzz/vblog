@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.pojo.vo;
 
+import com.jzj.vblog.web.pojo.entity.SysDictData;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,7 +32,10 @@ public class ArticleFrontVo {
     private String articleTag;
 
     @ApiModelProperty(value = "文章标签列表")
-    private List<String> tagList;
+    private List<String> articleTagList;
+
+    @ApiModelProperty(value = "标签列表")
+    private List<SysDictData> tagList;
 
     @ApiModelProperty(value = "作者")
     private String createBy;

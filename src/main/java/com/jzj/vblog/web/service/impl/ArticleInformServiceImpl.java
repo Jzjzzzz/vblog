@@ -210,7 +210,10 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         //封装标签列表
         List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
         List<String> tags = getTags(tagList, model.getArticleTag());
-        model.setTagList(tags);
+        //文章标签列表
+        model.setArticleTagList(tags);
+        //全部标签列表
+        model.setTagList(tagList);
         List<ArticleNextPreData> preNextList = getPreNextList(model);
         model.setArticleNextPreDataList(preNextList);
         //异步更新点击数
