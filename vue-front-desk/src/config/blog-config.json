@@ -218,23 +218,23 @@
         {
           "id": 63,
           "message": "测试",
-          "nickname": "唐益达",
+          "nickname": "漫漫长路",
           "date": "2018-06-26 17:35",
           "userPhoto": "assets/image/headimag2.jpg",
           "response": null,
           "responseName": null,
           "responseTime": null,
-          "area": "浙江杭州"
+          "area": "广东广州"
         }, {
           "id": 64,
           "message": "测试222",
-          "nickname": "唐益达",
+          "nickname": "漫漫长路",
           "date": "2018-06-26 17:35",
           "userPhoto": "assets/image/headimag2.jpg",
           "response": null,
           "responseName": null,
           "responseTime": null,
-          "area": "浙江宁波"
+          "area": "广东广州"
         }
       ],
       "tagList": [

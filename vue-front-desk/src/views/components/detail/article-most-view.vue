@@ -5,9 +5,9 @@
       <div class="row">
         <div v-for="item in mostView" class="col-sm-4 col-md-4 col-lg-4">
           <div class="detail-mostviewed">
-            <img :src="item.photo" >
+            <img :src="item.logImg"  style="height: 300px">
             <div class="caption">
-              <a :href="'/detail/'+item.articleId"><h5>{{item.title}}</h5></a>
+              <a :href="'/detail/'+item.id"><h5>{{item.articleTitle}}</h5></a>
             </div>
           </div>
         </div>

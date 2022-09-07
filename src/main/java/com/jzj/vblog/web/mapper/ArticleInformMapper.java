@@ -3,10 +3,7 @@ package com.jzj.vblog.web.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
-import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
-import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
-import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
-import com.jzj.vblog.web.pojo.vo.ArticleVo;
+import com.jzj.vblog.web.pojo.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -51,4 +48,10 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
      * @return
      */
     List<ArticleRankVo> selectArticleRank();
+
+    /**
+     * 获取精选文章列表
+     * @return
+     */
+    List<ArticlePopular> selectArticlePopular();
 }

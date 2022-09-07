@@ -24,7 +24,7 @@
         <article-next-pre :pre-next="articleNextPreData"></article-next-pre>
         <article-tags :tag-list="tagList"></article-tags>
         <hr /><br/>
-        <div class="content-detail-end comment shadow">
+        <div v-if="commentStatus" class="content-detail-end comment shadow">
           <blog-comment :user-data="userData" v-on:submit-comment="subLeaveMessage">
           </blog-comment><hr />
           <div class="comment-list">
@@ -73,6 +73,7 @@ export default {
   },
   data () {
     return {
+      commentStatus : false,
       sonRefresh: false,
       article: {
         content: undefined,
@@ -89,7 +90,9 @@ export default {
         commentNumber: undefined,
         logImg: undefined,
         numberLike: undefined,
-        articleNextPreDataList:[]
+        articleNextPreDataList:[],
+        commentStatus: undefined,
+        articlePopularList: []
       },
       content: content,
       markdownHtmlTest: '',
@@ -130,15 +133,17 @@ export default {
         this.tagList = this.article.tagList
         this.content = this.article.content
         this.sonRefresh = true
+        this.articleMostView = this.article.articlePopularList
+        //评论是否显示
+        if(this.article.commentStatus =='0'){
+          this.commentStatus = true
+        }
       })
     },
     getConfig () {
       this.tagList = config.data.detail['tagList'];
       this.commentList = JSON.parse(JSON.stringify(config.data.detail['detailComment']));
       this.articleMostView = JSON.parse(JSON.stringify(config.data.detail['articleMostView']))
-      this.articleMostView.forEach(item => {
-        item.photo = require('../../' + item.photo);
-      })
       this.commentList.forEach(item => {
         item.userPhoto = require('../../' + item.userPhoto);
       })
@@ -147,7 +152,6 @@ export default {
       alert(data);
     },
     getComment () {
-      alert('这里通过请求获取了评论信息，通过isGetComment标识来判断是否显示请求的数据与此按钮');
       this.isGetComment = !this.isGetComment;
     }
   }

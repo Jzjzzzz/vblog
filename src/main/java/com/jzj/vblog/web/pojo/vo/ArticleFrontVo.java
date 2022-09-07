@@ -79,7 +79,11 @@ public class ArticleFrontVo {
     @ApiModelProperty(value = "点赞数")
     private Long numberLike;
 
-    @ApiModelProperty(value = "Pre,Next集合")
+    @ApiModelProperty(value = "Pre,Next列表")
     private List<ArticleNextPreData> articleNextPreDataList;
+
+    @ApiModelProperty(value = "精品文章列表")
+    private List<ArticlePopular> articlePopularList;
+
 
 }

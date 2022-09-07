@@ -216,6 +216,8 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         model.setTagList(tagList);
         List<ArticleNextPreData> preNextList = getPreNextList(model);
         model.setArticleNextPreDataList(preNextList);
+        //获取精品文章列表
+        model.setArticlePopularList(articleInformMapper.selectArticlePopular());
         //异步更新点击数
         CompletableFuture.runAsync(() -> {
             ArticleInform inform = articleInformMapper.selectById(id);

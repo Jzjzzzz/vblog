@@ -136,4 +136,15 @@
         ORDER BY click_rate DESC
         LIMIT 7
     </select>
+    <select id="selectArticlePopular" resultType="com.jzj.vblog.web.pojo.vo.ArticlePopular">
+        SELECT
+            id,
+            article_title,
+            log_img
+        FROM
+            article_inform
+        ORDER BY
+            click_rate DESC
+        LIMIT 3
+    </select>
 </mapper>

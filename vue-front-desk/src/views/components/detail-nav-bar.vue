@@ -80,7 +80,6 @@ export default {
     this.init();
   },
   beforeDestroy () {
-    console.log('博文组件销毁，移除监听');
     document.removeEventListener('scroll', this.listenProcess);
   },
   methods: {

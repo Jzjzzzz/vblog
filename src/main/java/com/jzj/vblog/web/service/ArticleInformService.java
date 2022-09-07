@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
+import com.jzj.vblog.web.pojo.vo.ArticlePopular;
 import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,4 +88,6 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * @param id      文章id
      */
     void getByIdLike(String id);
+
+
 }

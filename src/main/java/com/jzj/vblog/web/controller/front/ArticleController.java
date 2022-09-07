@@ -3,8 +3,10 @@ package com.jzj.vblog.web.controller.front;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
+import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
+import com.jzj.vblog.web.pojo.vo.ArticlePopular;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.ArticleSummaryService;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,4 +66,5 @@ public class ArticleController extends BaseController {
         articleInformService.getByIdLike(id);
         return R.ok("点赞成功");
     }
+
 }
