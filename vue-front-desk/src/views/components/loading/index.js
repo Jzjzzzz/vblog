@@ -16,15 +16,12 @@ function update (options) {
 
 export default {
 	show () {
-		console.log(loadingSpining);
-		console.log('开始渲染了');
 		update({
       isShow: true
     });
 	},
 
 	hide () {
-		console.log('隐藏了');
 		update({
       isShow: false
     });

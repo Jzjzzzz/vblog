@@ -3,7 +3,9 @@
     <div class="row">
       <div class="col-md-12 col-sm-12">
         <div id="content-detail" ref="content-detail" class="content-detail content">
-          <detail-nav-bar></detail-nav-bar>
+         <div v-if="sonRefresh">
+           <detail-nav-bar></detail-nav-bar>
+         </div>
           <div class="detail-head">
             <div class="detail-title">
               <h1>{{article.articleTitle}}</h1>
@@ -54,6 +56,7 @@ import commentList from '@/views/components/comment-list';
 // 可以由外部引入您的markdown样式，这里引入的是我自己博客的markdown文章的样式。
 // 需要更改的可以注释掉，引入自己需要的比如富文本的样式或者自己在markdown.CSS里面修改
 import markdown from '../../assets/css/markdown/markdown.css';
+import content from '../../assets/content.txt';
 import config from '@/config/blog-config.json';
 import { getById } from '@/api/article'
 export default {
@@ -70,6 +73,7 @@ export default {
   },
   data () {
     return {
+      sonRefresh: false,
       article: {
         content: undefined,
         updateTime: undefined,
@@ -87,6 +91,7 @@ export default {
         numberLike: undefined,
         articleNextPreDataList:[]
       },
+      content: content,
       markdownHtmlTest: '',
       thumbsUpFlag: false,
       thumbsUpCount: 0,
@@ -121,8 +126,10 @@ export default {
         this.signatureAuthor = this.article.updateTime + ' By ' + this.article.createBy
         // 封装上一页下一页
         this.articleNextPreData = this.article.articleNextPreDataList
-        //封装全部标签列表
+        // 封装全部标签列表
         this.tagList = this.article.tagList
+        this.content = this.article.content
+        this.sonRefresh = true
       })
     },
     getConfig () {

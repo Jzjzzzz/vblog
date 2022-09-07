@@ -59,7 +59,7 @@ export default {
       this.init()
     },
     init () {
-      if(this.$route.query.tagId!=null){
+      if (this.$route.query.tagId != null){
         console.log(this.$route.query.tagId)
         this.query.tagId = this.$route.query.tagId
       }

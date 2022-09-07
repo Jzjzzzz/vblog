@@ -12,12 +12,9 @@ loadingSpining.newInstance = properties => {
       });
     }
   });
-
   const component = Instance.$mount();
   document.body.appendChild(component.$el);
   const loading_spining = Instance.$children[0];
-  console.log(Instance);
-  console.log(props);
 
   return {
     component: loading_spining,
