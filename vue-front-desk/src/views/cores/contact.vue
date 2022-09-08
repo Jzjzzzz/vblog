@@ -4,23 +4,23 @@
       <div class="content-container-item">
         <header class="contact-header">
           <div class="tangyidaImag">
-            <img class="tangyida" :src="bloggerImage"/>
+            <img class="tangyida" :src="webConfig.webAvatar"/>
           </div>
           <div class="name-introduce">
-            <h1>我是唐益达</h1>
-            <h5>一名95年生的前端小菜鸡<font style="font-weight:200"> <(￣︶￣)></font>。</h5><br />
+            <h1 v-html="webConfig.webName">漫漫长路</h1>
+            <h5 v-html="webConfig.webDetails">一名98年生的后端小菜鸡<font style="font-weight:200"> <(￣︶￣)></font>。</h5><br />
             <div style="position:relative;" class="contact-tools">
               <div v-show="wechatFlag" style="position:absolute;top:-100%;left:0px;right:0px;">
-                <img @mouseleave="wechatFlag=false;" width="320px" src="../../assets/image/WechatIMG390.jpeg" />
+                <img @mouseleave="wechatFlag=false;" width="320px" :src="webConfig.wechatImg" />
               </div>
               <a @mouseenter="wechatFlag=true;"  href="javascript:;" style="color:#00ca0e;">
                 <i class="fa fa-wechat fa-2x" aria-hidden="true"></i>
               </a>
-              <a href="https://github.com/xdnloveme" target="view_window" style="color:#222;margin-left: 10px;">
+              <a :href="webConfig.github" target="view_window" style="color:#222;margin-left: 10px;">
                 <i class="fa fa-github fa-2x" aria-hidden="true"></i>
               </a>
-              <a href="https://weibo.com/xdnloveme" target="view_window" style="color:#e4162c;margin-left: 10px;">
-                <i class="fa fa-weibo fa-2x" aria-hidden="true"></i>
+              <a :href="webConfig.qq" target="view_window" style="color:#1AB6FF;margin-left: 10px;">
+                <i class="fa fa-qq fa-2x" aria-hidden="true"></i>
               </a>
             </div>
           </div>
@@ -80,6 +80,19 @@ export default {
   },
   data () {
     return {
+      webConfig:{
+        articleBanner: undefined,
+        createTime: undefined,
+        gitee: undefined,
+        github: undefined,
+        homeBanner: undefined,
+        qq: undefined,
+        webAvatar: undefined,
+        webDetails: undefined,
+        webName: undefined,
+        wechat: undefined,
+        wechatImg: undefined
+      },
       wechatFlag: false,
       bloggerImage: require('../../assets/image/tangyida.jpeg'),
       userData: {
@@ -95,7 +108,6 @@ export default {
     }
   },
   created () {
-    console.log(this.$route);
     this.init();
   },
   methods: {
@@ -103,6 +115,9 @@ export default {
       this.getConfig();
     },
     getConfig () {
+      let webConfig = localStorage.getItem('webConfig') ? JSON.parse(localStorage.getItem('webConfig')) : {}
+      this.webConfig = webConfig;
+      this.webConfig.qq = 'https://wpa.qq.com/msgrd?v=3&uin=' + webConfig.qq + '&site=qq&menu=yes'
       this.timelineList = config.data.contact['timeLine'];
       this.commentList = JSON.parse(JSON.stringify(config.data.contact['commentList']));
       this.introduceList = config.data.contact['introduceList'];

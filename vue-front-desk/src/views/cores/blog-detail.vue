@@ -134,16 +134,14 @@ export default {
         this.content = this.article.content
         this.sonRefresh = true
         this.articleMostView = this.article.articlePopularList
-        //评论是否显示
-        if(this.article.commentStatus =='0'){
+        // 评论是否显示
+        if (this.article.commentStatus === '0'){
           this.commentStatus = true
         }
       })
     },
     getConfig () {
-      this.tagList = config.data.detail['tagList'];
       this.commentList = JSON.parse(JSON.stringify(config.data.detail['detailComment']));
-      this.articleMostView = JSON.parse(JSON.stringify(config.data.detail['articleMostView']))
       this.commentList.forEach(item => {
         item.userPhoto = require('../../' + item.userPhoto);
       })

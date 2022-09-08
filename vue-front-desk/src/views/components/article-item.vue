@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item,$key) in articleList" class="content-item">
+    <div v-for="(item) in articleList" class="content-item">
       <div class="rowitem-left">
         <img style="cursor:pointer;" @click="jump(item.id)" :src="item.logImg">
       </div>
@@ -17,7 +17,7 @@
           class="fa fa-user" aria-hidden="true"></i> {{ item.createBy }}</span>
         <span class="article_taglist">
               <a :href="'/blog/'+taglistItem" v-for="taglistItem in item.tagNameArray" class="tag">{{ taglistItem }}</a>
-            </span>
+        </span>
         <span class="rowitem-foot-span">
                 <a class="thumbup" href="javascript:;">
                     <transition mode="out-in" name="bounce">
@@ -27,11 +27,12 @@
                         <font key="up">{{ item.numberLike }}</font>
                     </transition>
                 </a>&nbsp;&nbsp;&nbsp;
-                <a class="eyes" href="javascript:;"><i class="fa fa-eye"
-                                                       aria-hidden="true"></i> {{ item.viewsCount }}</a>&nbsp;&nbsp;&nbsp;
+                <a class="eyes" href="javascript:;"><i class="fa fa-eye" aria-hidden="true"></i> {{
+                    item.viewsCount
+                  }}</a>&nbsp;&nbsp;&nbsp;
                 <a class="comment" href="javascript:;"><i class="fa fa-comment-o"
                                                           aria-hidden="true"></i> {{ item.commentsCount }}</a>
-            </span>
+        </span>
       </div>
     </div>
   </div>
@@ -43,14 +44,14 @@ export default {
   name: 'article-item',
   data() {
     return {
-      articleTaglist: []
+      articleTagList: []
     }
   },
   created() {
     this.articleList.forEach(item => {
       let tagNameArr;
       item.tag ? tagNameArr = item.tag.split(',') : tagNameArr = [];
-      this.articleTaglist.push(tagNameArr)
+      this.articleTagList.push(tagNameArr)
     });
   },
   methods: {

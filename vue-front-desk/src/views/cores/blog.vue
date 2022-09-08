@@ -13,7 +13,7 @@
             </div>
           </transition>
           <div class="row-content">
-                <article-item  :article-list="rowitem"></article-item>
+                <article-item  :article-list="rowItem"></article-item>
                 <article-page :current-page="query.currPage" :page-all="totalPage"
                               v-on:pageprocss="pageProcss"></article-page>
           </div>
@@ -28,7 +28,6 @@ import blogFoot from '@/views/components/blog-foot';
 import articleItem from '@/views/components/article-item';
 import articlePage from '@/views/components/article-page';
 import {fetchList} from '@/api/article';
-import config from '@/config/blog-config.json';
 
 export default {
   name: 'blog',
@@ -47,7 +46,7 @@ export default {
       totalPage: 0,
       tagShowFlag: false,
       tagList: [],
-      rowitem: []
+      rowItem: []
     }
   },
   created () {
@@ -55,17 +54,18 @@ export default {
   },
   methods: {
     clickTag(tagId){
+      this.query.currPage = 1
+      this.query.limit = 5
       this.query.tagId = tagId
       this.init()
     },
     init () {
       if (this.$route.query.tagId != null){
-        console.log(this.$route.query.tagId)
         this.query.tagId = this.$route.query.tagId
       }
       fetchList(this.query).then(res => {
         this.totalPage = res.data.map.totalPage
-        this.rowitem = res.data.map.items
+        this.rowItem = res.data.map.items
         this.tagList = res.data.map.tagList
       })
     },

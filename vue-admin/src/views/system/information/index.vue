@@ -52,6 +52,17 @@
               :style="{width: '100%'}"
             />
           </el-form-item>
+          <el-form-item label="微信二维码" prop="wechatImg">
+            <ele-upload-image
+              v-model="formData.wechatImg"
+              :action="BASE_API+uploadUrl"
+              :response-fn="handleResponse"
+              :is-show-success-tip="false"
+              :file-size="20"
+              :file-type="imgType"
+              :before-remove="beforeRemove"
+            />
+          </el-form-item>
           <el-form-item label="首页头像" prop="logImg">
             <ele-upload-image
               v-model="formData.webAvatar"
@@ -74,6 +85,7 @@
               :before-remove="beforeRemove"
             />
           </el-form-item>
+
           <el-form-item label="网站详情" prop="webDetails">
             <editor v-model="formData.webDetails" :min-height="192" />
           </el-form-item>
@@ -111,7 +123,8 @@ export default {
         webAvatar: undefined,
         id: undefined,
         homeBanner: undefined,
-        articleBanner: undefined
+        articleBanner: undefined,
+        wechatImg: undefined
       },
       rules: {
         webName: [{

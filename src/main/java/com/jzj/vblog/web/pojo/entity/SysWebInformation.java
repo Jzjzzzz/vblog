@@ -66,5 +66,8 @@ public class SysWebInformation extends BaseEntity {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
+    @ApiModelProperty(value = "微信二维码")
+    private String wechatImg;
+
 
 }

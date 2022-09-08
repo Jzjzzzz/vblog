@@ -9,7 +9,7 @@
     </div>
     <div class="introduce-title">
         <h1>{{currentRoute.title}}</h1>
-        <p class="subline">{{currentRoute.desc}}</p>
+        <p class="subline" v-html="currentRoute.desc"></p>
         <div :class="currentRoute.titleClass" class="title-mini">
           <h1>{{currentRoute.title}}</h1>
           <p class="subline-mini">
@@ -60,7 +60,10 @@ export default {
     getConfig () {
       this.textMessage = config.page.entryPage;
       getInformation().then(res => {
+        // 网站信息存入缓存
+        localStorage.setItem('webConfig', JSON.stringify(res.data))
         this.textMessage[0].title = res.data.webName
+        this.textMessage[0].desc = res.data.webDetails
       })
       this.navList = config.nav.mainNav;
     },

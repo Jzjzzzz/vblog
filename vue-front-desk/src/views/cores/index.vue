@@ -66,7 +66,7 @@ export default {
         router: '/contact',
         style: 'effect-marley'
       }],
-      title: '我是一名95年生的coder',
+      title: '我是一名98年生的coder',
       descList: ['一名刚刚毕业的菜鸟小码农，热爱生活，喜欢设计，', '严谨，强迫症，爱玩，爱电影，爱运动', '这是我的地盘，分享技术经验，生活琐事，见闻趣事。']
     }
   },
