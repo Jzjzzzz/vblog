@@ -50,7 +50,7 @@ public class CodeGenerator {
         dsc.setUrl("jdbc:mysql://110.42.224.240:3306/vblog?useSSL=false&useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true&allowMultiQueries=true");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("cla14UY5JhfTH0gfFkG83ymDugWvSitE");
+        dsc.setPassword("uqmDUurMPevyHPMp");
         dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
 
@@ -86,7 +86,7 @@ public class CodeGenerator {
         mpg.setCfg(cfg);
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("sys_count"); //这里输入你要生成的表
+        strategy.setInclude("friend_link"); //这里输入你要生成的表
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);//数据库表字段映射到实体的命名策略

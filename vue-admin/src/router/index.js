@@ -106,6 +106,22 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/link',
+    component: Layout,
+    redirect: '/link/index',
+    name: 'friend_link',
+    meta: { title: '友链管理', icon: 'el-icon-folder-opened' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index',
+        name: 'Link',
+        component: () => import('@/views/link/index'),
+        meta: { title: '友链列表', icon: 'el-icon-receiving' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/dict',

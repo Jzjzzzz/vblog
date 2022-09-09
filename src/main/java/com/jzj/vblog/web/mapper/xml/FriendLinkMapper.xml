@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.vblog.web.mapper.FriendLinkMapper">
+    <resultMap id="FriendLinkResult" type="com.jzj.vblog.web.pojo.entity.FriendLink">
+        <id     property="id"     column="id"     />
+        <result property="status"     column="status"      />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="name" column="name" />
+        <result property="link" column="link" />
+    </resultMap>
+    <sql id="selectFriendLinkVo">
+        SELECT id,status,create_time,update_time,name,link FROM friend_link
+    </sql>
+
+    <select id="selectLinkList" resultType="com.jzj.vblog.web.pojo.entity.FriendLink">
+        <include refid="selectFriendLinkVo"/>
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%',#{name},'%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="checkLinkUnique" resultType="com.jzj.vblog.web.pojo.entity.FriendLink">
+        <include refid="selectFriendLinkVo"/>
+        where name = #{name} limit 1
+    </select>
+</mapper>

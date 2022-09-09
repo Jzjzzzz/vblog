@@ -30,6 +30,10 @@
             <p v-for="sectionItem in introduce.section" v-html="sectionItem.content">
             </p>
           </div>
+          <div  class="contact-introduce-item">
+            <h2>友情链接</h2>
+            <a style="font-size: 20px;text-decoration: none" :href="item.link" v-for="item in linkList">{{item.name}}&nbsp;&nbsp;</a>
+          </div>
         </header>
       </div>
       <div class="content-container-item">
@@ -67,7 +71,7 @@ import timeLine from '../components/time-line';
 import blogFoot from '@/views/components/blog-foot';
 import blogComment from '@/views/components/blog-comment';
 import commentWall from '@/views/components/comment-wall';
-
+import { linkList } from '@/api/link'
 import config from '@/config/blog-config.json';
 
 export default {
@@ -99,6 +103,7 @@ export default {
         nickname: '唐益达',
         email: '530063113@qq.com'
       },
+      linkList: [], //友情链接列表
       introduceList: [],
       timelineList: [],
       commentList: [],
@@ -121,6 +126,9 @@ export default {
       this.timelineList = config.data.contact['timeLine'];
       this.commentList = JSON.parse(JSON.stringify(config.data.contact['commentList']));
       this.introduceList = config.data.contact['introduceList'];
+      linkList().then(res=>{
+        this.linkList = res.data
+      })
       this.getConfigImage();
     },
     getConfigImage () {
