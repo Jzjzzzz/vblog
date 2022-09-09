@@ -427,7 +427,7 @@
         },{
           "content": "然后这个博客就诞生了,用了以前写的完善了下，换了套前台UI。"
         },{
-          "content": "本站后端使用了SpringBoot,前端使用了VUE"
+          "content": "本站使用了SpringBoot+Vue前后端分离开发。"
         }]
       }, {
         "title": "友情链接。",
