@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { linkList } from "@/api/link";
-
 export default {
   name: 'blogFoot',
   data () {

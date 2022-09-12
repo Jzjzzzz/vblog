@@ -1,6 +1,7 @@
 package com.jzj.vblog.web.controller.admin;
 
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.constant.UserConstants;
@@ -28,6 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/friend/link")
+@SaCheckLogin
 public class FriendLinkController extends BaseController {
     @Autowired
     private FriendLinkService friendLinkService;
@@ -38,12 +40,6 @@ public class FriendLinkController extends BaseController {
         startPage();
         List<FriendLink> list = friendLinkService.selectLinkList(friendLink);
         return getDataTable(list);
-    }
-
-    @ApiOperation("友链列表")
-    @GetMapping("/list")
-    public R list(){
-        return R.ok(friendLinkService.list(new QueryWrapper<FriendLink>().eq("status","1")));
     }
 
     @Log(title = "友链管理", businessType = BusinessType.INSERT)
@@ -84,7 +80,6 @@ public class FriendLinkController extends BaseController {
     public R remove(@PathVariable List<String> ids, HttpServletRequest request) {
         return toAjax(friendLinkService.deleteLinkByIds(ids, request));
     }
-
 
 }
 

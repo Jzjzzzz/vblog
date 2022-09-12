@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function linkList() {
   return request({
-    url: `/friend/link/list`,
+    url: `/front/link/list`,
     method: 'get'
   })
 }

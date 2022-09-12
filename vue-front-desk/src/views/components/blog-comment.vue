@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { saveMessage } from "@/api/comment";
+
 export default {
   props: ['isResponse', 'responseName', 'userData'],
   name: 'blogComment',
@@ -88,25 +90,13 @@ export default {
         this.isStartEmail = true;
       }
       var data = {
-        nickname: _self.nickname,
-        textareaData: _self.textareaData,
+        nickName: _self.nickname,
+        content: _self.textareaData,
         email: _self.email,
-        isText: _self.isTextOk(),
-        isEmail: _self.isEmail,
-        isNickname: _self.isNickName
       };
-      console.log(data);
-      this.$emit('submit-comment', data);
-      this.textareaData = '';
-      if (this.isNickName && this.isEmail && this.isTextOk()) {
-        if (this.userData) {
-          return;
-        }
-        this.nickname = '';
-        this.email = '';
-        this.isStartNick = false;
-        this.isStartEmail = false;
-      }
+      saveMessage(data).then(res=>{
+        alert("留言成功!")
+      })
     },
     isEmailMethod: function (str) {
       var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
