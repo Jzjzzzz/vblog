@@ -86,7 +86,13 @@ export const constantRoutes = [
         component: () => import('@/views/article/add'),
         hidden: true,
         meta: { title: '修改文章', icon: 'el-icon-receiving' }
-      }
+      },
+      {
+        path: 'comment',
+        name: 'Comment',
+        component: () => import('@/views/article/comment'),
+        meta: { title: '评论列表', icon: 'el-icon-edit-outline' }
+      },
     ]
   },
   {
@@ -102,6 +108,22 @@ export const constantRoutes = [
         name: 'Website',
         component: () => import('@/views/website/index'),
         meta: { title: '资源列表', icon: 'el-icon-receiving' }
+      }
+    ]
+  },
+  {
+    path: '/link',
+    component: Layout,
+    redirect: '/link/index',
+    name: 'friend_link',
+    meta: { title: '友链管理', icon: 'el-icon-position' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index',
+        name: 'Link',
+        component: () => import('@/views/link/index'),
+        meta: { title: '友链列表', icon: 'el-icon-receiving' }
       }
     ]
   },

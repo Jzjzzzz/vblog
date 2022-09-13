@@ -1,5 +1,4 @@
-package com.jzj.vblog;
-
+package com.jzj.vblog.utils.sign;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -14,7 +13,6 @@ import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,11 +21,10 @@ import java.util.ArrayList;
  * @Author Jzj
  * @Date 2022/6/6 16:36
  * @Version 1.0
- * @Message:
+ * @Message: 代码生成器
  */
 public class CodeGenerator {
-    @Test
-    public void run() {
+    public static void main(String[] args) {
         // 1、创建代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -86,7 +83,7 @@ public class CodeGenerator {
         mpg.setCfg(cfg);
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("friend_link"); //这里输入你要生成的表
+        strategy.setInclude("article_comment"); //这里输入你要生成的表
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);//数据库表字段映射到实体的命名策略

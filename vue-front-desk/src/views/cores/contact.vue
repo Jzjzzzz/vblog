@@ -8,12 +8,13 @@
           </div>
           <div class="name-introduce">
             <h1 v-html="webConfig.webName">漫漫长路</h1>
-            <h5 v-html="webConfig.webDetails">一名98年生的后端小菜鸡<font style="font-weight:200"> <(￣︶￣)></font>。</h5><br />
+            <h5 v-html="webConfig.webDetails">一名98年生的后端小菜鸡<font style="font-weight:200"> <(￣︶￣)></font>。</h5>
+            <br/>
             <div style="position:relative;" class="contact-tools">
               <div v-show="wechatFlag" style="position:absolute;top:-100%;left:0px;right:0px;">
-                <img @mouseleave="wechatFlag=false;" width="320px" :src="webConfig.wechatImg" />
+                <img @mouseleave="wechatFlag=false;" width="320px" :src="webConfig.wechatImg"/>
               </div>
-              <a @mouseenter="wechatFlag=true;"  href="javascript:;" style="color:#00ca0e;">
+              <a @mouseenter="wechatFlag=true;" href="javascript:;" style="color:#00ca0e;">
                 <i class="fa fa-wechat fa-2x" aria-hidden="true"></i>
               </a>
               <a :href="webConfig.github" target="view_window" style="color:#222;margin-left: 10px;">
@@ -24,23 +25,27 @@
               </a>
             </div>
           </div>
-          <hr />
+          <hr/>
           <div v-for="introduce in introduceList" class="contact-introduce-item">
-            <h2>{{introduce.title}}</h2>
+            <h2>{{ introduce.title }}</h2>
             <p v-for="sectionItem in introduce.section" v-html="sectionItem.content">
             </p>
+          </div>
+          <div class="contact-introduce-item">
+            <h2>友情链接</h2>
+            <a style="font-size: 20px;text-decoration: none" :href="item.link" v-for="item in linkList">{{ item.name }}&nbsp;&nbsp;</a>
           </div>
         </header>
       </div>
       <div class="content-container-item">
         <div style="text-align:center;">
           <h2><i class="fa fa-clock-o" aria-hidden="true"></i> 本站的时间线</h2>
-          <br />
+          <br/>
         </div>
-        <hr />
+        <hr/>
         <time-line :timeline-list="timelineList"></time-line>
       </div>
-      <hr />
+      <hr/>
       <div style="text-align:center;" class="contact-introduce-item">
         <h2>谢谢你。</h2>
         <p>谢谢你能耐心地看到这里，谢谢你的支持，留下一个足迹可好？（:-D 下方留言）</p>
@@ -48,13 +53,17 @@
       <div id="leave_message" class="content-container-item">
         <h2>留言</h2>
         <h5>留言板块</h5>
-        <br />
+        <br/>
         <div class="comment">
           <blog-comment :user-data="userData" v-on:submit-comment="subLeaveMessage">
           </blog-comment>
-          <br/><br />
-          <div id="comment" class="comment-list-head">评论墙 <font style="font-size: 14px;color:#c7254e;">(共20条评论)</font><hr/></div>
-            <comment-wall :comment-list="commentList" :waterfall-data="waterfallData" v-on:waterfall="waterfallTest"></comment-wall>
+          <br/><br/>
+          <div id="comment" class="comment-list-head">评论墙 <font
+            style="font-size: 14px;color:#c7254e;">(共20条评论)</font>
+            <hr/>
+          </div>
+          <comment-wall :comment-list="commentList" :waterfall-data="waterfallData"
+                        v-on:waterfall="waterfallTest"></comment-wall>
         </div>
       </div>
     </div>
@@ -67,7 +76,7 @@ import timeLine from '../components/time-line';
 import blogFoot from '@/views/components/blog-foot';
 import blogComment from '@/views/components/blog-comment';
 import commentWall from '@/views/components/comment-wall';
-
+import {linkList} from '@/api/link'
 import config from '@/config/blog-config.json';
 
 export default {
@@ -78,9 +87,9 @@ export default {
     blogComment: blogComment,
     commentWall: commentWall
   },
-  data () {
+  data() {
     return {
-      webConfig:{
+      webConfig: {
         articleBanner: undefined,
         createTime: undefined,
         gitee: undefined,
@@ -96,9 +105,10 @@ export default {
       wechatFlag: false,
       bloggerImage: require('../../assets/image/tangyida.jpeg'),
       userData: {
-        nickname: '唐益达',
-        email: '530063113@qq.com'
+        nickname: '漫漫长路',
+        email: '946232976@qq.com'
       },
+      linkList: [], // 友情链接列表
       introduceList: [],
       timelineList: [],
       commentList: [],
@@ -107,23 +117,26 @@ export default {
       count: 0 // 瀑布流页码模拟
     }
   },
-  created () {
+  created() {
     this.init();
   },
   methods: {
-    init () {
+    init() {
       this.getConfig();
     },
-    getConfig () {
+    getConfig() {
       let webConfig = localStorage.getItem('webConfig') ? JSON.parse(localStorage.getItem('webConfig')) : {}
       this.webConfig = webConfig;
       this.webConfig.qq = 'https://wpa.qq.com/msgrd?v=3&uin=' + webConfig.qq + '&site=qq&menu=yes'
       this.timelineList = config.data.contact['timeLine'];
       this.commentList = JSON.parse(JSON.stringify(config.data.contact['commentList']));
       this.introduceList = config.data.contact['introduceList'];
+      linkList().then( res => {
+        this.linkList = res.data
+      })
       this.getConfigImage();
     },
-    getConfigImage () {
+    getConfigImage() {
       this.commentList.forEach(item => {
         item.userPhoto = require('../../' + item.userPhoto);
         // 这里通过创建虚拟dom节点获取评论消息中所有的图片，将其require()进来进行一个转换
@@ -136,7 +149,7 @@ export default {
         item.message = frag.innerHTML;
       })
     },
-    subLeaveMessage (data) {
+    subLeaveMessage(data) {
       alert(`您点击了提交,数据对象如下:${JSON.stringify(data)}`);
     },
     // 用作瀑布流的留言墙测试例子（仅供参考）
@@ -169,78 +182,94 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,h2,h3,h4,h5,h6{
- color: #3d4351;
- margin-top: 0;
+h1, h2, h3, h4, h5, h6 {
+  color: #3d4351;
+  margin-top: 0;
 }
-.view-body-contact{
+
+.view-body-contact {
   z-index: 98;
   top: 85%;
   color: #768390;
   -webkit-font-smoothing: antialiased;
-  font-family: Optima,"Lucida Sans",Calibri,Candara,Arial,source-han-serif-sc,"Source Han Serif SC","Source Han Serif CN","Source Han Serif TC","Source Han Serif TW","Source Han Serif","Songti SC","Microsoft YaHei",sans-serif;
+  font-family: Optima, "Lucida Sans", Calibri, Candara, Arial, source-han-serif-sc, "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif TC", "Source Han Serif TW", "Source Han Serif", "Songti SC", "Microsoft YaHei", sans-serif;
 }
-.h3, h3{
+
+.h3, h3 {
   font-size: 24px;
 }
 
-.content-container{
+.content-container {
   padding-left: 15px;
   padding-right: 15px;
 }
-.content-container-item{
-  padding-top:20px;
+
+.content-container-item {
+  padding-top: 20px;
 }
-.tangyidaImag{
+
+.tangyidaImag {
   text-align: center;
 }
-.tangyida{
+
+.tangyida {
   width: 100px;
   height: 100px;
   border-radius: 100%;
   opacity: .85;
 }
-.name-introduce{
+
+.name-introduce {
   text-align: center;
   margin-top: 20px;
 }
-.name-introduce h1{
+
+.name-introduce h1 {
   font-weight: 800;
   font-size: 3.25em;
 }
-.name-introduce h5{
+
+.name-introduce h5 {
   color: #777;
 }
-.contact-introduce-item{
+
+.contact-introduce-item {
   margin-bottom: 80px;
 }
+
 .contact-header p,
-.contact-introduce-item p{
+.contact-introduce-item p {
   font-size: 20px;
   margin-bottom: 28px;
 }
-.contact-introduce-item > p:last-child{
+
+.contact-introduce-item > p:last-child {
   margin-bottom: 0px;
 }
-.contact-introduce-item >>> a{
+
+.contact-introduce-item >>> a {
   text-decoration: underline;
 }
-.comment-list-head{
-		font-weight: 500;
-		font-size: 18px;
+
+.comment-list-head {
+  font-weight: 500;
+  font-size: 18px;
 }
-.comment-list-head hr{
-		margin-top: 10px;
-		margin-bottom: 10px;
+
+.comment-list-head hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-@media (min-width: 768px){
+
+@media (min-width: 768px) {
   .view-body-contact {
-      padding: 0 15%;
+    padding: 0 15%;
   }
-	.tangyida{
-		width: 180px;
-		height: 180px;
-		border-radius: 100%;
-	}
+
+  .tangyida {
+    width: 180px;
+    height: 180px;
+    border-radius: 100%;
+  }
 }
 </style>

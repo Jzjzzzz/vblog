@@ -298,52 +298,46 @@
     "contact": {
       "timeLine": [
         {
-          "title": "JULY 2017",
-          "date": "2",
-          "text": "2",
+          "title": " 7 月 18 日",
+          "date": "20",
+          "text": "22",
           "class": "period",
           "isSlide": false
         }, {
-          "title": "学习",
-          "date": "JULY 1, 2017",
-          "text": "学习基础的JS,CSS,HTML元素和jquery,前端框架Vue.js,后端node.js,数据库,服务器.",
+          "title": "构建项目后端架构",
+          "date": "2022 年 7 月 19 日",
+          "text": "后端框架搭建技术选型,选择合适的依赖版本,进行数据库设计。",
           "class": "",
           "isSlide": false
         }, {
-          "title": "进行网站搭建",
-          "date": "OCT 7, 2017",
-          "text": "进行了数据库结构的设计,和后台nodejs框架的搭建,前端模型设计,排除了N多初稿和设计,直到选定这个设计配色,包括后台管理界面的设计和代码编写",
+          "title": "后台功能编写",
+          "date": "2022 年 7 月 21 日",
+          "text": "进行了后台基础功能编写,添加了系统管理模块,文章管理模块。",
           "class": "",
           "isSlide": false
         }, {
-          "title": "增加文章功能",
-          "date": "OCT 22, 2017",
-          "text": "增加了博客文章的功能,包括文章的留言功能,文章的点赞功能,和文章的标签分类和文章热度,时间的排名功能.",
+          "title": "文件上传",
+          "date": "2022 年 7 月 22 日",
+          "text": "新增了文件上传本地,文件上传阿里云OSS两种解决方案使用工厂设计模式解决灵活切换。",
           "class": "1",
           "isSlide": false
         }, {
-          "title": "增加视频功能",
-          "date": "NOV 15, 2017",
-          "text": "增加了视频分享的版面，包括留言功能和分类,由于经费限制,采用了youku等网站嵌入代码的形式.",
+          "title": "后台日志管理",
+          "date": "2022 年 7 月 27 日",
+          "text": "项目添加日志记录，通过AOP+自定义注解+异步工厂实现日志灵活写入。",
           "class": "1",
           "isSlide": false
         }, {
-          "title": "选定阿里云OSS存储和服务器",
-          "date": "NOV 27, 2017",
-          "text": "阿里云ECS作为网站服务器,OSS云盘作为我的图片存储,当初写了很多上传的代码,考虑到安全性,最终实现从了Nodejs端获取临时TOKEN授权,通过阿里云权限接口系统,进行web端签名直传的功能.",
+          "title": "整合Sa-Token和AJ-Captcha行为验证码",
+          "date": "2022 年 8 月 19 日",
+          "text": "整合Sa-Token实现后台登录校验,添加风险操作激发行为验证码。",
           "class": "2",
           "isSlide": false
         }, {
-          "title": "网站上线",
-          "date": "DEC 5, 2017",
-          "text": "经过近两周的管局公安备案,成功部署项目到域名,网站v1.0第一个版本上线.",
+          "title": "前台页面",
+          "date": "2022 年 8 月 25 日",
+          "text": "前台页面编写,数据显示。网站功能初步完成。",
           "class": "2",
-          "isSlide": false
-        }, {
-          "title": "增加人数统计",
-          "date": "DEC 30, 2017",
-          "text": "通过截取IP，获得访问量，同时修正了一些适配手机端的做法，优化了样式",
-          "class": "1",
           "isSlide": false
         }
       ],
@@ -428,11 +422,6 @@
           "content": "然后这个博客就诞生了,用了以前写的完善了下，换了套前台UI。"
         },{
           "content": "本站使用了SpringBoot+Vue前后端分离开发。"
-        }]
-      }, {
-        "title": "友情链接。",
-        "section": [{
-          "content": "<a href=\"https://aoaoao.me/\">树洞</a>&nbsp;&nbsp;<a href=\"https://www.ailoli.org/\">Ailoli</a>"
         }]
       }]
     }

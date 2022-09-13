@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.vblog.web.mapper.ArticleCommentMapper">
+
+    <resultMap id="ArticleCommentResult" type="com.jzj.vblog.web.pojo.entity.ArticleComment">
+        <id     property="id"     column="id"     />
+        <result property="status"     column="status"      />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="nickName" column="nick_name" />
+        <result property="email" column="email" />
+        <result property="content" column="content" />
+        <result property="parentStatus" column="parent_status" />
+        <result property="articleId" column="article_id" />
+        <result property="commentType" column="comment_type" />
+    </resultMap>
+
+    <sql id="articleCommentVo">
+        SELECT id,status,create_time,update_time,nick_name,email,content,parent_status,article_id,comment_type FROM article_comment
+    </sql>
+
+    <select id="selectCommentList" resultType="com.jzj.vblog.web.pojo.entity.ArticleComment">
+        <include refid="articleCommentVo"/>
+            WHERE parent_status = '1'
+            <if test="commentType != null and commentType != ''">
+                AND comment_type = #{commentType}
+            </if>
+            <if test="status != null and status != ''">
+            AND status = #{status}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                AND nick_name like concat('%',#{nickName},'%')
+            </if>
+            <if test="email != null and email != ''">
+                AND email like concat('%',#{email},'%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        ORDER BY create_time DESC
+    </select>
+    <select id="selectCommentById" resultType="com.jzj.vblog.web.pojo.vo.CommentInfoVo">
+        SELECT
+            a1.id,
+            a1.nick_name,
+            a1.email,
+            a1.content,
+            a2.content reply,
+            a2.id sid
+        FROM
+            article_comment a1
+                LEFT JOIN article_comment a2 ON a1.id = a2.parent_id
+        WHERE
+            a1.id = #{id}
+    </select>
+</mapper>
