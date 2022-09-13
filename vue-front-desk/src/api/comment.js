@@ -7,3 +7,10 @@ export function saveMessage(data) {
     data: data
   })
 }
+
+export function getMessageList(pageNumber) {
+  return request({
+    url: `/front/comment/getList/message/${pageNumber}`,
+    method: 'get'
+  })
+}

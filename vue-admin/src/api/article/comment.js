@@ -34,3 +34,11 @@ export function update(data) {
     data: data
   })
 }
+
+// 删除评论
+export function del(id) {
+  return request({
+    url: `/article/comment/${id}`,
+    method: 'delete'
+  })
+}

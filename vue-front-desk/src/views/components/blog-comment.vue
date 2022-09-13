@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { saveMessage } from "@/api/comment";
+import { saveMessage } from '@/api/comment';
 
 export default {
   props: ['isResponse', 'responseName', 'userData'],
@@ -92,10 +92,10 @@ export default {
       var data = {
         nickName: _self.nickname,
         content: _self.textareaData,
-        email: _self.email,
+        email: _self.email
       };
-      saveMessage(data).then(res=>{
-        alert("留言成功!")
+      saveMessage(data).then(res => {
+        alert('留言成功!')
       })
     },
     isEmailMethod: function (str) {

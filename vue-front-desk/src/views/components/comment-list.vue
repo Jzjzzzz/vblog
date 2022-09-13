@@ -12,7 +12,7 @@
           </div>
           <div v-if="comment.response" class="comment-detail-response">
             <h5>引用 {{comment.responseName}}
-              <font style="font-size: 12px;float: right;color:#aaa;font-weight: 400;">发表时间：{{comment.responseTime}}</font>
+              <font style="font-size: 12px;float: right;color:#aaa;font-weight: 400;">发表时间： {{comment.responseTime}}</font>
             </h5> {{comment.response}}
           </div>
           <div v-html="comment.message" class="comment-detail-body-bottom"></div>

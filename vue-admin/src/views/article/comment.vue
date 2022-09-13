@@ -84,17 +84,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-        >删除</el-button>
+        >回复</el-button>
       </el-col>
       <el-col :span="1.5">
         <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
@@ -103,7 +93,7 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column type="index" label="序号" align="center"  />
+      <el-table-column type="index" label="序号" align="center" />
       <el-table-column label="昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
       <el-table-column label="邮箱" align="center" prop="email" :show-overflow-tooltip="true" />
       <el-table-column label="评论类型" align="center" prop="commentType">
@@ -150,17 +140,17 @@
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="50%" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="昵称" >
-          <el-input v-model="form.nickName" placeholder="请输入昵称"  disabled/>
+        <el-form-item label="昵称">
+          <el-input v-model="form.nickName" placeholder="请输入昵称" disabled />
         </el-form-item>
-        <el-form-item label="email" >
+        <el-form-item label="email">
           <el-input v-model="form.email" placeholder="请输入邮箱" disabled />
         </el-form-item>
         <el-form-item label="内容">
-          <el-input type="textarea" v-model="form.content" placeholder="请输入内容" disabled />
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" disabled />
         </el-form-item>
         <el-form-item label="回复">
-          <el-input type="textarea" v-model="form.reply" placeholder="请输入回复内容"  />
+          <el-input v-model="form.reply" type="textarea" placeholder="请输入回复内容" />
         </el-form-item>
 
       </el-form>
@@ -173,11 +163,10 @@
 </template>
 
 <script>
-import { pageList,getInfo,reply,update } from "@/api/article/comment";
-import { del } from '@/api/link/link'
+import { pageList, getInfo, reply, update, del } from '@/api/article/comment'
 export default {
   name: 'Dict',
-  dicts: ['article_comment_type','article_comment_status'],
+  dicts: ['article_comment_type', 'article_comment_status'],
   data() {
     return {
       // 遮罩层
@@ -221,10 +210,10 @@ export default {
     getList() {
       this.loading = true
       pageList(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.list = response.rows
-          this.total = response.total
-          this.loading = false
-        }
+        this.list = response.rows
+        this.total = response.total
+        this.loading = false
+      }
       )
     },
     // 取消按钮

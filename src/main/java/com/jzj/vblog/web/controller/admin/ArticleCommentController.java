@@ -3,11 +3,9 @@ package com.jzj.vblog.web.controller.admin;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
-import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
-import com.jzj.vblog.web.pojo.entity.FriendLink;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -66,10 +63,10 @@ public class ArticleCommentController extends BaseController {
     }
 
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{id}")
     @ApiOperation("删除评论")
-    public R remove(@PathVariable List<String> ids) {
-        return toAjax(articleCommentService.deleteCommentByIds(ids));
+    public R remove(@PathVariable String id) {
+        return toAjax(articleCommentService.deleteCommentById(id));
     }
 }
 

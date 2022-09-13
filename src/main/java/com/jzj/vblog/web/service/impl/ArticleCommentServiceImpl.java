@@ -1,18 +1,22 @@
 package com.jzj.vblog.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.jzj.vblog.web.pojo.entity.ArticleComment;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
+import com.jzj.vblog.web.pojo.entity.ArticleComment;
+import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 import com.jzj.vblog.web.service.ArticleCommentService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -24,6 +28,8 @@ import java.util.List;
  */
 @Service
 public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper, ArticleComment> implements ArticleCommentService {
+
+    private final static Integer SIZE = 1;
 
     @Autowired
     private ArticleCommentMapper articleCommentMapper;
@@ -79,8 +85,52 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         return articleCommentMapper.updateById(sonModel);
     }
 
+    @Transactional
     @Override
-    public int deleteCommentByIds(List<String> ids) {
-        return articleCommentMapper.deleteBatchIds(ids);
+    public int deleteCommentById(String id) {
+        ArticleComment sonModel = articleCommentMapper.selectOne(new QueryWrapper<ArticleComment>().eq("parent_id", id));
+        if(sonModel!=null){
+            articleCommentMapper.deleteById(sonModel.getId());
+        }
+        return articleCommentMapper.deleteById(id);
+    }
+
+    /**
+     * 前台显示留言板列表
+     * @return
+     */
+    @Override
+    public Map<String,Object> getMessageList(Integer pageNumber) {
+        IPage<ArticleComment> commentPage = articleCommentMapper.selectPage(new Page<>(pageNumber, 1), new QueryWrapper<ArticleComment>().eq("parent_status", "1"));
+        HashMap<String, Object> map = new HashMap<>();
+        List<ArticleComment> commentList = commentPage.getRecords();
+        List<CommentFrontListVo> voList = new ArrayList<>();
+        for (ArticleComment comment : commentList) {
+            CommentFrontListVo vo = new CommentFrontListVo();
+            ArticleComment sonModel = articleCommentMapper.selectOne(new QueryWrapper<ArticleComment>().eq("parent_id", comment.getId())); //子节点
+            if(sonModel!=null){
+                vo.setId(sonModel.getId());
+                vo.setNickname(sonModel.getNickName());
+                vo.setDate(sonModel.getCreateTime());
+                vo.setMessage(sonModel.getContent());
+                vo.setUserPhoto("https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/08/11/894545a484d24866bcf4f928914dda89.jpg");
+                vo.setArea("广东东莞");
+                vo.setResponse(comment.getContent());
+                vo.setResponseName(comment.getNickName());
+                vo.setResponseTime(comment.getCreateTime());
+            }else {
+                vo.setDate(comment.getCreateTime());
+                vo.setNickname(comment.getNickName());
+                vo.setMessage(comment.getContent());
+                vo.setUserPhoto("https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/08/11/894545a484d24866bcf4f928914dda89.jpg");
+                vo.setArea("广东东莞");
+            }
+            voList.add(vo);
+        }
+        map.put("list",voList);
+        long total = commentPage.getTotal();
+        map.put("total",total);
+        map.put("isFinish",total<=SIZE*pageNumber);
+        return map;
     }
 }

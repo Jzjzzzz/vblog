@@ -59,7 +59,7 @@
           </blog-comment>
           <br/><br/>
           <div id="comment" class="comment-list-head">评论墙 <font
-            style="font-size: 14px;color:#c7254e;">(共20条评论)</font>
+            style="font-size: 14px;color:#c7254e;">(共 {{ total }} 条评论)</font>
             <hr/>
           </div>
           <comment-wall :comment-list="commentList" :waterfall-data="waterfallData"
@@ -77,6 +77,7 @@ import blogFoot from '@/views/components/blog-foot';
 import blogComment from '@/views/components/blog-comment';
 import commentWall from '@/views/components/comment-wall';
 import {linkList} from '@/api/link'
+import { getMessageList } from '@/api/comment'
 import config from '@/config/blog-config.json';
 
 export default {
@@ -113,8 +114,12 @@ export default {
       timelineList: [],
       commentList: [],
       // 一定要声明这个瀑布流加载的数据对象
-      waterfallData: null,
-      count: 0 // 瀑布流页码模拟
+      waterfallData: {
+        isLoading: false,
+        isFinish: false
+      },
+      count: 1, // 瀑布流页码模拟
+      total: 0 // 总条数
     }
   },
   created() {
@@ -129,33 +134,20 @@ export default {
       this.webConfig = webConfig;
       this.webConfig.qq = 'https://wpa.qq.com/msgrd?v=3&uin=' + webConfig.qq + '&site=qq&menu=yes'
       this.timelineList = config.data.contact['timeLine'];
-      this.commentList = JSON.parse(JSON.stringify(config.data.contact['commentList']));
-      this.introduceList = config.data.contact['introduceList'];
-      linkList().then( res => {
-        this.linkList = res.data
+      getMessageList(this.count).then(res => {
+        this.commentList = res.data.list
+        this.total = res.data.total
+        this.waterfallData.isFinish = res.data.isFinish
       })
-      this.getConfigImage();
-    },
-    getConfigImage() {
-      this.commentList.forEach(item => {
-        item.userPhoto = require('../../' + item.userPhoto);
-        // 这里通过创建虚拟dom节点获取评论消息中所有的图片，将其require()进来进行一个转换
-        var frag = document.createElement('div');
-        frag.innerHTML = item.message;
-        Array.prototype.forEach.call(frag.getElementsByTagName('img'), (nodeItem) => {
-          var image = nodeItem.src.split(`${window.location.host}/`)[1];// 获取图片的相对路径
-          nodeItem.src = require('../../' + image);
-        });
-        item.message = frag.innerHTML;
+      this.introduceList = config.data.contact['introduceList'];
+      linkList().then(res => {
+        this.linkList = res.data
       })
     },
     subLeaveMessage(data) {
-      alert(`您点击了提交,数据对象如下:${JSON.stringify(data)}`);
     },
     // 用作瀑布流的留言墙测试例子（仅供参考）
     waterfallTest: function (data) {
-      alert('滑动到底了，触发瀑布流效果，这是一个延迟函数模拟请求，仅供测试');
-      console.log(data);
       let _self = this;
       if (data.isFinish) { // 如果服务器没有数据了，那么就返回(不建议这样做);
         return;
@@ -163,16 +155,17 @@ export default {
       setTimeout(() => {
         // 成功的回调
         _self.count++;
-        data.isLoading = false;
-        data.isLoading = false;
-        if (_self.count === 3) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
+        getMessageList(_self.count).then(res => {
+          let list = res.data.list
+          for (var i = 0; i < list.length; i++) {
+            _self.commentList.push(list[i]);
+          }
+          _self.isFinish = res.data.isFinish
+        })
+        if (_self.isFinish) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
           data.isFinish = true;
+          data.isLoading = true;
         }
-        _self.commentList.push(_self.commentList[0]);
-        _self.commentList.push(_self.commentList[1]);
-        _self.commentList.push(_self.commentList[2]);
-        _self.commentList.push(_self.commentList[3]);
-        _self.commentList.push(_self.commentList[4]);
         _self.waterfallData = data;
       }, 2000)
     }

@@ -1,10 +1,11 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,5 +32,11 @@ public interface ArticleCommentService extends IService<ArticleComment> {
 
     int updateComment(CommentInfoVo commentInfoVo);
 
-    int deleteCommentByIds(List<String> ids);
+    int deleteCommentById(String id);
+
+    /**
+     * 前台显示留言板列表
+     * @return
+     */
+    Map<String,Object> getMessageList(Integer pageNumber);
 }
