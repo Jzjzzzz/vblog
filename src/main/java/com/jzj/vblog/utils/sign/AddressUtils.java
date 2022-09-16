@@ -1,5 +1,6 @@
 package com.jzj.vblog.utils.sign;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jzj.vblog.utils.constant.Constants;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @Message: 获取地址类
  */
 public class AddressUtils {
+
     private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
     // IP地址查询

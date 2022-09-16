@@ -137,6 +137,9 @@
         <el-form-item label="email">
           <el-input v-model="form.email" placeholder="请输入邮箱" disabled />
         </el-form-item>
+        <el-form-item v-if="form.articleName!=null" label="文章名">
+          <el-input v-model="form.articleName" placeholder="留言板评论" disabled />
+        </el-form-item>
         <el-form-item label="内容">
           <el-input v-model="form.content" type="textarea" placeholder="请输入内容" disabled />
         </el-form-item>

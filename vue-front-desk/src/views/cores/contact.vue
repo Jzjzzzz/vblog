@@ -132,11 +132,7 @@ export default {
       this.webConfig = webConfig;
       this.webConfig.qq = 'https://wpa.qq.com/msgrd?v=3&uin=' + webConfig.qq + '&site=qq&menu=yes'
       this.timelineList = config.data.contact['timeLine'];
-      getMessageList(this.count).then(res => {
-        this.commentList = res.data.list
-        this.total = res.data.total
-        this.waterfallData.isFinish = res.data.isFinish
-      })
+      this.waterfallTest()
       this.introduceList = config.data.contact['introduceList'];
       linkList().then(res => {
         this.linkList = res.data
@@ -152,19 +148,21 @@ export default {
       }
       setTimeout(() => {
         // 成功的回调
-        _self.count++;
-        data.isLoading = false;
-
-        if (_self.count === _self.total) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
-          data.isFinish = true;
-        }
         getMessageList(_self.count).then(res => {
           let list = res.data.list
+          _self.total = res.data.total
           for (var i = 0; i < list.length; i++) {
             _self.commentList.push(list[i]);
           }
+          data.isLoading = false;
+
+          if (_self.count >= _self.total) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
+            data.isFinish = true;
+          }
+          _self.count++;
+
+          _self.waterfallData = data;
         })
-        _self.waterfallData = data;
       }, 2000)
     }
   }
