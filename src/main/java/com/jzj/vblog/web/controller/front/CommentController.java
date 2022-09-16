@@ -23,7 +23,7 @@ public class CommentController extends BaseController {
     @Autowired
     private ArticleCommentService articleCommentService;
 
-    @ApiOperation("前台评论留言板")
+    @ApiOperation("前台评论")
     @PostMapping("/insert/message")
     @Log(title = "前台评论", businessType = BusinessType.INSERT)
     public R saveMessage(@RequestBody ArticleComment articleComment){
@@ -39,4 +39,12 @@ public class CommentController extends BaseController {
         Map<String,Object> map = articleCommentService.getMessageList(pageNumber);
         return R.ok(map);
     }
+
+    @ApiOperation("前台显示文章评论列表")
+    @GetMapping("/getList/article/{articleId}")
+    public R getListArticle(@PathVariable String articleId){
+        Map<String,Object> map = articleCommentService.getListArticle(articleId);
+        return R.ok(map);
+    }
+
 }

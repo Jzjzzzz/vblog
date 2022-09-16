@@ -25,11 +25,11 @@
         <article-tags :tag-list="tagList"></article-tags>
         <hr /><br/>
         <div v-if="commentStatus" class="content-detail-end comment shadow">
-          <blog-comment :user-data="userData" v-on:submit-comment="subLeaveMessage">
+          <blog-comment :user-data="userData" :comment-type="commentType" :article-id="article.id" v-on:submit-comment="subLeaveMessage">
           </blog-comment><hr />
           <div class="comment-list">
             <div id="comment" class="comment-list-head">
-              评论列表 <font style="font-size: 14px;color:#c7254e;">(共5条评论)</font>
+              评论列表 <font style="font-size: 14px;color:#c7254e;">(共 {{commentList.length}} 条评论)</font>
               <hr>
             </div>
             <div class="comment-list-body">
@@ -59,6 +59,7 @@ import markdown from '../../assets/css/markdown/markdown.css';
 import content from '../../assets/content.txt';
 import config from '@/config/blog-config.json';
 import { getById } from '@/api/article'
+import { getListArticle } from '@/api/comment'
 export default {
   name: 'blog-detail',
   components: {
@@ -73,9 +74,11 @@ export default {
   },
   data () {
     return {
+      commentType: '1',
       commentStatus : false,
       sonRefresh: false,
       article: {
+        id: undefined,
         content: undefined,
         updateTime: undefined,
         articleTitle: undefined,
@@ -116,8 +119,8 @@ export default {
   },
   methods: {
     init () {
-      this.getConfig();
       this.getArticleDetail();
+      this.getConfig();
     },
     getArticleDetail () {
       getById(this.$route.params.articleId).then(res => {
@@ -141,9 +144,8 @@ export default {
       })
     },
     getConfig () {
-      this.commentList = JSON.parse(JSON.stringify(config.data.detail['detailComment']));
-      this.commentList.forEach(item => {
-        item.userPhoto = require('../../' + item.userPhoto);
+      getListArticle(this.$route.params.articleId).then(res => {
+        this.commentList = res.data.list
       })
     },
     subLeaveMessage (data) {

@@ -38,14 +38,12 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
 
     /**
-     * 访客评论留言板
+     * 访客评论
      * @param articleComment
      * @return
      */
     @Override
     public int saveUserMessage(ArticleComment articleComment) {
-        //评论类型(0-留言板,1-文章评论)
-        articleComment.setCommentType("0");
         articleComment.setStatus("0");
         //是否为父节点
         articleComment.setParentStatus("1");
@@ -69,7 +67,6 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         sonModel.setNickName("漫漫长路");
         sonModel.setEmail("946232976@qq.com");
         sonModel.setStatus("1");
-        sonModel.setCommentType("0");
         sonModel.setParentId(parentModel.getId());
         sonModel.setContent(commentInfoVo.getReply());
         return articleCommentMapper.insert(sonModel);
@@ -98,6 +95,25 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     }
 
     /**
+     * 前台显示文章评论列表
+     * @param articleId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getListArticle(String articleId) {
+        List<ArticleComment> commentList = articleCommentMapper.selectList(
+                new QueryWrapper<ArticleComment>()
+                        .eq("parent_status", "1")
+                        .eq("comment_type", "1")
+                        .eq("article_id",articleId)
+                        .orderByDesc("create_time"));
+        HashMap<String, Object> map = new HashMap<>();
+        List<CommentFrontListVo> voList = getCommentFrontListVos(commentList);
+        map.put("list",voList);
+        return map;
+    }
+
+    /**
      * 前台显示留言板列表
      * @return
      */
@@ -105,9 +121,21 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     public Map<String,Object> getMessageList(Integer pageNumber) {
         IPage<ArticleComment> commentPage = articleCommentMapper.selectPage(
                 new Page<>(pageNumber, 1),
-                new QueryWrapper<ArticleComment>().eq("parent_status", "1").orderByDesc("create_time"));
+                new QueryWrapper<ArticleComment>()
+                        .eq("parent_status", "1")
+                        .eq("comment_type","0")
+                        .orderByDesc("create_time"));
         HashMap<String, Object> map = new HashMap<>();
         List<ArticleComment> commentList = commentPage.getRecords();
+        List<CommentFrontListVo> voList = getCommentFrontListVos(commentList);
+        map.put("list",voList);
+        long total = commentPage.getTotal();
+        map.put("total",total);
+        map.put("isFinish",total<=SIZE*pageNumber);
+        return map;
+    }
+
+    private List<CommentFrontListVo> getCommentFrontListVos(List<ArticleComment> commentList) {
         List<CommentFrontListVo> voList = new ArrayList<>();
         for (ArticleComment comment : commentList) {
             CommentFrontListVo vo = new CommentFrontListVo();
@@ -131,12 +159,10 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
             }
             voList.add(vo);
         }
-        map.put("list",voList);
-        long total = commentPage.getTotal();
-        map.put("total",total);
-        map.put("isFinish",total<=SIZE*pageNumber);
-        return map;
+        return voList;
     }
+
+
 
     /**
      * 前台留言板数据校验
@@ -161,4 +187,6 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         }
         return true;
     }
+
+
 }

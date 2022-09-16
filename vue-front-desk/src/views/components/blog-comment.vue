@@ -22,7 +22,7 @@
 <script>
 import { saveMessage } from '@/api/comment';
 export default {
-  props: ['isResponse', 'responseName', 'userData'],
+  props: ['isResponse', 'responseName', 'userData', 'commentType', 'articleId'],
   name: 'blogComment',
   data () {
     return {
@@ -51,7 +51,9 @@ export default {
       var data = {
         nickName: _self.nickname,
         content: _self.textareaData,
-        email: _self.email
+        email: _self.email,
+        commentType: this.commentType,
+        articleId : this.articleId
       };
       if (data.nickName.length == 0 && data.nickName == ''){
         alert('昵称不能为空')

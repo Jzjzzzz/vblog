@@ -55,7 +55,7 @@
         <h5>留言板块</h5>
         <br/>
         <div class="comment">
-          <blog-comment :user-data="userData" v-on:submit-comment="subLeaveMessage">
+          <blog-comment :user-data="userData" :comment-type="commentType"  v-on:submit-comment="subLeaveMessage">
           </blog-comment>
           <br/><br/>
           <div id="comment" class="comment-list-head">评论墙 <font
@@ -90,6 +90,7 @@ export default {
   },
   data() {
     return {
+      commentType: '0',
       webConfig: {
         articleBanner: undefined,
         createTime: undefined,

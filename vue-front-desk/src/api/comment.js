@@ -14,3 +14,10 @@ export function getMessageList(pageNumber) {
     method: 'get'
   })
 }
+
+export function getListArticle(articleId) {
+  return request({
+    url: `/front/comment/getList/article/${articleId}`,
+    method: 'get'
+  })
+}

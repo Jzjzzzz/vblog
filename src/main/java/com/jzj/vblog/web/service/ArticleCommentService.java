@@ -18,7 +18,7 @@ import java.util.Map;
 public interface ArticleCommentService extends IService<ArticleComment> {
 
     /**
-     * 访客评论留言板
+     * 访客评论
      * @param articleComment
      * @return
      */
@@ -46,4 +46,11 @@ public interface ArticleCommentService extends IService<ArticleComment> {
      * @return
      */
     boolean checkFrontData(ArticleComment articleComment);
+
+    /**
+     * 前台显示文章评论列表
+     * @param articleId
+     * @return
+     */
+    Map<String, Object> getListArticle(String articleId);
 }
