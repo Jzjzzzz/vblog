@@ -1,8 +1,10 @@
 package com.jzj.vblog.web.controller.front;
 
+import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
+import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.service.ArticleCommentService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,11 @@ public class CommentController extends BaseController {
 
     @ApiOperation("前台评论留言板")
     @PostMapping("/insert/message")
+    @Log(title = "前台评论", businessType = BusinessType.INSERT)
     public R saveMessage(@RequestBody ArticleComment articleComment){
+        if(!articleCommentService.checkFrontData(articleComment)){
+            return R.error("数据异常!");
+        }
         return toAjax(articleCommentService.saveUserMessage(articleComment));
     }
 

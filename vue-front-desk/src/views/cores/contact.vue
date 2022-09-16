@@ -114,10 +114,7 @@ export default {
       timelineList: [],
       commentList: [],
       // 一定要声明这个瀑布流加载的数据对象
-      waterfallData: {
-        isLoading: false,
-        isFinish: false
-      },
+      waterfallData: null,
       count: 1, // 瀑布流页码模拟
       total: 0 // 总条数
     }
@@ -155,23 +152,23 @@ export default {
       setTimeout(() => {
         // 成功的回调
         _self.count++;
+        data.isLoading = false;
+
+        if (_self.count === _self.total) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
+          data.isFinish = true;
+        }
         getMessageList(_self.count).then(res => {
           let list = res.data.list
           for (var i = 0; i < list.length; i++) {
             _self.commentList.push(list[i]);
           }
-          _self.isFinish = res.data.isFinish
         })
-        if (_self.isFinish) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
-          data.isFinish = true;
-          data.isLoading = true;
-        }
         _self.waterfallData = data;
       }, 2000)
     }
   }
-
 }
+
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

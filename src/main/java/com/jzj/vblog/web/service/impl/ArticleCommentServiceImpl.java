@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.utils.sign.EmailUtil;
+import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
@@ -101,7 +103,9 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
      */
     @Override
     public Map<String,Object> getMessageList(Integer pageNumber) {
-        IPage<ArticleComment> commentPage = articleCommentMapper.selectPage(new Page<>(pageNumber, 1), new QueryWrapper<ArticleComment>().eq("parent_status", "1"));
+        IPage<ArticleComment> commentPage = articleCommentMapper.selectPage(
+                new Page<>(pageNumber, 1),
+                new QueryWrapper<ArticleComment>().eq("parent_status", "1").orderByDesc("create_time"));
         HashMap<String, Object> map = new HashMap<>();
         List<ArticleComment> commentList = commentPage.getRecords();
         List<CommentFrontListVo> voList = new ArrayList<>();
@@ -132,5 +136,29 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         map.put("total",total);
         map.put("isFinish",total<=SIZE*pageNumber);
         return map;
+    }
+
+    /**
+     * 前台留言板数据校验
+     * @param articleComment
+     * @return
+     */
+    @Override
+    public boolean checkFrontData(ArticleComment articleComment) {
+        String nickName = articleComment.getNickName();
+        String content = articleComment.getContent();
+        String email = articleComment.getEmail();
+        //非空校验
+        if(StringUtils.isEmpty(nickName) || StringUtils.isEmpty(content) || StringUtils.isEmpty(email)){
+            return false;
+        }
+        //长度校验
+        if(nickName.length()>20 || content.length()>200 || email.length()>30){
+            return false;
+        }
+        if(!EmailUtil.isEmail(email)){
+            return false;
+        }
+        return true;
     }
 }

@@ -41,7 +41,6 @@ export default {
       const _self = this;
       scrollToBottom.onScrollEvent(function () {
         if (!_self.isFinish && !_self.isLoading) {
-          console.log('到底了');
           _self.isLoading = true;
           _self.waterFall(_self.isLoading);
         }
@@ -56,7 +55,6 @@ export default {
     }
   },
   beforeDestroy () {
-    console.log('瀑布流组件开始销毁');
     window.removeEventListener('scroll', this.handleScroll);
   }
 }

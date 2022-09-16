@@ -16,12 +16,13 @@
             </h5> {{comment.response}}
           </div>
           <div v-html="comment.message" class="comment-detail-body-bottom"></div>
-          <div class="comment-detail-foot">
+<!--回复功能只能管理员回复-->
+<!--          <div class="comment-detail-foot">
             <a href="javascript:;" @click="commentResponse($key)">
               <font v-if="!comment.isResponse">回复</font>
               <font v-if="comment.isResponse">取消回复</font>
             </a>
-          </div>
+          </div>-->
         </div>
       </div>
       <div v-if="comment.isResponse">

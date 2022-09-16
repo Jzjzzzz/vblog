@@ -39,4 +39,11 @@ public interface ArticleCommentService extends IService<ArticleComment> {
      * @return
      */
     Map<String,Object> getMessageList(Integer pageNumber);
+
+    /**
+     * 前台留言板数据校验
+     * @param articleComment
+     * @return
+     */
+    boolean checkFrontData(ArticleComment articleComment);
 }
