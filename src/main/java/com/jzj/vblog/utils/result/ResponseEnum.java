@@ -17,6 +17,7 @@ public enum ResponseEnum {
     EXPORT_DATA_ERROR(104, "数据导出失败"),
     UPLOAD_DELETE_ERROR(105, "文件删除失败"),
     UPLOAD_DELETE_NOT(106, "文件不存在"),
+    REQUEST_UPPER_LIMIT(107,"接口请求超过次数"),
 
 
     //-2xx 参数校验

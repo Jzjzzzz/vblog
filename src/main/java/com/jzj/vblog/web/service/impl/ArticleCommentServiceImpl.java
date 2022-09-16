@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.utils.sign.EmailUtil;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
+import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
@@ -35,6 +36,9 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Autowired
     private ArticleCommentMapper articleCommentMapper;
+
+    @Autowired
+    private ArticleInformMapper articleInformMapper;
 
 
     /**
@@ -74,7 +78,8 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Override
     public CommentInfoVo selectCommentById(String id) {
-        return articleCommentMapper.selectCommentById(id);
+        CommentInfoVo commentInfoVo = articleCommentMapper.selectCommentById(id);
+        return commentInfoVo;
     }
 
     @Override

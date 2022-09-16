@@ -49,10 +49,12 @@
             a1.email,
             a1.content,
             a2.content reply,
-            a2.id sid
+            a2.id sid,
+            ai.article_title articleName
         FROM
             article_comment a1
                 LEFT JOIN article_comment a2 ON a1.id = a2.parent_id
+                LEFT JOIN article_inform ai ON a1.article_id = ai.id
         WHERE
             a1.id = #{id}
     </select>

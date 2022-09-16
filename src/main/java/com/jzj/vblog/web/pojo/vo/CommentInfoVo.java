@@ -25,4 +25,7 @@ public class CommentInfoVo {
 
     @ApiModelProperty(value = "子id")
     private String sid;
+
+    @ApiModelProperty(value = "文章名称")
+    private String articleName;
 }
