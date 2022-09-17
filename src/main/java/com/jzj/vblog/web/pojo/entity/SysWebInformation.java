@@ -69,5 +69,8 @@ public class SysWebInformation extends BaseEntity {
     @ApiModelProperty(value = "微信二维码")
     private String wechatImg;
 
+    @ApiModelProperty(value = "Email")
+    private String email;
+
 
 }

@@ -24,10 +24,19 @@
               :style="{width: '100%'}"
             />
           </el-form-item>
-          <el-form-item label="GitEE" prop="gitee">
+          <el-form-item label="Gitee" prop="gitee">
             <el-input
               v-model="formData.gitee"
-              placeholder="请输入GitEE"
+              placeholder="请输入Gitee"
+              prefix-icon="el-icon-position"
+              clearable
+              :style="{width: '100%'}"
+            />
+          </el-form-item>
+          <el-form-item label="Email" prop="Email">
+            <el-input
+              v-model="formData.email"
+              placeholder="请输入Email"
               prefix-icon="el-icon-position"
               clearable
               :style="{width: '100%'}"

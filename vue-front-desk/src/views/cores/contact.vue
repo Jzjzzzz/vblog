@@ -132,11 +132,12 @@ export default {
       this.webConfig = webConfig;
       this.webConfig.qq = 'https://wpa.qq.com/msgrd?v=3&uin=' + webConfig.qq + '&site=qq&menu=yes'
       this.timelineList = config.data.contact['timeLine'];
-      this.waterfallTest()
+
       this.introduceList = config.data.contact['introduceList'];
       linkList().then(res => {
         this.linkList = res.data
       })
+      this.waterfallTest()
     },
     subLeaveMessage(data) {
     },

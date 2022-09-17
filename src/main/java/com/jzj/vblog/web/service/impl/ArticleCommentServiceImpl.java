@@ -4,22 +4,35 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.utils.redis.RedisCache;
 import com.jzj.vblog.utils.sign.EmailUtil;
+import com.jzj.vblog.utils.sign.FileUtils;
+import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
+import com.jzj.vblog.web.mapper.SysWebInformationMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
+import com.jzj.vblog.web.pojo.entity.SysWebInformation;
+import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 import com.jzj.vblog.web.service.ArticleCommentService;
+import com.jzj.vblog.web.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toolgood.words.StringSearch;
+import toolgood.words.WordsHelper;
+import toolgood.words.WordsMatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * <p>
@@ -40,6 +53,16 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     @Autowired
     private ArticleInformMapper articleInformMapper;
 
+    @Autowired
+    private EmailService emailService;
+
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
+
+    @Autowired
+    private RedisCache redisCache;
+
+    @Autowired
+    private SysWebInformationMapper sysWebInformationMapper;
 
     /**
      * 访客评论
@@ -48,10 +71,21 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
      */
     @Override
     public int saveUserMessage(ArticleComment articleComment) {
-        articleComment.setStatus("0");
-        //是否为父节点
-        articleComment.setParentStatus("1");
-        return articleCommentMapper.insert(articleComment);
+        try {
+            articleComment.setStatus("0");
+            //是否为父节点
+            articleComment.setParentStatus("1");
+            StringSearch iwords = new StringSearch();
+            String path = this.getClass().getClassLoader().getResource("sensi_words.txt").getPath();
+            List<String> list = FileUtils.getContent(path);
+            iwords.SetKeywords(list);
+            articleComment.setContent(iwords.Replace(WordsHelper.ToSimplifiedChinese(articleComment.getContent()), '*'));
+            articleComment.setNickName(iwords.Replace(WordsHelper.ToSimplifiedChinese(articleComment.getNickName()), '*'));
+            articleComment.setEmail(iwords.Replace(WordsHelper.ToSimplifiedChinese(articleComment.getEmail()), '*'));
+            return articleCommentMapper.insert(articleComment);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -62,17 +96,26 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     @Transactional
     @Override
     public int reply(CommentInfoVo commentInfoVo) {
+        SysWebInformation information = null;
+        information = redisCache.getCacheObject("sys_web_information");
+        if(information==null){
+            information = sysWebInformationMapper.selectById(1);
+        }
         //修改父节点状态
         ArticleComment parentModel = articleCommentMapper.selectById(commentInfoVo.getId());
         parentModel.setStatus("1");
         articleCommentMapper.updateById(parentModel);
         //新增子节点
         ArticleComment sonModel = new ArticleComment();
-        sonModel.setNickName("漫漫长路");
-        sonModel.setEmail("946232976@qq.com");
+        sonModel.setNickName(information.getWebName()==null?"漫漫长路":information.getWebName());
+        sonModel.setEmail(information.getEmail()==null?"946232976@qq.com":information.getEmail());
         sonModel.setStatus("1");
         sonModel.setParentId(parentModel.getId());
         sonModel.setContent(commentInfoVo.getReply());
+        //发送邮件通知留言者
+        CompletableFuture.runAsync(()->{
+            emailService.sendMail(parentModel.getEmail(),sonModel.getNickName()+"对您留言的回复-"+"来着漫漫长路的博客",commentInfoVo.getReply());
+        },threadPoolTaskExecutor);
         return articleCommentMapper.insert(sonModel);
     }
 
@@ -176,21 +219,26 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
      */
     @Override
     public boolean checkFrontData(ArticleComment articleComment) {
-        String nickName = articleComment.getNickName();
-        String content = articleComment.getContent();
-        String email = articleComment.getEmail();
-        //非空校验
-        if(StringUtils.isEmpty(nickName) || StringUtils.isEmpty(content) || StringUtils.isEmpty(email)){
-            return false;
+        try {
+            String nickName = articleComment.getNickName();
+            String content = articleComment.getContent();
+            String email = articleComment.getEmail();
+            //非空校验
+            if(StringUtils.isEmpty(nickName) || StringUtils.isEmpty(content) || StringUtils.isEmpty(email)){
+                return false;
+            }
+            //长度校验
+            if(nickName.length()>20 || content.length()>200 || email.length()>30){
+                return false;
+            }
+            //邮箱类型
+            if(!EmailUtil.isEmail(email)){
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        //长度校验
-        if(nickName.length()>20 || content.length()>200 || email.length()>30){
-            return false;
-        }
-        if(!EmailUtil.isEmail(email)){
-            return false;
-        }
-        return true;
     }
 
 
