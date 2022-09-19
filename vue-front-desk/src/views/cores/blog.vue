@@ -2,8 +2,10 @@
   <div id="view-body" class="view-body view-body-blog">
     <div class="row">
       <div class="col-md-12 col-sm-12 ">
-        <div class="moreTag" @click="tagShowFlag=!tagShowFlag">
-          <img :class="tagShowFlag?'moreTagTransform':''" src="../../assets/image/icon/moreTag.svg"> {{tagShowFlag?'收起标签墙':'展开标签墙'}}</div>
+        <div v-if="this.$route.params.summaryId==null">
+          <div class="moreTag" @click="tagShowFlag=!tagShowFlag">
+            <img :class="tagShowFlag?'moreTagTransform':''" src="../../assets/image/icon/moreTag.svg"> {{tagShowFlag?'收起标签墙':'展开标签墙'}}
+          </div>
           <transition name="slide-more-tag">
             <div v-show="tagShowFlag" class="tag-wall shadow">
               <div class="tag-wall-head">标签墙</div>
@@ -12,6 +14,10 @@
               </div>
             </div>
           </transition>
+        </div>
+        <div v-else>
+          <h2 style="text-align:center;padding-bottom: 30px">{{ this.$route.params.summaryName }}</h2>
+        </div>
           <div class="row-content">
                 <article-item  :article-list="rowItem"></article-item>
                 <article-page :current-page="query.currPage" :page-all="totalPage"
@@ -41,7 +47,8 @@ export default {
       query: {
         currPage: 1, // 当前页
         limit: 5, // 总页数
-        tagId: undefined
+        tagId: undefined,
+        summaryId: undefined
       },
       totalPage: 0,
       tagShowFlag: false,
@@ -62,6 +69,9 @@ export default {
     init () {
       if (this.$route.query.tagId != null){
         this.query.tagId = this.$route.query.tagId
+      }
+      if (this.$route.params.summaryId != null){
+        this.query.summaryId = this.$route.params.summaryId
       }
       fetchList(this.query).then(res => {
         this.totalPage = res.data.map.totalPage

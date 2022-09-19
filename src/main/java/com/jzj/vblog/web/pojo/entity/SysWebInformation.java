@@ -72,5 +72,8 @@ public class SysWebInformation extends BaseEntity {
     @ApiModelProperty(value = "Email")
     private String email;
 
+    @ApiModelProperty(value = "评论头像")
+    private String commentImg;
+
 
 }

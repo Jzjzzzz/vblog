@@ -8,7 +8,7 @@
   	    "name": "技术杂谈",
   	    "router": "/blog"
   	  }, {
-  	    "name": "生活",
+  	    "name": "归档",
   	    "router": "/life"
   	  }, {
   	    "name": "关于我",
@@ -26,7 +26,7 @@
       "icon": "assets/image/icon/article.svg"
     },
     {
-      "name": "关于生活",
+      "name": "文章归档",
       "href": "/life",
       "icon": "assets/image/icon/video.svg"
     },
@@ -60,7 +60,7 @@
 		    "titleClass": "title-blog"
 		  },{
 		    "name": "life",
-		    "title": "生活",
+		    "title": "归档",
 		    "desc": "滋润一点",
 		    "backgroundImage": "assets/image/background/27.jpg",
 		    "isOpacityFull": false,
@@ -203,6 +203,24 @@
           "title": "这是测试数据，仅供参考，为了排版"
         }, {
           "id": 7,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/headimag2.jpg",
+          "read": 47,
+          "thumb": 2,
+          "title": "这是测试数据，仅供参考，为了排版"
+        },{
+          "id": 8,
+          "author": "唐益达",
+          "comment": 0,
+          "time": "2018-07-04 10:25",
+          "photo": "assets/image/headimag2.jpg",
+          "read": 47,
+          "thumb": 2,
+          "title": "这是测试数据，仅供参考，为了排版"
+        },{
+          "id": 9,
           "author": "唐益达",
           "comment": 0,
           "time": "2018-07-04 10:25",

@@ -94,6 +94,17 @@
               :before-remove="beforeRemove"
             />
           </el-form-item>
+          <el-form-item label="评论头像" prop="commentImg">
+            <ele-upload-image
+              v-model="formData.commentImg"
+              :action="BASE_API+uploadUrl"
+              :response-fn="handleResponse"
+              :is-show-success-tip="false"
+              :file-size="20"
+              :file-type="imgType"
+              :before-remove="beforeRemove"
+            />
+          </el-form-item>
 
           <el-form-item label="网站详情" prop="webDetails">
             <editor v-model="formData.webDetails" :min-height="192" />
@@ -133,7 +144,8 @@ export default {
         id: undefined,
         homeBanner: undefined,
         articleBanner: undefined,
-        wechatImg: undefined
+        wechatImg: undefined,
+        commentImg: undefined
       },
       rules: {
         webName: [{

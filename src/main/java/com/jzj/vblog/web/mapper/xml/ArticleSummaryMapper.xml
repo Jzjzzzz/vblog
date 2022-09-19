@@ -10,6 +10,7 @@
         <result property="updateTime" column="update_time" />
         <result property="status" column="status"/>
         <result property="topStatus" column="top_status"/>
+        <result property="author" column="author" />
     </resultMap>
 
     <sql id="ArticleSummaryVo">
@@ -20,7 +21,8 @@
             create_time,
             update_time,
             `status`,
-            top_status
+            top_status,
+            author
         FROM
             article_summary
     </sql>

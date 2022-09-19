@@ -54,7 +54,7 @@ export default {
         router: '/blog',
         style: 'effect-sadie'
       }, {
-        title: '生活 <span>分享</span>',
+        title: '文章 <span> 归档</span>',
         desc: '喜 欢 有 趣 的 生 活。',
         image: require('../../assets/image/8.jpg'),
         router: '/life',

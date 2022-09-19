@@ -21,8 +21,7 @@
 <script>
 import blogFoot from '@/views/components/blog-foot.vue';
 import lifeItem from '@/views/components/life-item.vue';
-
-import config from '@/config/blog-config.json';
+import { list } from '@/api/summary'
 
 export default {
   name: 'life',
@@ -44,12 +43,8 @@ export default {
       this.getConfig();
     },
     getConfig () {
-      this.lifeList = JSON.parse(JSON.stringify(config.data.life['lifeList']));
-      this.getConfigImage();
-    },
-    getConfigImage () {
-      this.lifeList.forEach(item => {
-        item.photo = require('../../' + item.photo);
+      list().then(res => {
+        this.lifeList = res.data
       })
     },
     getLifeList (lifeIndex) {

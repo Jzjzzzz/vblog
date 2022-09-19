@@ -60,6 +60,7 @@ public class ArticleSummaryController extends BaseController {
         if (articleSummaryService.checkSummaryTop(articleSummary)) {
             throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
         }
+        articleSummary.setAuthor("漫漫长路");
         return toAjax(articleSummaryService.insertSummary(articleSummary));
     }
 

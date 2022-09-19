@@ -5,28 +5,21 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.utils.redis.RedisCache;
-import com.jzj.vblog.utils.sign.EmailUtil;
-import com.jzj.vblog.utils.sign.FileUtils;
-import com.jzj.vblog.utils.sign.SpringUtils;
-import com.jzj.vblog.utils.sign.StringUtils;
+import com.jzj.vblog.utils.sign.*;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
-import com.jzj.vblog.web.mapper.ArticleInformMapper;
-import com.jzj.vblog.web.mapper.SysWebInformationMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.jzj.vblog.web.pojo.entity.SysWebInformation;
-import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 import com.jzj.vblog.web.service.ArticleCommentService;
 import com.jzj.vblog.web.service.EmailService;
+import com.jzj.vblog.web.service.SysWebInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toolgood.words.StringSearch;
 import toolgood.words.WordsHelper;
-import toolgood.words.WordsMatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,9 +44,6 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     private ArticleCommentMapper articleCommentMapper;
 
     @Autowired
-    private ArticleInformMapper articleInformMapper;
-
-    @Autowired
     private EmailService emailService;
 
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
@@ -62,7 +52,7 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     private RedisCache redisCache;
 
     @Autowired
-    private SysWebInformationMapper sysWebInformationMapper;
+    private SysWebInformationService webInformationService;
 
     /**
      * 访客评论
@@ -72,7 +62,14 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     @Override
     public int saveUserMessage(ArticleComment articleComment) {
         try {
+            //获取站点信息
+            SysWebInformation information = webInformationService.selectWebInformationById();
             articleComment.setStatus("0");
+            articleComment.setAvatar(information.getCommentImg());
+            // 请求的地址
+            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+            articleComment.setIp(ip);
+
             //是否为父节点
             articleComment.setParentStatus("1");
             StringSearch iwords = new StringSearch();
@@ -96,11 +93,8 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     @Transactional
     @Override
     public int reply(CommentInfoVo commentInfoVo) {
-        SysWebInformation information = null;
-        information = redisCache.getCacheObject("sys_web_information");
-        if(information==null){
-            information = sysWebInformationMapper.selectById(1);
-        }
+        //获取站点信息
+        SysWebInformation information = webInformationService.selectWebInformationById();
         //修改父节点状态
         ArticleComment parentModel = articleCommentMapper.selectById(commentInfoVo.getId());
         parentModel.setStatus("1");
@@ -184,6 +178,8 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     }
 
     private List<CommentFrontListVo> getCommentFrontListVos(List<ArticleComment> commentList) {
+        //获取站点信息
+        SysWebInformation information = webInformationService.selectWebInformationById();
         List<CommentFrontListVo> voList = new ArrayList<>();
         for (ArticleComment comment : commentList) {
             CommentFrontListVo vo = new CommentFrontListVo();
@@ -193,7 +189,7 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
                 vo.setNickname(sonModel.getNickName());
                 vo.setDate(sonModel.getCreateTime());
                 vo.setMessage(sonModel.getContent());
-                vo.setUserPhoto("https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/08/11/894545a484d24866bcf4f928914dda89.jpg");
+                vo.setUserPhoto(information.getWebAvatar());
                 vo.setArea("广东东莞");
                 vo.setResponse(comment.getContent());
                 vo.setResponseName(comment.getNickName());
@@ -202,7 +198,7 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
                 vo.setDate(comment.getCreateTime());
                 vo.setNickname(comment.getNickName());
                 vo.setMessage(comment.getContent());
-                vo.setUserPhoto("https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/08/11/894545a484d24866bcf4f928914dda89.jpg");
+                vo.setUserPhoto(comment.getAvatar());
                 vo.setArea("广东东莞");
             }
             voList.add(vo);

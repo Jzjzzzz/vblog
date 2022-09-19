@@ -101,8 +101,9 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         Integer page = (Integer) query.get("currPage");
         Integer limit = (Integer) query.get("limit");
         String tagId = (String) query.get("tagId");
+        String summaryId = (String) query.get("summaryId");
         //分页查询
-        Page<ArticleVo> pageList = articleInformMapper.selectPageVo(new Page<>(page, limit), tagId);
+        Page<ArticleVo> pageList = articleInformMapper.selectPageVo(new Page<>(page, limit), tagId,summaryId);
         if (pageList.getTotal() > 0) {
             //获取标签列表
             List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);

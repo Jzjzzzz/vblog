@@ -2,17 +2,16 @@
   <div class="life-content">
         <div v-for="(lifeItem,$index) in lifeList" class="row-item-detail shadow">
         <div class="detail-body">
-        <div class="detail-img"><img :src="lifeItem.photo">
-            <div @click="jumpTo(lifeItem.id)" class="detail-title">
-                <div class="title"><i class="fa fa-title" aria-hidden="true"></i> {{lifeItem.title}}</div>
+        <div class="detail-img"><img :src="lifeItem.banner">
+            <div @click="jumpTo(lifeItem.id,lifeItem.name)" class="detail-title">
+                <div class="title"><i class="fa fa-title" aria-hidden="true"></i> {{lifeItem.name}}</div>
                 <div class="content">
                     <div class="content-flex">
                         <div class="content-desc"><i class="fa fa-user" aria-hidden="true"></i> {{lifeItem.author}}</div>
-                        <div class="content-desc"><i class="fa fa-comment-o" aria-hidden="true"></i> {{lifeItem.comment}}</div>
                     </div>
                     <div class="content-flex">
-                        <div class="content-desc"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{lifeItem.time.split(' ')[0]}}</div>
-                        <div class="content-desc"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{lifeItem.thumb}}</div></div>
+                        <div class="content-desc"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{lifeItem.createTime.split(' ')[0]}}</div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -38,9 +37,15 @@ export default {
     getTimestamp: function (dateString) {
       return Date.parse(new Date(dateString));
     },
-    jumpTo: function (id) {
-      console.log(id);
-      this.$router.push({ path: `/detail/life/${id}` }) // 这里跳转到页面
+    jumpTo: function (id,name) {
+      this.$router.push({
+        path: `/blog`,
+        name: 'blog',
+        params:{
+          summaryId: id,
+          summaryName: name
+        }
+      }) // 这里跳转到页面
     }
   }
 }

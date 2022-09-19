@@ -77,10 +77,13 @@
         AND dict.dict_value = ai.article_type
         <where>
                 ai.`status` = '1'
-                <if test="tagId!=null and tagId!=''">
-                    AND article_tag LIKE concat('%',#{tagId},'%')
-                </if>
-            </where>
+            <if test="tagId!=null and tagId!=''">
+                AND article_tag LIKE concat('%',#{tagId},'%')
+            </if>
+            <if test="summaryId!=null and summaryId!=''">
+                AND aggregate_id LIKE concat('%',#{summaryId},'%')
+            </if>
+        </where>
             ORDER BY ai.sort DESC
     </select>
     <select id="selectArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleAddVo" parameterType="java.lang.String">

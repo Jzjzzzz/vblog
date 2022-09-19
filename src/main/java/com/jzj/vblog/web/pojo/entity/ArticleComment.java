@@ -61,6 +61,12 @@ public class ArticleComment extends BaseEntity{
     @ApiModelProperty(value = "父节点id")
     private String parentId;
 
+    @ApiModelProperty(value = "头像")
+    private String avatar;
+
+    @ApiModelProperty(value = "ip")
+    private String ip;
+
 
 
 }

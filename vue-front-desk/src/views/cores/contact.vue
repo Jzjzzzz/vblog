@@ -105,10 +105,10 @@ export default {
         wechatImg: undefined
       },
       wechatFlag: false,
-      bloggerImage: require('../../assets/image/tangyida.jpeg'),
+      bloggerImage: require('../../assets/image/user.png'),
       userData: {
-        nickname: '漫漫长路',
-        email: '946232976@qq.com'
+        nickname: '',
+        email: ''
       },
       linkList: [], // 友情链接列表
       introduceList: [],
