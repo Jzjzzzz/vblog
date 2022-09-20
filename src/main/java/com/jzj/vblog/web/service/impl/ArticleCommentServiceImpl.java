@@ -12,6 +12,7 @@ import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 import com.jzj.vblog.web.service.ArticleCommentService;
 import com.jzj.vblog.web.service.EmailService;
+import com.jzj.vblog.web.service.SysConfigService;
 import com.jzj.vblog.web.service.SysWebInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -46,6 +47,9 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Autowired
     private SysWebInformationService webInformationService;
+
+    @Autowired
+    private SysConfigService configService;
 
     /**
      * 访客评论
@@ -105,9 +109,11 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         sonModel.setParentId(parentModel.getId());
         sonModel.setContent(commentInfoVo.getReply());
         //发送邮件通知留言者
-        CompletableFuture.runAsync(()->{
-            emailService.sendMail(parentModel.getEmail(),sonModel.getNickName()+"对您留言的回复-"+"来着漫漫长路的博客",commentInfoVo.getReply());
-        },threadPoolTaskExecutor);
+        if("true".equals(configService.selectConfigByKey("sys_email_enable"))){
+            CompletableFuture.runAsync(()->{
+                emailService.sendMail(parentModel.getEmail(),sonModel.getNickName()+"对您留言的回复-"+"来着漫漫长路的博客",commentInfoVo.getReply());
+            },threadPoolTaskExecutor);
+        }
         return articleCommentMapper.insert(sonModel);
     }
 
