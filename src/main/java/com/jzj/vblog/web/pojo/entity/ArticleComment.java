@@ -67,6 +67,9 @@ public class ArticleComment extends BaseEntity{
     @ApiModelProperty(value = "ip")
     private String ip;
 
+    @ApiModelProperty(value = "所属省市")
+    private String city;
+
 
 
 }

@@ -104,8 +104,8 @@ export default {
       signatureAuthor: '2018-07-24 8:00 By Jzj',
       isGetComment: false,
       userData: {
-        nickname: '漫漫长路',
-        email: '946232976@qq.com'
+        nickname: '',
+        email: ''
       },
       articleMostView: [],
       commentList: [],

@@ -1,5 +1,6 @@
 package com.jzj.vblog.utils.sign;
 
+import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
@@ -7,7 +8,6 @@ import org.lionsoul.ip2region.Util;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -18,6 +18,7 @@ import java.net.UnknownHostException;
  * @Version 1.0
  * @Message: 获取IP方法
  */
+@Slf4j
 public class IpUtils {
     /**
      * 获取客户端IP
@@ -269,25 +270,31 @@ public class IpUtils {
         return StringUtils.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
     }
 
+    public static void main(String[] args) {
+        String[] split = getCityInfo("127.0.0.1").split("\\|");
+        for (int i = 0; i < split.length; i++) {
+            System.out.println(split[i]);
+        }
+    }
 
     /**
      * 根据IP地址获取城市
      * @param ip
      * @return
      */
-    public static String getCityInfo(String ip) throws IOException {
-        String path = IpUtils.class.getClassLoader().getResource("ip2region.db").getPath();
-        File file;
-        file = new File(path);
-        if (!file.exists()) {
-            System.out.println("Error: Invalid ip2region.db file, filePath：" + file.getPath());
-            return null;
-        }
-        //查询算法
-        int algorithm = DbSearcher.BTREE_ALGORITHM; //B-tree
-        //DbSearcher.BINARY_ALGORITHM //Binary
-        //DbSearcher.MEMORY_ALGORITYM //Memory
+    public static String getCityInfo(String ip) {
         try {
+            String path = IpUtils.class.getClassLoader().getResource("ip2region.db").getPath();
+            File file;
+            file = new File(path);
+            if (!file.exists()) {
+                log.error("Error: Invalid ip2region.db file, filePath：" + file.getPath());
+                return null;
+            }
+            //查询算法
+            int algorithm = DbSearcher.BTREE_ALGORITHM; //B-tree
+            //DbSearcher.BINARY_ALGORITHM //Binary
+            //DbSearcher.MEMORY_ALGORITYM //Memory
             DbConfig config = new DbConfig();
             DbSearcher searcher = new DbSearcher(config, file.getPath());
             Method method;
@@ -307,12 +314,13 @@ public class IpUtils {
             }
             DataBlock dataBlock;
             if (!Util.isIpAddress(ip)) {
-                System.out.println("Error: 无效的 IP 地址");
+                log.error("Error: 无效的 IP 地址");
                 return null;
             }
             dataBlock  = (DataBlock) method.invoke(searcher, ip);
             return dataBlock.getRegion();
         } catch (Exception e) {
+            log.error("根据IP获取省市出错,出错IP为:"+ip);
             e.printStackTrace();
         }
         return null;

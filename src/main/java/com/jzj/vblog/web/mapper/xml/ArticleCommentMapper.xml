@@ -15,6 +15,7 @@
         <result property="commentType" column="comment_type"/>
         <result property="avatar" column="avatar"/>
         <result property="ip" column="ip" />
+        <result property="city" column="city" />
     </resultMap>
 
     <sql id="articleCommentVo">
@@ -29,7 +30,8 @@
                article_id,
                comment_type,
                avatar,
-               ip
+               ip,
+               city
         FROM article_comment
     </sql>
 

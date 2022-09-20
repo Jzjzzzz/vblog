@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.vblog.utils.redis.RedisCache;
 import com.jzj.vblog.utils.sign.*;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
@@ -21,10 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import toolgood.words.StringSearch;
 import toolgood.words.WordsHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -49,9 +45,6 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
 
     @Autowired
-    private RedisCache redisCache;
-
-    @Autowired
     private SysWebInformationService webInformationService;
 
     /**
@@ -69,7 +62,12 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
             // 请求的地址
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
             articleComment.setIp(ip);
-
+            if(ip==null || IpUtils.internalIp(ip)){
+                articleComment.setCity("未知地址");
+            }else {
+                String[] citys = Objects.requireNonNull(IpUtils.getCityInfo(ip)).split("\\|");
+                articleComment.setCity(citys[2]+citys[3]);
+            }
             //是否为父节点
             articleComment.setParentStatus("1");
             StringSearch iwords = new StringSearch();
@@ -199,7 +197,7 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
                 vo.setNickname(comment.getNickName());
                 vo.setMessage(comment.getContent());
                 vo.setUserPhoto(comment.getAvatar());
-                vo.setArea("广东东莞");
+                vo.setArea(comment.getCity());
             }
             voList.add(vo);
         }
