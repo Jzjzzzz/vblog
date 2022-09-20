@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from, next) => {
   setTimeout(() => {
     loading.hide();
-  }, 220);
+  }, 300);
 });
 
 /* eslint-disable no-new */

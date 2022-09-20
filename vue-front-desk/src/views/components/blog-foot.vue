@@ -6,7 +6,7 @@
       <span>By 漫漫长路</span><span></span>
     </p>
     <p>
-      <a href="Jzjzzzz.icu" target="_blank">浙ICP备17057362号-1</a>
+      <a href="Jzjzzzz.icu" target="_blank">粤ICP备17057362号-1</a>
     </p>
   </div>
 </template>

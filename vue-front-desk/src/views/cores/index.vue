@@ -11,7 +11,7 @@
             <br />
           </span>
           <span style="font-size:14px;font-weight:500;margin-top:40px;">
-            —— 欢迎你！第 <font style="font-size:34px;">{{count}}</font> 位访问的游客 ——
+            —— 欢迎你！——
           </span>
         </h1>
       </header>
@@ -61,13 +61,13 @@ export default {
         style: 'effect-oscar'
       }, {
         title: '关 于  <span>我</span>',
-        desc: '我 知 道，你 很 想 遇 见 我。',
+        desc: '人生若只如初见。',
         image: require('../../assets/image/cj0.jpeg'),
         router: '/contact',
         style: 'effect-marley'
       }],
-      title: '我是一名98年生的coder',
-      descList: ['一名刚刚毕业的菜鸟小码农，热爱生活，喜欢设计，', '严谨，强迫症，爱玩，爱电影，爱运动', '这是我的地盘，分享技术经验，生活琐事，见闻趣事。']
+      title: '人生若只如初见',
+      descList: ['一名刚刚毕业的程序员，热爱生活，喜欢设计，', '严谨，强迫症，爱玩，爱电影，爱运动', '这是我的博客，分享技术经验，生活琐事，见闻趣事。']
     }
   },
   methods: {

@@ -37,7 +37,7 @@ export default {
     getTimestamp: function (dateString) {
       return Date.parse(new Date(dateString));
     },
-    jumpTo: function (id,name) {
+    jumpTo: function (id, name) {
       this.$router.push({
         path: `/blog`,
         name: 'blog',
