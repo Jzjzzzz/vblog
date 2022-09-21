@@ -64,18 +64,13 @@ public class ArticleSummaryController extends BaseController {
         return toAjax(articleSummaryService.insertSummary(articleSummary));
     }
 
-
-    /**
-     * 根据资源id获取归档详细信息
-     */
+    @ApiOperation("根据资源id获取归档详细信息")
     @GetMapping(value = "/{id}")
     public R getInfo(@PathVariable String id) {
         return R.ok(articleSummaryService.selectSummaryById(id));
     }
 
-    /**
-     * 修改归档
-     */
+    @ApiOperation("修改归档")
     @Log(title = "归档管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public R edit(@Validated @RequestBody ArticleSummary articleSummary) {
@@ -88,9 +83,7 @@ public class ArticleSummaryController extends BaseController {
         return toAjax(articleSummaryService.updateSummary(articleSummary));
     }
 
-    /**
-     * 删除归档
-     */
+    @ApiOperation("删除归档")
     @Log(title = "归档管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R remove(@PathVariable List<String> ids, HttpServletRequest request) {

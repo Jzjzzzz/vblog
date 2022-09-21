@@ -51,17 +51,13 @@ public class FriendLinkController extends BaseController {
         return toAjax(friendLinkService.insertLink(friendLink));
     }
 
-    /**
-     * 根据资源id获取资源详细信息
-     */
+    @ApiOperation("根据资源id获取资源详细信息")
     @GetMapping(value = "/{id}")
     public R getInfo(@PathVariable String id) {
         return R.ok(friendLinkService.selectLinkById(id));
     }
 
-    /**
-     * 修改资源
-     */
+    @ApiOperation("修改资源")
     @Log(title = "友链管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public R edit(@Validated @RequestBody FriendLink friendLink) {
@@ -71,9 +67,7 @@ public class FriendLinkController extends BaseController {
         return toAjax(friendLinkService.updateLink(friendLink));
     }
 
-    /**
-     * 删除资源
-     */
+    @ApiOperation("删除资源")
     @Log(title = "友链管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R remove(@PathVariable List<String> ids, HttpServletRequest request) {
