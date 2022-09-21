@@ -211,7 +211,10 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        articleTitle: undefined
+        articleTitle: undefined,
+        articleType: undefined,
+        articleTag: undefined,
+        aggregateId: undefined
       },
       // 归档列表
       summaryList: []

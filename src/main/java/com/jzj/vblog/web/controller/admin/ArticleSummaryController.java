@@ -37,7 +37,7 @@ public class ArticleSummaryController extends BaseController {
     private ArticleSummaryService articleSummaryService;
 
     @ApiOperation("分页列表")
-    @GetMapping("/list")
+    @GetMapping
     public TableDataInfo list(ArticleSummary articleSummary) {
         startPage();
         List<ArticleSummary> list = articleSummaryService.selectSummaryList(articleSummary);
@@ -52,7 +52,7 @@ public class ArticleSummaryController extends BaseController {
 
     @Log(title = "归档管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增归档")
-    @PostMapping("/add")
+    @PostMapping
     public R add(@Validated @RequestBody ArticleSummary articleSummary) {
         if (UserConstants.NOT_UNIQUE.equals(articleSummaryService.checkSummaryUnique(articleSummary))) {
             throw new BusinessException("新增归档'" + articleSummary.getName() + "'失败，归档已存在");

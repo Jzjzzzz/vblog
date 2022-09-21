@@ -3,7 +3,7 @@
     <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
       <el-form-item label="昵称" prop="nickName">
         <el-input
-          v-model="queryParams.name"
+          v-model="queryParams.nickName"
           placeholder="请输入昵称"
           clearable
           style="width: 240px"
@@ -87,6 +87,8 @@
       <el-table-column type="index" label="序号" align="center" />
       <el-table-column label="昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
       <el-table-column label="邮箱" align="center" prop="email" :show-overflow-tooltip="true" />
+      <el-table-column label="IP" align="center" prop="ip" :show-overflow-tooltip="true" />
+      <el-table-column label="归属地" align="center" prop="city" :show-overflow-tooltip="true" />
       <el-table-column label="评论类型" align="center" prop="commentType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.article_comment_type" :value="scope.row.commentType" />
@@ -187,8 +189,10 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: undefined,
-        status: undefined
+        email: undefined,
+        status: undefined,
+        nickName: undefined,
+        commentType: undefined
       },
       // 表单参数
       form: {},

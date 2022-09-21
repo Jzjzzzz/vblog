@@ -231,7 +231,8 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: undefined,
-        status: undefined
+        status: undefined,
+        topStatus: undefined
       },
       // 表单参数
       form: {},

@@ -34,7 +34,7 @@ public class ArticleCommentController extends BaseController {
     private ArticleCommentService articleCommentService;
 
     @ApiOperation("分页列表")
-    @GetMapping("/pageList")
+    @GetMapping
     public TableDataInfo pageList(ArticleComment articleComment) {
         startPage();
         List<ArticleComment> list = articleCommentService.selectCommentList(articleComment);
@@ -43,7 +43,7 @@ public class ArticleCommentController extends BaseController {
 
     @Log(title = "评论管理", businessType = BusinessType.INSERT)
     @ApiOperation("回复评论")
-    @PostMapping("/reply")
+    @PostMapping
     public R reply(@Validated @RequestBody CommentInfoVo commentInfoVo) {
         return toAjax(articleCommentService.reply(commentInfoVo));
     }

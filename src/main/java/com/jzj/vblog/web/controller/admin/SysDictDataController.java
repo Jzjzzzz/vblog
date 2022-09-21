@@ -49,7 +49,7 @@ public class SysDictDataController extends BaseController {
     public R dictType(@PathVariable String dictType) {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data)) {
-            data = new ArrayList<SysDictData>();
+            data = new ArrayList<>();
         }
         return R.ok(data);
     }

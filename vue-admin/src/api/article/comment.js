@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 分页查询
 export function pageList(query) {
   return request({
-    url: '/article/comment/pageList',
+    url: '/article/comment',
     method: 'get',
     params: query
   })
@@ -20,7 +20,7 @@ export function getInfo(id) {
 // 回复
 export function reply(data) {
   return request({
-    url: `/article/comment/reply`,
+    url: `/article/comment`,
     method: 'post',
     data: data
   })

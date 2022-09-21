@@ -2,7 +2,6 @@ package com.jzj.vblog.web.controller.admin;
 
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
@@ -35,7 +34,7 @@ public class FriendLinkController extends BaseController {
     private FriendLinkService friendLinkService;
 
     @ApiOperation("分页列表")
-    @GetMapping("/pageList")
+    @GetMapping
     public TableDataInfo pageList(FriendLink friendLink) {
         startPage();
         List<FriendLink> list = friendLinkService.selectLinkList(friendLink);
@@ -44,7 +43,7 @@ public class FriendLinkController extends BaseController {
 
     @Log(title = "友链管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增友链")
-    @PostMapping("/add")
+    @PostMapping
     public R add(@Validated @RequestBody FriendLink friendLink) {
         if (UserConstants.NOT_UNIQUE.equals(friendLinkService.checkLinkUnique(friendLink))) {
             return R.error("新增友链'" + friendLink.getName()+ "'失败，友链已存在");

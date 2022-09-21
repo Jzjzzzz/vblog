@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.anji.captcha.model.common.ResponseModel;
@@ -53,6 +54,7 @@ public class SysLoginController {
             return R.ok(tokenInfo.tokenName, tokenInfo.tokenValue);
     }
 
+    @SaCheckLogin
     @ApiOperation("退出登录")
     @PostMapping("/logout")
     public R logout() {
@@ -60,12 +62,7 @@ public class SysLoginController {
         return R.ok();
     }
 
-    /**
-     * 获取行为验证码
-     * @param data
-     * @param request
-     * @return
-     */
+    @ApiOperation("获取行为验证码")
     @PostMapping({"/get"})
     public R get(@RequestBody CaptchaVO data, HttpServletRequest request) {
         assert request.getRemoteHost() != null;
@@ -73,12 +70,7 @@ public class SysLoginController {
         return R.ok(captchaService.get(data));
     }
 
-    /**
-     * 验证码校验
-     * @param data
-     * @param request
-     * @return
-     */
+    @ApiOperation("验证码校验")
     @PostMapping({"/check"})
     public R check(@RequestBody CaptchaVO data, HttpServletRequest request) {
         data.setBrowserInfo(VerifyCodeUtils.getRemoteId(request));

@@ -34,7 +34,7 @@ public class ArticleInformController extends BaseController {
     private ArticleInformService articleInformService;
 
     @ApiOperation("分页列表")
-    @GetMapping("/list")
+    @GetMapping
     public TableDataInfo list(ArticleInform entity) {
         startPage();
         List<ArticleInform> list = articleInformService.selectList(entity);
@@ -43,27 +43,27 @@ public class ArticleInformController extends BaseController {
 
     @Log(title = "文章管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增文章")
-    @PostMapping("/add")
+    @PostMapping
     public R add(@RequestBody ArticleAddVo vo) {
         return toAjax(articleInformService.articleAdd(vo));
     }
 
     @ApiOperation("根据Id获取文章")
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public R getById(@PathVariable String id) {
         return R.ok(articleInformService.getArticleById(id));
     }
 
     @Log(title = "文章管理", businessType = BusinessType.UPDATE)
     @ApiOperation("根据Id修改文章")
-    @PutMapping("/updateById")
+    @PutMapping
     public R updateById(@RequestBody ArticleAddVo vo) {
         return toAjax(articleInformService.updateArticleById(vo));
     }
 
     @Log(title = "文章管理", businessType = BusinessType.DELETE)
     @ApiOperation("根据Id批量删除文章")
-    @DeleteMapping("/deleteById/{ids}")
+    @DeleteMapping("/{ids}")
     public R deleteBthById(@PathVariable String[] ids, HttpServletRequest request) {
         articleInformService.deleteArticleById(ids, request);
         return R.ok();

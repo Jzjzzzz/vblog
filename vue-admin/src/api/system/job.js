@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询定时任务列表
 export function list(query) {
   return request({
-    url: '/system/job/list',
+    url: '/system/job',
     method: 'get',
     params: query
   })
@@ -47,7 +47,7 @@ export function handleResume(data) {
 // 删除定时任务
 export function del(data) {
   return request({
-    url: '/system/job/del',
+    url: '/system/job',
     method: 'delete',
     data: data
   })

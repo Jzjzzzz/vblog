@@ -9,6 +9,7 @@ import com.jzj.vblog.web.pojo.entity.SysNotice;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysNoticeService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +31,7 @@ public class SysNoticeController extends BaseController {
     @Autowired
     private SysNoticeService noticeService;
 
-    /**
-     * 获取通知公告列表
-     */
+    @ApiOperation("获取通知公告列表")
     @GetMapping("/list")
     public TableDataInfo list(SysNotice notice) {
         startPage();
@@ -40,17 +39,13 @@ public class SysNoticeController extends BaseController {
         return getDataTable(list);
     }
 
-    /**
-     * 根据通知公告编号获取详细信息
-     */
+    @ApiOperation("根据通知公告编号获取详细信息")
     @GetMapping(value = "/{noticeId}")
     public R getInfo(@PathVariable Long noticeId) {
         return R.ok(noticeService.selectNoticeById(noticeId));
     }
 
-    /**
-     * 新增通知公告
-     */
+    @ApiOperation("新增通知公告")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
     public R add(@Validated @RequestBody SysNotice notice) {
@@ -58,9 +53,7 @@ public class SysNoticeController extends BaseController {
         return toAjax(noticeService.insertNotice(notice));
     }
 
-    /**
-     * 修改通知公告
-     */
+    @ApiOperation("修改通知公告")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
     public R edit(@Validated @RequestBody SysNotice notice) {
@@ -68,9 +61,7 @@ public class SysNoticeController extends BaseController {
         return toAjax(noticeService.updateNotice(notice));
     }
 
-    /**
-     * 删除通知公告
-     */
+    @ApiOperation("删除通知公告")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
     public R remove(@PathVariable Long[] noticeIds) {

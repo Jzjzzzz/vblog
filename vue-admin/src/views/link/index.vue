@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item label="友链名称" prop="resourceName">
+      <el-form-item label="友链名称" prop="name">
         <el-input
           v-model="queryParams.name"
           placeholder="请输入友链名称"

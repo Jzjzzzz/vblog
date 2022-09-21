@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <el-steps :active="active" finish-status="success">
       <el-step title="基础信息" />
       <el-step title="内容编辑" />

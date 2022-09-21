@@ -1,22 +1,22 @@
-import request from "@/utils/request";
+import request from '@/utils/request'
 
-//列表
+// 列表
 export function list() {
   return request({
-    url: `/sys/todo/list`,
+    url: `/sys/todo`,
     method: 'get'
   })
 }
 
-//新增备忘
+// 新增备忘
 export function addTodo(content) {
   return request({
-    url: `/sys/todo/add/${content}`,
+    url: `/sys/todo/${content}`,
     method: 'post'
   })
 }
 
-//修改备忘
+// 修改备忘
 // 根据id修改文章
 export function updateById(data) {
   return request({

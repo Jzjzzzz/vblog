@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询列表
 export function list(query) {
   return request({
-    url: '/friend/link/pageList',
+    url: '/friend/link',
     method: 'get',
     params: query
   })
@@ -11,7 +11,7 @@ export function list(query) {
 // 新增
 export function add(data) {
   return request({
-    url: '/friend/link/add',
+    url: '/friend/link',
     method: 'post',
     data: data
   })
@@ -19,7 +19,7 @@ export function add(data) {
 // 根据Id查询
 export function getInfo(id) {
   return request({
-    url: '/friend/link/' + id,
+    url: `/friend/link/${id}`,
     method: 'get'
   })
 }
@@ -27,7 +27,7 @@ export function getInfo(id) {
 // 修改
 export function update(data) {
   return request({
-    url: '/friend/link/',
+    url: '/friend/link',
     method: 'put',
     data: data
   })
@@ -36,7 +36,7 @@ export function update(data) {
 // 删除
 export function del(id) {
   return request({
-    url: '/friend/link/' + id,
+    url: `/friend/link/${id}`,
     method: 'delete'
   })
 }

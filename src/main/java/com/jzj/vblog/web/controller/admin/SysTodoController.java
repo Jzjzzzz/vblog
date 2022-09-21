@@ -31,14 +31,14 @@ public class SysTodoController extends BaseController {
     private SysTodoService sysTodoService;
 
     @ApiOperation("备忘列表")
-    @GetMapping("/list")
+    @GetMapping
     public R list() {
         return R.ok(sysTodoService.list());
     }
 
     @Log(title = "备忘录", businessType = BusinessType.INSERT)
     @ApiOperation("新增备忘")
-    @PostMapping("/add/{content}")
+    @PostMapping("/{content}")
     public R add(@PathVariable String content) {
         if (UserConstants.NOT_UNIQUE.equals(sysTodoService.checkUnique(content))) {
             return R.error("新增事件'" + content + "'失败，事件已存在");

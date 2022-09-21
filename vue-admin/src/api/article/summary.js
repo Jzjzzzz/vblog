@@ -4,7 +4,7 @@ import request from '@/utils/request'
 // 查询归档列表
 export function listArticleSummary(query) {
   return request({
-    url: '/article/summary/list',
+    url: '/article/summary',
     method: 'get',
     params: query
   })
@@ -21,7 +21,7 @@ export function listAll() {
 // 新增归档
 export function add(data) {
   return request({
-    url: '/article/summary/add',
+    url: '/article/summary',
     method: 'post',
     data: data
   })
@@ -30,14 +30,14 @@ export function add(data) {
 // 删除归档
 export function del(id) {
   return request({
-    url: '/article/summary/' + id,
+    url: `/article/summary/${id}`,
     method: 'delete'
   })
 }
 // 根据Id查询归档详细
 export function getInfo(id) {
   return request({
-    url: '/article/summary/' + id,
+    url: `/article/summary/${id}`,
     method: 'get'
   })
 }

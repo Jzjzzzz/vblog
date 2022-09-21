@@ -1,8 +1,10 @@
 package com.jzj.vblog.web.controller.admin;
 
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.service.SysCountService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,16 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sys/count")
+@SaCheckLogin
 public class SysCountController {
+
     @Autowired
     private SysCountService sysCountService;
 
-    /**
-     * 获取统计数据
-     *
-     * @return
-     */
-    @GetMapping("/one")
+    @ApiOperation("获取统计数据")
+    @GetMapping
     public R getCount() {
         return R.ok(sysCountService.getOne(null));
     }

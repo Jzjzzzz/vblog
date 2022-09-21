@@ -36,7 +36,7 @@ public class WebsiteResourceController extends BaseController {
     private WebsiteResourceService websiteResourceService;
 
     @ApiOperation("分页列表")
-    @GetMapping("/list")
+    @GetMapping
     public TableDataInfo list(WebsiteResource websiteResource) {
         startPage();
         List<WebsiteResource> list = websiteResourceService.selectWebsiteList(websiteResource);
@@ -45,7 +45,7 @@ public class WebsiteResourceController extends BaseController {
 
     @Log(title = "资源站点", businessType = BusinessType.INSERT)
     @ApiOperation("新增资源")
-    @PostMapping("/add")
+    @PostMapping
     public R add(@Validated @RequestBody WebsiteResource websiteResource) {
         if (UserConstants.NOT_UNIQUE.equals(websiteResourceService.checkWebsiteUnique(websiteResource))) {
             return R.error("新增资源'" + websiteResource.getResourceName() + "'失败，资源已存在");
