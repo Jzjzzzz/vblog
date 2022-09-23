@@ -149,6 +149,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         ArticleContent content = new ArticleContent();
         content.setId(inform.getId());
         content.setContent(vo.getContent());
+        content.setHtmlContent(vo.getHtmlContent());
         return articleContentMapper.insert(content);
     }
 
@@ -175,6 +176,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         //文章内容
         ArticleContent content = new ArticleContent();
         content.setContent(vo.getContent());
+        content.setHtmlContent(vo.getHtmlContent());
         content.setId(vo.getId());
         return articleContentMapper.updateById(content);
     }

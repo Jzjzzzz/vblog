@@ -33,6 +33,9 @@ public class ArticleContent extends BaseEntity {
     @ApiModelProperty(value = "文章内容")
     private String content;
 
+    @ApiModelProperty(value = "文章内容转html")
+    private String htmlContent;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;

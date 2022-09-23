@@ -119,7 +119,7 @@
             ai.log_img,
             ai.introduce,
             ai.update_time,
-            ac.content,
+            ac.html_content,
             ai.click_rate,
             ai.comment_number,
             ai.create_by,

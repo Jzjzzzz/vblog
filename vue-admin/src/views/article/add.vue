@@ -122,6 +122,7 @@
               </el-form-item>
               <el-form-item size="large">
                 <el-button type="primary" @click="next">下一步</el-button>
+                <el-button type="success" @click="submitForm">提交</el-button>
                 <el-button @click="resetForm">重置</el-button>
               </el-form-item>
             </div>
@@ -215,6 +216,7 @@ export default {
         introduce: undefined,
         logImg: undefined,
         content: undefined,
+        htmlContent: undefined,
         id: undefined,
         aggregateId: undefined,
         sort: 0
@@ -339,12 +341,14 @@ export default {
         if (!valid) return
         this.form.articleTag = this.form.articleTagArray.join(',')
         if (this.form.id != null) {
+          this.form.htmlContent = this.$refs.md.d_render
           // 修改
           updateById(this.form).then(response => {
             this.$modal.msgSuccess('修改成功')
             this.$router.push({ path: '/article/index' })
           })
         } else {
+          this.form.htmlContent = this.$refs.md.d_render
           // 新增
           add(this.form).then(response => {
             this.$modal.msgSuccess('新增成功')

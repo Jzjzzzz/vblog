@@ -12,7 +12,7 @@
             </div>
             <hr />
           </div>
-          <div v-html="markdownHtmlTest" class="markdown-body">
+          <div v-html="article.htmlContent" class="markdown-body">
           </div>
         </div>
         <div class="thumb-for">
@@ -95,10 +95,10 @@ export default {
         numberLike: undefined,
         articleNextPreDataList:[],
         commentStatus: undefined,
-        articlePopularList: []
+        articlePopularList: [],
+        htmlContent: undefined
       },
       content: content,
-      markdownHtmlTest: '',
       thumbsUpFlag: false,
       thumbsUpCount: 0,
       signatureAuthor: '2018-07-24 8:00 By Jzj',
@@ -125,9 +125,6 @@ export default {
     getArticleDetail () {
       getById(this.$route.params.articleId).then(res => {
         this.article = res.data
-        // 内容封装
-        let converter = new showdown.Converter();
-        this.markdownHtmlTest = converter.makeHtml(this.article.content);
         // 作者签名
         this.signatureAuthor = this.article.updateTime + ' By ' + this.article.createBy
         // 封装上一页下一页
