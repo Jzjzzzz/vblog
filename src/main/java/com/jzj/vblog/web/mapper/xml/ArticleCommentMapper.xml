@@ -16,6 +16,7 @@
         <result property="avatar" column="avatar"/>
         <result property="ip" column="ip" />
         <result property="city" column="city" />
+        <result property="auditStatus" column="audit_status" />
     </resultMap>
 
     <sql id="articleCommentVo">
@@ -31,7 +32,8 @@
                comment_type,
                avatar,
                ip,
-               city
+               city,
+               audit_status
         FROM article_comment
     </sql>
 
@@ -43,6 +45,9 @@
         </if>
         <if test="status != null and status != ''">
             AND status = #{status}
+        </if>
+        <if test="auditStatus != null and auditStatus != ''">
+            AND audit_status = #{auditStatus}
         </if>
         <if test="nickName != null and nickName != ''">
             AND nick_name like concat('%',#{nickName},'%')

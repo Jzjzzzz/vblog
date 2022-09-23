@@ -32,7 +32,7 @@ public interface ArticleCommentService extends IService<ArticleComment> {
 
     int updateComment(CommentInfoVo commentInfoVo);
 
-    int deleteCommentById(String id);
+    void deleteCommentById(String[] ids);
 
     /**
      * 前台显示留言板列表
@@ -53,4 +53,6 @@ public interface ArticleCommentService extends IService<ArticleComment> {
      * @return
      */
     Map<String, Object> getListArticle(String articleId);
+
+    int auditCommentById(String[] ids, String type);
 }

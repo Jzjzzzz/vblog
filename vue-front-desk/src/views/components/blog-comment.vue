@@ -73,7 +73,7 @@ export default {
         return
       }
       saveMessage(data).then(res => {
-        alert('留言成功!')
+        alert('留言成功,审核成功后显示!')
         this.$router.go(0);
       })
     }

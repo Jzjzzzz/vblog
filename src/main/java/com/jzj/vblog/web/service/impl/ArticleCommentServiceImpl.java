@@ -18,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toolgood.words.StringSearch;
-import toolgood.words.WordsHelper;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -74,13 +72,7 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
             }
             //是否为父节点
             articleComment.setParentStatus("1");
-            StringSearch iwords = new StringSearch();
-            String path = this.getClass().getClassLoader().getResource("sensi_words.txt").getPath();
-            List<String> list = FileUtils.getContent(path);
-            iwords.SetKeywords(list);
-            articleComment.setContent(iwords.Replace(WordsHelper.ToSimplifiedChinese(articleComment.getContent()), '*'));
-            articleComment.setNickName(iwords.Replace(WordsHelper.ToSimplifiedChinese(articleComment.getNickName()), '*'));
-            articleComment.setEmail(iwords.Replace(WordsHelper.ToSimplifiedChinese(articleComment.getEmail()), '*'));
+            articleComment.setAuditStatus("0");
             return articleCommentMapper.insert(articleComment);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -132,12 +124,14 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Transactional
     @Override
-    public int deleteCommentById(String id) {
-        ArticleComment sonModel = articleCommentMapper.selectOne(new QueryWrapper<ArticleComment>().eq("parent_id", id));
-        if(sonModel!=null){
-            articleCommentMapper.deleteById(sonModel.getId());
+    public void deleteCommentById(String[] ids) {
+        for (String id : ids) {
+            ArticleComment sonModel = articleCommentMapper.selectOne(new QueryWrapper<ArticleComment>().eq("parent_id", id));
+            if(sonModel!=null){
+                articleCommentMapper.deleteById(sonModel.getId());
+            }
+            articleCommentMapper.deleteById(id);
         }
-        return articleCommentMapper.deleteById(id);
     }
 
     /**
@@ -152,11 +146,25 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
                         .eq("parent_status", "1")
                         .eq("comment_type", "1")
                         .eq("article_id",articleId)
+                        .eq("audit_status","1")
                         .orderByDesc("create_time"));
         HashMap<String, Object> map = new HashMap<>();
         List<CommentFrontListVo> voList = getCommentFrontListVos(commentList);
         map.put("list",voList);
         return map;
+    }
+
+    @Override
+    public int auditCommentById(String[] ids, String type) {
+        List<ArticleComment> list = articleCommentMapper.selectBatchIds(Arrays.asList(ids));
+        for (ArticleComment comment : list) {
+            comment.setAuditStatus(type);
+        }
+        boolean result = this.updateBatchById(list);
+        if(result){
+            return 1;
+        }
+        return 0;
     }
 
     /**
@@ -166,10 +174,11 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     @Override
     public Map<String,Object> getMessageList(Integer pageNumber) {
         IPage<ArticleComment> commentPage = articleCommentMapper.selectPage(
-                new Page<>(pageNumber, 1),
+                new Page<>(pageNumber, 5),
                 new QueryWrapper<ArticleComment>()
                         .eq("parent_status", "1")
                         .eq("comment_type","0")
+                        .eq("audit_status","1")
                         .orderByDesc("create_time"));
         HashMap<String, Object> map = new HashMap<>();
         List<ArticleComment> commentList = commentPage.getRecords();

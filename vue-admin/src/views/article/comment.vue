@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item label="昵称" prop="nickName">
+      <el-form-item label="访客昵称" prop="nickName">
         <el-input
           v-model="queryParams.nickName"
           placeholder="请输入昵称"
@@ -28,6 +28,21 @@
         >
           <el-option
             v-for="dict in dict.type.article_comment_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="审核状态" prop="auditStatus">
+        <el-select
+          v-model="queryParams.auditStatus"
+          placeholder="审核状态"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in dict.type.article_comment_audit_status"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -78,6 +93,28 @@
         >回复</el-button>
       </el-col>
       <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-thumb"
+          size="mini"
+          :disabled="multiple"
+          @click="handleAudit"
+        >审核
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          icon="el-icon-delete"
+          size="mini"
+          :disabled="multiple"
+          @click="handleDelete"
+        >删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
         <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
       </el-col>
     </el-row>
@@ -92,6 +129,11 @@
       <el-table-column label="评论类型" align="center" prop="commentType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.article_comment_type" :value="scope.row.commentType" />
+        </template>
+      </el-table-column>
+      <el-table-column label="审核状态" align="center" prop="auditStatus">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.article_comment_audit_status" :value="scope.row.auditStatus" />
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
@@ -112,6 +154,12 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
           >回复</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-thumb"
+            @click="handleAudit(scope.row)"
+          >审核</el-button>
           <el-button
             size="mini"
             type="text"
@@ -159,10 +207,10 @@
 </template>
 
 <script>
-import { pageList, getInfo, reply, update, del } from '@/api/article/comment'
+import { pageList, getInfo, reply, update, del, audit } from '@/api/article/comment'
 export default {
   name: 'Dict',
-  dicts: ['article_comment_type', 'article_comment_status'],
+  dicts: ['article_comment_type', 'article_comment_status','article_comment_audit_status'],
   data() {
     return {
       // 遮罩层
@@ -192,7 +240,8 @@ export default {
         email: undefined,
         status: undefined,
         nickName: undefined,
-        commentType: undefined
+        commentType: undefined,
+        auditStatus: undefined
       },
       // 表单参数
       form: {},
@@ -283,6 +332,39 @@ export default {
         this.getList()
         this.$modal.msgSuccess('删除成功')
       }).catch(() => {})
+    },
+    /** 审核按钮操作 */
+    handleAudit(row){
+      const ids = row.id || this.ids
+      this.$confirm('是否通过评论审核?(审核通过后,前台将展示)', '审核', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '通过',
+        cancelButtonText: '未通过'
+      })
+        .then(() => {
+          audit(ids,1).then(res=>{
+            this.$message({
+              type: 'success',
+              message: '审核通过!'
+            });
+            this.getList()
+          })
+        })
+        .catch(action => {
+          if(action === 'cancel'){
+            audit(ids,2).then(res=>{
+              this.$message({
+                type: 'error',
+                message: '审核不通过'
+              });
+              this.getList()
+            })
+          }
+          this.$message({
+            type: 'info',
+            message: '取消审核'
+          });
+        });
     }
   }
 }

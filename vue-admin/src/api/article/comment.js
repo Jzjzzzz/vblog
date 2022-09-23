@@ -36,9 +36,17 @@ export function update(data) {
 }
 
 // 删除评论
-export function del(id) {
+export function del(ids) {
   return request({
-    url: `/article/comment/${id}`,
+    url: `/article/comment/${ids}`,
     method: 'delete'
+  })
+}
+
+// 审核评论
+export function audit(ids,type) {
+  return request({
+    url: `/article/comment/${ids}/${type}`,
+    method: 'put'
   })
 }

@@ -7,8 +7,11 @@ import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.utils.sign.StringUtils;
+import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
+import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
+import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.ArticleSummaryService;
 import com.jzj.vblog.web.service.SysConfigService;
 import com.jzj.vblog.web.service.UploadService;
@@ -40,6 +43,9 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     private ArticleSummaryMapper articleSummaryMapper;
 
     @Autowired
+    private ArticleInformService articleInformService;
+
+    @Autowired
     private SysConfigService sysConfigService;
 
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
@@ -65,9 +71,9 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     @Override
     public boolean checkSummaryTop(ArticleSummary articleSummary) {
         if (TOP_STATUS.equals(articleSummary.getTopStatus())) {
-            if(articleSummary.getId()!=null){
+            if (articleSummary.getId() != null) {
                 ArticleSummary summary = articleSummaryMapper.selectById(articleSummary.getId());
-                if(summary.getTopStatus().equals(articleSummary.getTopStatus())){
+                if (summary.getTopStatus().equals(articleSummary.getTopStatus())) {
                     return false;
                 }
             }
@@ -87,7 +93,17 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
             List<String> imgList = new ArrayList<>();
             //根据ids查询
             List<ArticleSummary> list = articleSummaryMapper.selectBatchIds(ids);
-            list.forEach(s -> imgList.add(s.getBanner()));
+            list.forEach(s -> {
+                imgList.add(s.getBanner());
+                //更新文章基础表
+                List<ArticleInform> informList = articleInformService.list(new QueryWrapper<ArticleInform>().eq("aggregate_id", s.getId()));
+                if(informList.size()>0){
+                    for (ArticleInform articleInform : informList) {
+                        articleInform.setAggregateId("");
+                    }
+                    articleInformService.updateBatchById(informList);
+                }
+            });
             int result = articleSummaryMapper.deleteBatchIds(ids);
             //多线程执行批量删除图片操作
             CompletableFuture.runAsync(() -> {

@@ -25,21 +25,6 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="首页展示" prop="topStatus">
-        <el-select
-          v-model="queryParams.topStatus"
-          placeholder="首页展示"
-          clearable
-          style="width: 240px"
-        >
-          <el-option
-            v-for="dict in dict.type.sys_summary_top"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
       <el-form-item label="创建时间">
         <el-date-picker
           v-model="dateRange"
@@ -110,11 +95,6 @@
           <dict-tag :options="dict.type.sys_summary_status" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="首页展示" align="center" prop="topStatus">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_summary_top" :value="scope.row.topStatus" />
-        </template>
-      </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -162,16 +142,6 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="首页显示" prop="topStatus">
-          <el-select v-model="form.topStatus" placeholder="请选择是否展示" clearable :style="{width: '100%'}">
-            <el-option
-              v-for="dict in dict.type.sys_summary_top"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item label="归档图" prop="banner">
           <ele-upload-image
             v-model="form.banner"
@@ -197,7 +167,7 @@ import { listArticleSummary, add, del, getInfo, update } from '@/api/article/sum
 import { deleteImg } from '@/api/upload'
 export default {
   name: 'Dict',
-  dicts: ['sys_summary_status', 'sys_summary_top'],
+  dicts: ['sys_summary_status'],
   data() {
     return {
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -63,10 +64,18 @@ public class ArticleCommentController extends BaseController {
     }
 
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @ApiOperation("删除评论")
-    public R remove(@PathVariable String id) {
-        return toAjax(articleCommentService.deleteCommentById(id));
+    public R remove(@PathVariable String[] ids) {
+        articleCommentService.deleteCommentById(ids);
+        return success();
+    }
+
+    @Log(title = "评论管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/{ids}/{type}")
+    @ApiOperation("审核评论")
+    public R audit(@PathVariable String[] ids,@PathVariable String type) {
+        return toAjax(articleCommentService.auditCommentById(ids,type));
     }
 }
 

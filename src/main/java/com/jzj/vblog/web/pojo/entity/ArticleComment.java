@@ -70,6 +70,9 @@ public class ArticleComment extends BaseEntity{
     @ApiModelProperty(value = "所属省市")
     private String city;
 
+    @ApiModelProperty(value = "审核状态(0-未审核,1-审核通过,2-审核未通过)")
+    private String auditStatus;
+
 
 
 }

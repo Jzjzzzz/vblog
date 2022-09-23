@@ -37,7 +37,7 @@ public class EmailServiceImpl implements EmailService {
      * @param subject 邮件主题
      * @param text    纯文本内容
      */
-    @Retryable(value = RuntimeException.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
+    @Retryable(value = MailException.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
     @Override
     public void sendMail(String to, String subject, String text) {
         try {
@@ -51,7 +51,6 @@ public class EmailServiceImpl implements EmailService {
             }
         } catch (MailException e) {
             log.error("邮箱发送失败,发送用户为:"+to+"---错误信息为:"+e);
-            throw new RuntimeException(e);
         }
     }
 
@@ -79,7 +78,6 @@ public class EmailServiceImpl implements EmailService {
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error("邮箱发送失败,发送用户为:"+to+"---错误信息为:"+e);
-            throw new RuntimeException(e);
         }
     }
 
@@ -107,7 +105,6 @@ public class EmailServiceImpl implements EmailService {
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error("邮箱发送失败,发送用户为:"+to+"---错误信息为:"+e);
-            throw new RuntimeException(e);
         }
     }
 }
