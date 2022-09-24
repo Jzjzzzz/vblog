@@ -26,6 +26,7 @@ import java.util.List;
  */
 public class BaseController {
 
+
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
      */
@@ -86,6 +87,15 @@ public class BaseController {
      */
     protected R toAjax(int rows) {
         return rows > 0 ? R.ok() : R.error();
+    }
+
+    /**
+     *  响应返回结果
+     * @param result 执行结果
+     * @return 操作结果
+     */
+    protected R toAjax(boolean result){
+        return result? R.ok() : R.error();
     }
 
     /**

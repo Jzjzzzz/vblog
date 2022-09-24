@@ -166,7 +166,7 @@
 import { listArticleSummary, add, del, getInfo, update } from '@/api/article/summary'
 import { deleteImg } from '@/api/upload'
 export default {
-  name: 'Dict',
+  name: 'Summary',
   dicts: ['sys_summary_status'],
   data() {
     return {

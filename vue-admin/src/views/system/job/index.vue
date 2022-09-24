@@ -126,7 +126,7 @@
 import { add, del, handlePause, handleResume, list, updateCron } from '@/api/system/job'
 
 export default {
-  name: 'Config',
+  name: 'Job',
   data() {
     return {
       // 遮罩层

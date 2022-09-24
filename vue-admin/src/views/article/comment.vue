@@ -209,7 +209,7 @@
 <script>
 import { pageList, getInfo, reply, update, del, audit } from '@/api/article/comment'
 export default {
-  name: 'Dict',
+  name: 'Comment',
   dicts: ['article_comment_type', 'article_comment_status','article_comment_audit_status'],
   data() {
     return {

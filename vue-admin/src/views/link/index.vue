@@ -149,7 +149,7 @@
 <script>
 import { list,add,update,del,getInfo } from '@/api/link/link'
 export default {
-  name: 'Dict',
+  name: 'Link',
   dicts: ['sys_friend_link'],
   data() {
     return {

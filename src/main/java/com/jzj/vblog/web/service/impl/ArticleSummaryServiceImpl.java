@@ -11,10 +11,8 @@ import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
-import com.jzj.vblog.web.service.ArticleInformService;
-import com.jzj.vblog.web.service.ArticleSummaryService;
-import com.jzj.vblog.web.service.SysConfigService;
-import com.jzj.vblog.web.service.UploadService;
+import com.jzj.vblog.web.pojo.entity.SysWebInformation;
+import com.jzj.vblog.web.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -47,6 +45,9 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
 
     @Autowired
     private SysConfigService sysConfigService;
+
+    @Autowired
+    private SysWebInformationService webInformationService;
 
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
 
@@ -84,6 +85,9 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
 
     @Override
     public int insertSummary(ArticleSummary articleSummary) {
+        //获取站点信息
+        SysWebInformation information = webInformationService.selectWebInformationById();
+        articleSummary.setAuthor(information.getWebName());
         return articleSummaryMapper.insert(articleSummary);
     }
 

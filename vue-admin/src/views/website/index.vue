@@ -94,7 +94,7 @@
 
     <el-table v-loading="loading" :data="websiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column type="index" label="序号" align="center" :index="getIndex" />
+      <el-table-column type="index" label="序号" align="center" />
       <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true" />
       <el-table-column prop="resourceImg" label="标题图" align="center">
         <template slot-scope="scope">
@@ -203,7 +203,7 @@
 import { listWebsiteInform, addWebSite, getInfo, updateWebsite, delWebSite } from '@/api/website/website'
 import { deleteImg } from '@/api/upload'
 export default {
-  name: 'Dict',
+  name: 'Website',
   dicts: ['sys_website_type', 'sys_website_status'],
   data() {
     return {
@@ -256,6 +256,9 @@ export default {
         ],
         status: [
           { required: true, message: '资源状态不能为空', trigger: 'blur' }
+        ],
+        resourceImg: [
+          { required: true, message: '资源图不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -278,10 +281,6 @@ export default {
       deleteImg(this.imgPath).then(response => {
         this.$modal.msgSuccess('删除成功')
       })
-    },
-    // 设置序号
-    getIndex(index) {
-      return index + (this.queryParams.pageNum - 1) * this.queryParams.pageSize + 1
     },
     /** 查询文章列表 */
     getList() {

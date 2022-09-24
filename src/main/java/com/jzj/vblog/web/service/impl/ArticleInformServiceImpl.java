@@ -18,11 +18,9 @@ import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleContent;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
+import com.jzj.vblog.web.pojo.entity.SysWebInformation;
 import com.jzj.vblog.web.pojo.vo.*;
-import com.jzj.vblog.web.service.ArticleInformService;
-import com.jzj.vblog.web.service.SysConfigService;
-import com.jzj.vblog.web.service.SysDictTypeService;
-import com.jzj.vblog.web.service.UploadService;
+import com.jzj.vblog.web.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +54,13 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     private ArticleContentMapper articleContentMapper;
 
     @Autowired
-    private ArticleSummaryMapper articleSummaryMapper;
-
-    @Autowired
     private SysDictTypeService dictTypeService;
 
     @Autowired
     private SysConfigService sysConfigService;
+
+    @Autowired
+    private SysWebInformationService webInformationService;
 
     @Autowired
     private RedisCache redisCache;
@@ -136,12 +134,14 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int articleAdd(ArticleAddVo vo) {
+        //获取站点信息
+        SysWebInformation information = webInformationService.selectWebInformationById();
         //文章基础信息
         ArticleInform inform = new ArticleInform();
         BeanUtils.copyProperties(vo, inform);
         //初始化值
         inform.setClickRate(0L);
-        inform.setCreateBy("漫漫长路");
+        inform.setCreateBy(information.getWebName());
         inform.setNumberLike(0L);
         inform.setCommentNumber(0);
         articleInformMapper.insert(inform);

@@ -128,6 +128,22 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/gallery',
+    component: Layout,
+    redirect: '/gallery/index',
+    name: 'gallery',
+    meta: { title: '图片管理', icon: 'el-icon-collection-tag' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index',
+        name: 'GalleryList',
+        component: () => import('@/views/gallery/index'),
+        meta: { title: '图库', icon: 'el-icon-receiving' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/dict',

@@ -187,7 +187,7 @@ import { deleteBthById, listArticleInform } from '@/api/article/article'
 import { listAll } from '@/api/article/summary'
 
 export default {
-  name: 'Dict',
+  name: 'Article',
   dicts: ['sys_article_type', 'sys_article_status', 'sys_article_top', 'sys_article_origin', 'sys_article_comment', 'sys_article_tag'],
   data() {
     return {
