@@ -90,5 +90,12 @@ public class ArticleSummaryController extends BaseController {
         return toAjax(articleSummaryService.deleteSummaryByIds(ids, request));
     }
 
+    @ApiOperation("根据归档id查询文章列表")
+    @GetMapping("/articleList/{id}")
+    public R articleList(@PathVariable String id) {
+        return R.ok(articleSummaryService.articleList(id));
+    }
+
+
 }
 

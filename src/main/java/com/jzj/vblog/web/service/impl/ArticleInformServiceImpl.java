@@ -306,6 +306,26 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     }
 
     /**
+     * 根据id修改文章归档
+     * @param id
+     * @param type
+     * @return
+     */
+    @Override
+    public boolean updateSummaryById(String id,String summaryId, String type) {
+        String[] ids = id.split(",");
+        List<ArticleInform> informs = articleInformMapper.selectBatchIds(Arrays.asList(ids));
+        for (ArticleInform inform : informs) {
+            if("1".equals(type)){
+                inform.setAggregateId(summaryId);
+            }else {
+                inform.setAggregateId("");
+            }
+        }
+        return this.updateBatchById(informs);
+    }
+
+    /**
      * 根据标签编号获取中文名称
      *
      * @param tagList

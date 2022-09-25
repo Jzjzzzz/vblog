@@ -1,7 +1,9 @@
 package com.jzj.vblog.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
+import com.jzj.vblog.web.pojo.vo.ArticleListSummaryVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -81,4 +83,6 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
      * @return
      */
     HashMap<String, Object> summaryPage(Map<String, Object> queryMap);
+
+    List<ArticleListSummaryVo> articleList(String id);
 }

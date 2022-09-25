@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @ApiModel(description = "精选文章vo")
 public class ArticlePopular {
-    @TableId(value = "id",type = IdType.ASSIGN_UUID)
+    @TableId(value = "id")
     private String id;
 
     @ApiModelProperty(value = "文章标题")

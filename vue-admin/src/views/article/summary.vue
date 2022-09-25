@@ -111,6 +111,12 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-edit"
+            @click="handleList(scope.row)"
+          >文章列表</el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
@@ -159,17 +165,32 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 文章列表 -->
+    <el-dialog :title="title" :visible.sync="openList" width="30%" append-to-body>
+      <el-transfer
+        v-model="value"
+        :titles="['所有文章', '当前归档']"
+        :button-texts="['移除', '添加']"
+        :data="articleData"
+        :render-content="renderFunc"
+      @change="handleChange"></el-transfer>
+    </el-dialog>
   </div>
 </template>
-
 <script>
-import { listArticleSummary, add, del, getInfo, update } from '@/api/article/summary'
+import { listArticleSummary, add, del, getInfo, update, articleList } from '@/api/article/summary'
+import { updateSummaryById } from "@/api/article/article";
 import { deleteImg } from '@/api/upload'
 export default {
   name: 'Summary',
   dicts: ['sys_summary_status'],
   data() {
+
     return {
+      summaryId: '',
+      articleData: [],
+      value: [],
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
       uploadUrl: '/api/upload/uploadImg?name=articleSummary',
       // 文件上传类型
@@ -190,8 +211,10 @@ export default {
       list: [],
       // 弹出层标题
       title: '',
-      // 是否显示弹出层
+      // 是否显示新增删除弹出层
       open: false,
+      // 是否显示文章列表弹出层
+      openList: false,
       // 图片url
       imgPath: '',
       // 日期范围
@@ -227,6 +250,9 @@ export default {
     this.getList()
   },
   methods: {
+    renderFunc(h, option) {
+      return <span title={option.label}>{option.label}</span>;
+    },
     // 图片回显
     handleResponse(response) {
       if (response.success) {
@@ -243,7 +269,7 @@ export default {
       })
     },
 
-    /** 查询文章列表 */
+    /** 查询归档列表 */
     getList() {
       this.loading = true
       listArticleSummary(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
@@ -265,6 +291,16 @@ export default {
         articleTitle: undefined
       }
       this.resetForm('form')
+    },
+    /** 穿梭框点击 */
+    handleChange(value, direction, movedKeys) {
+      let type = "1"
+      if(direction==='left'){
+        type = "0"
+      }
+      updateSummaryById(movedKeys,this.summaryId,type).then(res=>{
+        this.$modal.msgSuccess('修改成功')
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -300,6 +336,23 @@ export default {
         this.title = '修改资源'
       })
     },
+    /** 文章列表按钮操作 */
+    handleList(row) {
+      this.articleData = []
+      this.value = []
+      const id = row.id || this.ids
+      articleList(id).then(response=>{
+        this.articleData = response.data
+        this.summaryId = id
+        this.articleData.forEach(s => {
+          if(s.belong === 1){
+            this.value.push(s.key)
+          }
+        })
+        this.openList = true
+        this.title = '文章列表'
+      })
+    },
     /** 提交按钮 */
     submitForm: function() {
       this.$refs['form'].validate(valid => {
@@ -333,3 +386,4 @@ export default {
   }
 }
 </script>
+

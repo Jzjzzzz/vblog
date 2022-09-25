@@ -12,7 +12,9 @@ import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.entity.SysWebInformation;
+import com.jzj.vblog.web.pojo.vo.ArticleListSummaryVo;
 import com.jzj.vblog.web.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -142,5 +145,21 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
             map.put("hasNextPage", (long) page * limit < summaryPage.getTotal());
         }
         return map;
+    }
+
+    @Override
+    public List<ArticleListSummaryVo> articleList(String id) {
+        //获取文章列表
+        List<ArticleInform> informs = articleInformService.list(new QueryWrapper<ArticleInform>().select("id","article_title","aggregate_id"));
+        List<ArticleListSummaryVo> list = informs.stream().map(s -> {
+            ArticleListSummaryVo vo = new ArticleListSummaryVo();
+            vo.setKey(s.getId());
+            vo.setLabel(s.getArticleTitle());
+            if (id.equals(s.getAggregateId())) {
+                vo.setBelong(1);
+            }
+            return vo;
+        }).collect(Collectors.toList());
+        return list;
     }
 }

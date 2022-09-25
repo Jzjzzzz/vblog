@@ -47,3 +47,11 @@ export function getRankList() {
     method: 'get'
   })
 }
+
+// 根据id修改文章归档
+export function updateSummaryById(id,summaryId,type) {
+  return request({
+    url: `/article/inform/updateSummaryById/${id}/${summaryId}/${type}`,
+    method: 'put'
+  })
+}

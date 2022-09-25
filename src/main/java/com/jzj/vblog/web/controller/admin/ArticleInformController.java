@@ -69,6 +69,13 @@ public class ArticleInformController extends BaseController {
         return R.ok();
     }
 
+    @Log(title = "文章管理", businessType = BusinessType.UPDATE)
+    @ApiOperation("根据id修改文章归档")
+    @PutMapping("updateSummaryById/{id}/{summaryId}/{type}")
+    public R updateSummaryById(@PathVariable String id,@PathVariable String summaryId,@PathVariable String type) {
+        return toAjax(articleInformService.updateSummaryById(id,summaryId,type));
+    }
+
     @ApiOperation("获取文章后台排行榜")
     @GetMapping("/getRank")
     public R getRank() {

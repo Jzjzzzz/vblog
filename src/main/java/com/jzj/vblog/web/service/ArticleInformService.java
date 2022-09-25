@@ -90,4 +90,11 @@ public interface ArticleInformService extends IService<ArticleInform> {
     void getByIdLike(String id);
 
 
+    /**
+     * 根据id修改文章归档
+     * @param id
+     * @param type
+     * @return
+     */
+    boolean updateSummaryById(String id,String summaryId, String type);
 }

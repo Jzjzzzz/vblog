@@ -50,3 +50,11 @@ export function update(data) {
     data: data
   })
 }
+
+// 根据归档id查询文章列表
+export function articleList(id) {
+  return request({
+    url: `/article/summary/articleList/${id}`,
+    method: 'get'
+  })
+}
