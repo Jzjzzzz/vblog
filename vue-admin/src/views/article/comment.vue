@@ -210,7 +210,7 @@
 import { pageList, getInfo, reply, update, del, audit } from '@/api/article/comment'
 export default {
   name: 'Comment',
-  dicts: ['article_comment_type', 'article_comment_status','article_comment_audit_status'],
+  dicts: ['article_comment_type', 'article_comment_status', 'article_comment_audit_status'],
   data() {
     return {
       // 遮罩层
@@ -334,7 +334,7 @@ export default {
       }).catch(() => {})
     },
     /** 审核按钮操作 */
-    handleAudit(row){
+    handleAudit(row) {
       const ids = row.id || this.ids
       this.$confirm('是否通过评论审核?(审核通过后,前台将展示)', '审核', {
         distinguishCancelAndClose: true,
@@ -342,29 +342,29 @@ export default {
         cancelButtonText: '未通过'
       })
         .then(() => {
-          audit(ids,1).then(res=>{
+          audit(ids, 1).then(res => {
             this.$message({
               type: 'success',
               message: '审核通过!'
-            });
+            })
             this.getList()
           })
         })
         .catch(action => {
-          if(action === 'cancel'){
-            audit(ids,2).then(res=>{
+          if (action === 'cancel') {
+            audit(ids, 2).then(res => {
               this.$message({
                 type: 'error',
                 message: '审核不通过'
-              });
+              })
               this.getList()
             })
           }
           this.$message({
             type: 'info',
             message: '取消审核'
-          });
-        });
+          })
+        })
     }
   }
 }

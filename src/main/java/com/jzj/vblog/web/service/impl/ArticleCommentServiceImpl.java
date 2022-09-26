@@ -164,9 +164,11 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         List<ArticleComment> list = articleCommentMapper.selectBatchIds(Arrays.asList(ids));
         for (ArticleComment comment : list) {
             comment.setAuditStatus(type);
-            ArticleInform inform = articleInformMapper.selectById(comment.getArticleId());
-            inform.setCommentNumber(inform.getCommentNumber()+1);
-            articleInformMapper.updateById(inform);
+            if("1".equals(comment.getCommentType())){
+                ArticleInform inform = articleInformMapper.selectById(comment.getArticleId());
+                inform.setCommentNumber(inform.getCommentNumber()+1);
+                articleInformMapper.updateById(inform);
+            }
         }
         return this.updateBatchById(list);
     }

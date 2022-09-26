@@ -101,9 +101,9 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         String summaryId = (String) query.get("summaryId");
         //分页查询
         Page<ArticleVo> pageList = articleInformMapper.selectPageVo(new Page<>(page, limit), tagId,summaryId);
+        //获取标签列表
+        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
         if (pageList.getTotal() > 0) {
-            //获取标签列表
-            List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
             //获取列表
             List<ArticleVo> list = pageList.getRecords();
             list.forEach(s -> {
@@ -115,10 +115,10 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
                 s.setTagNameArray(tags.toArray(new String[tags.size()]));
             });
             map.put("items", list);
-            map.put("currPage", page);
-            map.put("totalPage",(pageList.getTotal()+limit-1)/limit);
-            map.put("tagList",tagList);
         }
+        map.put("currPage", page);
+        map.put("totalPage",(pageList.getTotal()+limit-1)/limit);
+        map.put("tagList",tagList);
         return map;
     }
 
