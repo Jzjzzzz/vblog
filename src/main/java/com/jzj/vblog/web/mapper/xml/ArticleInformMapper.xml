@@ -68,11 +68,10 @@
         ai.article_tag tagIds,
         ai.create_by createBy,
         ai.number_like numberLike,
-        ac.content content,
+        ai.comment_number commentNumber,
         dict.dict_label typeName
         FROM
         article_inform ai
-        LEFT JOIN article_content ac ON ai.id = ac.id
         LEFT JOIN sys_dict_data dict ON dict.dict_type = 'sys_article_type'
         AND dict.dict_value = ai.article_type
         <where>

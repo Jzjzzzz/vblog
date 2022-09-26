@@ -14,7 +14,6 @@ import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.mapper.ArticleContentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
-import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleContent;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
@@ -108,8 +107,6 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             //获取列表
             List<ArticleVo> list = pageList.getRecords();
             list.forEach(s -> {
-                //封装评论数
-                s.setCommentsCount(0);
                 String[] imgArray = s.getLogImg().split(",");
                 //封装轮播图
                 s.setBanner(imgArray);

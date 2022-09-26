@@ -57,7 +57,6 @@ import commentList from '@/views/components/comment-list';
 // 需要更改的可以注释掉，引入自己需要的比如富文本的样式或者自己在markdown.CSS里面修改
 import markdown from '../../assets/css/markdown/markdown.css';
 import content from '../../assets/content.txt';
-import config from '@/config/blog-config.json';
 import { getById } from '@/api/article'
 import { getListArticle } from '@/api/comment'
 export default {

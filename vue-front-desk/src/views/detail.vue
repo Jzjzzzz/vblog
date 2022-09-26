@@ -101,7 +101,6 @@ export default {
       let life = this.lifeList.find(item => {
         return item.id == lifeId
       });
-      console.log(life);
       this.title = life.title;
       this.viewBackstyle.backgroundImage = `url(${require('../' + life.photo)})`;
       this.author = life.author;

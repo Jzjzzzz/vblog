@@ -134,6 +134,7 @@
               <el-form-item prop="content">
                 <div>
                   <mavon-editor
+                    style="height: 1100px"
                     ref="md"
                     v-model="form.content"
                     :external-link="externalLink"

@@ -5,6 +5,8 @@ import 'font-awesome/css/font-awesome.css'
 import './main.css'// 可复用的CSS全局的CSS文件
 import loading from '@/views/components/loading'
 import mavonEditor from 'mavon-editor'
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css'
 import 'mavon-editor/dist/css/index.css'
 Vue.config.productionTip = false
 Vue.use(mavonEditor)
@@ -16,6 +18,13 @@ router.beforeEach((to, from, next) => {
   window.scrollTo(0, 0);
   // 这里由于route-view的bug，明显上滑动作不够友好，如果很不喜欢这种效果或者不喜欢单文件路由跳转，可以把路由跳转中所有的<route-link></route-link>取消换成a标签（不推荐）
   next();
+})
+
+Vue.directive('highlight', function (el) {
+  let blocks = el.querySelectorAll('pre code');
+  blocks.forEach((block) => {
+    hljs.highlightBlock(block)
+  })
 })
 
 router.afterEach((to, from, next) => {

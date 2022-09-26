@@ -54,5 +54,5 @@ public interface ArticleCommentService extends IService<ArticleComment> {
      */
     Map<String, Object> getListArticle(String articleId);
 
-    int auditCommentById(String[] ids, String type);
+    boolean auditCommentById(String[] ids, String type);
 }

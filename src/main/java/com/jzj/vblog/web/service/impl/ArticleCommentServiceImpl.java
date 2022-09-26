@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.utils.sign.*;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
+import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
+import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.SysWebInformation;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
@@ -48,6 +50,9 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Autowired
     private SysConfigService configService;
+
+    @Autowired
+    private ArticleInformMapper articleInformMapper;
 
     /**
      * 访客评论
@@ -155,16 +160,15 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     }
 
     @Override
-    public int auditCommentById(String[] ids, String type) {
+    public boolean auditCommentById(String[] ids, String type) {
         List<ArticleComment> list = articleCommentMapper.selectBatchIds(Arrays.asList(ids));
         for (ArticleComment comment : list) {
             comment.setAuditStatus(type);
+            ArticleInform inform = articleInformMapper.selectById(comment.getArticleId());
+            inform.setCommentNumber(inform.getCommentNumber()+1);
+            articleInformMapper.updateById(inform);
         }
-        boolean result = this.updateBatchById(list);
-        if(result){
-            return 1;
-        }
-        return 0;
+        return this.updateBatchById(list);
     }
 
     /**

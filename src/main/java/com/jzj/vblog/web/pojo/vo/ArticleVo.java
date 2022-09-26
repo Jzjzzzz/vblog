@@ -41,14 +41,11 @@ public class ArticleVo {
     @ApiModelProperty(value = "概要")
     private String summary;
 
-    @ApiModelProperty(value = "内容")
-    private String content;
-
     @ApiModelProperty(value = "点击数")
     private Integer viewsCount;
 
     @ApiModelProperty(value = "评论数")
-    private Integer commentsCount;
+    private Integer commentNumber;
 
     @ApiModelProperty(value = "分类名称")
     private String typeName;

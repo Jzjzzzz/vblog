@@ -31,7 +31,7 @@
                     item.viewsCount
                   }}</a>&nbsp;&nbsp;&nbsp;
                 <a class="comment" href="javascript:;"><i class="fa fa-comment-o"
-                                                          aria-hidden="true"></i> {{ item.commentsCount }}</a>
+                                                          aria-hidden="true"></i> {{ item.commentNumber }}</a>
         </span>
       </div>
     </div>
