@@ -59,8 +59,7 @@ public class SysTodoController extends BaseController {
     @Log(title = "备忘录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
     public R remove(@PathVariable String id) {
-        sysTodoService.removeById(id);
-        return R.ok();
+        return toAjax(sysTodoService.removeById(id));
     }
 }
 

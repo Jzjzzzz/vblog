@@ -152,20 +152,15 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Override
     public ArticleAddVo getArticleById(String id) {
-        if (id == null) {
-            throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
-        }
+        if (id == null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         //文章基础信息
-        ArticleAddVo model = articleInformMapper.selectArticleByIdVo(id);
-        return model;
+        return articleInformMapper.selectArticleByIdVo(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateArticleById(ArticleAddVo vo) {
-        if (vo == null || vo.getId() == null) {
-            throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
-        }
+        if (vo == null || vo.getId() == null) throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         //文章基本信息
         ArticleInform inform = new ArticleInform();
         BeanUtils.copyProperties(vo, inform);
@@ -283,23 +278,16 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
      */
     @Override
     public void getByIdLike(String id) {
-        try {
-            if (id == null) {
-                throw new BusinessException("数据异常");
-            }
-            //请求IP
-            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
-            String redisIp = redisCache.getCacheObject(LIKE_IP + ip + "," + id);
-            if (StringUtils.isNotEmpty(redisIp)) {
-                throw new BusinessException(201, "该文章已点赞");
-            }
-            ArticleInform inform = articleInformMapper.selectById(id);
-            inform.setNumberLike(inform.getNumberLike() + 1);
-            articleInformMapper.updateById(inform);
-            //存入redis
-            redisCache.setCacheObject(LIKE_IP + ip + "," + id, ip, 30, TimeUnit.MINUTES);
-        } catch (Exception e) {
-        }
+        if (id == null) throw new BusinessException("数据异常");
+        //请求IP
+        String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+        String redisIp = redisCache.getCacheObject(LIKE_IP + ip + "," + id);
+        if (StringUtils.isNotEmpty(redisIp)) throw new BusinessException(201, "该文章已点赞");
+        ArticleInform inform = articleInformMapper.selectById(id);
+        inform.setNumberLike(inform.getNumberLike() + 1);
+        articleInformMapper.updateById(inform);
+        //存入redis
+        redisCache.setCacheObject(LIKE_IP + ip + "," + id, ip, 30, TimeUnit.MINUTES);
     }
 
     /**

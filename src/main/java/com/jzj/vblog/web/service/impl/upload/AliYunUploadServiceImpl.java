@@ -31,6 +31,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class AliYunUploadServiceImpl implements UploadService {
+
     /**
      * 获取当前实现类编码
      *

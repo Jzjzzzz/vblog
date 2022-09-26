@@ -44,9 +44,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         Assert.notEmpty(password, ResponseEnum.LOGIN_PASSWORD_NULL_ERROR);
         AdminUser user = adminUserMapper.login(username, SaSecureUtil.md5BySalt(password, Constants.MD5_SALT));
         //账号密码错误
-        if (user == null) {
-            throw new BusinessException(ResponseEnum.LOGIN_USER_ERROR);
-        }
+        if (user == null) throw new BusinessException(ResponseEnum.LOGIN_USER_ERROR);
         UserInfoVo userinfo = new UserInfoVo();
         BeanUtils.copyProperties(user, userinfo);
         userinfo.setName(user.getUsername());
@@ -82,16 +80,10 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
             user.setAvatar(vo.getAvatar());
         }
         if(StringUtils.isNotBlank(vo.getOldpassword())){
-            if(StringUtils.isBlank(vo.getNewpassword1()) && StringUtils.isBlank(vo.getNewpassword2())){
-                throw new BusinessException("新密码不能为空");
-            }
-            if(!vo.getNewpassword1().equals(vo.getNewpassword2())){
-                throw new BusinessException("两次输入密码不一致");
-            }
+            if(StringUtils.isBlank(vo.getNewpassword1()) && StringUtils.isBlank(vo.getNewpassword2())) throw new BusinessException("新密码不能为空");
+            if(!vo.getNewpassword1().equals(vo.getNewpassword2())) throw new BusinessException("两次输入密码不一致");
             //旧密码比对
-            if(!user.getPassword().equals(SaSecureUtil.md5BySalt(vo.getOldpassword(),Constants.MD5_SALT))){
-                throw new BusinessException("旧密码错误");
-            }
+            if(!user.getPassword().equals(SaSecureUtil.md5BySalt(vo.getOldpassword(),Constants.MD5_SALT))) throw new BusinessException("旧密码错误");
             user.setPassword(SaSecureUtil.md5BySalt(vo.getNewpassword1(),Constants.MD5_SALT));
         }
         return adminUserMapper.updateById(user);

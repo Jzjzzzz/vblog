@@ -13,8 +13,6 @@ import java.util.concurrent.TimeUnit;
  *
  * ☆☆☆ SPI： 在resources目录新建META-INF.services文件夹(两层)，参考当前服务resources。
  * @Title: 使用redis缓存
- * @author lide1202@hotmail.com
- * @date 2020-05-12
  */
 public class CaptchaCacheServiceRedisImpl implements CaptchaCacheService {
 

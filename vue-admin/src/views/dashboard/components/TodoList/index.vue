@@ -6,9 +6,14 @@
     </header>
     <!-- main section -->
     <section v-show="todos.length" class="main">
-      <input id="toggle-all" :checked="allChecked" class="toggle-all" type="checkbox"
-             @change="toggleAll({ done: !allChecked })">
-      <label for="toggle-all"/>
+      <input
+        id="toggle-all"
+        :checked="allChecked"
+        class="toggle-all"
+        type="checkbox"
+        @change="toggleAll({ done: !allChecked })"
+      >
+      <label for="toggle-all" />
       <ul class="todo-list">
         <todo
           v-for="(todo, index) in filteredTodos"
@@ -40,7 +45,7 @@
 
 <script>
 import Todo from './Todo.vue'
-import {addTodo, deleteById, list, updateById} from "@/api/system/todo";
+import { addTodo, deleteById, list, updateById } from '@/api/system/todo'
 
 const STORAGE_KEY = 'todos'
 const filters = {
@@ -49,17 +54,17 @@ const filters = {
   completed: todos => todos.filter(todo => todo.done)
 }
 const defalutList = [
-  {text: 'star this repository', done: false},
-  {text: 'fork this repository', done: false},
-  {text: 'follow author', done: false},
-  {text: 'vue-element-admin', done: true},
-  {text: 'vue', done: true},
-  {text: 'element-ui', done: true},
-  {text: 'axios', done: true},
-  {text: 'webpack', done: true}
+  { text: 'star this repository', done: false },
+  { text: 'fork this repository', done: false },
+  { text: 'follow author', done: false },
+  { text: 'vue-element-admin', done: true },
+  { text: 'vue', done: true },
+  { text: 'element-ui', done: true },
+  { text: 'axios', done: true },
+  { text: 'webpack', done: true }
 ]
 export default {
-  components: {Todo},
+  components: { Todo },
   filters: {
     pluralize: (n, w) => n === 1 ? w : w + 's',
     capitalize: s => s.charAt(0).toUpperCase() + s.slice(1)
@@ -106,6 +111,7 @@ export default {
           this.setLocalStorage()
         }
         e.target.value = ''
+        this.init()
       })
     },
     toggleTodo(val) {
@@ -120,7 +126,7 @@ export default {
         this.setLocalStorage()
       })
     },
-    editTodo({todo, value}) {
+    editTodo({ todo, value }) {
       todo.text = value
       this.setLocalStorage()
     },
@@ -128,7 +134,7 @@ export default {
       this.todos = this.todos.filter(todo => !todo.done)
       this.setLocalStorage()
     },
-    toggleAll({done}) {
+    toggleAll({ done }) {
       this.todos.forEach(todo => {
         updateById(todo).then(res => {
           todo.done = done

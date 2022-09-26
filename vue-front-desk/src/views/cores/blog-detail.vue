@@ -56,7 +56,6 @@ import commentList from '@/views/components/comment-list';
 // 可以由外部引入您的markdown样式，这里引入的是我自己博客的markdown文章的样式。
 // 需要更改的可以注释掉，引入自己需要的比如富文本的样式或者自己在markdown.CSS里面修改
 import markdown from '../../assets/css/markdown/markdown.css';
-import content from '../../assets/content.txt';
 import { getById } from '@/api/article'
 import { getListArticle } from '@/api/comment'
 export default {
@@ -97,7 +96,6 @@ export default {
         articlePopularList: [],
         htmlContent: undefined
       },
-      content: content,
       thumbsUpFlag: false,
       thumbsUpCount: 0,
       signatureAuthor: '2018-07-24 8:00 By Jzj',
@@ -130,7 +128,6 @@ export default {
         this.articleNextPreData = this.article.articleNextPreDataList
         // 封装全部标签列表
         this.tagList = this.article.tagList
-        this.content = this.article.content
         this.sonRefresh = true
         this.articleMostView = this.article.articlePopularList
         // 评论是否显示
