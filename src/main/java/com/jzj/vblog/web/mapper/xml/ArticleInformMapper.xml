@@ -81,9 +81,17 @@
             </if>
             <if test="summaryId!=null and summaryId!=''">
                 AND aggregate_id LIKE concat('%',#{summaryId},'%')
+
             </if>
         </where>
-            ORDER BY ai.sort DESC
+        <choose>
+            <when test="summaryId!=null and summaryId!=''">
+                ORDER BY ai.create_time ASC, ai.sort DESC
+            </when>
+            <otherwise>
+                ORDER BY ai.create_time DESC
+            </otherwise>
+        </choose>
     </select>
     <select id="selectArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleAddVo" parameterType="java.lang.String">
         SELECT
