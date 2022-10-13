@@ -234,6 +234,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
                 .ne("id", model.getId())
                 .le("create_time", model.getCreateTime())
                 .select("article_title", "id")
+                .orderByDesc("create_time")
                 .last("limit 1"));
         preData.setType("pre");
         preData.setName("没有更多了");
@@ -248,7 +249,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         List<ArticleInform> nextArticle = articleInformMapper.selectList(new QueryWrapper<ArticleInform>()
                 .ne("id", model.getId())
                 .ge("create_time", model.getCreateTime())
-                .select("article_title", "id")
+                .select("article_title", "id").orderByAsc("create_time")
                 .last("limit 1"));
         nextData.setType("next");
         nextData.setName("没有更多了");
