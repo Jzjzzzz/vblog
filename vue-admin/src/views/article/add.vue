@@ -29,7 +29,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="分类" prop="articleType">
-                <el-select v-model="form.articleType" placeholder="请选择分类" clearable :style="{width: '100%'}">
+                <el-select v-model="form.articleType" filterable placeholder="请选择分类" clearable :style="{width: '100%'}">
                   <el-option
                     v-for="dict in dict.type.sys_article_type"
                     :key="dict.value"
@@ -42,6 +42,7 @@
                 <el-select
                   v-model="form.articleTagArray"
                   placeholder="请选择标签"
+                  filterable
                   multiple
                   clearable
                   :style="{width: '100%'}"
@@ -76,7 +77,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="归档">
-                <el-select v-model="form.aggregateId" placeholder="请选择归档" clearable :style="{width: '100%'}">
+                <el-select v-model="form.aggregateId" placeholder="请选择归档" filterable clearable :style="{width: '100%'}">
                   <el-option
                     v-for="summary in summaryList"
                     :key="summary.id"
@@ -134,9 +135,9 @@
               <el-form-item prop="content">
                 <div>
                   <mavon-editor
-                    style="height: 1100px"
                     ref="md"
                     v-model="form.content"
+                    style="height: 1100px"
                     :external-link="externalLink"
                     @imgAdd="imgAdd"
                     @imgDel="imgDel"
