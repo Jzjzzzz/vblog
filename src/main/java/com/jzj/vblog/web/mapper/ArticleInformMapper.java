@@ -30,7 +30,7 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
      * @param page
      * @return
      */
-    Page<ArticleVo> selectPageVo(@Param("page") Page<ArticleVo> page, @Param("tagId") String tagId,String summaryId);
+    Page<ArticleVo> selectPageVo(@Param("page") Page<ArticleVo> page, @Param("tagId") String tagId,@Param("summaryId") String summaryId);
 
     /**
      * 根据id获取文章
