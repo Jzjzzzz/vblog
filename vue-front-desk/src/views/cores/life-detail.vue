@@ -43,7 +43,6 @@ import articleShare from '@/views/components/detail/article-share.vue';
 import blogComment from '@/views/components/blog-comment';
 import commentList from '@/views/components/comment-list';
 
-
 export default {
   name: 'life-detail',
   components: {
