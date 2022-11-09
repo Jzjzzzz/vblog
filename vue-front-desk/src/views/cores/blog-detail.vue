@@ -3,37 +3,41 @@
     <div class="row">
       <div class="col-md-12 col-sm-12">
         <div id="content-detail" ref="content-detail" class="content-detail content">
-         <div v-if="sonRefresh">
-           <detail-nav-bar></detail-nav-bar>
-         </div>
+          <div v-if="sonRefresh">
+            <detail-nav-bar></detail-nav-bar>
+          </div>
           <div class="detail-head">
             <div class="detail-title">
-              <h1>{{article.articleTitle}}</h1>
+              <h1>{{ article.articleTitle }}</h1>
             </div>
-            <hr />
+            <hr/>
           </div>
           <div v-html="article.htmlContent" class="markdown-body">
           </div>
         </div>
         <div class="thumb-for">
           <!-- thumbs-count传递的是点赞的数量，thumbs-up-flag传递的是当前用户是否点赞的标识 -->
-          <thumb-up :thumbs-count="article.numberLike" :thumbs-up-flag="false" ></thumb-up>
+          <thumb-up :thumbs-count="article.numberLike" :thumbs-up-flag="false"></thumb-up>
         </div>
         <article-share :signature-author="signatureAuthor"></article-share>
-        <hr style="margin-top:8px;" />
+        <hr style="margin-top:8px;"/>
         <article-next-pre :pre-next="articleNextPreData"></article-next-pre>
         <article-tags :tag-list="tagList"></article-tags>
-        <hr /><br/>
+        <hr/>
+        <br/>
         <div v-if="commentStatus" class="content-detail-end comment shadow">
-          <blog-comment :user-data="userData" :comment-type="commentType" :article-id="article.id" v-on:submit-comment="subLeaveMessage">
-          </blog-comment><hr />
+          <blog-comment :user-data="userData" :comment-type="commentType" :article-id="article.id"
+                        v-on:submit-comment="subLeaveMessage">
+          </blog-comment>
+          <hr/>
           <div class="comment-list">
             <div id="comment" class="comment-list-head">
-              评论列表 <font style="font-size: 14px;color:#c7254e;">(共 {{commentList.length}} 条评论)</font>
+              评论列表 <font style="font-size: 14px;color:#c7254e;">(共 {{ commentList.length }} 条评论)</font>
               <hr>
             </div>
             <div class="comment-list-body">
-              <div class="pulldown" v-if="!isGetComment"><a @click="getComment" href="javascript:;">看看别人怎么说</a></div>
+              <div class="pulldown" v-if="!isGetComment"><a @click="getComment" href="javascript:;">看看别人怎么说</a>
+              </div>
               <comment-list v-if="isGetComment" :comment-list="commentList"></comment-list>
             </div>
           </div>
@@ -56,8 +60,9 @@ import commentList from '@/views/components/comment-list';
 // 可以由外部引入您的markdown样式，这里引入的是我自己博客的markdown文章的样式。
 // 需要更改的可以注释掉，引入自己需要的比如富文本的样式或者自己在markdown.CSS里面修改
 import markdown from '../../assets/css/markdown/markdown.css';
-import { getById } from '@/api/article'
-import { getListArticle } from '@/api/comment'
+import {getById} from '@/api/article'
+import {getListArticle} from '@/api/comment'
+
 export default {
   name: 'blog-detail',
   components: {
@@ -70,10 +75,10 @@ export default {
     articleMostView: articleMostView,
     articleShare: articleShare
   },
-  data () {
+  data() {
     return {
       commentType: '1',
-      commentStatus : false,
+      commentStatus: false,
       sonRefresh: false,
       article: {
         id: undefined,
@@ -87,11 +92,11 @@ export default {
         clickRate: undefined,
         articleTagList: [],
         tagList: [],
-        createBy:undefined,
+        createBy: undefined,
         commentNumber: undefined,
         logImg: undefined,
         numberLike: undefined,
-        articleNextPreDataList:[],
+        articleNextPreDataList: [],
         commentStatus: undefined,
         articlePopularList: [],
         htmlContent: undefined
@@ -111,15 +116,15 @@ export default {
       tagList: []
     }
   },
-  created () {
+  created() {
     this.init();
   },
   methods: {
-    init () {
+    init() {
       this.getArticleDetail();
       this.getConfig();
     },
-    getArticleDetail () {
+    getArticleDetail() {
       getById(this.$route.params.articleId).then(res => {
         this.article = res.data
         // 作者签名
@@ -131,20 +136,20 @@ export default {
         this.sonRefresh = true
         this.articleMostView = this.article.articlePopularList
         // 评论是否显示
-        if (this.article.commentStatus === '0'){
+        if (this.article.commentStatus === '0') {
           this.commentStatus = true
         }
       })
     },
-    getConfig () {
+    getConfig() {
       getListArticle(this.$route.params.articleId).then(res => {
         this.commentList = res.data.list
       })
     },
-    subLeaveMessage (data) {
+    subLeaveMessage(data) {
       alert(data);
     },
-    getComment () {
+    getComment() {
       this.isGetComment = !this.isGetComment;
     }
   }
@@ -153,7 +158,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.view-body-detail{
+.view-body-detail {
   opacity: 0;
   position: absolute;
   top: 40%;
@@ -163,46 +168,55 @@ export default {
   -moz-transition: all .4s ease;
   width: 100%;
 }
-.slide .view-body-detail{
+
+.slide .view-body-detail {
   opacity: 1;
 }
+
 .content-detail,
-.content-detail-end{
+.content-detail-end {
   background-color: #fafafa;
   padding: 5% 4%;
 }
-.detail-head{
+
+.detail-head {
   font-weight: 400;
   text-align: center;
-  font-family: Vollkorn,Palatino,Times;
+  font-family: Vollkorn, Palatino, Times;
   color: #333;
   line-height: 1.4;
   margin-top: 50px;
   margin-bottom: 30px;
 }
-.comment-list-head{
+
+.comment-list-head {
   font-weight: 500;
   font-size: 18px;
 }
-.comment-list-head hr{
+
+.comment-list-head hr {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-@media (min-width: 768px){
+
+@media (min-width: 768px) {
   .view-body-detail {
     padding: 10px 14% 0 14%;
   }
-  .view-body-detail>.row {
+
+  .view-body-detail > .row {
     padding: 0 10%;
   }
 }
-@media (max-width: 767px){
+
+@media (max-width: 767px) {
   .row {
     margin: 0;
   }
 }
+
 @media (max-width: 540px) {
-  .content-detail{
+  .content-detail {
     padding: 5% 0%;
   }
 }

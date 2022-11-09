@@ -8,7 +8,8 @@
           </div>
           <div class="name-introduce">
             <h1 v-html="webConfig.webName">漫漫长路</h1>
-            <h5 v-html="webConfig.webDetails">一名98年生的后端小菜鸡<font style="font-weight:200"> <(￣︶￣)></font>。</h5>
+            <h5 v-html="webConfig.webDetails">一名98年生的后端Java程序员<font style="font-weight:200"> <(￣︶￣)></font>。
+            </h5>
             <br/>
             <div style="position:relative;" class="contact-tools">
               <div v-show="wechatFlag" style="position:absolute;top:-100%;left:0px;right:0px;">
@@ -55,7 +56,7 @@
         <h5>留言板块</h5>
         <br/>
         <div class="comment">
-          <blog-comment :user-data="userData" :comment-type="commentType"  v-on:submit-comment="subLeaveMessage">
+          <blog-comment :user-data="userData" :comment-type="commentType" v-on:submit-comment="subLeaveMessage">
           </blog-comment>
           <br/><br/>
           <div id="comment" class="comment-list-head">评论墙 <font
@@ -77,7 +78,7 @@ import blogFoot from '@/views/components/blog-foot';
 import blogComment from '@/views/components/blog-comment';
 import commentWall from '@/views/components/comment-wall';
 import {linkList} from '@/api/link'
-import { getMessageList } from '@/api/comment'
+import {getMessageList} from '@/api/comment'
 import config from '@/config/blog-config.json';
 
 export default {

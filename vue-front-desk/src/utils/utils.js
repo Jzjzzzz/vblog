@@ -57,17 +57,17 @@ var throttle = function (fn, delay) {
 };
 
 var isPhone = function () {
-   var userAgentInfo = navigator.userAgent;
-   var Agents = ['Android', 'iPhone',
-      'SymbianOS', 'Windows Phone'];
-   var flag = false;
-   for (var v = 0; v < Agents.length; v++) {
-      if (userAgentInfo.indexOf(Agents[v]) > 0) {
-         flag = true;
-         break;
-      }
-   }
-   return flag;
+  var userAgentInfo = navigator.userAgent;
+  var Agents = ['Android', 'iPhone',
+    'SymbianOS', 'Windows Phone'];
+  var flag = false;
+  for (var v = 0; v < Agents.length; v++) {
+    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+      flag = true;
+      break;
+    }
+  }
+  return flag;
 }
 
 export {

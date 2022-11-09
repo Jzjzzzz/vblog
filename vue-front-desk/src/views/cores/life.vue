@@ -2,16 +2,16 @@
   <div id="view-body" class="view-body view-body-life">
     <div class="row">
       <div class="col-sm-6 col-md-3 video-left">
-          <life-item :life-list="getLifeList(0)"></life-item>
+        <life-item :life-list="getLifeList(0)"></life-item>
       </div>
       <div class="col-sm-6 col-md-3 video-center">
-          <life-item :life-list="getLifeList(2)"></life-item>
+        <life-item :life-list="getLifeList(2)"></life-item>
       </div>
       <div class="col-sm-6 col-md-3 video-center">
-          <life-item :life-list="getLifeList(1)"></life-item>
+        <life-item :life-list="getLifeList(1)"></life-item>
       </div>
       <div class="col-sm-6 col-md-3 video-right">
-          <life-item :life-list="getLifeList(3)"></life-item>
+        <life-item :life-list="getLifeList(3)"></life-item>
       </div>
     </div>
     <blog-foot></blog-foot>
@@ -21,7 +21,7 @@
 <script>
 import blogFoot from '@/views/components/blog-foot.vue';
 import lifeItem from '@/views/components/life-item.vue';
-import { list } from '@/api/summary'
+import {list} from '@/api/summary'
 
 export default {
   name: 'life',
@@ -29,25 +29,25 @@ export default {
     blogFoot: blogFoot,
     lifeItem: lifeItem
   },
-  data () {
+  data() {
     return {
       lifeList: []
     }
   },
-  created () {
+  created() {
     this.init();
   },
   methods: {
-    init () {
+    init() {
       // 在这里初始化
       this.getConfig();
     },
-    getConfig () {
+    getConfig() {
       list().then(res => {
         this.lifeList = res.data
       })
     },
-    getLifeList (lifeIndex) {
+    getLifeList(lifeIndex) {
       return this.lifeList.filter(function (item, index) {
         return index % 4 == lifeIndex;
       })
@@ -58,12 +58,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.view-body-life{
+.view-body-life {
   padding-top: 60px;
 }
+
 @media (max-width: 540px) {
   .view-body-life {
-    padding:60px 4% 2% 4%;
+    padding: 60px 4% 2% 4%;
   }
 }
 

@@ -15,7 +15,7 @@ export default {
     //   default: false
     // }
   },
-  data () {
+  data() {
     return {
       isShow: false
     };
@@ -23,17 +23,18 @@ export default {
 };
 </script>
 <style scoped>
-.loadSpinner{
+.loadSpinner {
   position: fixed;
   top: 0px;
   bottom: 0px;
   left: 0px;
-  right:0px;
+  right: 0px;
   width: 100%;
-  background-color: rgba(255,255,255,.99);
+  background-color: rgba(255, 255, 255, .99);
   z-index: 10000;
 }
-.boxText{
+
+.boxText {
   position: absolute;
   left: 0px;
   top: 0px;
@@ -43,19 +44,21 @@ export default {
   height: 150px;
   width: 200px;
   text-align: center;
-  color:#708090;
+  color: #708090;
 }
+
 .boxLoading {
-    width: 50px;
-    height: 50px;
-    margin: auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
-.boxLoading::before{
+
+.boxLoading::before {
   content: '';
   width: 50px;
   height: 5px;
@@ -67,7 +70,8 @@ export default {
   border-radius: 50%;
   animation: shadow .5s linear infinite;
 }
-.boxLoading::after{
+
+.boxLoading::after {
   content: '';
   width: 50px;
   height: 50px;
@@ -78,6 +82,7 @@ export default {
   left: 0;
   border-radius: 3px;
 }
+
 @keyframes animate {
   17% {
     border-bottom-right-radius: 3px;

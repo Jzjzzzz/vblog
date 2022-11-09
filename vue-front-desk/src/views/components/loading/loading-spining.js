@@ -6,9 +6,9 @@ loadingSpining.newInstance = properties => {
 
   const Instance = new Vue({
     data: props,
-    render (h) {
+    render(h) {
       return h(loadingSpining, {
-          props: props
+        props: props
       });
     }
   });
@@ -18,10 +18,10 @@ loadingSpining.newInstance = properties => {
 
   return {
     component: loading_spining,
-    update (options) {
+    update(options) {
       loading_spining.isShow = options.isShow;
     },
-    destroy () {
+    destroy() {
       document.body.removeChild(document.getElementsByClassName('loadSpinner')[0]);
     }
   };

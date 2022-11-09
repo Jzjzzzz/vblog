@@ -1,7 +1,8 @@
 <template>
   <div class="comment-list-body">
     <comment-list :comment-list="commentList"></comment-list>
-    <p v-show="!isLoading && !isFinish" class="falls-item"><i class="fa fa-angle-double-down animate-movedown fa-2x fa-fw margin-bottom"></i> 下滑更多留言</p>
+    <p v-show="!isLoading && !isFinish" class="falls-item"><i
+      class="fa fa-angle-double-down animate-movedown fa-2x fa-fw margin-bottom"></i> 下滑更多留言</p>
     <p v-show="isLoading" class="falls-item"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i> 刷新中</p>
     <div style="width: 100%;text-align: center;padding-top: 20px;" v-show="isFinish">
       <h5><img src="../../assets/image/icon/cry.svg"> &nbsp;&nbsp;没有更多的留言啦 </h5>
@@ -19,14 +20,14 @@ export default {
   components: {
     commentList: commentList
   },
-  data () {
+  data() {
     return {
       isLoading: false,
       isFinish: false
     }
   },
   watch: {
-    waterfallData (newValue, oldValue) {
+    waterfallData(newValue, oldValue) {
       console.log(newValue);
       console.log(oldValue);
       this.isLoading = newValue.isLoading;
@@ -54,7 +55,7 @@ export default {
       });
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     window.removeEventListener('scroll', this.handleScroll);
   }
 }

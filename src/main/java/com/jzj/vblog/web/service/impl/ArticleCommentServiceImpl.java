@@ -72,8 +72,10 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
             if(ip==null || IpUtils.internalIp(ip)){
                 articleComment.setCity("未知地址");
             }else {
-                String[] citys = Objects.requireNonNull(IpUtils.getCityInfo(ip)).split("\\|");
-                articleComment.setCity(citys[2]+citys[3]);
+                String address = AddressUtils.getRealAddressByIP(ip);
+                // String[] citys = Objects.requireNonNull(IpUtils.getCityInfo(ip)).split("\\|");
+                // articleComment.setCity(citys[2]+citys[3]);
+                articleComment.setCity(address);
             }
             //是否为父节点
             articleComment.setParentStatus("1");

@@ -2,7 +2,6 @@
   <div id="app" class="conetent" :class="headCoverSilde?'slide':''">
     <nav-header v-show="isShowNav" :nav-list="navList" v-on:slidechange="headSilde"></nav-header>
     <router-view/>
-
   </div>
 </template>
 
@@ -15,7 +14,7 @@ export default {
   components: {
     navHeader
   },
-  data () {
+  data() {
     return {
       headCoverSilde: false,
       isShowNav: true,
@@ -27,10 +26,10 @@ export default {
     }
   },
   methods: {
-    headSilde (data) {
+    headSilde(data) {
       this.headCoverSilde = data;
     },
-    routerChange (oldRoute, newRoute) {
+    routerChange(oldRoute, newRoute) {
       console.log(newRoute);
       const routerItem = this.noNavList.find(value => {
         return newRoute.name === value.name;
@@ -44,7 +43,7 @@ export default {
     }
   },
   watch: {
-    $route (to, from) {
+    $route(to, from) {
       this.routerChange(from, to);
     }
   },

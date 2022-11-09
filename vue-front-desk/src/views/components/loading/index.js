@@ -1,29 +1,30 @@
 import loadingSpining from './loading-spining';
+
 let loadingSpinInstance;
 
-function getInstance () {
-	loadingSpinInstance = loadingSpinInstance || loadingSpining.newInstance({
-      isShow: false
+function getInstance() {
+  loadingSpinInstance = loadingSpinInstance || loadingSpining.newInstance({
+    isShow: false
   });
-	return loadingSpinInstance;
+  return loadingSpinInstance;
 }
 
-function update (options) {
-    let instance = getInstance();
+function update(options) {
+  let instance = getInstance();
 
-    instance.update(options);
+  instance.update(options);
 }
 
 export default {
-	show () {
-		update({
+  show() {
+    update({
       isShow: true
     });
-	},
+  },
 
-	hide () {
-		update({
+  hide() {
+    update({
       isShow: false
     });
-	}
+  }
 }

@@ -61,7 +61,7 @@
 		  },{
 		    "name": "life",
 		    "title": "归档",
-		    "desc": "滋润一点",
+		    "desc": "井井有条",
 		    "backgroundImage": "assets/image/background/27.jpg",
 		    "isOpacityFull": false,
 		    "titleClass": "title-blog"
@@ -82,179 +82,7 @@
     ]
 	},
   "data": {
-    "article": {
-      "articleList": [{
-        "id": 151,
-        "title": "从零开始学习Rollup.js的前端打包利器",
-        "time": "2018-06-26 16:50",
-        "author": "唐益达",
-        "photoUrl": "assets/image/article/rollupimg.jpg",
-        "summary": "Rollup 是一个 JavaScript 模块打包器，可以将小块代码编译成大块复杂的代码，例如 library 或应用程序,之前的vue的插件就是用rollup打包的",
-        "thumbUp": 2,
-        "articleRead": 23,
-        "commentCount": 1,
-        "tag": "javascript,rollup.js",
-        "thumbUpStatus": 1
-      }, {
-        "id": 150,
-        "title": "Vue原理解析——自己写个Vue",
-        "time": "2018-05-24 15:58",
-        "author": "唐益达",
-        "photoUrl": "assets/image/article/Vuejs1.jpg",
-        "summary": "Vue由于其高效的性能和灵活入门简单、轻量的特点下变得火热 在当今前端越来越普遍的使用，今天来剖析一下Vue的深入响应式原理。",
-        "thumbUp": 1,
-        "articleRead": 43,
-        "commentCount": 1,
-        "tag": "vue,javascript",
-        "thumbUpStatus": 0
-      }, {
-        "id": 149,
-        "title": "Vue插件开发初体验——（懒加载）",
-        "time": "2018-04-08 10:28",
-        "author": "唐益达",
-        "photoUrl": "assets/image/article/vuePlugin.jpeg",
-        "summary": "我一直推崇一些高度定制化的插件，一些小Demo，是需要自己写的，不能崇尚“拿来主义”。有些插件网上都有，但是你用了会发现谁都会用，而且有时候对于自己的需求又不够贴合。所以会写插件是一个必备的技能。",
-        "thumbUp": 0,
-        "articleRead": 41,
-        "commentCount": 0,
-        "tag": "javascript,vue,插件开发",
-        "thumbUpStatus": 0
-      }, {
-        "id": 148,
-        "title": "Javascript基础设计(四)——不可忽视的细节",
-        "time": "2018-02-06 22:28",
-        "author": "唐益达",
-        "photoUrl": "assets/image/article/jsjs2.jpeg",
-        "summary": "虽然随着ES6的出现，Javascript语言变得越来越规范化，但是不容忽视的是：JS还有许许多多的细节需要重视，这篇博文主要记录那些容易忽视又不可以忽视的语言细节，持续更新",
-        "thumbUp": 0,
-        "articleRead": 36,
-        "commentCount": 1,
-        "tag": "javascript",
-        "thumbUpStatus": 0
-      }, {
-        "id": 147,
-        "title": "Node入门——爬虫获取\"虎扑步行街\"的活跃用户数据与结构",
-        "time": "2018-01-30 22:47",
-        "author": "唐益达",
-        "photoUrl": "assets/image/article/nodeJS.jpeg",
-        "summary": "最近利用闲暇时间想要爬取虎扑的一些用户数据，大致可以统计现在发帖回帖的用户的公开信息，看看现在步行街用户群体是怎么样一个‘背景’。",
-        "thumbUp": 4,
-        "articleRead": 111,
-        "commentCount": 1,
-        "tag": "node.js,javascript,爬虫",
-        "thumbUpStatus": 0
-      }]
-    },
-    "life": {
-      "lifeList": [
-        {
-          "id": 1,
-          "author": "唐益达",
-          "comment": 3,
-          "time": "2018-04-10 14:38",
-          "photo": "assets/image/life/saierdafengmian.jpg",
-          "read": 38,
-          "thumb": 1,
-          "title": "我的海拉鲁世界"
-        }, {
-          "id": 2,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/life/banwagong.jpeg",
-          "read": 47,
-          "thumb": 2,
-          "title": "用搬瓦工给自己搭建一个shadowsocks服务器"
-        }, {
-          "id": 3,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/53b8d6afdeef5.jpg",
-          "read": 47,
-          "thumb": 2,
-          "title": "这是我的标题，最好不要超过30个字节，会造成排版错乱"
-        }, {
-          "id": 4,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/tangyida.jpeg",
-          "read": 47,
-          "thumb": 2,
-          "title": "这是瀑布墙的流式分布"
-        }, {
-          "id": 5,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/background2.jpg",
-          "read": 47,
-          "thumb": 2,
-          "title": "这是测试数据"
-        }, {
-          "id": 6,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/background5.jpg",
-          "read": 47,
-          "thumb": 2,
-          "title": "这是测试数据，仅供参考，为了排版"
-        }, {
-          "id": 7,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/headimag2.jpg",
-          "read": 47,
-          "thumb": 2,
-          "title": "这是测试数据，仅供参考，为了排版"
-        },{
-          "id": 8,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/headimag2.jpg",
-          "read": 47,
-          "thumb": 2,
-          "title": "这是测试数据，仅供参考，为了排版"
-        },{
-          "id": 9,
-          "author": "唐益达",
-          "comment": 0,
-          "time": "2018-07-04 10:25",
-          "photo": "assets/image/headimag2.jpg",
-          "read": 47,
-          "thumb": 2,
-          "title": "这是测试数据，仅供参考，为了排版"
-        }
-      ]
-    },
     "detail": {
-      "detailComment": [
-        {
-          "id": 63,
-          "message": "测试",
-          "nickname": "漫漫长路",
-          "date": "2018-06-26 17:35",
-          "userPhoto": "assets/image/headimag2.jpg",
-          "response": null,
-          "responseName": null,
-          "responseTime": null,
-          "area": "广东广州"
-        }, {
-          "id": 64,
-          "message": "测试222",
-          "nickname": "漫漫长路",
-          "date": "2018-06-26 17:35",
-          "userPhoto": "assets/image/headimag2.jpg",
-          "response": null,
-          "responseName": null,
-          "responseTime": null,
-          "area": "广东广州"
-        }
-      ],
       "tagList": [
         {
           "tagId": 1,
@@ -359,81 +187,28 @@
           "isSlide": false
         }
       ],
-      "commentList": [
-        {
-          "id": 70,
-          "message": "<img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\"> <img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\">  <img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\"> 谢谢，因为想搭建博客的时候顺便学一下框架",
-          "nickname": "唐益达",
-          "date": "2018-06-28 9:35",
-          "userPhoto": "assets/image/headimag2.jpg",
-          "response": "小哥用的是Vue哦，厉害。:smile: ",
-          "responseName": "雾仙",
-          "responseTime": "2018-06-25 20:36",
-          "area": "浙江杭州"
-        }, {
-          "id": 69,
-          "message": "小哥用的是Vue哦，厉害。 <img width=\"20px\" height=\"20px\" alt=\"smile\" src=\"assets/image/emotions/emoji/smile.png\">",
-          "nickname": "雾仙",
-          "date": "2018-06-25 20:36",
-          "userPhoto": "assets/image/headimag2.jpg",
-          "response": null,
-          "responseName": null,
-          "responseTime": null,
-          "area": "广东广州"
-        }, {
-          "id": 68,
-          "message": "路过",
-          "nickname": "FUNKYEYES",
-          "date": "2018-06-25 13:18",
-          "userPhoto": "assets/image/headimag2.jpg",
-          "response": null,
-          "responseName": null,
-          "responseTime": null,
-          "area": "浙江宁波"
-        }, {
-          "id": 67,
-          "message": "。。。你究竟对我的网站做了什么？ <img width=\"20px\" height=\"20px\" alt=\"scream\" src=\"assets/image/emotions/emoji/scream.png\">",
-          "nickname": "唐益达",
-          "date": "2018-06-09 17:17",
-          "userPhoto": "assets/image/headimag2.jpg",
-          "response": "闪讯直连测试",
-          "responseName": "宁大通信狗",
-          "responseTime": "2018-06-08 15:55",
-          "area": "浙江宁波"
-        }, {
-          "id": 66,
-          "message": "闪讯直连测试",
-          "nickname": "宁大通信狗",
-          "date": "2018-06-08 15:55",
-          "userPhoto": "assets/image/headimag2.jpg",
-          "response": null,
-          "responseName": null,
-          "responseTime": null,
-          "area": "浙江宁波"
-        }
-      ],
       "introduceList": [{
         "title": "关于学习。",
         "section": [{
-          "content": "从小就喜欢玩电脑游戏,第一次接触编程还是在初中,当时玩的回合制游戏,自己做日常太麻烦就用按键精灵做了个自动脚本。"
+          "content": "从小就喜欢玩电脑游戏,第一次接触编程还是在初中,当时玩的回合制游戏,自己做日常太麻烦就用按键精灵做了个自动脚本,做的过程中感受到了编程的乐趣。"
         }, {
-          "content": "大学的时候选专业专门选了个软件工程，学校教学的比较基础,大部分知识我都是通过网课学习的。"
+          "content": "大学的时候选专业专门选了个软件工程，不过学校教学的比较基础,大部分知识都比较老旧，那时刚好培训机构网络上发布的课程泛滥，就一直跟着看培训机构的视频。"
         }, {
-          "content": "一开始看黑马程序员,把Java基础都过了一般,后面就看尚硅谷和马士兵这种讲得比较有深度的培训机构，慢慢的感觉自己的技术架构清晰了很多,也学会了不跟着视频而是自己翻阅官方文档来学习。"
+          "content": "一开始看视频就跟着视频学习比较浅，都是会用就行，后面自己写多了就不满足停留在这种地步了，就开始看框架实现原理，看官方文档，看设计模式，算法，想着怎么去优化现在写出来的代码。"
         }]
       }, {
         "title": "关于生活。",
         "section": [{
-          "content": "喜欢吃,喜欢旅游,喜欢音乐,虽然旅游次数屈指可数,不过梦想是拥有一台房车环游中国。"
+          "content": "喜欢吃,喜欢旅游,喜欢音乐，喜欢游戏,热爱生活。"
         }]
       }, {
         "title": "关于本站。",
         "section": [{
-          "content": "一直想做自己做一个博客,上学时学完微服务后用Spring Cloud做了一个,后面觉得一个博客没必要搞得架构那么复杂。 "
+          "content": "网络上现成优秀的博客框架比比皆是,不过我一直想的是从无到有的自己搭建一个"
         },{
-          "content": "然后这个博客就诞生了。"
+          "content": "然后这个博客就诞生了，从开始的技术选型,数据库设计,到后期的前后端开发,部署都一步步慢慢在我手里实现。"
         },{
-          "content": "本站使用了SpringBoot+Vue前后端分离开发。"
+          "content": "本项目只是普通的单体服务(为什么不用SpringCloud),我觉得个人博客就应该小而精,易搭建部署,不需要很高的服务器配置,也不需要考虑并发,大数据量问题。我个人的博客只是为了整理自己所学知识，记录下来,需要的时候在来翻阅而已。"
         }]
       }]
     }

@@ -1,22 +1,22 @@
 <template>
   <div>
     <div :style="viewBackstyle" :class="current.class">
-      <div class="title"><h1>{{article.articleTitle}}</h1>
+      <div class="title"><h1>{{ article.articleTitle }}</h1>
         <h2 v-if="current.id === 'blog-detail'" class="title-h2 tagsArr">
-          <a v-for="item in article.articleTagList" href="javascript:;" class="tag">{{item}}</a>
+          <a v-for="item in article.articleTagList" href="javascript:;" class="tag">{{ item }}</a>
         </h2>
         <h2 class="title-h2">
-          <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{article.createBy}}</span><br /><br />
+          <span><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{ article.createBy }}</span><br/><br/>
           <span class="title-h2-date">
-            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{article.updateTime}}</span>
+            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{ article.updateTime }}</span>
         </h2>
         <h3 class="title-h3">
           <span class="title-h3-view">
-            <i class="fa fa-eye" aria-hidden="true"></i> view {{article.clickRate}}
+            <i class="fa fa-eye" aria-hidden="true"></i> view {{ article.clickRate }}
           </span>
           <span>
             <a class="title-h3-comment" href="#comment">
-              <i class="fa fa-comments-o" aria-hidden="true"></i> comment {{article.commentNumber}}
+              <i class="fa fa-comments-o" aria-hidden="true"></i> comment {{ article.commentNumber }}
             </a>
           </span>
           <br>
@@ -29,10 +29,11 @@
 
 <script>
 import config from '@/config/blog-config.json'
-import { getById } from '@/api/article'
+import {getById} from '@/api/article'
+
 export default {
   name: 'detail',
-  data () {
+  data() {
     return {
       viewBackstyle: {
         backgroundImage: ''
@@ -48,14 +49,12 @@ export default {
         clickRate: undefined,
         tagList: [],
         articleTagList: [],
-        createBy:undefined,
+        createBy: undefined,
         commentNumber: undefined,
         logImg: undefined
       },
       currentType: '',
       detailList: [],
-      articleList: [],
-      lifeList: [],
       current: null,
       title: '',
       tagsArr: null,
@@ -65,11 +64,11 @@ export default {
       commentCount: -1
     }
   },
-  created () {
+  created() {
     this.init();
   },
   methods: {
-    init () {
+    init() {
       this.getConfig();
       this.current = this.getCurrentRoute();
       if (this.current.id == 'blog-detail') {
@@ -78,25 +77,23 @@ export default {
         this.getLifeDetail();
       }
     },
-    getConfig () {
+    getConfig() {
       this.detailList = config.page.detail;
-      this.articleList = config.data.article['articleList'];
-      this.lifeList = config.data.life['lifeList'];
     },
-    getCurrentRoute () {
+    getCurrentRoute() {
       const id = this.$route.name;
       let current = this.detailList.find(item => {
         return item.id === id;
       });
       return current;
     },
-    getArticleDetail () {
+    getArticleDetail() {
       getById(this.$route.params.articleId).then(res => {
         this.article = res.data
         this.viewBackstyle.backgroundImage = `url(${this.article.logImg})`;
       })
     },
-    getLifeDetail () {
+    getLifeDetail() {
       let lifeId = this.$route.params.lifeId;
       let life = this.lifeList.find(item => {
         return item.id == lifeId
@@ -115,16 +112,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.slide .view-detail{
-  transform: translate3d(0,-60%,0);
-  -webkit-transform: translate3d(0,-60%,0);
-  -moz-transform: translate3d(0,-60%,0);
-  -ms-transform: translate3d(0,-60%,0);
+.slide .view-detail {
+  transform: translate3d(0, -60%, 0);
+  -webkit-transform: translate3d(0, -60%, 0);
+  -moz-transform: translate3d(0, -60%, 0);
+  -ms-transform: translate3d(0, -60%, 0);
 }
-.slide .view-detail::after{
+
+.slide .view-detail::after {
   background: 0 0;
 }
-.view-detail-life{
+
+.view-detail-life {
   position: relative;
   min-height: 600px;
   background-size: cover;
@@ -134,7 +133,8 @@ export default {
   -moz-transition: all .5s;
   -ms-transition: all .5s;
 }
-.view-detail{
+
+.view-detail {
   position: absolute;
   top: 0;
   width: 100%;
@@ -145,8 +145,9 @@ export default {
   -webkit-transition: all .4s;
   z-index: 98;
 }
+
 .view-detail::after,
-.view-detail-life::after{
+.view-detail-life::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -157,10 +158,12 @@ export default {
   transition: all .4s;
   -webkit-transition: all .4s;
 }
-.view-detail::after{
-  background-color: rgba(29,29,29,.45);
+
+.view-detail::after {
+  background-color: rgba(29, 29, 29, .45);
 }
-.title{
+
+.title {
   position: absolute;
   text-align: justify;
   margin: 0 auto;
@@ -168,72 +171,86 @@ export default {
   color: #fff;
   z-index: 1;
 }
-.view-detail-life .title{
-  top:unset;
-  padding-top:120px;
+
+.view-detail-life .title {
+  top: unset;
+  padding-top: 120px;
   height: 100%;
   padding-right: 20px;
-  background-color: rgba(29,29,29,.45);
+  background-color: rgba(29, 29, 29, .45);
 }
-.view-detail .title{
+
+.view-detail .title {
   top: 20%;
   padding: 0 18%;
 }
-.title h1{
+
+.title h1 {
   padding: 0 0 .2em;
   color: #fff;
   font-weight: 700;
 }
-.view-detail .title h1{
+
+.view-detail .title h1 {
   font-size: 65px;
   margin: 0 auto;
   border-radius: 5px;
   margin-bottom: -10px;
 }
-.view-detail-life .title h1{
+
+.view-detail-life .title h1 {
   font-size: 3.75em;
   margin-top: 0;
   margin-bottom: 40px;
   border-radius: 5px;
 }
-.view-detail-life .title .title-h2{
+
+.view-detail-life .title .title-h2 {
   font-size: 28px;
 }
-.view-detail-life .title .title-h3{
+
+.view-detail-life .title .title-h3 {
   margin-top: 30px;
 }
-.title-h3 .title-h3-comment, .title-h3 .title-h3-view{
+
+.title-h3 .title-h3-comment, .title-h3 .title-h3-view {
   margin-top: 14px;
   font-size: 20px;
 }
-.title .title-h2-date{
-  font-family: Lora,'Times New Roman',serif;
+
+.title .title-h2-date {
+  font-family: Lora, 'Times New Roman', serif;
   font-style: italic;
   font-weight: 300;
   display: block;
   margin-top: 16px;
   font-size: 20px;
 }
-.tagsArr{
+
+.tagsArr {
   margin-top: 0;
   margin-bottom: 50px;
 }
-.tagsArr .tag{
+
+.tagsArr .tag {
   margin-left: 14px;
   background-color: #fff;
-  color: rgba(153,153,153,.8);
+  color: rgba(153, 153, 153, .8);
   font-weight: 400;
 }
-.tag{
+
+.tag {
   color: #fff;
   font-size: 14px;
   height: 24px;
   line-height: 24px;
 }
-.tagsArr .tag::before{
+
+.tagsArr .tag::before {
   border-right-color: #fff;
 }
-.tag:before{
+
+.tag:before {
   width: 0;
   height: 0;
   top: 0;
@@ -241,49 +258,60 @@ export default {
   border: 12px solid transparent;
   border-right-color: grey;
 }
-.tag:after{
+
+.tag:after {
   width: 4px;
   height: 4px;
   background-color: #fff;
   border-radius: 4px;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.3);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .3);
   top: 10px;
   left: 1px;
 }
+
 .tag:hover {
   color: #fff;
   background-color: #de686d;
 }
+
 .tag:hover::before {
   border-right-color: #de686d;
 }
-.title-h3-view{
+
+.title-h3-view {
   margin-right: 20px;
 }
-.title-h3{
+
+.title-h3 {
   font-size: 20px;
   margin-top: 28px;
 }
-.title-h3-comment{
-  color:#fff;
+
+.title-h3-comment {
+  color: #fff;
 }
-@media (max-width: 767px){
+
+@media (max-width: 767px) {
   .tagsArr .tag {
     font-size: 12px;
   }
+
   .view-detail .title {
     top: 14%;
     padding: 0 20px;
   }
+
   .view-detail .title h1 {
     font-size: 40px;
   }
-  .view-detail-life .title{
+
+  .view-detail-life .title {
     padding-left: 24px;
   }
 }
-@media (min-width: 768px){
-  .view-detail-life .title{
+
+@media (min-width: 768px) {
+  .view-detail-life .title {
     padding-left: 22%;
     padding-right: 22%;
   }

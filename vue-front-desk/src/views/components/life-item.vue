@@ -1,21 +1,23 @@
 <template>
   <div class="life-content">
-        <div v-for="(lifeItem,$index) in lifeList" class="row-item-detail shadow">
-        <div class="detail-body">
+    <div v-for="(lifeItem,$index) in lifeList" class="row-item-detail shadow">
+      <div class="detail-body">
         <div class="detail-img"><img :src="lifeItem.banner">
-            <div @click="jumpTo(lifeItem.id,lifeItem.name)" class="detail-title">
-                <div class="title"><i class="fa fa-title" aria-hidden="true"></i> {{lifeItem.name}}</div>
-                <div class="content">
-                    <div class="content-flex">
-                        <div class="content-desc"><i class="fa fa-user" aria-hidden="true"></i> {{lifeItem.author}}</div>
-                    </div>
-                    <div class="content-flex">
-                        <div class="content-desc"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{lifeItem.createTime.split(' ')[0]}}</div>
-                    </div>
-                    </div>
+          <div @click="jumpTo(lifeItem.id,lifeItem.name)" class="detail-title">
+            <div class="title"><i class="fa fa-title" aria-hidden="true"></i> {{ lifeItem.name }}</div>
+            <div class="content">
+              <div class="content-flex">
+                <div class="content-desc"><i class="fa fa-user" aria-hidden="true"></i> {{ lifeItem.author }}</div>
+              </div>
+              <div class="content-flex">
+                <div class="content-desc"><i class="fa fa-calendar-o" aria-hidden="true"></i>
+                  {{ lifeItem.createTime.split(' ')[0] }}
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,19 +31,15 @@ export default {
     }
   },
   name: 'life-item',
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   methods: {
-    getTimestamp: function (dateString) {
-      return Date.parse(new Date(dateString));
-    },
     jumpTo: function (id, name) {
       this.$router.push({
         path: `/blog`,
         name: 'blog',
-        params:{
+        params: {
           summaryId: id,
           summaryName: name
         }
@@ -53,31 +51,36 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.life-content{
+.life-content {
   margin-bottom: 6px;
 }
-.row-item-detail{
+
+.row-item-detail {
   background-color: #fff;
   margin-bottom: 20px;
 }
-.detail-body{
+
+.detail-body {
   border-bottom: 1px solid #eee;
 }
-.detail-img{
+
+.detail-img {
   position: relative;
   overflow: hidden;
   width: 100%;
   max-height: 600px;
   cursor: pointer;
 }
-.detail-img img{
+
+.detail-img img {
   width: 100%;
   height: auto;
   min-height: 180px;
   transition: transform .4s;
   -webkit-transition: transform .4s;
 }
-.detail-title{
+
+.detail-title {
   font-size: 18px;
   font-weight: 700;
   padding: 32px 48px 28px 28px;
@@ -96,46 +99,54 @@ export default {
   -webkit-transition: transform .4s;
   -moz-transition: transform .4s;
 }
-.detail-title > .title{
+
+.detail-title > .title {
   font-size: 20px;
   margin-bottom: 18px;
 }
-.detail-title .content{
+
+.detail-title .content {
   margin-bottom: 8px;
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
 }
-.content-flex{
+
+.content-flex {
   flex: 1;
 }
-.content-flex>.content-desc{
+
+.content-flex > .content-desc {
   margin-bottom: 4px;
   font-size: 14px;
   font-weight: 300;
   color: #777;
 }
-.detail-img .detail-title{
-  background-color: rgba(255,255,255,.9);
-  color:#666;
+
+.detail-img .detail-title {
+  background-color: rgba(255, 255, 255, .9);
+  color: #666;
 }
-.detail-img:hover .detail-title{
-	opacity: 1;
+
+.detail-img:hover .detail-title {
+  opacity: 1;
   transform: translateY(0);
-	-webkit-transform: translateY(0);
+  -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
   -ms-transform: translateY(0);
 }
-.detail-img:hover img{
-	transform:scale(1.2,1.2);
- -ms-transform:scale(1.2,1.2);     /* IE 9 */
- -moz-transform:scale(1.2,1.2);    /* Firefox */
- -webkit-transform:scale(1.2,1.2); /* Safari 和 Chrome */
- -o-transform:scale(1.2,1.2);  /* Opera */
+
+.detail-img:hover img {
+  transform: scale(1.2, 1.2);
+  -ms-transform: scale(1.2, 1.2); /* IE 9 */
+  -moz-transform: scale(1.2, 1.2); /* Firefox */
+  -webkit-transform: scale(1.2, 1.2); /* Safari 和 Chrome */
+  -o-transform: scale(1.2, 1.2); /* Opera */
 }
-.detail-img:hover .detail-title{
-	color: #666;
-	opacity: 1;
+
+.detail-img:hover .detail-title {
+  color: #666;
+  opacity: 1;
 }
 </style>

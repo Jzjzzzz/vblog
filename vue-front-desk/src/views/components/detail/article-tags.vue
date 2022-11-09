@@ -3,7 +3,8 @@
     <div class="col-sm-12 col-lg-12 article-tags">
       <div class="detail-tags-title">ARTICLE TAGS</div>
       <div class="detail-tags-body">
-        <a v-for="tagItem in tagList" class="tags-detail" @click="onSubmit(tagItem.dictValue)">{{tagItem.dictLabel}}</a>
+        <a v-for="tagItem in tagList" class="tags-detail"
+           @click="onSubmit(tagItem.dictValue)">{{ tagItem.dictLabel }}</a>
       </div>
     </div>
   </div>
@@ -18,24 +19,23 @@ export default {
     }
   },
   name: 'article-tags',
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
-  created () {
+  created() {
     this.init();
   },
   methods: {
-    onSubmit(id){
+    onSubmit(id) {
       this.$router.push({
-        path:'/blog',
-        query:{tagId:id}
+        path: '/blog',
+        query: {tagId: id}
       })
     },
-    init () {
+    init() {
       this.assert();
     },
-    assert () {
+    assert() {
       if (!this.tagList) {
         throw new Error('必须传入具体的tag标签数组，数组格式[{tagName:"标签名",tagId:"标签id可以不传"}]');
       }
@@ -47,12 +47,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-.detail-tags-title{
+.detail-tags-title {
   padding: 10px;
   font-weight: 700;
   color: #d3d3d3;
 }
-.tags-detail{
+
+.tags-detail {
   display: inline-block;
   padding-left: 10px;
   padding-right: 10px;
@@ -64,7 +65,8 @@ export default {
   margin: 0 6px;
   margin-bottom: 6px;
 }
-.tags-detail:hover{
+
+.tags-detail:hover {
   color: #fff;
   background-color: #696969;
 }

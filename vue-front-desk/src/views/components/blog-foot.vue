@@ -14,14 +14,12 @@
 <script>
 export default {
   name: 'blogFoot',
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   created() {
   },
-  methods:{
-  }
+  methods: {}
 
 }
 </script>

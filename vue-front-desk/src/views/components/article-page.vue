@@ -3,13 +3,13 @@
     <nav aria-label="...">
       <ul class="pager">
         <li v-for="item in pageList" v-on:click="pageClick(item)" :class="item.class">
-          <a href="javascript:void(0)">{{item.isIcon?'':item.name}}
+          <a href="javascript:void(0)">{{ item.isIcon ? '' : item.name }}
             <i v-if="item.isIcon" :class="item.iconClass" aria-hidden="true"></i>
           </a>
         </li>
         <li>
           <a href="javascript:void(0)">
-            <span aria-hidden="true">Page {{current}} / {{pageAll}}</span>
+            <span aria-hidden="true">Page {{ current }} / {{ pageAll }}</span>
           </a>
         </li>
       </ul>
@@ -30,7 +30,7 @@ export default {
     }
   },
   name: 'article-page',
-  data () {
+  data() {
     return {
       itemAll: -1,
       current: this.currentPage,
@@ -94,8 +94,11 @@ export default {
             message = '您点击的下一页';
             this.current = this.current + 1;
             type = id;
-          }; break;
-      };
+          }
+          ;
+          break;
+      }
+      ;
       this.$emit('pageprocss', {
         current: this.current,
         message: message,
@@ -108,16 +111,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.pager{
+.pager {
   margin: 0;
 }
-.pagefoot{
+
+.pagefoot {
   background-color: #fff;
   text-align: center;
   padding: 6px;
   margin-top: -10px;
 }
-.pager li a{
+
+.pager li a {
   border: 1px solid #fff;
   color: #616161;
 }

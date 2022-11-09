@@ -5,9 +5,11 @@ import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 import org.lionsoul.ip2region.Util;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -284,19 +286,20 @@ public class IpUtils {
      */
     public static String getCityInfo(String ip) {
         try {
-            String path = IpUtils.class.getClassLoader().getResource("ip2region.db").getPath();
-            File file;
-            file = new File(path);
-            if (!file.exists()) {
-                log.error("Error: Invalid ip2region.db file, filePath：" + file.getPath());
-                return null;
+            InputStream inputStream = new ClassPathResource("ip2region.db").getInputStream();
+            ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+            byte[] buff = new byte[100];
+            int rc = 0;
+            while ((rc = inputStream.read(buff, 0, 100)) > 0) {
+                swapStream.write(buff, 0, rc);
             }
+            byte[] in2b = swapStream.toByteArray();
             //查询算法
             int algorithm = DbSearcher.BTREE_ALGORITHM; //B-tree
             //DbSearcher.BINARY_ALGORITHM //Binary
             //DbSearcher.MEMORY_ALGORITYM //Memory
             DbConfig config = new DbConfig();
-            DbSearcher searcher = new DbSearcher(config, file.getPath());
+            DbSearcher searcher = new DbSearcher(config, in2b);
             Method method;
             switch ( algorithm )
             {
