@@ -133,6 +133,12 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     @Override
     public void deleteCommentById(String[] ids) {
         for (String id : ids) {
+            ArticleComment comment = articleCommentMapper.selectById(id);
+            if("1".equals(comment.getCommentType()) && "1".equals(comment.getAuditStatus())){
+                ArticleInform inform = articleInformMapper.selectById(comment.getArticleId());
+                inform.setCommentNumber(inform.getCommentNumber()-1);
+                articleInformMapper.updateById(inform);
+            }
             ArticleComment sonModel = articleCommentMapper.selectOne(new QueryWrapper<ArticleComment>().eq("parent_id", id));
             if(sonModel!=null){
                 articleCommentMapper.deleteById(sonModel.getId());
