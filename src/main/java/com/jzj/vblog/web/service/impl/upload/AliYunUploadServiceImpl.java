@@ -42,6 +42,14 @@ public class AliYunUploadServiceImpl implements UploadService {
         return UploadCode.A_LI_YUN;
     }
 
+    /**
+     * 文件上传oss
+     *
+     * @param photo   文件
+     * @param name    文件模块名
+     * @param request
+     * @return
+     */
     @Override
     public String uploadImg(MultipartFile photo, String name, HttpServletRequest request) {
         OSS ossClient = null;
@@ -76,6 +84,13 @@ public class AliYunUploadServiceImpl implements UploadService {
         }
     }
 
+    /**
+     * oss文件删除
+     *
+     * @param url
+     * @param request
+     * @return
+     */
     @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
     @Override
     public boolean deleteImg(String url, HttpServletRequest request) {
@@ -99,6 +114,11 @@ public class AliYunUploadServiceImpl implements UploadService {
         }
     }
 
+    /**
+     * oss批量删除
+     * @param list
+     * @param request
+     */
     @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
     @Override
     public void deleteBtnImg(List<String> list, HttpServletRequest request) {
