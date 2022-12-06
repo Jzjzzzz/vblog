@@ -24,3 +24,10 @@ export function del(id) {
     method: 'delete'
   })
 }
+
+export function getGalleryList(){
+  return request({
+    url: '/gallery/getList',
+    methods: 'get'
+  })
+}

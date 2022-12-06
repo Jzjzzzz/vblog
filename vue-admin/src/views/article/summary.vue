@@ -186,7 +186,6 @@ export default {
   name: 'Summary',
   dicts: ['sys_summary_status'],
   data() {
-
     return {
       summaryId: '',
       articleData: [],

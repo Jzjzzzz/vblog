@@ -3,10 +3,8 @@ package com.jzj.vblog.web.controller.admin;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
-import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
-import com.jzj.vblog.web.pojo.entity.FriendLink;
 import com.jzj.vblog.web.pojo.entity.Gallery;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
@@ -55,6 +53,12 @@ public class GalleryController extends BaseController {
     @DeleteMapping("/{id}")
     public R del(@PathVariable String id,HttpServletRequest request) {
         return toAjax(galleryService.removeByIdImg(id,request));
+    }
+
+    @ApiOperation("获取所有图片")
+    @GetMapping("/getList")
+    public R getList(){
+        return R.ok(galleryService.list());
     }
 }
 

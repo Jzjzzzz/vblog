@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-steps :active="active" finish-status="success">
-      <el-step title="基础信息" />
-      <el-step title="内容编辑" />
+      <el-step title="基础信息"/>
+      <el-step title="内容编辑"/>
     </el-steps>
     <div class="grid-content bg-purple">
       <el-form ref="elForm" :model="form" :rules="rules" size="medium" label-width="100px">
@@ -29,7 +29,8 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="分类" prop="articleType">
-                <el-select v-model="form.articleType" filterable placeholder="请选择分类" clearable :style="{width: '100%'}">
+                <el-select v-model="form.articleType" filterable placeholder="请选择分类" clearable
+                           :style="{width: '100%'}">
                   <el-option
                     v-for="dict in dict.type.sys_article_type"
                     :key="dict.value"
@@ -77,7 +78,8 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="归档">
-                <el-select v-model="form.aggregateId" placeholder="请选择归档" filterable clearable :style="{width: '100%'}">
+                <el-select v-model="form.aggregateId" placeholder="请选择归档" filterable clearable
+                           :style="{width: '100%'}">
                   <el-option
                     v-for="summary in summaryList"
                     :key="summary.id"
@@ -97,18 +99,18 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="排序" prop="sort">
-                <el-input-number v-model="form.sort" :min="0" :max="10" label="排序" />
+                <el-input-number v-model="form.sort" :min="0" :max="10" label="排序"/>
               </el-form-item>
               <el-form-item label="封面" prop="logImg">
-                <ele-upload-image
-                  v-model="form.logImg"
-                  :action="BASE_API+uploadUrl"
-                  :response-fn="handleResponse"
-                  :is-show-success-tip="false"
-                  :file-size="5"
-                  :file-type="imgType"
-                  :before-remove="beforeRemove"
-                />
+                <el-row :gutter="6">
+                  <el-col :span="3">
+                    <el-avatar v-if="form.logImg!=null && form.logImg !==''" shape="square" :size="100"
+                               :src="form.logImg"></el-avatar>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-button type="success" size="mini" @click="handleImgList">选择图片</el-button>
+                  </el-col>
+                </el-row>
               </el-form-item>
               <el-form-item label="简介" prop="introduce">
                 <el-input
@@ -145,7 +147,7 @@
                     <!-- 左工具栏前加入自定义按钮 -->
                     <template slot="left-toolbar-before">
                       <input v-show="false" id="upload" type="file" accept=".md" @change="importMd($event)">
-                      <label type="button" for="upload" class="op-icon fa el-icon-folder-add" title="导入md文档" />
+                      <label type="button" for="upload" class="op-icon fa el-icon-folder-add" title="导入md文档"/>
                     </template>
                   </mavon-editor>
                 </div>
@@ -159,12 +161,32 @@
         </el-row>
       </el-form>
     </div>
+    <!-- 图片列表 -->
+    <el-dialog :title="title" :visible.sync="openList" width="17%" append-to-body>
+      <div class="goods-list-container" v-for="(item, index) in this.galleryList" :key="index">
+            <el-card :body-style="{ padding: '0px' }" shadow="hover">
+              <div class="goods-list-card-body">
+                <div class="goods-list-image-group" >
+                  <el-avatar shape="square"  :size="400"  :src="item.imgAddress"></el-avatar>
+                </div>
+                <el-button
+                  style="padding-left: 45%"
+                  type="text"
+                  size="medium"
+                  icon="el-icon-thumb"
+                  @click="setPicture(item)"
+                >使用该图片</el-button>
+              </div>
+            </el-card>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { deleteImg, uploadImg } from '@/api/upload'
-import { add, getById, updateById } from '@/api/article/article'
-import { listAll } from '@/api/article/summary'
+import {deleteImg, uploadImg} from '@/api/upload'
+import {add, getById, updateById} from '@/api/article/article'
+import {listAll} from '@/api/article/summary'
+import {getGalleryList} from "@/api/gallery/gallery";
 
 export default {
   components: {},
@@ -173,27 +195,27 @@ export default {
   data() {
     return {
       externalLink: {
-        markdown_css: function() {
+        markdown_css: function () {
           // 这是你的markdown css文件路径
           return '/mavon-editor/markdown/github-markdown.min.css'
         },
-        hljs_js: function() {
+        hljs_js: function () {
           // 这是你的hljs文件路径
           return '/mavon-editor/highlightjs/highlight.min.js'
         },
-        hljs_css: function(css) {
+        hljs_css: function (css) {
           // 这是你的代码高亮配色文件路径
           return '/mavon-editor/highlightjs/styles/' + css + '.min.css'
         },
-        hljs_lang: function(lang) {
+        hljs_lang: function (lang) {
           // 这是你的代码高亮语言解析路径
           return '/mavon-editor/highlightjs/languages/' + lang + '.min.js'
         },
-        katex_css: function() {
+        katex_css: function () {
           // 这是你的katex配色方案路径路径
           return '/mavon-editor/katex/katex.min.css'
         },
-        katex_js: function() {
+        katex_js: function () {
           // 这是你的katex.js路径
           return '/mavon-editor/katex/katex.min.js'
         }
@@ -206,6 +228,11 @@ export default {
       active: 0,
       // 图片url
       imgPath: '',
+      // 弹出层标题
+      title: '',
+      // 是否显示图片列表弹出层
+      openList: false,
+      galleryList: [], //图集
       form: {
         articleTagArray: [], // 标签数组列表
         articleTitle: undefined,
@@ -296,7 +323,7 @@ export default {
         if (response.success) {
           _this.$refs.md.$imglst2Url([[pos, url]])
         } else {
-          _this.$message({ type: response.code, message: response.msg })
+          _this.$message({type: response.code, message: response.msg})
         }
       })
     },
@@ -308,6 +335,19 @@ export default {
       })
     },
 
+    // 图片选择
+    setPicture(item){
+      this.form.logImg = item.imgAddress
+      this.openList = false
+    },
+    // 图集列表
+    handleImgList() {
+      getGalleryList().then(response => {
+        this.galleryList = response.data
+        this.openList = true
+        this.title = '图集'
+      })
+    },
     init() {
       // 归档列表
       listAll().then(response => {
@@ -347,14 +387,14 @@ export default {
           // 修改
           updateById(this.form).then(response => {
             this.$modal.msgSuccess('修改成功')
-            this.$router.push({ path: '/article/index' })
+            this.$router.push({path: '/article/index'})
           })
         } else {
           this.form.htmlContent = this.$refs.md.d_render
           // 新增
           add(this.form).then(response => {
             this.$modal.msgSuccess('新增成功')
-            this.$router.push({ path: '/article/index' })
+            this.$router.push({path: '/article/index'})
           })
         }
       })
