@@ -233,6 +233,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         List<ArticleInform> preArticle = articleInformMapper.selectList(new QueryWrapper<ArticleInform>()
                 .ne("id", model.getId())
                 .le("create_time", model.getCreateTime())
+                .eq("status","1")
                 .select("article_title", "id")
                 .orderByDesc("create_time")
                 .last("limit 1"));
@@ -249,6 +250,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         List<ArticleInform> nextArticle = articleInformMapper.selectList(new QueryWrapper<ArticleInform>()
                 .ne("id", model.getId())
                 .ge("create_time", model.getCreateTime())
+                .eq("status","1")
                 .select("article_title", "id").orderByAsc("create_time")
                 .last("limit 1"));
         nextData.setType("next");

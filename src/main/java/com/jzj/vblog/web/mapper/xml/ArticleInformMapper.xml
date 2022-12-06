@@ -153,6 +153,8 @@
             log_img
         FROM
             article_inform
+        WHERE
+            `status` = '1'
         ORDER BY
             click_rate DESC
         LIMIT 3
