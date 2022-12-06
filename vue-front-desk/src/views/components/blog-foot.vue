@@ -3,23 +3,36 @@
     <p>
       <span> Copyright </span><span>©</span><span> 2022 </span>
       <a href="/"> Vblog </a>
-      <span>By 漫漫长路</span><span></span>
+      <span>By {{webConfig.webName}}</span><span></span>
     </p>
     <p>
-      <a href="Jzjzzzz.icu" target="_blank">粤ICP备17057362号-1</a>
+      <a href="Jzjzzzz.icu" target="_blank">{{webConfig.recordNumber}}</a>
     </p>
   </div>
 </template>
 
 <script>
+import {getInformation} from '@/api/webInformation'
 export default {
   name: 'blogFoot',
   data() {
-    return {}
+    return {
+      webConfig:{
+        recordNumber: '',
+        webName:''
+      }
+    }
   },
   created() {
+    this.getConfig()
   },
-  methods: {}
+  methods: {
+    getConfig() {
+      getInformation().then(res => {
+        this.webConfig = res.data
+      })
+    }
+  }
 
 }
 </script>

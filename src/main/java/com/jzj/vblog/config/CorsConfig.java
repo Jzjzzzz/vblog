@@ -19,7 +19,6 @@ public class CorsConfig {
      * 表示通过aop框架暴露该代理对象,AopContext能够访问
      */
     private static final long MAX_AGE = 24 * 60 * 60;
-
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

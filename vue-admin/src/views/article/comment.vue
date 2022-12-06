@@ -155,6 +155,7 @@
             @click="handleUpdate(scope.row)"
           >回复</el-button>
           <el-button
+            v-if="scope.row.auditStatus !=='1'"
             size="mini"
             type="text"
             icon="el-icon-thumb"

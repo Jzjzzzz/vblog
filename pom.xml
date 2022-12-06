@@ -232,7 +232,7 @@
 
     <build>
         <!-- 自定义打包的包名称 -->
-        <finalName>vblog</finalName>
+<!--        <finalName>vblog</finalName>-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
