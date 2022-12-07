@@ -51,14 +51,8 @@ public class GalleryController extends BaseController {
     @Log(title = "图片管理", businessType = BusinessType.DELETE)
     @ApiOperation("删除图片")
     @DeleteMapping("/{id}")
-    public R del(@PathVariable String id,HttpServletRequest request) {
-        return toAjax(galleryService.removeByIdImg(id,request));
-    }
-
-    @ApiOperation("获取所有图片")
-    @GetMapping("/getList")
-    public R getList(){
-        return R.ok(galleryService.list());
+    public R del(@PathVariable String id, HttpServletRequest request) {
+        return toAjax(galleryService.removeByIdImg(id, request));
     }
 }
 

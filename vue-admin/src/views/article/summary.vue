@@ -149,15 +149,15 @@
           </el-select>
         </el-form-item>
         <el-form-item label="归档图" prop="banner">
-          <ele-upload-image
-            v-model="form.banner"
-            :action="BASE_API+uploadUrl"
-            :response-fn="handleResponse"
-            :is-show-success-tip="false"
-            :file-size="5"
-            :file-type="imgType"
-            :before-remove="beforeRemove"
-          />
+          <div style="width: 200px;height: auto">
+            <el-image v-if="form.banner!=null && form.banner !==''"
+                      :src="form.banner"
+                      fit="fill"
+                      :preview-src-list="[form.banner]">
+            </el-image>
+            <el-button style="margin-left: 53px" type="success" size="mini" @click="handleImgList">选择图片
+            </el-button>
+          </div>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -176,12 +176,49 @@
         :render-content="renderFunc"
       @change="handleChange"></el-transfer>
     </el-dialog>
+
+    <!-- 图片列表 -->
+    <el-dialog  :visible.sync="imgOpenList" width="650px" append-to-body>
+      <div class="goods-list-container" v-for="(item, index) in this.galleryList" :key="index">
+        <el-card :body-style="{ padding: '0px' }" shadow="hover">
+          <div class="goods-list-card-body">
+            <div class="goods-list-image-group">
+              <el-image
+                style="width: 620px; height: 450px"
+                :src="item.imgAddress"
+                fit="fill"
+                :preview-src-list="[item.imgAddress]"
+              ></el-image>
+            </div>
+            <el-button
+              style="padding-left: 46%"
+              type="text"
+              size="medium"
+              icon="el-icon-thumb"
+              @click="setPicture(item)"
+            >使用该图片
+            </el-button>
+          </div>
+        </el-card>
+      </div>
+      <pagination
+        :pager-count="5"
+        v-show="imgTotal>0"
+        :total="imgTotal"
+        :page-sizes="[2,5,8]"
+        :page.sync="imgParams.pageNum"
+        :limit.sync="imgParams.pageSize"
+        @pagination="handleImgList"
+      />
+    </el-dialog>
   </div>
 </template>
 <script>
 import { listArticleSummary, add, del, getInfo, update, articleList } from '@/api/article/summary'
 import { updateSummaryById } from "@/api/article/article";
 import { deleteImg } from '@/api/upload'
+import {list} from "@/api/gallery/gallery";
+
 export default {
   name: 'Summary',
   dicts: ['sys_summary_status'],
@@ -206,6 +243,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      //图集分页总条数
+      imgTotal:0,
       // 表格数据
       list: [],
       // 弹出层标题
@@ -214,6 +253,10 @@ export default {
       open: false,
       // 是否显示文章列表弹出层
       openList: false,
+      //图片列表显示弹出层
+      imgOpenList: false,
+      //图集
+      galleryList: [],
       // 图片url
       imgPath: '',
       // 日期范围
@@ -225,6 +268,11 @@ export default {
         name: undefined,
         status: undefined,
         topStatus: undefined
+      },
+      //图集分页参数
+      imgParams: {
+        pageNum: 1,
+        pageSize: 2,
       },
       // 表单参数
       form: {},
@@ -249,6 +297,22 @@ export default {
     this.getList()
   },
   methods: {
+    // 图片选择
+    setPicture(item) {
+      this.form.banner = item.imgAddress
+      this.queryParams.pageNum = 1
+      this.queryParams.pageSize = 2
+      this.imgOpenList = false
+    },
+    // 图集列表
+    handleImgList() {
+      list(this.imgParams).then(response => {
+        this.imgOpenList = true
+        this.galleryList = response.rows
+        this.imgTotal = response.total
+      })
+    },
+
     renderFunc(h, option) {
       return <span title={option.label}>{option.label}</span>;
     },

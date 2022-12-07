@@ -102,15 +102,15 @@
                 <el-input-number v-model="form.sort" :min="0" :max="10" label="排序"/>
               </el-form-item>
               <el-form-item label="封面" prop="logImg">
-                <el-row :gutter="6">
-                  <el-col :span="3">
-                    <el-avatar v-if="form.logImg!=null && form.logImg !==''" shape="square" :size="100"
-                               :src="form.logImg"></el-avatar>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-button type="success" size="mini" @click="handleImgList">选择图片</el-button>
-                  </el-col>
-                </el-row>
+                <div style="width: 200px;height: auto">
+                  <el-image v-if="form.logImg!=null && form.logImg !==''"
+                            :src="form.logImg"
+                            fit="fill"
+                            :preview-src-list="[form.logImg]">
+                  </el-image>
+                  <el-button style="margin-left: 53px" type="success" size="mini" @click="handleImgList">选择图片
+                  </el-button>
+                </div>
               </el-form-item>
               <el-form-item label="简介" prop="introduce">
                 <el-input
@@ -162,23 +162,38 @@
       </el-form>
     </div>
     <!-- 图片列表 -->
-    <el-dialog :title="title" :visible.sync="openList" width="17%" append-to-body>
+    <el-dialog  :visible.sync="openList" width="650px" append-to-body>
       <div class="goods-list-container" v-for="(item, index) in this.galleryList" :key="index">
-            <el-card :body-style="{ padding: '0px' }" shadow="hover">
-              <div class="goods-list-card-body">
-                <div class="goods-list-image-group" >
-                  <el-avatar shape="square"  :size="400"  :src="item.imgAddress"></el-avatar>
-                </div>
-                <el-button
-                  style="padding-left: 45%"
-                  type="text"
-                  size="medium"
-                  icon="el-icon-thumb"
-                  @click="setPicture(item)"
-                >使用该图片</el-button>
-              </div>
-            </el-card>
+        <el-card :body-style="{ padding: '0px' }" shadow="hover">
+          <div class="goods-list-card-body">
+            <div class="goods-list-image-group">
+              <el-image
+                style="width: 620px; height: 450px"
+                :src="item.imgAddress"
+                fit="fill"
+                :preview-src-list="[item.imgAddress]"
+              ></el-image>
+            </div>
+            <el-button
+              style="padding-left: 46%"
+              type="text"
+              size="medium"
+              icon="el-icon-thumb"
+              @click="setPicture(item)"
+            >使用该图片
+            </el-button>
+          </div>
+        </el-card>
       </div>
+      <pagination
+        :pager-count="5"
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[2,5,8]"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="handleImgList"
+      />
     </el-dialog>
   </div>
 </template>
@@ -186,7 +201,7 @@
 import {deleteImg, uploadImg} from '@/api/upload'
 import {add, getById, updateById} from '@/api/article/article'
 import {listAll} from '@/api/article/summary'
-import {getGalleryList} from "@/api/gallery/gallery";
+import {list} from "@/api/gallery/gallery"
 
 export default {
   components: {},
@@ -228,11 +243,16 @@ export default {
       active: 0,
       // 图片url
       imgPath: '',
-      // 弹出层标题
-      title: '',
       // 是否显示图片列表弹出层
       openList: false,
       galleryList: [], //图集
+      // 总条数
+      total: 0,
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 2
+      },
       form: {
         articleTagArray: [], // 标签数组列表
         articleTitle: undefined,
@@ -336,16 +356,18 @@ export default {
     },
 
     // 图片选择
-    setPicture(item){
+    setPicture(item) {
       this.form.logImg = item.imgAddress
+      this.queryParams.pageNum = 1
+      this.queryParams.pageSize = 2
       this.openList = false
     },
     // 图集列表
     handleImgList() {
-      getGalleryList().then(response => {
-        this.galleryList = response.data
+      list(this.queryParams).then(response => {
         this.openList = true
-        this.title = '图集'
+        this.galleryList = response.rows
+        this.total = response.total
       })
     },
     init() {

@@ -8,6 +8,7 @@ export function list(query) {
     params: query
   })
 }
+
 // 新增
 export function add(data) {
   return request({
@@ -22,12 +23,5 @@ export function del(id) {
   return request({
     url: `/gallery/${id}`,
     method: 'delete'
-  })
-}
-
-export function getGalleryList(){
-  return request({
-    url: '/gallery/getList',
-    methods: 'get'
   })
 }

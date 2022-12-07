@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { list,add,del } from "@/api/gallery/gallery";
+import { list,add,del } from "@/api/gallery/gallery"
 import { deleteImg } from '@/api/upload'
 export default {
   name: 'Gallery',
