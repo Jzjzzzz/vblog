@@ -29,6 +29,6 @@ public class SysCountController {
     @ApiOperation("获取统计数据")
     @GetMapping
     public R getCount() {
-        return R.ok(sysCountService.getOne(null));
+        return R.ok(sysCountService.getCount());
     }
 }

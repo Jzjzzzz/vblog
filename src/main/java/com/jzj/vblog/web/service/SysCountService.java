@@ -13,4 +13,9 @@ import com.jzj.vblog.web.pojo.entity.SysCount;
  */
 public interface SysCountService extends IService<SysCount> {
 
+    /**
+     * 获取首页统计数据
+     * @return
+     */
+    SysCount getCount();
 }

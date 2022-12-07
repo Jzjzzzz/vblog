@@ -13,4 +13,9 @@ import com.jzj.vblog.web.pojo.entity.SysCount;
  */
 public interface SysCountMapper extends BaseMapper<SysCount> {
 
+    /**
+     * 获取昨天的统计数据
+     * @return
+     */
+    SysCount getBeforeDayCount();
 }
