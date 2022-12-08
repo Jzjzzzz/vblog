@@ -90,6 +90,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         }
     }
 
+
     /**
      * 日期路径 即年/月/日 如2018/08/08
      */
@@ -125,6 +126,21 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         {
             return null;
         }
+    }
+
+    /**
+     * 将长时间格式时间转换为字符串 yyyy-MM-dd HH:mm:ss
+     *
+     * @param dateDate
+     * @return
+     */
+    public static String dateToStrLong(Date dateDate) {
+        if (dateDate == null) {
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat(YYYY_MM_DD);
+        String dateString = formatter.format(dateDate);
+        return dateString;
     }
 
     /**

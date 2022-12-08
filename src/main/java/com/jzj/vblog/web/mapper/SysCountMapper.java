@@ -3,6 +3,8 @@ package com.jzj.vblog.web.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzj.vblog.web.pojo.entity.SysCount;
 
+import java.util.List;
+
 /**
  * <p>
  * 统计归档 Mapper 接口
@@ -18,4 +20,10 @@ public interface SysCountMapper extends BaseMapper<SysCount> {
      * @return
      */
     SysCount getBeforeDayCount();
+
+    /**
+     * 获取前7天的统计数据
+     * @return
+     */
+    List<SysCount> getSevenCount();
 }

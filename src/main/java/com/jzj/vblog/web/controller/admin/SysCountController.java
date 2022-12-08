@@ -31,4 +31,10 @@ public class SysCountController {
     public R getCount() {
         return R.ok(sysCountService.getCount());
     }
+
+    @ApiOperation("获取过去七天日统计数据")
+    @GetMapping("/getSevenCount")
+    public R getSevenCount(){
+        return R.ok(sysCountService.getSevenCount());
+    }
 }

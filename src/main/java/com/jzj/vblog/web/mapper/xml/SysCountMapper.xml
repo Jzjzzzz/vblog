@@ -32,4 +32,13 @@
             TO_DAYS( create_time ) = TO_DAYS(NOW())-1
         LIMIT 1
     </select>
+    <select id="getSevenCount" resultType="com.jzj.vblog.web.pojo.entity.SysCount">
+        SELECT
+        *
+        FROM
+        `sys_count`
+        WHERE
+        TO_DAYS( create_time ) &lt;= TO_DAYS( NOW())- 1 AND TO_DAYS( create_time ) &gt;= TO_DAYS(NOW())- 7
+        ORDER BY create_time
+    </select>
 </mapper>

@@ -3,26 +3,12 @@
     <github-corner class="github-corner" />
     <panel-group />
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData" />
+      <line-chart :chart-data="lineChartData1"  />
+    </el-row>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <line-chart :chart-data="lineChartData2" />
     </el-row>
 
-    <el-row :gutter="32">
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <raddar-chart />
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <pie-chart />
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <bar-chart />
-        </div>
-      </el-col>
-    </el-row>
 
     <el-row :gutter="8">
       <el-col
@@ -70,13 +56,7 @@ import BarChart from './components/BarChart'
 import TransactionTable from './components/TransactionTable'
 import TodoList from './components/TodoList'
 import BoxCard from './components/BoxCard'
-
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  }
-}
+import {getSevenCount} from "@/api/system/count";
 export default {
   name: 'Dashboard',
   components: {
@@ -90,12 +70,33 @@ export default {
     TodoList,
     BoxCard
   },
+  created() {
+    this.getCount()
+  },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData1: {
+        dataList: [],
+        dateList: [],
+        title: '访问量'
+      },
+      lineChartData2: {
+        dataList: [],
+        dateList: [],
+        title: '点赞量'
+      },
     }
   },
-  methods: {}
+  methods: {
+    getCount(){
+      getSevenCount().then(res=>{
+        this.lineChartData1.dataList = res.data.clickDayCounts
+        this.lineChartData1.dateList = res.data.dateList
+        this.lineChartData2.dataList = res.data.likeDayCounts
+        this.lineChartData2.dateList = res.data.dateList
+      })
+    }
+  }
 }
 </script>
 

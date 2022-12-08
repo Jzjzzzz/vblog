@@ -34,11 +34,16 @@ export default {
   },
   data() {
     return {
-
       chart: null
     }
   },
   watch: {
+    title: {
+      deep: true,
+      handler(val) {
+        this.title = val
+      }
+    },
     chartData: {
       deep: true,
       handler(val) {
@@ -63,10 +68,10 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions({ dataList, dateList, title } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['2020-12-12', '2020-12-13', '2020-12-14', '2020-12-15', '2020-12-16', '2020-12-17', '2020-12-18'],
+          data: dateList,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -92,45 +97,25 @@ export default {
           }
         },
         legend: {
-          data: ['访问量', '点赞量']
+          data: [title]
         },
         series: [{
-          name: '访问量', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        },
-        {
-          name: '点赞量',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
+          name: title, itemStyle: {
             normal: {
               color: '#3888fa',
               lineStyle: {
                 color: '#3888fa',
                 width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
               }
             }
           },
-          data: actualData,
+          smooth: true,
+          type: 'line',
+          data: dataList,
           animationDuration: 2800,
-          animationEasing: 'quadraticOut'
+          animationEasing: 'cubicInOut'
         }]
-      })
+      },true)
     }
   }
 }

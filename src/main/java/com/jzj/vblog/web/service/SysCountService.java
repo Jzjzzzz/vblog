@@ -2,6 +2,7 @@ package com.jzj.vblog.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.SysCount;
+import com.jzj.vblog.web.pojo.vo.BeforeDayCountVo;
 
 /**
  * <p>
@@ -18,4 +19,11 @@ public interface SysCountService extends IService<SysCount> {
      * @return
      */
     SysCount getCount();
+
+
+    /**
+     * 获取过去七天日统计数据
+     * @return
+     */
+    BeforeDayCountVo getSevenCount();
 }
