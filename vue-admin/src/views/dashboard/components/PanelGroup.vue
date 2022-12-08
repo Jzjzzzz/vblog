@@ -66,10 +66,10 @@ export default {
   data() {
     return {
       model: {
-        articleCount: 0,
-        summaryCount: 0,
-        clickCount: 0,
-        likeCount: 0
+        articleCount: undefined,
+        summaryCount: undefined,
+        clickCount: undefined,
+        likeCount: undefined
       }
     }
   },

@@ -96,6 +96,19 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" />
       <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true" />
+      <el-table-column label="资源网址" align="center" prop="resourceAddress" >
+        <template slot-scope="scope">
+          <a :href="scope.row.resourceAddress">
+            <button class="c-button c-button--gooey"> 前往
+              <div class="c-button__blobs">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </button>
+          </a>
+        </template>
+      </el-table-column>
       <el-table-column prop="resourceImg" label="标题图" align="center">
         <template slot-scope="scope">
           <el-image
@@ -372,3 +385,71 @@ export default {
   }
 }
 </script>
+<style>
+.c-button {
+  color: #000;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 0.9em 1.8em;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  z-index: 1;
+}
+
+.c-button--gooey {
+  color: #06c8d9;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 3px solid #06c8d9;
+  border-radius: 0;
+  position: relative;
+  transition: all 700ms ease;
+}
+
+.c-button--gooey .c-button__blobs {
+  height: 100%;
+  filter: url(#goo);
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: -3px;
+  right: -1px;
+  z-index: -1;
+}
+
+.c-button--gooey .c-button__blobs div {
+  background-color: #06c8d9;
+  width: 36%;
+  height: 100%;
+  border-radius: 100%;
+  position: absolute;
+  transform: scale(1.4) translateY(125%) translateZ(0);
+  transition: all 700ms ease;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(1) {
+  left: -5%;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(2) {
+  left: 30%;
+  transition-delay: 60ms;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(3) {
+  left: 66%;
+  transition-delay: 25ms;
+}
+
+.c-button--gooey:hover {
+  color: #fff;
+}
+
+.c-button--gooey:hover .c-button__blobs div {
+  transform: scale(1.4) translateY(0) translateZ(0);
+}
+</style>

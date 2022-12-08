@@ -32,7 +32,16 @@ public class SysCountServiceImpl extends ServiceImpl<SysCountMapper, SysCount> i
      */
     @Override
     public SysCount getCount() {
-        return sysCountMapper.getBeforeDayCount();
+        SysCount sysCount;
+        sysCount = sysCountMapper.getBeforeDayCount();
+        if(sysCount==null){
+            sysCount = new SysCount();
+            sysCount.setArticleCount(0L);
+            sysCount.setLikeCount(0L);
+            sysCount.setClickCount(0L);
+            sysCount.setSummaryCount(0L);
+        }
+        return sysCount;
     }
 
     /**
