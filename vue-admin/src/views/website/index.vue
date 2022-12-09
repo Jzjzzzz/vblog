@@ -98,7 +98,7 @@
       <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true" />
       <el-table-column label="资源网址" align="center" prop="resourceAddress" >
         <template slot-scope="scope">
-          <a :href="scope.row.resourceAddress">
+          <a :href="scope.row.resourceAddress" target="_blank">
             <button class="c-button c-button--gooey"> 前往
               <div class="c-button__blobs">
                 <div></div>

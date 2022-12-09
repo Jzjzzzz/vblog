@@ -201,7 +201,7 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'http://localhost:8888/',
+        path: 'http://jzjzzzz.cn/',
         meta: { title: '博客首页', icon: 'link' }
       }
     ]
