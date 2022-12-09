@@ -300,8 +300,8 @@ export default {
     // 图片选择
     setPicture(item) {
       this.form.banner = item.imgAddress
-      this.queryParams.pageNum = 1
-      this.queryParams.pageSize = 2
+      this.imgParams.pageNum = 1
+      this.imgParams.pageSize = 2
       this.imgOpenList = false
     },
     // 图集列表
