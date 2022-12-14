@@ -65,7 +65,8 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -75,7 +76,8 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -85,26 +87,26 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
-        <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+        <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
       </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="websiteList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column type="index" label="序号" align="center" />
-      <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true" />
-      <el-table-column label="资源网址" align="center" prop="resourceAddress" >
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column type="index" label="序号" align="center"/>
+      <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true"/>
+      <el-table-column label="资源网址" align="center" prop="resourceAddress">
         <template slot-scope="scope">
           <a :href="scope.row.resourceAddress" target="_blank">
-            <button class="c-button c-button--gooey"> 前往
-              <div class="c-button__blobs">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
+            <button class="learn-more">
+              <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">前往站点</span>
             </button>
           </a>
         </template>
@@ -120,15 +122,15 @@
       </el-table-column>
       <el-table-column label="分类" align="center" prop="resourceType">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_website_type" :value="scope.row.resourceType" />
+          <dict-tag :options="dict.type.sys_website_type" :value="scope.row.resourceType"/>
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_website_status" :value="scope.row.status" />
+          <dict-tag :options="dict.type.sys_website_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true" />
+      <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -141,13 +143,15 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -164,13 +168,13 @@
     <el-dialog :title="title" :visible.sync="open" width="30%" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="资源名称" prop="resourceName">
-          <el-input v-model="form.resourceName" placeholder="请输入资源名称" />
+          <el-input v-model="form.resourceName" placeholder="请输入资源名称"/>
         </el-form-item>
         <el-form-item label="资源描述" prop="resourceDetail">
-          <el-input v-model="form.resourceDetail" placeholder="请输入资源描述" />
+          <el-input v-model="form.resourceDetail" placeholder="请输入资源描述"/>
         </el-form-item>
         <el-form-item label="资源地址" prop="resourceAddress">
-          <el-input v-model="form.resourceAddress" placeholder="请输入资源地址" />
+          <el-input v-model="form.resourceAddress" placeholder="请输入资源地址"/>
         </el-form-item>
         <el-form-item label="资源分类" prop="resourceType">
           <el-select v-model="form.resourceType" placeholder="请选择分类" clearable :style="{width: '100%'}">
@@ -213,8 +217,9 @@
 </template>
 
 <script>
-import { listWebsiteInform, addWebSite, getInfo, updateWebsite, delWebSite } from '@/api/website/website'
-import { deleteImg } from '@/api/upload'
+import {listWebsiteInform, addWebSite, getInfo, updateWebsite, delWebSite} from '@/api/website/website'
+import {deleteImg} from '@/api/upload'
+
 export default {
   name: 'Website',
   dicts: ['sys_website_type', 'sys_website_status'],
@@ -259,19 +264,19 @@ export default {
       // 表单校验
       rules: {
         resourceName: [
-          { required: true, message: '资源名称不能为空', trigger: 'blur' }
+          {required: true, message: '资源名称不能为空', trigger: 'blur'}
         ],
         resourceAddress: [
-          { required: true, message: '资源地址不能为空', trigger: 'blur' }
+          {required: true, message: '资源地址不能为空', trigger: 'blur'}
         ],
         resourceType: [
-          { required: true, message: '资源分类不能为空', trigger: 'blur' }
+          {required: true, message: '资源分类不能为空', trigger: 'blur'}
         ],
         status: [
-          { required: true, message: '资源状态不能为空', trigger: 'blur' }
+          {required: true, message: '资源状态不能为空', trigger: 'blur'}
         ],
         resourceImg: [
-          { required: true, message: '资源图不能为空', trigger: 'blur' }
+          {required: true, message: '资源图不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -299,10 +304,10 @@ export default {
     getList() {
       this.loading = true
       listWebsiteInform(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        this.websiteList = response.rows
-        this.total = response.total
-        this.loading = false
-      }
+          this.websiteList = response.rows
+          this.total = response.total
+          this.loading = false
+        }
       )
     },
     // 取消按钮
@@ -353,7 +358,7 @@ export default {
       })
     },
     /** 提交按钮 */
-    submitForm: function() {
+    submitForm: function () {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
@@ -375,81 +380,103 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$modal.confirm('是否确认删除资源编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除资源编号为"' + ids + '"的数据项？').then(function () {
         return delWebSite(ids)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess('删除成功')
-      }).catch(() => {})
+      }).catch(() => {
+      })
     }
   }
 }
 </script>
 <style>
-.c-button {
-  color: #000;
-  font-weight: 700;
-  font-size: 14px;
-  text-decoration: none;
-  padding: 0.9em 1.8em;
-  cursor: pointer;
+button {
+  position: relative;
   display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
   vertical-align: middle;
-  position: relative;
-  z-index: 1;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
 }
 
-.c-button--gooey {
-  color: #06c8d9;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  border: 3px solid #06c8d9;
-  border-radius: 0;
-  position: relative;
-  transition: all 700ms ease;
+button.learn-more {
+  width: 12rem;
+  height: auto;
 }
 
-.c-button--gooey .c-button__blobs {
-  height: 100%;
-  filter: url(#goo);
-  overflow: hidden;
+button.learn-more .circle {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #282936;
+  border-radius: 1.625rem;
+}
+
+button.learn-more .circle .icon {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+
+button.learn-more .circle .icon.arrow {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+}
+
+button.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.29rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+}
+
+button.learn-more .button-text {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
   position: absolute;
   top: 0;
   left: 0;
-  bottom: -3px;
-  right: -1px;
-  z-index: -1;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 0;
+  margin: 0 0 0 1.85rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
 }
 
-.c-button--gooey .c-button__blobs div {
-  background-color: #06c8d9;
-  width: 36%;
-  height: 100%;
-  border-radius: 100%;
-  position: absolute;
-  transform: scale(1.4) translateY(125%) translateZ(0);
-  transition: all 700ms ease;
+button:hover .circle {
+  width: 100%;
 }
 
-.c-button--gooey .c-button__blobs div:nth-child(1) {
-  left: -5%;
+button:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
 }
 
-.c-button--gooey .c-button__blobs div:nth-child(2) {
-  left: 30%;
-  transition-delay: 60ms;
-}
-
-.c-button--gooey .c-button__blobs div:nth-child(3) {
-  left: 66%;
-  transition-delay: 25ms;
-}
-
-.c-button--gooey:hover {
+button:hover .button-text {
   color: #fff;
-}
-
-.c-button--gooey:hover .c-button__blobs div {
-  transform: scale(1.4) translateY(0) translateZ(0);
 }
 </style>
