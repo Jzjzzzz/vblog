@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 01/11/2022 17:28:18
+ Date: 14/12/2022 18:08:48
 */
 
 SET NAMES utf8mb4;
@@ -33,6 +33,11 @@ CREATE TABLE `admin_user`  (
   `introduction` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员用户表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of admin_user
+-- ----------------------------
+INSERT INTO `admin_user` VALUES (00000000001, 'admin', '9bda42f78a579ca9e9397936c9558338', '18176702572', 'https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/adminAvatar/2022/08/19/80b086d23aac408c95517bd5ebc4eea3.jpg', '2022-06-07 15:06:24', '2022-12-14 18:07:59', 'admin', 'I am a super administrator');
 
 -- ----------------------------
 -- Table structure for article_comment
@@ -58,6 +63,10 @@ CREATE TABLE `article_comment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '留言板' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of article_comment
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for article_content
 -- ----------------------------
 DROP TABLE IF EXISTS `article_content`;
@@ -69,6 +78,10 @@ CREATE TABLE `article_content`  (
   `html_content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章内容转html',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章内容' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of article_content
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for article_inform
@@ -97,6 +110,10 @@ CREATE TABLE `article_inform`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章基础信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of article_inform
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for article_summary
 -- ----------------------------
 DROP TABLE IF EXISTS `article_summary`;
@@ -113,6 +130,10 @@ CREATE TABLE `article_summary`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章归档' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of article_summary
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for friend_link
 -- ----------------------------
 DROP TABLE IF EXISTS `friend_link`;
@@ -127,6 +148,11 @@ CREATE TABLE `friend_link`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '友情链接' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of friend_link
+-- ----------------------------
+INSERT INTO `friend_link` VALUES ('d855c662eddc70853cee7304bb1c1b05', 'Jzjzzzz', 'https://www.jzjzzzz.icu/', '2022-09-10 00:50:33', '2022-09-10 00:50:33', '1');
+
+-- ----------------------------
 -- Table structure for gallery
 -- ----------------------------
 DROP TABLE IF EXISTS `gallery`;
@@ -138,6 +164,10 @@ CREATE TABLE `gallery`  (
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图集' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of gallery
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -166,6 +196,10 @@ CREATE TABLE `gen_table`  (
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of gen_table
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -198,6 +232,10 @@ CREATE TABLE `gen_table_column`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of gen_table_column
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for qrtz_blob_triggers
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
@@ -207,8 +245,13 @@ CREATE TABLE `qrtz_blob_triggers`  (
   `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `BLOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  INDEX `SCHED_NAME`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `QRTZ_BLOB_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_blob_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_calendars
@@ -222,6 +265,10 @@ CREATE TABLE `qrtz_calendars`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of qrtz_calendars
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for qrtz_cron_triggers
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_cron_triggers`;
@@ -229,11 +276,16 @@ CREATE TABLE `qrtz_cron_triggers`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `TRIGGER_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `CRON_EXPRESSION` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `CRON_EXPRESSION` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `QRTZ_CRON_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_cron_triggers
+-- ----------------------------
+INSERT INTO `qrtz_cron_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', '0 0 1 * * ?', 'GMT+08:00');
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -253,8 +305,18 @@ CREATE TABLE `qrtz_fired_triggers`  (
   `JOB_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE
+  PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE,
+  INDEX `IDX_QRTZ_FT_TRIG_INST_NAME`(`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE,
+  INDEX `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY`(`SCHED_NAME`, `INSTANCE_NAME`, `REQUESTS_RECOVERY`) USING BTREE,
+  INDEX `IDX_QRTZ_FT_J_G`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_FT_JG`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_FT_T_G`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_FT_TG`(`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_fired_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_job_details
@@ -271,8 +333,15 @@ CREATE TABLE `qrtz_job_details`  (
   `IS_UPDATE_DATA` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `JOB_DATA` blob NULL,
-  PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE
+  PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_J_REQ_RECOVERY`(`SCHED_NAME`, `REQUESTS_RECOVERY`) USING BTREE,
+  INDEX `IDX_QRTZ_J_GRP`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_job_details
+-- ----------------------------
+INSERT INTO `qrtz_job_details` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', NULL, 'com.jzj.vblog.job.ArticleCountJob', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -285,6 +354,11 @@ CREATE TABLE `qrtz_locks`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of qrtz_locks
+-- ----------------------------
+INSERT INTO `qrtz_locks` VALUES ('VblogScheduler', 'TRIGGER_ACCESS');
+
+-- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
@@ -293,6 +367,10 @@ CREATE TABLE `qrtz_paused_trigger_grps`  (
   `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_paused_trigger_grps
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_scheduler_state
@@ -305,6 +383,10 @@ CREATE TABLE `qrtz_scheduler_state`  (
   `CHECKIN_INTERVAL` bigint(13) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_scheduler_state
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -320,6 +402,10 @@ CREATE TABLE `qrtz_simple_triggers`  (
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `QRTZ_SIMPLE_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_simple_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_simprop_triggers
@@ -345,6 +431,10 @@ CREATE TABLE `qrtz_simprop_triggers`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of qrtz_simprop_triggers
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for qrtz_triggers
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_triggers`;
@@ -366,9 +456,25 @@ CREATE TABLE `qrtz_triggers`  (
   `MISFIRE_INSTR` smallint(2) NULL DEFAULT NULL,
   `JOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  INDEX `SCHED_NAME`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_T_J`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_T_JG`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_T_C`(`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE,
+  INDEX `IDX_QRTZ_T_G`(`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  INDEX `IDX_QRTZ_T_STATE`(`SCHED_NAME`, `TRIGGER_STATE`) USING BTREE,
+  INDEX `IDX_QRTZ_T_N_STATE`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
+  INDEX `IDX_QRTZ_T_N_G_STATE`(`SCHED_NAME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
+  INDEX `IDX_QRTZ_T_NEXT_FIRE_TIME`(`SCHED_NAME`, `NEXT_FIRE_TIME`) USING BTREE,
+  INDEX `IDX_QRTZ_T_NFT_ST`(`SCHED_NAME`, `TRIGGER_STATE`, `NEXT_FIRE_TIME`) USING BTREE,
+  INDEX `IDX_QRTZ_T_NFT_MISFIRE`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`) USING BTREE,
+  INDEX `IDX_QRTZ_T_NFT_ST_MISFIRE`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`, `TRIGGER_STATE`) USING BTREE,
+  INDEX `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
   CONSTRAINT `QRTZ_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_triggers
+-- ----------------------------
+INSERT INTO `qrtz_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', NULL, 1671037200000, 1670950800000, 5, 'WAITING', 'CRON', 1668500317000, 0, NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -389,18 +495,31 @@ CREATE TABLE `sys_config`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参数配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_config
+-- ----------------------------
+INSERT INTO `sys_config` VALUES (6, 'oss云存储-是否开启云存储', 'sys.oss.enable', 'true', 'Y', 'admin', '2022-07-27 14:52:18', 'admin', '2022-07-29 15:02:59', '开启云存储需要配置application.yml里的oss相关参数（true开启，false关闭）');
+INSERT INTO `sys_config` VALUES (7, '是否开启邮箱通知', 'sys_email_enable', 'true', 'Y', 'admin', '2022-09-20 14:45:07', 'admin', '2022-09-23 22:16:59', '后台回复留言，邮箱通知留言者,开启需要配置email相关参数 （true开启，false关闭）');
+
+-- ----------------------------
 -- Table structure for sys_count
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_count`;
 CREATE TABLE `sys_count`  (
   `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'id',
-  `article_count` bigint(20) NULL DEFAULT NULL COMMENT '文章数',
-  `summary_count` bigint(20) NULL DEFAULT NULL COMMENT '归档数',
-  `user_count` bigint(20) NULL DEFAULT NULL COMMENT '用户数',
-  `click_count` bigint(20) NULL DEFAULT NULL COMMENT '点击数',
-  `like_count` bigint(20) NULL DEFAULT NULL COMMENT '点赞数',
+  `article_count` bigint(20) NULL DEFAULT NULL COMMENT '文章总数',
+  `summary_count` bigint(20) NULL DEFAULT NULL COMMENT '归档总数',
+  `user_count` bigint(20) NULL DEFAULT NULL COMMENT '用户总数',
+  `click_count` bigint(20) NULL DEFAULT NULL COMMENT '点击总数',
+  `like_count` bigint(20) NULL DEFAULT NULL COMMENT '点赞总数',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `click_day_count` bigint(20) NULL DEFAULT NULL COMMENT '日点击数',
+  `like_day_count` bigint(20) NULL DEFAULT NULL COMMENT '日点赞数',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '统计归档' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_count
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -422,7 +541,86 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 141 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_dict_data
+-- ----------------------------
+INSERT INTO `sys_dict_data` VALUES (1, 1, '男', '0', 'sys_user_sex', '', '', 'Y', '0', 'admin', '2022-04-27 02:10:24', 'admin', '2022-07-22 06:16:44', '性别男');
+INSERT INTO `sys_dict_data` VALUES (2, 2, '女', '1', 'sys_user_sex', '', '', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '性别女');
+INSERT INTO `sys_dict_data` VALUES (3, 3, '未知', '2', 'sys_user_sex', '', '', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '性别未知');
+INSERT INTO `sys_dict_data` VALUES (4, 1, '显示', '0', 'sys_show_hide', '', 'primary', 'Y', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '显示菜单');
+INSERT INTO `sys_dict_data` VALUES (5, 2, '隐藏', '1', 'sys_show_hide', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '隐藏菜单');
+INSERT INTO `sys_dict_data` VALUES (6, 1, '正常', '0', 'sys_normal_disable', '', 'primary', 'Y', '0', 'admin', '2022-04-27 02:10:24', 'admin', '2022-07-21 11:52:18', '正常状态');
+INSERT INTO `sys_dict_data` VALUES (7, 2, '停用', '1', 'sys_normal_disable', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '停用状态');
+INSERT INTO `sys_dict_data` VALUES (8, 1, '正常', '0', 'sys_job_status', '', 'primary', 'Y', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '正常状态');
+INSERT INTO `sys_dict_data` VALUES (9, 2, '暂停', '1', 'sys_job_status', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '停用状态');
+INSERT INTO `sys_dict_data` VALUES (10, 1, '默认', 'DEFAULT', 'sys_job_group', '', '', 'Y', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '默认分组');
+INSERT INTO `sys_dict_data` VALUES (11, 2, '系统', 'SYSTEM', 'sys_job_group', '', '', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '系统分组');
+INSERT INTO `sys_dict_data` VALUES (12, 1, '是', 'Y', 'sys_yes_no', '', 'primary', 'Y', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '系统默认是');
+INSERT INTO `sys_dict_data` VALUES (13, 2, '否', 'N', 'sys_yes_no', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '系统默认否');
+INSERT INTO `sys_dict_data` VALUES (14, 1, '通知', '1', 'sys_notice_type', '', 'warning', 'Y', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '通知');
+INSERT INTO `sys_dict_data` VALUES (15, 2, '公告', '2', 'sys_notice_type', '', 'success', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '公告');
+INSERT INTO `sys_dict_data` VALUES (16, 1, '正常', '0', 'sys_notice_status', '', 'primary', 'Y', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '正常状态');
+INSERT INTO `sys_dict_data` VALUES (17, 2, '关闭', '1', 'sys_notice_status', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '关闭状态');
+INSERT INTO `sys_dict_data` VALUES (18, 1, '新增', '1', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '新增操作');
+INSERT INTO `sys_dict_data` VALUES (19, 2, '修改', '2', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '修改操作');
+INSERT INTO `sys_dict_data` VALUES (20, 3, '删除', '3', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '删除操作');
+INSERT INTO `sys_dict_data` VALUES (21, 4, '授权', '4', 'sys_oper_type', '', 'primary', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '授权操作');
+INSERT INTO `sys_dict_data` VALUES (22, 5, '导出', '5', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '导出操作');
+INSERT INTO `sys_dict_data` VALUES (23, 6, '导入', '6', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '导入操作');
+INSERT INTO `sys_dict_data` VALUES (24, 7, '强退', '7', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '强退操作');
+INSERT INTO `sys_dict_data` VALUES (25, 8, '生成代码', '8', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '生成操作');
+INSERT INTO `sys_dict_data` VALUES (26, 9, '清空数据', '9', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '清空操作');
+INSERT INTO `sys_dict_data` VALUES (27, 1, '成功', '0', 'sys_common_status', '', 'primary', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '正常状态');
+INSERT INTO `sys_dict_data` VALUES (28, 2, '失败', '1', 'sys_common_status', '', 'danger', 'N', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '停用状态');
+INSERT INTO `sys_dict_data` VALUES (101, 0, '编程', '0', 'sys_article_type', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 01:20:03', '', NULL, '编程');
+INSERT INTO `sys_dict_data` VALUES (102, 1, '日常', '1', 'sys_article_type', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 01:20:43', '', NULL, '日常');
+INSERT INTO `sys_dict_data` VALUES (103, 0, 'Java', '0', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 01:21:22', '', NULL, 'Java');
+INSERT INTO `sys_dict_data` VALUES (104, 0, 'SQL', '1', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 01:21:38', 'admin', '2022-08-08 09:27:52', 'SQL');
+INSERT INTO `sys_dict_data` VALUES (105, 1, '下架', '0', 'sys_article_status', NULL, 'danger', 'N', '0', 'admin', '2022-07-22 19:22:30', 'admin', '2022-08-19 15:48:22', '文章下架');
+INSERT INTO `sys_dict_data` VALUES (106, 0, '发布', '1', 'sys_article_status', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 19:22:53', 'admin', '2022-08-19 15:48:16', '文章发布');
+INSERT INTO `sys_dict_data` VALUES (107, 0, '默认', '0', 'sys_article_top', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 19:24:59', 'admin', '2022-07-22 19:27:42', '不置顶');
+INSERT INTO `sys_dict_data` VALUES (108, 0, '置顶', '1', 'sys_article_top', NULL, 'success', 'N', '0', 'admin', '2022-07-22 19:25:07', 'admin', '2022-08-05 15:51:39', '置顶');
+INSERT INTO `sys_dict_data` VALUES (109, 0, '原创', '0', 'sys_article_origin', NULL, 'success', 'N', '0', 'admin', '2022-07-22 19:27:31', 'admin', '2022-08-05 15:51:53', '文章原创');
+INSERT INTO `sys_dict_data` VALUES (110, 0, '转载', '1', 'sys_article_origin', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 19:28:10', '', NULL, '转载');
+INSERT INTO `sys_dict_data` VALUES (111, 0, '开启', '0', 'sys_article_comment', NULL, 'primary', 'N', '0', 'admin', '2022-07-22 19:28:36', 'admin', '2022-07-22 19:28:40', '开启评论');
+INSERT INTO `sys_dict_data` VALUES (112, 0, '关闭', '1', 'sys_article_comment', NULL, 'danger', 'N', '0', 'admin', '2022-07-22 19:28:54', 'admin', '2022-08-05 15:52:04', '关闭评论');
+INSERT INTO `sys_dict_data` VALUES (113, 0, '工具', '0', 'sys_website_type', NULL, 'primary', 'N', '0', 'admin', '2022-07-26 15:28:50', '', NULL, '工具');
+INSERT INTO `sys_dict_data` VALUES (114, 0, 'Java', '1', 'sys_website_type', NULL, 'primary', 'N', '0', 'admin', '2022-07-26 15:29:03', '', NULL, 'Java');
+INSERT INTO `sys_dict_data` VALUES (115, 0, '前端', '2', 'sys_website_type', NULL, 'primary', 'N', '0', 'admin', '2022-07-26 15:29:13', 'admin', '2022-07-26 15:29:18', '前端');
+INSERT INTO `sys_dict_data` VALUES (116, 0, '发布', '0', 'sys_website_status', NULL, 'success', 'N', '0', 'admin', '2022-07-26 15:32:28', 'admin', '2022-09-09 16:40:26', '发布');
+INSERT INTO `sys_dict_data` VALUES (117, 0, '下架', '1', 'sys_website_status', NULL, 'info', 'N', '0', 'admin', '2022-07-26 15:32:42', 'admin', '2022-07-27 16:36:26', '下架');
+INSERT INTO `sys_dict_data` VALUES (118, 0, 'Spring', '2', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-08-08 09:27:25', 'admin', '2022-08-08 09:27:39', 'spring');
+INSERT INTO `sys_dict_data` VALUES (119, 0, 'Spring MVC', '3', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-08-08 09:28:23', '', NULL, 'Spring MVC');
+INSERT INTO `sys_dict_data` VALUES (120, 0, 'MyBatis', '4', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-08-08 09:28:42', 'admin', '2022-08-08 09:28:54', 'Mybatis');
+INSERT INTO `sys_dict_data` VALUES (121, 0, '上架', '1', 'sys_summary_status', NULL, 'primary', 'N', '0', 'admin', '2022-08-11 11:31:07', 'admin', '2022-08-11 11:31:40', '上架');
+INSERT INTO `sys_dict_data` VALUES (122, 0, '下架', '0', 'sys_summary_status', NULL, 'danger', 'N', '0', 'admin', '2022-08-11 11:31:26', 'admin', '2022-08-11 11:31:35', '下架');
+INSERT INTO `sys_dict_data` VALUES (123, 0, '默认', '0', 'sys_summary_top', NULL, 'success', 'N', '0', 'admin', '2022-08-12 19:17:40', 'admin', '2022-08-12 19:43:52', '不显示在首页');
+INSERT INTO `sys_dict_data` VALUES (124, 0, '展示', '1', 'sys_summary_top', NULL, 'primary', 'N', '0', 'admin', '2022-08-12 19:17:54', 'admin', '2022-08-12 19:43:48', '显示在首页');
+INSERT INTO `sys_dict_data` VALUES (125, 0, 'BUG', '2', 'sys_article_type', NULL, 'primary', 'N', '0', 'admin', '2022-08-19 15:45:26', 'admin', '2022-08-19 15:45:32', 'BUG');
+INSERT INTO `sys_dict_data` VALUES (126, 0, '算法', '5', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-08-19 15:46:31', '', NULL, '算法');
+INSERT INTO `sys_dict_data` VALUES (127, 0, 'JUC', '6', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-08-29 09:25:52', '', NULL, 'JUC');
+INSERT INTO `sys_dict_data` VALUES (128, 0, '发布', '1', 'sys_friend_link', NULL, 'primary', 'N', '0', 'admin', '2022-09-09 16:40:51', '', NULL, '发布');
+INSERT INTO `sys_dict_data` VALUES (129, 0, '下架', '0', 'sys_friend_link', NULL, 'danger', 'N', '0', 'admin', '2022-09-09 16:41:10', '', NULL, '下架');
+INSERT INTO `sys_dict_data` VALUES (130, 0, '留言板', '0', 'article_comment_type', NULL, 'primary', 'N', '0', 'admin', '2022-09-11 15:32:58', '', NULL, '留言板');
+INSERT INTO `sys_dict_data` VALUES (131, 0, '文章', '1', 'article_comment_type', NULL, 'success', 'N', '0', 'admin', '2022-09-11 15:33:16', '', NULL, '文章评论');
+INSERT INTO `sys_dict_data` VALUES (132, 0, '未回复', '0', 'article_comment_status', NULL, 'danger', 'N', '0', 'admin', '2022-09-11 15:35:37', 'admin', '2022-09-11 15:35:46', '未回复');
+INSERT INTO `sys_dict_data` VALUES (133, 0, '已回复', '1', 'article_comment_status', NULL, 'success', 'N', '0', 'admin', '2022-09-11 15:35:58', 'admin', '2022-09-11 15:36:10', '已回复');
+INSERT INTO `sys_dict_data` VALUES (134, 0, '未审核', '0', 'article_comment_audit_status', NULL, 'info', 'N', '0', 'admin', '2022-09-23 21:08:23', '', NULL, '未审核');
+INSERT INTO `sys_dict_data` VALUES (135, 0, '通过', '1', 'article_comment_audit_status', NULL, 'success', 'N', '0', 'admin', '2022-09-23 21:08:41', '', NULL, '通过');
+INSERT INTO `sys_dict_data` VALUES (136, 0, '未通过', '2', 'article_comment_audit_status', NULL, 'danger', 'N', '0', 'admin', '2022-09-23 21:09:02', '', NULL, '未通过');
+INSERT INTO `sys_dict_data` VALUES (137, 0, 'OSS', '7', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-09-26 10:06:37', '', NULL, 'OSS');
+INSERT INTO `sys_dict_data` VALUES (138, 0, '短信', '9', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-09-26 14:51:32', '', NULL, '短信');
+INSERT INTO `sys_dict_data` VALUES (139, 0, 'NIO', '10', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-09-30 15:07:08', '', NULL, 'NIO');
+INSERT INTO `sys_dict_data` VALUES (140, 0, 'Netty', '11', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-10-14 14:57:51', 'admin', '2022-10-14 14:58:09', NULL);
+INSERT INTO `sys_dict_data` VALUES (141, 0, 'API', '12', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-11-15 08:24:18', 'admin', '2022-11-15 08:24:24', '');
+INSERT INTO `sys_dict_data` VALUES (142, 0, '中间件', '13', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-11-22 02:51:33', '', NULL, '中间件');
+INSERT INTO `sys_dict_data` VALUES (143, 0, '开源项目', '3', 'sys_website_type', NULL, 'primary', 'N', '0', 'admin', '2022-12-02 09:13:24', '', NULL, '开源项目');
+INSERT INTO `sys_dict_data` VALUES (144, 0, '资料', '4', 'sys_website_type', NULL, 'primary', 'N', '0', 'admin', '2022-12-02 09:13:38', '', NULL, '资料');
+INSERT INTO `sys_dict_data` VALUES (145, 0, 'UI', '5', 'sys_website_type', NULL, 'primary', 'N', '0', 'admin', '2022-12-02 09:13:52', '', NULL, 'UI');
+INSERT INTO `sys_dict_data` VALUES (146, 0, '文章', '6', 'sys_website_type', NULL, 'info', 'N', '0', 'admin', '2022-12-02 09:16:38', 'admin', '2022-12-02 09:19:10', '文章');
+INSERT INTO `sys_dict_data` VALUES (147, 0, '文档', '14', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2022-12-14 07:49:27', '', NULL, '文档');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -443,6 +641,34 @@ CREATE TABLE `sys_dict_type`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_dict_type
+-- ----------------------------
+INSERT INTO `sys_dict_type` VALUES (1, '用户性别', 'sys_user_sex', '0', 'admin', '2022-04-27 02:10:24', 'admin', '2022-07-22 06:57:38', '用户性别列表');
+INSERT INTO `sys_dict_type` VALUES (2, '菜单状态', 'sys_show_hide', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '菜单状态列表');
+INSERT INTO `sys_dict_type` VALUES (3, '系统开关', 'sys_normal_disable', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '系统开关列表');
+INSERT INTO `sys_dict_type` VALUES (4, '任务状态', 'sys_job_status', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '任务状态列表');
+INSERT INTO `sys_dict_type` VALUES (5, '任务分组', 'sys_job_group', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '任务分组列表');
+INSERT INTO `sys_dict_type` VALUES (6, '系统是否', 'sys_yes_no', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '系统是否列表');
+INSERT INTO `sys_dict_type` VALUES (7, '通知类型', 'sys_notice_type', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '通知类型列表');
+INSERT INTO `sys_dict_type` VALUES (8, '通知状态', 'sys_notice_status', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '通知状态列表');
+INSERT INTO `sys_dict_type` VALUES (9, '操作类型', 'sys_oper_type', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '操作类型列表');
+INSERT INTO `sys_dict_type` VALUES (10, '系统状态', 'sys_common_status', '0', 'admin', '2022-04-27 02:10:24', '', NULL, '登录状态列表');
+INSERT INTO `sys_dict_type` VALUES (100, '文章分类', 'sys_article_type', '0', 'admin', '2022-07-20 01:14:22', 'admin', '2022-07-22 06:17:14', '文章分类');
+INSERT INTO `sys_dict_type` VALUES (104, '文章标签', 'sys_article_tag', '0', 'admin', '2022-07-22 01:19:31', '', NULL, '文章标签');
+INSERT INTO `sys_dict_type` VALUES (106, '文章状态', 'sys_article_status', '0', 'admin', '2022-07-22 17:09:06', '', NULL, '文章状态');
+INSERT INTO `sys_dict_type` VALUES (107, '文章置顶', 'sys_article_top', '0', 'admin', '2022-07-22 19:23:51', '', NULL, '文章是否置顶');
+INSERT INTO `sys_dict_type` VALUES (108, '文章原创', 'sys_article_origin', '0', 'admin', '2022-07-22 19:26:02', '', NULL, '文章是否原创');
+INSERT INTO `sys_dict_type` VALUES (109, '文章评论', 'sys_article_comment', '0', 'admin', '2022-07-22 19:26:44', '', NULL, '是否开启评论');
+INSERT INTO `sys_dict_type` VALUES (110, '资源分类', 'sys_website_type', '0', 'admin', '2022-07-26 15:27:22', '', NULL, '资源分类');
+INSERT INTO `sys_dict_type` VALUES (111, '资源状态', 'sys_website_status', '0', 'admin', '2022-07-26 15:32:05', '', NULL, '资源状态');
+INSERT INTO `sys_dict_type` VALUES (112, '归档状态', 'sys_summary_status', '0', 'admin', '2022-08-11 11:30:26', '', NULL, '归档状态');
+INSERT INTO `sys_dict_type` VALUES (113, '归档置顶', 'sys_summary_top', '0', 'admin', '2022-08-12 19:17:03', '', NULL, '归档置顶');
+INSERT INTO `sys_dict_type` VALUES (114, '友链状态', 'sys_friend_link', '0', 'admin', '2022-09-09 16:38:49', '', NULL, '友链状态');
+INSERT INTO `sys_dict_type` VALUES (115, '评论类型', 'article_comment_type', '0', 'admin', '2022-09-11 15:32:13', '', NULL, '评论类型');
+INSERT INTO `sys_dict_type` VALUES (116, '评论状态', 'article_comment_status', '0', 'admin', '2022-09-11 15:35:16', 'admin', '2022-09-12 19:04:17', '评论状态');
+INSERT INTO `sys_dict_type` VALUES (117, '评论审核状态', 'article_comment_audit_status', '0', 'admin', '2022-09-23 21:08:01', '', NULL, '评论审核状态');
+
+-- ----------------------------
 -- Table structure for sys_logininfor
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_logininfor`;
@@ -458,6 +684,22 @@ CREATE TABLE `sys_logininfor`  (
   `login_time` datetime NULL DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_logininfor
+-- ----------------------------
+INSERT INTO `sys_logininfor` VALUES (100, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-04-27 02:14:22');
+INSERT INTO `sys_logininfor` VALUES (101, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-05-13 07:16:40');
+INSERT INTO `sys_logininfor` VALUES (102, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-11 01:19:05');
+INSERT INTO `sys_logininfor` VALUES (103, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-11 06:03:09');
+INSERT INTO `sys_logininfor` VALUES (104, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-11 07:08:20');
+INSERT INTO `sys_logininfor` VALUES (105, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-20 00:52:08');
+INSERT INTO `sys_logininfor` VALUES (106, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-21 08:29:27');
+INSERT INTO `sys_logininfor` VALUES (107, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '1', '验证码错误', '2022-07-21 09:20:15');
+INSERT INTO `sys_logininfor` VALUES (108, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-21 09:20:21');
+INSERT INTO `sys_logininfor` VALUES (109, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '退出成功', '2022-07-21 09:30:15');
+INSERT INTO `sys_logininfor` VALUES (110, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-21 09:30:22');
+INSERT INTO `sys_logininfor` VALUES (111, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2022-07-21 11:05:38');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -476,6 +718,10 @@ CREATE TABLE `sys_notice`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`notice_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知公告表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_notice
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_oper_log
@@ -499,7 +745,13 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_oper_log
+-- ----------------------------
+INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.jzj.vblog.web.controller.admin.SysOperLogController.clean()', 'DELETE', 1, 'admin', NULL, '/monitor/operlog/clean', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2022-12-14 18:07:06');
+INSERT INTO `sys_oper_log` VALUES (2, '用户管理', 2, 'com.jzj.vblog.web.controller.admin.SysUserController.edit()', 'PUT', 1, 'admin', NULL, '/admin/user', '127.0.0.1', '内网IP', '{\"newpassword1\":\"123456\",\"newpassword2\":\"123456\",\"oldpassword\":\"1410357039\",\"avatar\":\"\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2022-12-14 18:07:59');
 
 -- ----------------------------
 -- Table structure for sys_todo
@@ -513,6 +765,18 @@ CREATE TABLE `sys_todo`  (
   `text` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '备忘录' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_todo
+-- ----------------------------
+INSERT INTO `sys_todo` VALUES ('1dcba433dcff57f17f82d1bbdabadfd4', '2022-11-29 17:01:56', '2022-12-07 14:50:51', '1', '网站备案');
+INSERT INTO `sys_todo` VALUES ('60f535a5824d47f1433b71f1e541ce82', '2022-12-08 21:42:48', '2022-12-09 09:33:12', '1', '后台图集列表选中后存在BUG');
+INSERT INTO `sys_todo` VALUES ('7fbf8cdf5b49cf0f6362d4f64b55feb0', '2022-12-07 14:54:07', '2022-12-07 14:54:07', '0', '资源前台展示');
+INSERT INTO `sys_todo` VALUES ('ad59208e42473b57794d69034f4869da', '2022-12-07 15:09:05', '2022-12-07 15:09:05', '0', '项目日志');
+INSERT INTO `sys_todo` VALUES ('b894ce623f551d8495be0fdaea64bb01', '2022-12-07 14:51:55', '2022-12-08 14:23:20', '0', '时间线开发');
+INSERT INTO `sys_todo` VALUES ('c4762dec027acc74786eafca0d50a494', '2022-12-08 14:24:41', '2022-12-08 15:12:04', '1', '优化资源页显示');
+INSERT INTO `sys_todo` VALUES ('ecb4e59a419d74dd1c9cfc56e9eb60d7', '2022-12-07 14:51:15', '2022-12-08 14:23:21', '1', '折线图开发');
+INSERT INTO `sys_todo` VALUES ('f84a1b530e4f7eac8f74709d7a057bf3', '2022-12-07 14:52:04', '2022-12-07 14:52:04', '0', '项目文档');
 
 -- ----------------------------
 -- Table structure for sys_web_information
@@ -534,8 +798,14 @@ CREATE TABLE `sys_web_information`  (
   `wechat_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信二维码',
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `comment_img` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论头像',
+  `record_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备案号',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '网站基本信息' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_web_information
+-- ----------------------------
+INSERT INTO `sys_web_information` VALUES (1, '漫漫前路', '<p>长路漫漫，吾将上下而求索。</p>', 'https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/09/16/de051c412f2f46ba92de7817496cb605.jpg', '946232976', 'fr946232976', 'https://github.com/Jzjzzzz', 'https://gitee.com/jzjzz', '2022-07-28 20:16:13', '2022-12-14 18:06:52', 'https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/08/09/a108c42fa21a43a4940c3e08cfd33c4f.jpg', 'https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/08/10/9d26abe18ec84eadbaa8b9f180fefee6.jpg', 'https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/09/08/f2330c187a6040ed8a74df5aae1cb763.jpg', '946232976@qq.com', 'https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/webLogo/2022/09/19/1b0d32a2d72e4ed58b7cc6ede72621b0.png', '桂ICP备2022010904号-1');
 
 -- ----------------------------
 -- Table structure for website_resource
@@ -554,5 +824,9 @@ CREATE TABLE `website_resource`  (
   `resource_detail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源站点' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of website_resource
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

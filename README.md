@@ -1,6 +1,6 @@
-
 ## <center> Vblog
 #### <center> 基于SpringBoot+Vue前后端分离的个人博客项目
+
 
 ### 项目介绍
 轻量级的博客项目，没有弄那些花里胡哨的功能。开源不易，如喜欢请帮忙点个star ，各位的star也是我对该项目后期维护和新增功能的动力。
@@ -35,7 +35,23 @@
 ### 在线站点
 
 [前台博客端](http://jzjzzzz.cn/)
+
 [后台管理端](http://jzjzzzz.cn/)（暂时关闭，有人上去乱删东西，不开了）
+
+### 启动教程
+#### 后端
+1. 项目下db目录内寻找最新日期sql文件运行。
+2. 修改dev下redis，mysql配置信息，这时即可通过VblogApplication启动项目。
+3. 如不需要oss和邮箱功能可去系统管理-参数设置处关闭，如开启状态下需要在dev里填入相关秘钥即可。
+
+#### 后台前端页面（vue-admin）
+1. npm install
+2. npm run dev
+3. 后台初始账号密码：admin,123456
+
+#### 前台前端页面（vue-front-desk）
+1. npm install
+2. npm run dev
 
 ### 演示图（前台博客端请移步站点查看）
 ![image.png](https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/article/2022/12/14/2f24cb06652d4d0badae95b0216ee7a3.png)
