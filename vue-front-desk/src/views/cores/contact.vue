@@ -145,6 +145,7 @@ export default {
     // 用作瀑布流的留言墙测试例子（仅供参考）
     waterfallTest: function (data) {
       let _self = this;
+
       if (data.isFinish) { // 如果服务器没有数据了，那么就返回(不建议这样做);
         return;
       }
@@ -155,13 +156,14 @@ export default {
           _self.total = res.data.total
           for (var i = 0; i < list.length; i++) {
             _self.commentList.push(list[i]);
+            _self.count++;
           }
           data.isLoading = false;
 
           if (_self.count >= _self.total) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
             data.isFinish = true;
           }
-          _self.count++;
+
 
           _self.waterfallData = data;
         })

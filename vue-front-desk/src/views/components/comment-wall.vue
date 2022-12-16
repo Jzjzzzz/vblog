@@ -28,8 +28,6 @@ export default {
   },
   watch: {
     waterfallData(newValue, oldValue) {
-      console.log(newValue);
-      console.log(oldValue);
       this.isLoading = newValue.isLoading;
       this.isFinish = newValue.isFinish && true;
     }
