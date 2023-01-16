@@ -56,4 +56,14 @@ public class CacheConstants {
      * 文章分类
      */
     public static final String SYS_ARTICLE_TYPE = "sys_article_type";
+
+    /**
+     *  邮箱通知开关
+     */
+    public static final String SYS_EMAIL_ENABLE = "sys_email_enable";
+
+    /**
+     * Email发送是否使用RabbitMQ
+     */
+    public static final String SYS_RABBIT_ENABLE = "sys_rabbit_enable";
 }

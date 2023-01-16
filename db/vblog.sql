@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 14/12/2022 18:08:48
+ Date: 16/01/2023 17:01:58
 */
 
 SET NAMES utf8mb4;
@@ -150,7 +150,7 @@ CREATE TABLE `friend_link`  (
 -- ----------------------------
 -- Records of friend_link
 -- ----------------------------
-INSERT INTO `friend_link` VALUES ('d855c662eddc70853cee7304bb1c1b05', 'Jzjzzzz', 'https://www.jzjzzzz.icu/', '2022-09-10 00:50:33', '2022-09-10 00:50:33', '1');
+INSERT INTO `friend_link` VALUES ('d855c662eddc70853cee7304bb1c1b05', 'Jzjzzzz', 'http://jzjzzzz.cn/', '2022-09-10 00:50:33', '2023-01-16 16:59:37', '1');
 
 -- ----------------------------
 -- Table structure for gallery
@@ -474,7 +474,7 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', NULL, 1671037200000, 1670950800000, 5, 'WAITING', 'CRON', 1668500317000, 0, NULL, 0, '');
+INSERT INTO `qrtz_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', NULL, 1673888400000, 1673830662554, 5, 'WAITING', 'CRON', 1668500317000, 0, NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -492,13 +492,14 @@ CREATE TABLE `sys_config`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参数配置表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参数配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_config
 -- ----------------------------
 INSERT INTO `sys_config` VALUES (6, 'oss云存储-是否开启云存储', 'sys.oss.enable', 'true', 'Y', 'admin', '2022-07-27 14:52:18', 'admin', '2022-07-29 15:02:59', '开启云存储需要配置application.yml里的oss相关参数（true开启，false关闭）');
 INSERT INTO `sys_config` VALUES (7, '是否开启邮箱通知', 'sys_email_enable', 'true', 'Y', 'admin', '2022-09-20 14:45:07', 'admin', '2022-09-23 22:16:59', '后台回复留言，邮箱通知留言者,开启需要配置email相关参数 （true开启，false关闭）');
+INSERT INTO `sys_config` VALUES (8, 'RabbitMQ开关', 'sys_rabbit_enable', 'true', 'Y', 'admin', '2023-01-16 16:41:31', 'admin', '2023-01-16 16:56:42', '开启-true，关闭-false（开启需要配置RabbitMQ相关参数,目前仅发送邮件用到该中间件）');
 
 -- ----------------------------
 -- Table structure for sys_count
@@ -520,6 +521,7 @@ CREATE TABLE `sys_count`  (
 -- ----------------------------
 -- Records of sys_count
 -- ----------------------------
+INSERT INTO `sys_count` VALUES ('228dcad4160dff726884e8c757a8133a', 0, 0, 0, 0, 0, '2023-01-16 08:57:43', 0, 0);
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -745,13 +747,12 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
-INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.jzj.vblog.web.controller.admin.SysOperLogController.clean()', 'DELETE', 1, 'admin', NULL, '/monitor/operlog/clean', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2022-12-14 18:07:06');
-INSERT INTO `sys_oper_log` VALUES (2, '用户管理', 2, 'com.jzj.vblog.web.controller.admin.SysUserController.edit()', 'PUT', 1, 'admin', NULL, '/admin/user', '127.0.0.1', '内网IP', '{\"newpassword1\":\"123456\",\"newpassword2\":\"123456\",\"oldpassword\":\"1410357039\",\"avatar\":\"\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2022-12-14 18:07:59');
+INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.jzj.vblog.web.controller.admin.SysOperLogController.clean()', 'DELETE', 1, 'admin', NULL, '/monitor/operlog/clean', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2023-01-16 16:59:53');
 
 -- ----------------------------
 -- Table structure for sys_todo

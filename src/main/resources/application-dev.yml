@@ -30,10 +30,16 @@ spring:
         max-active: 8
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
+  rabbitmq:
+    host: 127.0.0.1
+    username: admin
+    password: admin
+    virtual-host: /
+    port: 5672
   mail:
     host: smtp.163.com #SMTP服务器地址
     username: mm946232976@163.com
-    password: GREHZVVOAYUXJJZH #登陆密码（或授权码）
+    password: SGfertCnIjKNm3x9 #登陆密码（或授权码）
     port: 465
     properties:
       mail:
@@ -110,8 +116,8 @@ pagehelper:
 aliyun:
   oss:
     endpoint: oss-cn-shenzhen.aliyuncs.com
-    keyId: LTAI5tPJqdTCFLCYhoBvApLN
-    keySecret: tKfhKeOT3axaQhYLbpmznLXtVHZL7o
+    keyId: xxx
+    keySecret: xxx
     bucketName: vue-vblog
 
 #行为验证码相关
