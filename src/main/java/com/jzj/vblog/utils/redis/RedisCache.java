@@ -191,6 +191,16 @@ public class RedisCache {
     }
 
     /**
+     * 判断Hash内是否有该Key
+     * @param key
+     * @param hkey
+     * @return
+     */
+    public boolean isCacheMapKey(final String key,final String hkey){
+        return redisTemplate.opsForHash().entries(key).containsKey(hkey);
+    }
+
+    /**
      * 删除Hash中的数据
      *
      * @param key

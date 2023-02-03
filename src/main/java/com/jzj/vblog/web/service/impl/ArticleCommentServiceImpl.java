@@ -9,16 +9,11 @@ import com.jzj.vblog.utils.constant.RabbitConstants;
 import com.jzj.vblog.utils.sign.*;
 import com.jzj.vblog.web.mapper.ArticleCommentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
-import com.jzj.vblog.web.pojo.entity.ArticleComment;
-import com.jzj.vblog.web.pojo.entity.ArticleInform;
-import com.jzj.vblog.web.pojo.entity.EmailMessageStruct;
-import com.jzj.vblog.web.pojo.entity.SysWebInformation;
+import com.jzj.vblog.web.pojo.entity.*;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
-import com.jzj.vblog.web.service.ArticleCommentService;
-import com.jzj.vblog.web.service.EmailService;
-import com.jzj.vblog.web.service.SysConfigService;
-import com.jzj.vblog.web.service.SysWebInformationService;
+import com.jzj.vblog.web.service.*;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -61,6 +56,9 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private MailSendLogService mailSendLogService;
 
     /**
      * 访客评论
@@ -118,7 +116,20 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         //发送邮件通知留言者
         if("true".equals(configService.selectConfigByKey(CacheConstants.SYS_EMAIL_ENABLE))){
             if("true".equals(configService.selectConfigByKey(CacheConstants.SYS_RABBIT_ENABLE))){
-                rabbitTemplate.convertAndSend(RabbitConstants.EMAIL_QUEUE,new EmailMessageStruct(parentModel.getEmail(),sonModel.getNickName(),commentInfoVo.getReply()));
+                MailSendLog mailSendLog = new MailSendLog();
+                mailSendLog.setExchange(RabbitConstants.EMAIL_EXCHANGE);
+                mailSendLog.setRouteKey(RabbitConstants.EMAIL_ROUTING_KEY);
+                mailSendLog.setTryTime(new Date(System.currentTimeMillis()+ 1000L *60*RabbitConstants.MSG_TIMEOUT));
+                mailSendLog.setEmail(parentModel.getEmail());
+                mailSendLog.setNickName(sonModel.getNickName());
+                mailSendLog.setReply(commentInfoVo.getReply());
+                mailSendLog.setCount(0);
+                mailSendLogService.save(mailSendLog);
+                rabbitTemplate.convertAndSend(
+                        RabbitConstants.EMAIL_EXCHANGE,
+                        RabbitConstants.EMAIL_ROUTING_KEY,
+                        new EmailMessageStruct(parentModel.getEmail(),sonModel.getNickName(),commentInfoVo.getReply()),
+                        new CorrelationData(mailSendLog.getId()));
             }else {
                 CompletableFuture.runAsync(()->{
                     emailService.sendMail(parentModel.getEmail(),sonModel.getNickName()+"对您留言的回复-"+"来着漫漫长路的博客",commentInfoVo.getReply());

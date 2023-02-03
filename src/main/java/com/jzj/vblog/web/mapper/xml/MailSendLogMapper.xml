@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.vblog.web.mapper.MailSendLogMapper">
+
+    <resultMap id="mailSendLogResult" type="com.jzj.vblog.web.pojo.entity.MailSendLog">
+        <id     property="id"     column="id"     />
+        <result property="status"     column="status"      />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="routeKey" column="route_key" />
+        <result property="exchange" column="exchange" />
+        <result property="count" column="count" />
+        <result property="tryTime" column="try_time" />
+        <result property="email" column="email" />
+        <result property="nickName" column="nick_name" />
+        <result property="reply" column="reply" />
+    </resultMap>
+
+    <sql id="mailSendLogVO">
+        SELECT id,
+               status,
+               route_key,
+               exchange,
+               count,
+               try_time,
+               create_time,
+               update_time,
+               email,
+               nick_name,
+               reply
+        FROM mail_send_log
+    </sql>
+
+    <update id="updateMailSendStatus">
+        UPDATE mail_send_log SET status =#{status} WHERE id = #{id}
+    </update>
+    <update id="updateCount">
+        UPDATE mail_send_log SET count=count+1,update_time=#{date} WHERE id=#{id}
+    </update>
+    <select id="getMailSendLogByStatus" resultType="com.jzj.vblog.web.pojo.entity.MailSendLog">
+        <include refid="mailSendLogVO" />
+        WHERE status = 0 AND try_time &lt; SYSDATE()
+    </select>
+</mapper>
