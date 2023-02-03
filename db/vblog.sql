@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 16/01/2023 17:01:58
+ Date: 03/02/2023 17:08:14
 */
 
 SET NAMES utf8mb4;
@@ -236,6 +236,29 @@ CREATE TABLE `gen_table_column`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for mail_send_log
+-- ----------------------------
+DROP TABLE IF EXISTS `mail_send_log`;
+CREATE TABLE `mail_send_log`  (
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'id',
+  `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '状态(0-消息投递中,1-投递成功,2-投递失败)',
+  `route_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `exchange` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'MQ交换机',
+  `count` int(11) NULL DEFAULT NULL COMMENT '重试次数',
+  `try_time` datetime NULL DEFAULT NULL COMMENT '预计定时计划执行时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
+  `reply` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '留言消息',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发送消息记录表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of mail_send_log
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for qrtz_blob_triggers
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
@@ -286,6 +309,7 @@ CREATE TABLE `qrtz_cron_triggers`  (
 -- Records of qrtz_cron_triggers
 -- ----------------------------
 INSERT INTO `qrtz_cron_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', '0 0 1 * * ?', 'GMT+08:00');
+INSERT INTO `qrtz_cron_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.EmailSendLogJob', 'EmailSendLogJob', '0/10 * * * * ?', 'Asia/Shanghai');
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -342,6 +366,7 @@ CREATE TABLE `qrtz_job_details`  (
 -- Records of qrtz_job_details
 -- ----------------------------
 INSERT INTO `qrtz_job_details` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', NULL, 'com.jzj.vblog.job.ArticleCountJob', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
+INSERT INTO `qrtz_job_details` VALUES ('VblogScheduler', 'com.jzj.vblog.job.EmailSendLogJob', 'EmailSendLogJob', NULL, 'com.jzj.vblog.job.EmailSendLogJob', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -474,7 +499,8 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', NULL, 1673888400000, 1673830662554, 5, 'WAITING', 'CRON', 1668500317000, 0, NULL, 0, '');
+INSERT INTO `qrtz_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', 'com.jzj.vblog.job.ArticleCountJob', 'ArticleCount', NULL, 1675357200000, 1675270800000, 5, 'WAITING', 'CRON', 1668500317000, 0, NULL, 0, '');
+INSERT INTO `qrtz_triggers` VALUES ('VblogScheduler', 'com.jzj.vblog.job.EmailSendLogJob', 'EmailSendLogJob', 'com.jzj.vblog.job.EmailSendLogJob', 'EmailSendLogJob', NULL, 1675324740000, 1675324730000, 5, 'PAUSED', 'CRON', 1675217904000, 0, NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -522,6 +548,8 @@ CREATE TABLE `sys_count`  (
 -- Records of sys_count
 -- ----------------------------
 INSERT INTO `sys_count` VALUES ('228dcad4160dff726884e8c757a8133a', 0, 0, 0, 0, 0, '2023-01-16 08:57:43', 0, 0);
+INSERT INTO `sys_count` VALUES ('705482dfbddf390eab1d208b338c4529', 0, 0, 0, 0, 0, '2023-02-02 01:00:00', 0, 0);
+INSERT INTO `sys_count` VALUES ('d511414d4f17d299d99d573142a076e0', 0, 0, 0, 0, 0, '2023-02-01 10:10:04', 0, 0);
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -747,12 +775,11 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 88 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
-INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.jzj.vblog.web.controller.admin.SysOperLogController.clean()', 'DELETE', 1, 'admin', NULL, '/monitor/operlog/clean', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2023-01-16 16:59:53');
 
 -- ----------------------------
 -- Table structure for sys_todo
