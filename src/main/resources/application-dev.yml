@@ -42,7 +42,7 @@ spring:
   mail:
     host: smtp.163.com #SMTP服务器地址
     username: mm946232976@163.com
-    password: xxxxx #登陆密码（或授权码）
+    password: xxx #登陆密码（或授权码）
     port: 465
     properties:
       mail:
