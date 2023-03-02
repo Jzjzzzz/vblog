@@ -107,9 +107,10 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             //获取列表
             List<ArticleVo> list = pageList.getRecords();
             list.forEach(s -> {
-                String[] imgArray = s.getLogImg().split(",");
-                //封装轮播图
-                s.setBanner(imgArray);
+                if(s.getLogImg()!=null){
+                    String[] imgArray = s.getLogImg().split(",");
+                    s.setBanner(imgArray);
+                }
                 //封装标签
                 List<String> tags = getTags(tagList, s.getTagIds());
                 s.setTagNameArray(tags.toArray(new String[tags.size()]));
