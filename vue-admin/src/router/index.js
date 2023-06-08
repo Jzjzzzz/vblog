@@ -144,6 +144,22 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/itembank',
+    component: Layout,
+    redirect: '/itembank/index',
+    name: 'itembank',
+    meta: { title: '题库', icon: 'el-icon-collection-tag' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index',
+        name: 'itembankList',
+        component: () => import('@/views/itembank/index'),
+        meta: { title: '题库', icon: 'el-icon-receiving' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/dict',

@@ -1,0 +1,57 @@
+package ${package.ServiceImpl};
+
+import com.jzj.vblog.web.pojo.entity.${entity};
+import com.jzj.vblog.web.mapper.${table.mapperName};
+import com.jzj.vblog.web.service.${table.serviceName};
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    @Autowired
+    private ${table.mapperName} ${table.entityPath}Mapper;
+
+    @Override
+    public List<${entity}> pageList(${entity} ${table.entityPath}) {
+        List<${entity}> list = ${table.entityPath}Mapper.getPageList(${table.entityPath});
+        return list;
+    }
+
+    @Override
+    public int add(${entity} ${table.entityPath}) {
+        return ${table.entityPath}Mapper.insert(${table.entityPath});
+    }
+
+    @Override
+    public ${entity} selectById(String id) {
+        return ${table.entityPath}Mapper.selectById(id);
+    }
+
+    @Override
+    public int modify(${entity} ${table.entityPath}) {
+        return ${table.entityPath}Mapper.updateById(${table.entityPath});
+    }
+
+    @Override
+        public int deleteByIds(List<String> ids, HttpServletRequest request) {
+        return ${table.entityPath}Mapper.deleteBatchIds(ids);
+    }
+}
+#end

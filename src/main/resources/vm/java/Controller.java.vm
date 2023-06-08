@@ -1,0 +1,73 @@
+package ${package.Controller};
+
+
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import com.jzj.vblog.annotation.Log;
+import com.jzj.vblog.utils.result.R;
+import com.jzj.vblog.web.pojo.entity.${entity};
+import com.jzj.vblog.web.pojo.enums.BusinessType;
+import com.jzj.vblog.web.pojo.page.TableDataInfo;
+import com.jzj.vblog.web.service.${table.serviceName};
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@SaCheckLogin
+public class ${table.controllerName} extends BaseController {
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    @ApiOperation("分页列表")
+    @GetMapping
+    public TableDataInfo pageList(${entity} ${table.entityPath}) {
+        startPage();
+        List<${entity}> list = ${table.entityPath}Service.pageList(${table.entityPath});
+        return getDataTable(list);
+    }
+
+    @Log(title = "$!{table.comment}管理", businessType = BusinessType.INSERT)
+    @ApiOperation("新增$!{table.comment}")
+    @PostMapping
+    public R add(@Validated @RequestBody ${entity} ${table.entityPath}) {
+        return toAjax(${table.entityPath}Service.add(${table.entityPath}));
+    }
+
+    @ApiOperation("根据$!{table.comment}id获取$!{table.comment}详细信息")
+    @GetMapping(value = "/{id}")
+    public R getInfo(@PathVariable String id) {
+        return R.ok(${table.entityPath}Service.selectById(id));
+    }
+
+    @ApiOperation("修改$!{table.comment}")
+    @Log(title = "$!{table.comment}管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public R edit(@Validated @RequestBody ${entity} ${table.entityPath}) {
+        return toAjax(${table.entityPath}Service.modify(${table.entityPath}));
+    }
+
+    @ApiOperation("删除$!{table.comment}")
+    @Log(title = "$!{table.comment}管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{ids}")
+    public R remove(@PathVariable List<String> ids, HttpServletRequest request) {
+        return toAjax(${table.entityPath}Service.deleteByIds(ids, request));
+    }
+}
+

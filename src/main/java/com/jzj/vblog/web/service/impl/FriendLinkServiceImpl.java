@@ -1,22 +1,16 @@
 package com.jzj.vblog.web.service.impl;
 
-import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.pojo.entity.FriendLink;
 import com.jzj.vblog.web.mapper.FriendLinkMapper;
-import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.jzj.vblog.web.service.FriendLinkService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.vblog.web.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * <p>
@@ -34,7 +28,8 @@ public class FriendLinkServiceImpl extends ServiceImpl<FriendLinkMapper, FriendL
 
     @Override
     public List<FriendLink> selectLinkList(FriendLink friendLink) {
-        return friendLinkMapper.selectLinkList(friendLink);
+        List<FriendLink> list = friendLinkMapper.selectLinkList(friendLink);
+        return list;
     }
 
     @Override

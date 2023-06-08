@@ -1,0 +1,55 @@
+package ${package.Service};
+
+import com.jzj.vblog.web.pojo.entity.${entity};
+import com.baomidou.mybatisplus.extension.service.IService;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+    /**
+    * 分页查询
+    * @param ${table.entityPath} 查询参数
+    * @return 列表
+    */
+    List<${entity}> pageList(${entity} ${table.entityPath});
+
+    /**
+    * 新增$!{table.comment}
+    * @param ${table.entityPath} 实体
+    * @return 成功条数
+    */
+    int add(${entity} ${table.entityPath});
+
+    /**
+    * 根据id查询单条记录
+    * @param id
+    */
+    ${entity} selectById(String id);
+
+    /**
+    * 修改$!{table.comment}
+    * @param ${table.entityPath} 实体
+    * @return 成功条数
+    */
+    int modify(${entity} ${table.entityPath});
+
+    /**
+    * 批量删除$!{table.comment}
+    * @param ids id数组
+    * @return 成功条数
+    */
+    int deleteByIds(List<String> ids, HttpServletRequest request);
+}
+#end

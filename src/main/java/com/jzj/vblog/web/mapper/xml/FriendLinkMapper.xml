@@ -2,18 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzj.vblog.web.mapper.FriendLinkMapper">
     <resultMap id="FriendLinkResult" type="com.jzj.vblog.web.pojo.entity.FriendLink">
-        <id     property="id"     column="id"     />
-        <result property="status"     column="status"      />
-        <result property="createTime" column="create_time" />
-        <result property="updateTime" column="update_time" />
-        <result property="name" column="name" />
-        <result property="link" column="link" />
+        <id property="id" column="id"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="name" column="name"/>
+        <result property="link" column="link"/>
     </resultMap>
     <sql id="selectFriendLinkVo">
-        SELECT id,status,create_time,update_time,name,link FROM friend_link
+        SELECT id, status, create_time, update_time, name, link
+        FROM friend_link
     </sql>
 
-    <select id="selectLinkList" resultType="com.jzj.vblog.web.pojo.entity.FriendLink">
+    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.FriendLink">
         <include refid="selectFriendLinkVo"/>
         <where>
             <if test="name != null and name != ''">

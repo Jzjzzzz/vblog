@@ -16,12 +16,18 @@ import java.util.List;
  */
 public interface FriendLinkService extends IService<FriendLink> {
 
+
     List<FriendLink> selectLinkList(FriendLink friendLink);
 
     String checkLinkUnique(FriendLink friendLink);
 
+
     int insertLink(FriendLink friendLink);
 
+    /**
+     * @param id
+     * @return
+     */
     FriendLink selectLinkById(String id);
 
     int updateLink(FriendLink friendLink);
