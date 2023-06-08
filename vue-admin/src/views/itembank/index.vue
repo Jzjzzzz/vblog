@@ -212,7 +212,7 @@
 
 <script>
 import {list, add, update, del, getInfo, random} from '@/api/itembank/itembank'
-import fa from "element-ui/src/locale/lang/fa";
+import {deleteImg, uploadImg} from '@/api/upload'
 
 export default {
   name: 'Link',
@@ -245,6 +245,11 @@ export default {
           return '/mavon-editor/katex/katex.min.js'
         }
       },
+      uploadUrl: '/api/upload/uploadImg?name=itemBank',
+      // 文件上传类型
+      imgType: ['png', 'jpg', 'jpeg'],
+      // 图片url
+      imgPath: '',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -354,7 +359,23 @@ export default {
       random().then(response => {
         this.formOne = response.data
         this.openOne = true
+        this.openAnswer = false
         this.title = '每日一题'
+      })
+    },
+    // 图片回显
+    handleResponse(response) {
+      if (response.code === 20000) {
+        this.$modal.msgSuccess('上传文件成功')
+        this.imgPath = response.data.url
+        return response.data.url
+      }
+      return this.$modal.msgError('上传文件失败')
+    },
+    // 删除图片
+    beforeRemove() {
+      deleteImg(this.imgPath).then(response => {
+        this.$modal.msgSuccess('删除成功')
       })
     },
 
