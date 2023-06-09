@@ -24,8 +24,11 @@
     <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.ItemBank">
         <include refid="Base_Column_List"/>
         <where>
-            <if test="status != null and status != ''">
-                AND status = #{status}
+            <if test="title != null and title != ''">
+                AND title LIKE concat('%',#{title},'%')
+            </if>
+            <if test="type != null and type != ''">
+                AND type = #{type}
             </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
@@ -40,6 +43,4 @@
         <include refid="Base_Column_List"/>
         ORDER BY RAND() LIMIT 1;
     </select>
-
-
 </mapper>
