@@ -6,6 +6,7 @@ import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
+import com.jzj.vblog.web.pojo.vo.ArticleHeadVo;
 import com.jzj.vblog.web.pojo.vo.ArticlePopular;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.ArticleSummaryService;
@@ -40,7 +41,14 @@ public class ArticleController extends BaseController {
         return R.ok("map", map);
     }
 
-    @ApiOperation("根据Id获取文章")
+    @ApiOperation("根据Id获取文章头部信息")
+    @GetMapping("/getHeadById/{id}")
+    public R getHeadById(@PathVariable String id){
+        ArticleHeadVo article = articleInformService.getHeadById(id);
+        return R.ok(article);
+    }
+
+    @ApiOperation("根据Id获取文章详细信息")
     @GetMapping("/getById/{id}")
     public R getById(@PathVariable String id) {
         ArticleFrontVo article = articleInformService.getFrontArticleById(id);

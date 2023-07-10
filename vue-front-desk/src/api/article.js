@@ -15,6 +15,13 @@ export function getById(id) {
   })
 }
 
+export function getHeadById(id){
+  return request({
+    url: `/front/article/getHeadById/${id}`,
+    method: 'get'
+  })
+}
+
 // 根据Id点赞文章
 export function getByIdLike(id) {
   return request({

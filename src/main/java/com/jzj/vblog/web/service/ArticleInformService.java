@@ -2,10 +2,7 @@ package com.jzj.vblog.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
-import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
-import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
-import com.jzj.vblog.web.pojo.vo.ArticlePopular;
-import com.jzj.vblog.web.pojo.vo.ArticleRankVo;
+import com.jzj.vblog.web.pojo.vo.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -97,4 +94,12 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * @return
      */
     boolean updateSummaryById(String id,String summaryId, String type);
+
+
+    /**
+     * 根据Id获取文章头部信息
+     * @param id
+     * @return
+     */
+    ArticleHeadVo getHeadById(String id);
 }

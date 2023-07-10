@@ -132,7 +132,7 @@
     />
     <el-dialog :title="title" :visible.sync="openOne" width="80%" append-to-body>
       <el-form ref="formOne" :model="formOne" :rules="rules" label-width="80px">
-        <el-form-item label="题目类型" prop="type">
+        <el-form-item label="题目类型" disabled prop="type">
           <el-select v-model="formOne.type" placeholder="请选择题目类型" clearable :style="{width: '100%'}">
             <el-option
               v-for="dict in dict.type.sys_item_bank_type"
@@ -142,7 +142,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="题目" prop="title">
+        <el-form-item label="题目"  prop="title">
           <el-input autosize type="textarea" v-model="formOne.title" placeholder="请输入题目"/>
         </el-form-item>
         <el-form-item label="答案" prop="answer" v-if="openAnswer">

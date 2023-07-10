@@ -54,4 +54,11 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
      * @return
      */
     List<ArticlePopular> selectArticlePopular();
+
+    /**
+     * 根据id获取前台文章头部内容
+     * @param id
+     * @return
+     */
+    ArticleHeadVo selectFrontArticleHeadByIdVo(String id);
 }

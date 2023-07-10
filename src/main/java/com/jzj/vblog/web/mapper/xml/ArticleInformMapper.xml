@@ -117,25 +117,18 @@
         SELECT
             ai.id,
             ai.article_title,
-            ai.`status`,
-            ai.article_type,
-            ai.origin_status,
-            ai.article_tag,
-            ai.top_status,
             ai.comment_status,
-            ai.log_img,
-            ai.introduce,
             ai.update_time,
             ac.html_content,
             ai.click_rate,
             ai.comment_number,
             ai.create_by,
-            ai.comment_number,
-            ai.number_like,
-            ai.create_time
-        FROM article_inform ai
-                 LEFT JOIN article_content ac ON ai.id = ac.id
-        WHERE ai.id = #{id}
+            ai.number_like
+        FROM
+            article_inform ai
+                LEFT JOIN article_content ac ON ai.id = ac.id
+        WHERE
+            ai.id = #{id}
           AND ai.`status` = '1'
     </select>
     <select id="selectArticleRank" resultType="com.jzj.vblog.web.pojo.vo.ArticleRankVo">
@@ -159,4 +152,21 @@
             click_rate DESC
         LIMIT 3
     </select>
+    <select id="selectFrontArticleHeadByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleHeadVo">
+        SELECT
+            ai.id,
+            ai.article_title,
+            ai.article_tag,
+            ai.log_img,
+            ai.update_time,
+            ai.click_rate,
+            ai.comment_number,
+            ai.create_by
+        FROM
+            article_inform ai
+        WHERE
+            ai.id = #{id}
+          AND ai.`status` = '1'
+    </select>
+
 </mapper>

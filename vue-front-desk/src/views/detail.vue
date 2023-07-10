@@ -29,7 +29,7 @@
 
 <script>
 import config from '@/config/blog-config.json'
-import {getById} from '@/api/article'
+import {getHeadById} from '@/api/article'
 
 export default {
   name: 'detail',
@@ -88,7 +88,7 @@ export default {
       return current;
     },
     getArticleDetail() {
-      getById(this.$route.params.articleId).then(res => {
+      getHeadById(this.$route.params.articleId).then(res => {
         this.article = res.data
         this.viewBackstyle.backgroundImage = `url(${this.article.logImg})`;
       })

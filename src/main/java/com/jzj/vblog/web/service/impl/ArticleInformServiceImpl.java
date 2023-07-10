@@ -204,9 +204,6 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         ArticleFrontVo model = articleInformMapper.selectFrontArticleByIdVo(id);
         //封装标签列表
         List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
-        List<String> tags = getTags(tagList, model.getArticleTag());
-        //文章标签列表
-        model.setArticleTagList(tags);
         //全部标签列表
         model.setTagList(tagList);
         List<ArticleNextPreData> preNextList = getPreNextList(model);
@@ -311,6 +308,20 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
             }
         }
         return this.updateBatchById(informs);
+    }
+
+    @Override
+    public ArticleHeadVo getHeadById(String id) {
+        if (StringUtils.isEmpty(id)) {
+            throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
+        }
+        ArticleHeadVo model = articleInformMapper.selectFrontArticleHeadByIdVo(id);
+        //封装标签列表
+        List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
+        List<String> tags = getTags(tagList, model.getArticleTag());
+        //文章标签列表
+        model.setArticleTagList(tags);
+        return model;
     }
 
     /**
