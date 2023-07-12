@@ -3,6 +3,7 @@ package com.jzj.vblog.web.controller.admin;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
+import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.controller.BaseController;
@@ -65,6 +66,9 @@ public class SysDictDataController extends BaseController {
     @PostMapping
     @SaCheckLogin
     public R add(@Validated @RequestBody SysDictData dict) {
+        if (UserConstants.NOT_UNIQUE.equals(dictDataService.checkDictDataUnique(dict))) {
+            return R.error("新增字典类型'" + dict.getDictValue() + "'失败，字典键值已存在");
+        }
         dict.setCreateBy(getUsername());
         return toAjax(dictDataService.insertDictData(dict));
     }
@@ -74,6 +78,9 @@ public class SysDictDataController extends BaseController {
     @PutMapping
     @SaCheckLogin
     public R edit(@Validated @RequestBody SysDictData dict) {
+        if (UserConstants.NOT_UNIQUE.equals(dictDataService.checkDictDataUnique(dict))) {
+            return R.error("修改字典类型'" + dict.getDictValue() + "'失败，字典键值已存在");
+        }
         dict.setUpdateBy(getUsername());
         return toAjax(dictDataService.updateDictData(dict));
     }

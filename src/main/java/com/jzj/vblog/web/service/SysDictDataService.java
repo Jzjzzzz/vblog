@@ -47,4 +47,6 @@ public interface SysDictDataService extends IService<SysDictData> {
      * @param dictCodes 需要删除的字典数据ID
      */
     void deleteDictDataByIds(Long[] dictCodes);
+
+    String checkDictDataUnique(SysDictData dict);
 }

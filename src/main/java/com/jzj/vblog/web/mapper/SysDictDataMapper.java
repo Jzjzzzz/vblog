@@ -3,6 +3,7 @@ package com.jzj.vblog.web.mapper;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -74,4 +75,6 @@ public interface SysDictDataMapper extends BaseMapper<SysDictData> {
      * @return 结果
      */
     int deleteDictDataById(Long dictCode);
+
+    SysDictData checkDictDataUnique(@PathVariable("dictValue") String dictValue,@PathVariable("dictType") String dictType);
 }

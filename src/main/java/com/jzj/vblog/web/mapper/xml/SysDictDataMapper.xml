@@ -56,6 +56,10 @@
         <include refid="selectDictDataVo"/>
         where id = #{dictCode}
     </select>
+    <select id="checkDictDataUnique" resultType="com.jzj.vblog.web.pojo.entity.SysDictData">
+        <include refid="selectDictDataVo"/>
+        where dict_type = #{dictType} and dict_value = #{dictValue} limit 1
+    </select>
 
     <insert id="insertDictData" parameterType="com.jzj.vblog.web.pojo.entity.SysDictData">
         insert into sys_dict_data(

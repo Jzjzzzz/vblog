@@ -1,8 +1,11 @@
 package com.jzj.vblog.web.service.impl;
 
+import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.sign.DictUtils;
+import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.mapper.SysDictDataMapper;
+import com.jzj.vblog.web.pojo.entity.SysDictType;
 import com.jzj.vblog.web.service.SysDictDataService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +93,16 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
             List<SysDictData> dictDatas = dictDataMapper.selectDictDataByType(data.getDictType());
             DictUtils.setDictCache(data.getDictType(), dictDatas);
         }
+    }
+
+    @Override
+    public String checkDictDataUnique(SysDictData dict) {
+        Long dictId = StringUtils.isNull(dict.getId()) ? -1L : dict.getId();
+        SysDictData data = dictDataMapper.checkDictDataUnique(dict.getDictValue(),dict.getDictType());
+        if (StringUtils.isNotNull(data) && data.getId().longValue() != dictId.longValue())
+        {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
     }
 }

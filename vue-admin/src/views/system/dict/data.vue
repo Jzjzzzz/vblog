@@ -253,7 +253,9 @@ export default {
         status: undefined
       },
       // 表单参数
-      form: {},
+      form: {
+        dictValue: 0
+      },
       // 表单校验
       rules: {
         dictLabel: [
@@ -342,6 +344,7 @@ export default {
       this.open = true
       this.title = '添加字典数据'
       this.form.dictType = this.queryParams.dictType
+      this.form.dictValue = this.total
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
