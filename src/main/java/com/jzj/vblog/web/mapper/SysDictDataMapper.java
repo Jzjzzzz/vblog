@@ -76,5 +76,5 @@ public interface SysDictDataMapper extends BaseMapper<SysDictData> {
      */
     int deleteDictDataById(Long dictCode);
 
-    SysDictData checkDictDataUnique(@PathVariable("dictValue") String dictValue,@PathVariable("dictType") String dictType);
+    SysDictData checkDictDataUnique(@Param("dictValue") String dictValue,@Param("dictType") String dictType);
 }
