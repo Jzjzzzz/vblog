@@ -66,4 +66,9 @@ public class CacheConstants {
      * Email发送是否使用RabbitMQ
      */
     public static final String SYS_RABBIT_ENABLE = "sys_rabbit_enable";
+
+    /**
+     * 文章点击数缓存
+     */
+    public static final String VBLOG_ARTICLE_CLICK = "vblog:article:click:";
 }

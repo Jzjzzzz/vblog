@@ -52,6 +52,9 @@ public class ArticleFrontVo {
     @ApiModelProperty(value = "点赞数")
     private Long numberLike;
 
+    @ApiModelProperty(value = "文章点击量")
+    private Long clickRate;
+
     @ApiModelProperty(value = "Pre,Next列表")
     private List<ArticleNextPreData> articleNextPreDataList;
 

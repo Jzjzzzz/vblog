@@ -1,6 +1,8 @@
 package com.jzj.vblog.job;
 
 import com.jzj.vblog.job.base.BaseJob;
+import com.jzj.vblog.utils.constant.CacheConstants;
+import com.jzj.vblog.utils.redis.RedisCache;
 import com.jzj.vblog.web.mapper.SysCountMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.SysCount;
@@ -11,6 +13,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +22,8 @@ import java.util.List;
 @Slf4j
 public class ArticleCountJob implements BaseJob {
 
+    private static final int BATCH_COUNT = 500;
+
     @Autowired
     private SysCountMapper sysCountMapper;
 
@@ -26,8 +31,13 @@ public class ArticleCountJob implements BaseJob {
     private ArticleSummaryService articleSummaryService;
     @Autowired
     private ArticleInformService articleInformService;
+
+    @Autowired
+    private RedisCache redisCache;
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        //点击数更新集合
+        List<ArticleInform> newList = new ArrayList<>();
         try {
             SysCount sysCount = new SysCount();
             //统计归档数
@@ -39,8 +49,22 @@ public class ArticleCountJob implements BaseJob {
             long clickCount = 0L;
             long likeCount = 0L;
             for (ArticleInform inform : list) {
+                String id = inform.getId();
+                String key = CacheConstants.VBLOG_ARTICLE_CLICK +id;
+                if(redisCache.hasKey(key)){
+                    Integer count = redisCache.getCacheObject(key);
+                    if(count>inform.getClickRate()){
+                        inform.setClickRate(Long.valueOf(count));
+                        newList.add(inform);
+                        redisCache.deleteObject(key);
+                    }
+                }
                 clickCount += inform.getClickRate();
                 likeCount += inform.getNumberLike();
+                if(newList.size()>BATCH_COUNT){
+                    articleInformService.updateBatchById(newList);
+                    newList.clear();
+                }
             }
             sysCount.setUserCount(0L);
             sysCount.setClickCount(clickCount);
@@ -59,6 +83,10 @@ public class ArticleCountJob implements BaseJob {
         } catch (Exception e) {
             log.error("文章统计定时计划执行失败,失败原因:" + e.getMessage());
             e.printStackTrace();
+        } finally {
+            if(newList.size()>0){
+                articleInformService.updateBatchById(newList);
+            }
         }
     }
 }

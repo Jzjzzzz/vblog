@@ -38,10 +38,10 @@ public class ArticleHeadVo {
     private String updateTime;
 
     @ApiModelProperty(value = "访问量")
-    private String clickRate;
+    private Long clickRate;
 
     @ApiModelProperty(value = "评论数")
-    private Integer commentNumber;
+    private Long commentNumber;
 
 
 }

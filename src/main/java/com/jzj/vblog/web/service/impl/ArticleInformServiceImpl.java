@@ -81,6 +81,11 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         for (ArticleInform inform : articleList) {
             List<String> tags = getTags(tagList, inform.getArticleTag());
             inform.setArticleTagList(tags);
+            String key = CacheConstants.VBLOG_ARTICLE_CLICK+inform.getId();
+            if(redisCache.hasKey(key)){
+                Number count = redisCache.getCacheObject(key);
+                inform.setClickRate(count.longValue());
+            }
         }
         return articleList;
     }
@@ -94,6 +99,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     @Override
     public HashMap<String, Object> listPage(Map<String, Object> query) {
         HashMap<String, Object> map = new HashMap<>();
+
         //获取查询条件
         Integer page = (Integer) query.get("currPage");
         Integer limit = (Integer) query.get("limit");
@@ -113,6 +119,11 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
                 //封装标签
                 List<String> tags = getTags(tagList, s.getTagIds());
                 s.setTagNameArray(tags.toArray(new String[tags.size()]));
+                String key = CacheConstants.VBLOG_ARTICLE_CLICK+s.getId();
+                if(redisCache.hasKey(key)){
+                    Number count = redisCache.getCacheObject(key);
+                    s.setViewsCount(count.longValue());
+                }
             });
             map.put("items", list);
         }
@@ -198,6 +209,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Override
     public ArticleFrontVo getFrontArticleById(String id) {
+        String key = "vblog:article:click:"+id;
         if (StringUtils.isEmpty(id)) {
             throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         }
@@ -210,12 +222,13 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         model.setArticleNextPreDataList(preNextList);
         //获取精品文章列表
         model.setArticlePopularList(articleInformMapper.selectArticlePopular());
-        //异步更新点击数
-        CompletableFuture.runAsync(() -> {
-            ArticleInform inform = articleInformMapper.selectById(id);
-            inform.setClickRate(inform.getClickRate() + 1);
-            articleInformMapper.updateById(inform);
-        }, threadPoolTaskExecutor);
+        if(redisCache.hasKey(key)){
+            redisCache.count(key,null);
+        } else {
+            redisCache.count(key,model.getClickRate());
+        }
+
+
         return model;
     }
 
@@ -268,7 +281,15 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
      */
     @Override
     public List<ArticleRankVo> getRank() {
-        return articleInformMapper.selectArticleRank();
+        List<ArticleRankVo> list = articleInformMapper.selectArticleRank();
+        list.forEach(s->{
+            String key = CacheConstants.VBLOG_ARTICLE_CLICK + s.getId();
+            if(redisCache.hasKey(key)){
+                Number count = redisCache.getCacheObject(key);
+                s.setClickRate(count.longValue());
+            }
+        });
+        return list;
     }
 
     /**
@@ -312,10 +333,15 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Override
     public ArticleHeadVo getHeadById(String id) {
+        String key = CacheConstants.VBLOG_ARTICLE_CLICK+id;
         if (StringUtils.isEmpty(id)) {
             throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         }
         ArticleHeadVo model = articleInformMapper.selectFrontArticleHeadByIdVo(id);
+        if(redisCache.hasKey(key)){
+            Number count = redisCache.getCacheObject(key);
+            model.setClickRate(count.longValue());
+        }
         //封装标签列表
         List<SysDictData> tagList = dictTypeService.selectDictDataByType(CacheConstants.SYS_ARTICLE_TAG);
         List<String> tags = getTags(tagList, model.getArticleTag());

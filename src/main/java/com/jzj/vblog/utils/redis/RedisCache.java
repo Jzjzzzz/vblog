@@ -1,10 +1,7 @@
 package com.jzj.vblog.utils.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundSetOperations;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -21,6 +18,9 @@ import java.util.concurrent.TimeUnit;
 public class RedisCache {
     @Autowired
     public RedisTemplate redisTemplate;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 缓存基本的对象，Integer、String、实体类等
@@ -220,5 +220,33 @@ public class RedisCache {
      */
     public Collection<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);
+    }
+
+    /**
+     * 数量统计
+     * @param key
+     * @return
+     */
+    public Long count(final String key,final Long initValue){
+        if(initValue!=null && initValue>=1){
+            stringRedisTemplate.opsForValue().set(key, String.valueOf(initValue));
+        }
+        return stringRedisTemplate.opsForValue().increment(key);
+    }
+
+    /**
+     *
+     * 判断key是否存在
+     * @param key 键
+     * @return true 存在 false不存在
+     */
+
+    public boolean hasKey(final String key) {
+        try {
+            return redisTemplate.hasKey(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

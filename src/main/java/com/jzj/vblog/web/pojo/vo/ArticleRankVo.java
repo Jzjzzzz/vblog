@@ -18,7 +18,7 @@ public class ArticleRankVo {
     private String articleTitle;
 
     @ApiModelProperty(value = "访问量")
-    private String clickRate;
+    private Long clickRate;
 
     @ApiModelProperty(value = "点赞数")
     private Long numberLike;

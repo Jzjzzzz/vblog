@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface FriendLinkMapper extends BaseMapper<FriendLink> {
 
-    List<FriendLink> selectLinkList(FriendLink friendLink);
+    List<FriendLink> getPageList(FriendLink friendLink);
 
     FriendLink checkLinkUnique(String name);
 }
