@@ -52,9 +52,9 @@ public class ArticleCountJob implements BaseJob {
                 String id = inform.getId();
                 String key = CacheConstants.VBLOG_ARTICLE_CLICK +id;
                 if(redisCache.hasKey(key)){
-                    Integer count = redisCache.getCacheObject(key);
-                    if(count>inform.getClickRate()){
-                        inform.setClickRate(Long.valueOf(count));
+                    Number count = redisCache.getCacheObject(key);
+                    if(count.longValue()>inform.getClickRate()){
+                        inform.setClickRate(count.longValue());
                         newList.add(inform);
                         redisCache.deleteObject(key);
                     }

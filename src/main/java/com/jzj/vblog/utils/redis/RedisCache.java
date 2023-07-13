@@ -224,7 +224,8 @@ public class RedisCache {
 
     /**
      * 数量统计
-     * @param key
+     * @param key 键
+     * @param initValue 初始值,为空则只执行+1操作
      * @return
      */
     public Long count(final String key,final Long initValue){
@@ -240,7 +241,6 @@ public class RedisCache {
      * @param key 键
      * @return true 存在 false不存在
      */
-
     public boolean hasKey(final String key) {
         try {
             return redisTemplate.hasKey(key);

@@ -209,7 +209,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
 
     @Override
     public ArticleFrontVo getFrontArticleById(String id) {
-        String key = "vblog:article:click:"+id;
+        String key = CacheConstants.VBLOG_ARTICLE_CLICK+id;
         if (StringUtils.isEmpty(id)) {
             throw new BusinessException(ResponseEnum.Model_NULL_ERROR);
         }
@@ -227,8 +227,6 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         } else {
             redisCache.count(key,model.getClickRate());
         }
-
-
         return model;
     }
 
