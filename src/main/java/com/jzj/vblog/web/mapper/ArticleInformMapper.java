@@ -50,10 +50,16 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
     List<ArticleRankVo> selectArticleRank();
 
     /**
-     * 获取精选文章列表
+     * 获取点击率排行前3条文章
      * @return
      */
     List<ArticlePopular> selectArticlePopular();
+
+    /**
+     * 获取所有上架置顶文章
+     * @return
+     */
+    List<SwiperVo> selectArticleTop();
 
     /**
      * 根据id获取前台文章头部内容
@@ -61,4 +67,10 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
      * @return
      */
     ArticleHeadVo selectFrontArticleHeadByIdVo(String id);
+
+    /**
+     * 根据关键字获取文章
+     * @return
+     */
+    List<SwiperVo> selectArticleListKw(@Param("kw") String kw);
 }

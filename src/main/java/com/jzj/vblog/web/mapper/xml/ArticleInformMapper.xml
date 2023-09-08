@@ -81,7 +81,6 @@
             </if>
             <if test="summaryId!=null and summaryId!=''">
                 AND aggregate_id LIKE concat('%',#{summaryId},'%')
-
             </if>
         </where>
         <choose>
@@ -169,6 +168,35 @@
         WHERE
             ai.id = #{id}
           AND ai.`status` = '1'
+    </select>
+    <select id="selectArticleTop" resultType="com.jzj.vblog.web.pojo.vo.SwiperVo">
+        SELECT
+            id,
+            article_title title,
+            log_img logImg
+        FROM
+            article_inform
+        WHERE
+            `status` = '1'
+            AND `top_status` = '1'
+        ORDER BY
+            create_time DESC
+    </select>
+    <select id="selectArticleListKw" resultType="com.jzj.vblog.web.pojo.vo.SwiperVo">
+        SELECT
+            id,
+            article_title title
+        FROM
+            article_inform
+        WHERE
+            `status` = '1'
+            AND (
+                article_title LIKE CONCAT( '%', #{kw}, '%' )
+                OR create_by LIKE CONCAT( '%', #{kw}, '%' )
+            OR introduce LIKE CONCAT( '%', #{kw}, '%' ))
+        ORDER BY
+            create_time DESC
+        LIMIT 30
     </select>
 
 </mapper>

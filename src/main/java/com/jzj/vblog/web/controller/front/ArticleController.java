@@ -8,9 +8,11 @@ import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
 import com.jzj.vblog.web.pojo.vo.ArticleHeadVo;
 import com.jzj.vblog.web.pojo.vo.ArticlePopular;
+import com.jzj.vblog.web.pojo.vo.SwiperVo;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.ArticleSummaryService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,6 +75,26 @@ public class ArticleController extends BaseController {
     public R getByIdLike(@PathVariable String id) {
         articleInformService.getByIdLike(id);
         return R.ok("点赞成功");
+    }
+
+    /**
+     * 目前只在UniApp中使用
+     */
+    @ApiOperation("获取文章轮播图列表")
+    @GetMapping("/getSwiperList")
+    public R getSwiperList(){
+        List<SwiperVo> list = articleInformService.getSwiperList();
+        return R.ok(list);
+    }
+
+    @ApiOperation("根据关键字获取10条相似博客")
+    @GetMapping("/getSwiperList/{kw}")
+    public R getArticleListKw(@PathVariable String kw){
+        if(StringUtils.isBlank(kw)){
+            return R.error();
+        }
+        List<SwiperVo> list = articleInformService.getArticleListKw(kw);
+        return R.ok(list);
     }
 
 }

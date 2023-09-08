@@ -349,6 +349,20 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     }
 
     /**
+     * 获取文章轮播图列表
+     * @return
+     */
+    @Override
+    public List<SwiperVo> getSwiperList() {
+        return articleInformMapper.selectArticleTop();
+    }
+
+    @Override
+    public List<SwiperVo> getArticleListKw(String kw) {
+        return articleInformMapper.selectArticleListKw(kw);
+    }
+
+    /**
      * 根据标签编号获取中文名称
      *
      * @param tagList

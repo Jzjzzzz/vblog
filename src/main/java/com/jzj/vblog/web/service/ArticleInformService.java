@@ -102,4 +102,14 @@ public interface ArticleInformService extends IService<ArticleInform> {
      * @return
      */
     ArticleHeadVo getHeadById(String id);
+
+    /**
+     * 获取文章轮播图列表
+     */
+    List<SwiperVo> getSwiperList();
+
+    /**
+     * 根据关键字获取10条相似博客
+     */
+    List<SwiperVo> getArticleListKw(String kw);
 }
