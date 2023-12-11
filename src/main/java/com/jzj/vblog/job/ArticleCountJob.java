@@ -61,10 +61,10 @@ public class ArticleCountJob implements BaseJob {
                 }
                 clickCount += inform.getClickRate();
                 likeCount += inform.getNumberLike();
-                if(newList.size()>BATCH_COUNT){
-                    articleInformService.updateBatchById(newList);
-                    newList.clear();
-                }
+            }
+            if(newList.size()>BATCH_COUNT){
+                articleInformService.updateBatchById(newList);
+                newList.clear();
             }
             sysCount.setUserCount(0L);
             sysCount.setClickCount(clickCount);

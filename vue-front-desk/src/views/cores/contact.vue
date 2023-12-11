@@ -163,8 +163,6 @@ export default {
           if (_self.count >= _self.total) { // 如果在服务器端没有数据返回了为空(这里假设获取的数据为空)，那么赋值isFinish为真，这里仅仅为测试
             data.isFinish = true;
           }
-
-
           _self.waterfallData = data;
         })
       }, 2000)
