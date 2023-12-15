@@ -27,6 +27,7 @@
 6. 个人信息：头像修改，密码修改。
 7. 登录：Sa-Token管理，图形验证码校验。
 8. 评论列表，评论回复可通过邮箱通知留言者(可关闭),评论消息发送通过RabbitMQ(可关闭)。
+9. 题库(2023/12/15添加)
 
 ### 前台功能
 1. 文章列表，详情展示。
@@ -84,6 +85,11 @@
 ![image.png](https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/article/2022/12/14/0a73001048ab4cb2815fb2aa2cd9d024.png)
 
 ![image.png](https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/article/2022/12/14/a82883ffc73c4d5f90065bcdf8c5f652.png)
+
+![image.png](https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/article/2023/12/15/6493ab13bd284bbb90f1666405910f71.png)
+
+![image.png](https://vue-vblog.oss-cn-shenzhen.aliyuncs.com/article/2023/12/15/5a20f605bc684e1b8b68b17c16278704.png)
+
 
 
 ### 问题解决
