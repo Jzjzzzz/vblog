@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.service.impl;
 
+import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.sign.JobUtil;
 import com.jzj.vblog.web.mapper.JobMapper;
 import com.jzj.vblog.web.pojo.entity.JobAndTrigger;
@@ -8,6 +9,7 @@ import com.jzj.vblog.web.service.JobService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +33,9 @@ public class JobServiceImpl implements JobService {
         this.scheduler = scheduler;
         this.jobMapper = jobMapper;
     }
+
+    @Autowired
+    private SchedulerFactoryBean schedulerFactoryBean;
 
     /**
      * 添加并启动定时任务
@@ -132,5 +137,19 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<JobAndTrigger> selectJobList(JobAndTrigger jobAndTrigger) {
         return jobMapper.list(jobAndTrigger);
+    }
+
+
+    /**
+     * 手动调用一次定时计划
+     * @param form
+     */
+    @Override
+    public void manualJob(JobVo form) {
+        try {
+            schedulerFactoryBean.getScheduler().triggerJob(JobKey.jobKey(form.getJobClassName(),form.getJobGroupName()));
+        } catch (SchedulerException e) {
+            throw new BusinessException("运行手动调用一次定时计划任务失败,失败原因:"+e);
+        }
     }
 }

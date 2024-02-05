@@ -26,4 +26,9 @@ public interface SysCountMapper extends BaseMapper<SysCount> {
      * @return
      */
     List<SysCount> getSevenCount();
+
+    /**
+     * 判断当前日期是否已生成数据
+     */
+    SysCount getNowDateCount();
 }

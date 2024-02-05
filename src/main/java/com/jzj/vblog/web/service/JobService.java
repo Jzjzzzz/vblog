@@ -57,4 +57,10 @@ public interface JobService {
 
 
     List<JobAndTrigger> selectJobList(JobAndTrigger jobAndTrigger);
+
+    /**
+     * 手动执行一次定时计划
+     * @param form
+     */
+    void manualJob(JobVo form);
 }

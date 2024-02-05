@@ -52,6 +52,13 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-magic-stick"
+            @click="handleManual(scope.$index, scope.row)"
+          >手动执行
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.$index, scope.row)"
           >修改
@@ -144,7 +151,7 @@
 </template>
 
 <script>
-import {add, del, handlePause, handleResume, list, updateCron} from '@/api/system/job'
+import {add, del, handlePause,handleManual, handleResume, list, updateCron} from '@/api/system/job'
 
 export default {
   name: 'Job',
@@ -314,6 +321,15 @@ export default {
       this.updateForm.jobGroupName = row.jobGroup
       handlePause(this.updateForm).then(res => {
         this.$modal.msgSuccess('暂停任务成功')
+        this.getList()
+      })
+    },
+    /** 手动调用 **/
+    handleManual: function (index, row) {
+      this.updateForm.jobClassName = row.jobName
+      this.updateForm.jobGroupName = row.jobGroup
+      handleManual(this.updateForm).then(res => {
+        this.$modal.msgSuccess('手动调用任务成功')
         this.getList()
       })
     },

@@ -108,4 +108,15 @@ public class SysJobController extends BaseController {
         return R.ok("修改成功");
     }
 
+    @ApiOperation("手动调用一次定时计划")
+    @PostMapping("/manualJob")
+    @Log(title = "定时任务", businessType = BusinessType.OTHER)
+    public R manualJob(@RequestBody JobVo form){
+        if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
+            return R.error("参数不能为空");
+        }
+        jobService.manualJob(form);
+        return R.ok("调用成功");
+    }
+
 }

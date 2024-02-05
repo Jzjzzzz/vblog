@@ -39,7 +39,10 @@ public class ArticleCountJob implements BaseJob {
         //点击数更新集合
         List<ArticleInform> newList = new ArrayList<>();
         try {
-            SysCount sysCount = new SysCount();
+            SysCount sysCount = sysCountMapper.getNowDateCount();
+            if(sysCount==null){
+                sysCount = new SysCount();
+            }
             //统计归档数
             sysCount.setSummaryCount((long) articleSummaryService.count());
             //统计文章数
@@ -61,10 +64,10 @@ public class ArticleCountJob implements BaseJob {
                 }
                 clickCount += inform.getClickRate();
                 likeCount += inform.getNumberLike();
-            }
-            if(newList.size()>BATCH_COUNT){
-                articleInformService.updateBatchById(newList);
-                newList.clear();
+                if(newList.size()>BATCH_COUNT){
+                    articleInformService.updateBatchById(newList);
+                    newList.clear();
+                }
             }
             sysCount.setUserCount(0L);
             sysCount.setClickCount(clickCount);
@@ -79,7 +82,11 @@ public class ArticleCountJob implements BaseJob {
             }
             sysCount.setClickDayCount(clickDayCount);
             sysCount.setLikeDayCount(likeDayCount);
-            sysCountMapper.insert(sysCount);
+            if(sysCount.getId()==null){
+                sysCountMapper.insert(sysCount);
+            } else {
+                sysCountMapper.updateById(sysCount);
+            }
         } catch (Exception e) {
             log.error("文章统计定时计划执行失败,失败原因:" + e.getMessage());
             e.printStackTrace();

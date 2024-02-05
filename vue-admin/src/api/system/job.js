@@ -34,6 +34,14 @@ export function handlePause(data) {
     data: data
   })
 }
+//手动调用定时计划
+export function handleManual(data) {
+  return request({
+    url: '/system/job/manualJob',
+    method: 'post',
+    data: data
+  })
+}
 
 // 恢复定时计划
 export function handleResume(data) {
