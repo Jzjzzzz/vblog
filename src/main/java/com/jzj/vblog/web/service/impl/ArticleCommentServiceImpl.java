@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.aspectj.manager.AsyncFactory;
+import com.jzj.vblog.aspectj.manager.AsyncManager;
 import com.jzj.vblog.utils.constant.CacheConstants;
 import com.jzj.vblog.utils.constant.RabbitConstants;
 import com.jzj.vblog.utils.sign.*;
@@ -16,17 +18,14 @@ import com.jzj.vblog.web.pojo.entity.SysWebInformation;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 import com.jzj.vblog.web.service.ArticleCommentService;
-import com.jzj.vblog.web.service.EmailService;
 import com.jzj.vblog.web.service.SysConfigService;
 import com.jzj.vblog.web.service.SysWebInformationService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * <p>
@@ -44,9 +43,6 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
     @Autowired
     private ArticleCommentMapper articleCommentMapper;
 
-
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
-
     @Autowired
     private SysWebInformationService webInformationService;
 
@@ -58,9 +54,6 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
-
-    @Autowired
-    private EmailService emailService;
 
     /**
      * 访客评论
@@ -120,9 +113,10 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
             if("true".equals(configService.selectConfigByKey(CacheConstants.SYS_RABBIT_ENABLE))){
                 rabbitTemplate.convertAndSend(RabbitConstants.EMAIL_QUEUE,new EmailMessageStruct(parentModel.getEmail(),sonModel.getNickName(),commentInfoVo.getReply()));
             }else {
-                CompletableFuture.runAsync(()->{
-                    emailService.sendMail(parentModel.getEmail(),sonModel.getNickName()+"对您留言的回复-"+"来着漫漫长路的博客",commentInfoVo.getReply());
-                },threadPoolTaskExecutor);
+                AsyncManager.me().execute(AsyncFactory.sendMail(
+                        parentModel.getEmail(),
+                        sonModel.getNickName()+"对您留言的回复-来着漫漫长路的博客",
+                        commentInfoVo.getReply()));
             }
         }
         return articleCommentMapper.insert(sonModel);
@@ -130,8 +124,7 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
 
     @Override
     public CommentInfoVo selectCommentById(String id) {
-        CommentInfoVo commentInfoVo = articleCommentMapper.selectCommentById(id);
-        return commentInfoVo;
+        return articleCommentMapper.selectCommentById(id);
     }
 
     @Override

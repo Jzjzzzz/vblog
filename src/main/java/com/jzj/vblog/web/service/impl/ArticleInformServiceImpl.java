@@ -3,14 +3,12 @@ package com.jzj.vblog.web.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.constant.CacheConstants;
 import com.jzj.vblog.utils.redis.RedisCache;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.ResponseEnum;
 import com.jzj.vblog.utils.sign.IpUtils;
 import com.jzj.vblog.utils.sign.ServletUtils;
-import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.mapper.ArticleContentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
@@ -19,17 +17,17 @@ import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.pojo.entity.SysWebInformation;
 import com.jzj.vblog.web.pojo.vo.*;
-import com.jzj.vblog.web.service.*;
+import com.jzj.vblog.web.service.ArticleInformService;
+import com.jzj.vblog.web.service.SysDictTypeService;
+import com.jzj.vblog.web.service.SysWebInformationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -56,15 +54,10 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     private SysDictTypeService dictTypeService;
 
     @Autowired
-    private SysConfigService sysConfigService;
-
-    @Autowired
     private SysWebInformationService webInformationService;
 
     @Autowired
     private RedisCache redisCache;
-
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
 
     /**
      * 后台分页文章列表
@@ -188,15 +181,8 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
     @Override
     public void deleteArticleById(String[] ids, HttpServletRequest request) {
         try {
-            List<String> imgList = new ArrayList<>();
             //根据ids批量查询图片地址和内容id
             List<ArticleInform> list = articleInformMapper.selectBatchIds(Arrays.asList(ids));
-            list.forEach(s -> imgList.add(s.getLogImg()));
-            //批量删除图片
-            CompletableFuture.runAsync(() -> {
-                UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
-                uploadService.deleteBtnImg(imgList, request);
-            }, threadPoolTaskExecutor);
             //批量删除文章基础
             articleInformMapper.deleteBatchIds(Arrays.asList(ids));
             //批量删除文章内容
@@ -248,7 +234,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         preData.setType("pre");
         preData.setName("没有更多了");
         preData.setRoute("#");
-        if(preArticle!=null && preArticle.size()>0){
+        if(preArticle!=null && !preArticle.isEmpty()){
             preData.setName(preArticle.get(0).getArticleTitle());
             preData.setRoute(preArticle.get(0).getId());
         }
@@ -264,7 +250,7 @@ public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, A
         nextData.setType("next");
         nextData.setName("没有更多了");
         nextData.setRoute("#");
-        if(nextArticle!=null && nextArticle.size()>0){
+        if(nextArticle!=null && !nextArticle.isEmpty()){
             nextData.setName(nextArticle.get(0).getArticleTitle());
             nextData.setRoute(nextArticle.get(0).getId());
         }

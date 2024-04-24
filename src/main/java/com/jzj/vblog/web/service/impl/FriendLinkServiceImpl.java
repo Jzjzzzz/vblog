@@ -28,8 +28,7 @@ public class FriendLinkServiceImpl extends ServiceImpl<FriendLinkMapper, FriendL
 
     @Override
     public List<FriendLink> selectLinkList(FriendLink friendLink) {
-        List<FriendLink> list = friendLinkMapper.getPageList(friendLink);
-        return list;
+        return friendLinkMapper.getPageList(friendLink);
     }
 
     @Override

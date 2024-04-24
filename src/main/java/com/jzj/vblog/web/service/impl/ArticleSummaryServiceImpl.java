@@ -3,28 +3,23 @@ package com.jzj.vblog.web.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.vblog.factory.UploadFactory;
 import com.jzj.vblog.utils.constant.UserConstants;
-import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.utils.sign.StringUtils;
-import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.mapper.ArticleSummaryMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.entity.SysWebInformation;
 import com.jzj.vblog.web.pojo.vo.ArticleListSummaryVo;
-import com.jzj.vblog.web.service.*;
-import org.springframework.beans.BeanUtils;
+import com.jzj.vblog.web.service.ArticleInformService;
+import com.jzj.vblog.web.service.ArticleSummaryService;
+import com.jzj.vblog.web.service.SysWebInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -47,12 +42,7 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     private ArticleInformService articleInformService;
 
     @Autowired
-    private SysConfigService sysConfigService;
-
-    @Autowired
     private SysWebInformationService webInformationService;
-
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
 
     @Override
     public List<ArticleSummary> selectSummaryList(ArticleSummary articleSummary) {
@@ -97,27 +87,19 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     @Override
     public int deleteSummaryByIds(List<String> ids, HttpServletRequest request) {
         try {
-            List<String> imgList = new ArrayList<>();
             //根据ids查询
             List<ArticleSummary> list = articleSummaryMapper.selectBatchIds(ids);
             list.forEach(s -> {
-                imgList.add(s.getBanner());
                 //更新文章基础表
                 List<ArticleInform> informList = articleInformService.list(new QueryWrapper<ArticleInform>().eq("aggregate_id", s.getId()));
-                if(informList.size()>0){
+                if(!informList.isEmpty()){
                     for (ArticleInform articleInform : informList) {
                         articleInform.setAggregateId("");
                     }
                     articleInformService.updateBatchById(informList);
                 }
             });
-            int result = articleSummaryMapper.deleteBatchIds(ids);
-            //多线程执行批量删除图片操作
-            CompletableFuture.runAsync(() -> {
-                UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
-                uploadService.deleteBtnImg(imgList, request); //批量删除图片
-            }, threadPoolTaskExecutor);
-            return result;
+            return articleSummaryMapper.deleteBatchIds(ids);
         } catch (Exception e) {
             log.error("批量删除错误:" + e.getMessage());
             throw new RuntimeException(e);
@@ -151,7 +133,7 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     public List<ArticleListSummaryVo> articleList(String id) {
         //获取文章列表
         List<ArticleInform> informs = articleInformService.list(new QueryWrapper<ArticleInform>().select("id","article_title","aggregate_id"));
-        List<ArticleListSummaryVo> list = informs.stream().map(s -> {
+        return informs.stream().map(s -> {
             ArticleListSummaryVo vo = new ArticleListSummaryVo();
             vo.setKey(s.getId());
             vo.setLabel(s.getArticleTitle());
@@ -160,6 +142,5 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
             }
             return vo;
         }).collect(Collectors.toList());
-        return list;
     }
 }

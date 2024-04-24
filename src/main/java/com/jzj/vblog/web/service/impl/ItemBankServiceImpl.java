@@ -26,8 +26,7 @@ public class ItemBankServiceImpl extends ServiceImpl<ItemBankMapper, ItemBank> i
 
     @Override
     public List<ItemBank> pageList(ItemBank itemBank) {
-        List<ItemBank> list = itemBankMapper.getPageList(itemBank);
-        return list;
+        return itemBankMapper.getPageList(itemBank);
     }
 
     @Override

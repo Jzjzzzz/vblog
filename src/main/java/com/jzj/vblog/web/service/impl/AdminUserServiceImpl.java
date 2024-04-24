@@ -55,8 +55,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
                 .setExtra("introduction", user.getIntroduction())
                 .setExtra("avatar", user.getAvatar())
                 .setExtra("roles", user.getRoles()));
-        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
-        return tokenInfo;
+        return StpUtil.getTokenInfo();
     }
 
     @Override

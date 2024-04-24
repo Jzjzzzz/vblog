@@ -49,11 +49,7 @@ public class SysTodoServiceImpl extends ServiceImpl<SysTodoMapper, SysTodo> impl
 
     @Override
     public int updateTodo(SysTodo sysTodo) {
-        if (sysTodo.isDone()) {
-            sysTodo.setDone(false);
-        } else {
-            sysTodo.setDone(true);
-        }
+        sysTodo.setDone(!sysTodo.isDone());
         return sysTodoMapper.updateById(sysTodo);
     }
 }

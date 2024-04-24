@@ -1,23 +1,19 @@
 package com.jzj.vblog.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.vblog.factory.UploadFactory;
+import com.jzj.vblog.aspectj.manager.AsyncFactory;
+import com.jzj.vblog.aspectj.manager.AsyncManager;
 import com.jzj.vblog.utils.constant.UserConstants;
-import com.jzj.vblog.utils.sign.SpringUtils;
 import com.jzj.vblog.utils.sign.StringUtils;
 import com.jzj.vblog.web.mapper.WebsiteResourceMapper;
 import com.jzj.vblog.web.pojo.entity.WebsiteResource;
-import com.jzj.vblog.web.service.SysConfigService;
-import com.jzj.vblog.web.service.UploadService;
 import com.jzj.vblog.web.service.WebsiteResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * <p>
@@ -31,13 +27,7 @@ import java.util.concurrent.CompletableFuture;
 public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMapper, WebsiteResource> implements WebsiteResourceService {
 
     @Autowired
-    private SysConfigService sysConfigService;
-
-    @Autowired
     private WebsiteResourceMapper websiteResourceMapper;
-
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
-
 
     /**
      * 分页查询资源
@@ -100,11 +90,8 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
             List<WebsiteResource> list = websiteResourceMapper.selectBatchIds(ids);
             list.forEach(s -> imgList.add(s.getResourceImg()));
             int result = websiteResourceMapper.deleteBatchIds(ids);
-            /*多线程执行批量删除图片操作*/
-            CompletableFuture.runAsync(() -> {
-                UploadService uploadService = UploadFactory.getUploadService(sysConfigService);
-                uploadService.deleteBtnImg(imgList, request); //批量删除图片
-            }, threadPoolTaskExecutor);
+            //异步删除图片
+            AsyncManager.me().execute(AsyncFactory.deleteBtnImg(imgList, request));
             return result;
         } catch (Exception e) {
             log.error("批量删除错误:" + e.getMessage());
