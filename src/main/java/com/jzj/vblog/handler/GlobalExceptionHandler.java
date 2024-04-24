@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Author Jzj
  * @Date 2022/6/6 16:49
  * @Version 1.0
- * @Message: 异常处理拦截器1
+ * @Message: 异常处理拦截器
  */
 @ControllerAdvice
 @Slf4j
