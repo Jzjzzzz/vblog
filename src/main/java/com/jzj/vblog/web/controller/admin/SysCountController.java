@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.service.SysCountService;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sys/count")
-@SaCheckLogin
 public class SysCountController {
 
     @Autowired

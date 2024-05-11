@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
@@ -24,7 +23,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/monitor/operlog")
-@SaCheckLogin
 public class SysOperLogController extends BaseController {
 
     @Autowired

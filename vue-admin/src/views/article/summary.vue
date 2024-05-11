@@ -18,7 +18,7 @@
           style="width: 240px"
         >
           <el-option
-            v-for="dict in dict.type.sys_summary_status"
+            v-for="dict in dict.type.currency_status"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -92,7 +92,7 @@
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_summary_status" :value="scope.row.status" />
+          <dict-tag :options="dict.type.currency_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -141,7 +141,7 @@
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
             <el-option
-              v-for="dict in dict.type.sys_summary_status"
+              v-for="dict in dict.type.currency_status"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
@@ -167,7 +167,7 @@
     </el-dialog>
 
     <!-- 文章列表 -->
-    <el-dialog :title="title" :visible.sync="openList" width="30%" append-to-body>
+    <el-dialog :title="title" :visible.sync="openList" append-to-body width="780px">
       <el-transfer
         v-model="value"
         :titles="['所有文章', '当前归档']"
@@ -178,7 +178,7 @@
     </el-dialog>
 
     <!-- 图片列表 -->
-    <el-dialog  :visible.sync="imgOpenList" width="650px" append-to-body>
+    <el-dialog  :visible.sync="imgOpenList" width="780px" append-to-body>
       <div class="goods-list-container" v-for="(item, index) in this.galleryList" :key="index">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <div class="goods-list-card-body">
@@ -221,7 +221,7 @@ import {list} from "@/api/gallery/gallery";
 
 export default {
   name: 'Summary',
-  dicts: ['sys_summary_status'],
+  dicts: ['currency_status'],
   data() {
     return {
       summaryId: '',

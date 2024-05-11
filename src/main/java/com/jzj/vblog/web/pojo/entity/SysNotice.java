@@ -39,7 +39,7 @@ public class SysNotice extends BaseEntity {
     @ApiModelProperty(value = "公告内容")
     private String noticeContent;
 
-    @ApiModelProperty(value = "公告状态（0正常 1关闭）")
+    @ApiModelProperty(value = "公告状态（1正常 0关闭）")
     private String status;
 
     @ApiModelProperty(value = "创建者")

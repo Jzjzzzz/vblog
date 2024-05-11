@@ -1,9 +1,7 @@
 package com.jzj.vblog.web.controller.admin;
 
-import com.jzj.vblog.web.pojo.entity.AdminUser;
-import com.jzj.vblog.web.pojo.vo.LoginVo;
-import com.jzj.vblog.web.service.AdminUserService;
-import org.junit.jupiter.api.Test;
+import com.jzj.vblog.utils.sign.MD5Utils;
+import com.jzj.vblog.web.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,14 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class LoginControllerTest {
 
     @Autowired
-    AdminUserService adminUserService;
+    private SysUserService sysUserService;
 
-    @Test
-   public void login() {
-        LoginVo loginVo = new LoginVo();
-        loginVo.setUsername("admin");
-        loginVo.setPassword("111111");
-        adminUserService.login(loginVo);
-        AdminUser user = new AdminUser();
+
+    public static void main(String[] args) {
+        String encrypt = MD5Utils.encrypt("111111");
+        System.out.println(encrypt);
     }
 }

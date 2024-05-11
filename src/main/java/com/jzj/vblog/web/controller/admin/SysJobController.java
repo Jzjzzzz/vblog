@@ -1,7 +1,5 @@
 package com.jzj.vblog.web.controller.admin;
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.hutool.core.util.StrUtil;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
@@ -29,7 +27,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/job")
 @Slf4j
-@SaCheckLogin
 public class SysJobController extends BaseController {
     private final JobService jobService;
 
@@ -40,7 +37,6 @@ public class SysJobController extends BaseController {
 
     @ApiOperation("定时计划列表")
     @GetMapping
-    @SaCheckLogin
     public TableDataInfo list(JobAndTrigger jobAndTrigger) {
         startPage();
         List<JobAndTrigger> list = jobService.selectJobList(jobAndTrigger);
@@ -63,7 +59,7 @@ public class SysJobController extends BaseController {
     @DeleteMapping
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     public R deleteJob(@RequestBody JobVo form) throws SchedulerException {
-        if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
+        if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error();
         }
         jobService.deleteJob(form);
@@ -74,7 +70,7 @@ public class SysJobController extends BaseController {
     @PutMapping("/pause")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     public R pauseJob(@RequestBody JobVo form) throws SchedulerException {
-        if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
+        if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
         jobService.pauseJob(form);
@@ -85,7 +81,7 @@ public class SysJobController extends BaseController {
     @PutMapping("/resume")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     public R resumeJob(@RequestBody JobVo form) throws SchedulerException {
-        if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
+        if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
 
@@ -112,7 +108,7 @@ public class SysJobController extends BaseController {
     @PostMapping("/manualJob")
     @Log(title = "定时任务", businessType = BusinessType.OTHER)
     public R manualJob(@RequestBody JobVo form){
-        if (StrUtil.hasBlank(form.getJobGroupName(), form.getJobClassName())) {
+        if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
         jobService.manualJob(form);

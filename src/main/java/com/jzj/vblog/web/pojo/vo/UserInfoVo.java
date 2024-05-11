@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Author Jzj
  * @Date 2022/6/7 16:43
@@ -31,4 +33,10 @@ public class UserInfoVo {
 
     @ApiModelProperty("手机号")
     private String phone;
+
+    @ApiModelProperty("菜单权限值")
+    private List<RouterVo> routerList;
+
+    @ApiModelProperty("按钮权限值")
+    private List<String> permsList;
 }

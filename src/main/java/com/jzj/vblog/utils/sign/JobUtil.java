@@ -8,7 +8,7 @@ import com.jzj.vblog.job.base.BaseJob;
  * 定时任务反射工具类
  * </p>
  *
- * @author yangkai.shen
+ * @author Jzj
  * @date Created in 2018-11-26 13:33
  */
 public class JobUtil {

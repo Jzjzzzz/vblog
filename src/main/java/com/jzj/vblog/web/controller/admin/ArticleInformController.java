@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
@@ -12,6 +11,7 @@ import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.service.ArticleInformService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/article/inform")
-@SaCheckLogin
 public class ArticleInformController extends BaseController {
 
     @Autowired
@@ -35,6 +34,7 @@ public class ArticleInformController extends BaseController {
 
     @ApiOperation("分页列表")
     @GetMapping
+    @PreAuthorize("hasAuthority('btn.article.list')")
     public TableDataInfo list(ArticleInform entity) {
         startPage();
         List<ArticleInform> list = articleInformService.selectList(entity);

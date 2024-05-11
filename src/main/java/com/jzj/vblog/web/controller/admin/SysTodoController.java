@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sys/todo")
-@SaCheckLogin
 public class SysTodoController extends BaseController {
 
     @Autowired

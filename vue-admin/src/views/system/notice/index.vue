@@ -82,7 +82,7 @@
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_notice_status" :value="scope.row.status" />
+          <dict-tag :options="dict.type.currency_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="创建者" align="center" prop="createBy" width="100" />
@@ -142,7 +142,7 @@
             <el-form-item label="状态">
               <el-radio-group v-model="form.status">
                 <el-radio
-                  v-for="dict in dict.type.sys_notice_status"
+                  v-for="dict in dict.type.currency_status"
                   :key="dict.value"
                   :label="dict.value"
                 >{{ dict.label }}</el-radio>
@@ -169,7 +169,7 @@ import { listNotice, getNotice, delNotice, addNotice, updateNotice } from '@/api
 
 export default {
   name: 'Notice',
-  dicts: ['sys_notice_status', 'sys_notice_type'],
+  dicts: ['currency_status', 'sys_notice_type'],
   data() {
     return {
       // 遮罩层

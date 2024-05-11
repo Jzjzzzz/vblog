@@ -33,7 +33,7 @@
           style="width: 240px"
         >
           <el-option
-            v-for="dict in dict.type.sys_website_status"
+            v-for="dict in dict.type.currency_status"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -127,7 +127,7 @@
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_website_status" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.currency_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column label="点击量" align="center" prop="clickRate" :show-overflow-tooltip="true"/>
@@ -189,7 +189,7 @@
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
             <el-option
-              v-for="dict in dict.type.sys_website_status"
+              v-for="dict in dict.type.currency_status"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
@@ -222,7 +222,7 @@ import {deleteImg} from '@/api/upload'
 
 export default {
   name: 'Website',
-  dicts: ['sys_website_type', 'sys_website_status'],
+  dicts: ['sys_website_type', 'currency_status'],
   data() {
     return {
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址

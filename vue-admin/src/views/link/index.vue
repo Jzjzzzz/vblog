@@ -18,7 +18,7 @@
           style="width: 240px"
         >
           <el-option
-            v-for="dict in dict.type.sys_friend_link"
+            v-for="dict in dict.type.currency_status"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -50,7 +50,9 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-        >新增</el-button>
+          :disabled="$hasBP('btn.link.add')  === false"
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -58,9 +60,10 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.link.edit')  === false"
           @click="handleUpdate"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -68,23 +71,24 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.link.del')  === false"
           @click="handleDelete"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
-        <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+        <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
       </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column type="index" label="序号" align="center"  />
-      <el-table-column label="友链名称" align="center" prop="name" :show-overflow-tooltip="true" />
-      <el-table-column label="友链地址" align="center" prop="link" :show-overflow-tooltip="true" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column type="index" label="序号" align="center"/>
+      <el-table-column label="友链名称" align="center" prop="name" :show-overflow-tooltip="true"/>
+      <el-table-column label="友链地址" align="center" prop="link" :show-overflow-tooltip="true"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_friend_link" :value="scope.row.status" />
+          <dict-tag :options="dict.type.currency_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -99,13 +103,17 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-          >修改</el-button>
+            :disabled="$hasBP('btn.link.edit')  === false"
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-          >删除</el-button>
+            :disabled="$hasBP('btn.link.del')  === false"
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -122,15 +130,15 @@
     <el-dialog :title="title" :visible.sync="open" width="30%" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="友链名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入友链名称" />
+          <el-input v-model="form.name" placeholder="请输入友链名称"/>
         </el-form-item>
         <el-form-item label="友链地址" prop="link">
-          <el-input v-model="form.link" placeholder="请输入友链地址" />
+          <el-input v-model="form.link" placeholder="请输入友链地址"/>
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
             <el-option
-              v-for="dict in dict.type.sys_friend_link"
+              v-for="dict in dict.type.currency_status"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
@@ -147,10 +155,11 @@
 </template>
 
 <script>
-import { list,add,update,del,getInfo } from '@/api/link/link'
+import {list, add, update, del, getInfo} from '@/api/link/link'
+
 export default {
   name: 'Link',
-  dicts: ['sys_friend_link'],
+  dicts: ['currency_status'],
   data() {
     return {
       // 遮罩层
@@ -185,13 +194,13 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: '站点名称不能为空', trigger: 'blur' }
+          {required: true, message: '站点名称不能为空', trigger: 'blur'}
         ],
         link: [
-          { required: true, message: '站点地址不能为空', trigger: 'blur' }
+          {required: true, message: '站点地址不能为空', trigger: 'blur'}
         ],
         status: [
-          { required: true, message: '资源状态不能为空', trigger: 'blur' }
+          {required: true, message: '资源状态不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -202,12 +211,13 @@ export default {
   methods: {
     /** 查询文章列表 */
     getList() {
+      this.isPreList("btn.link.list")
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        this.list = response.rows
-        this.total = response.total
-        this.loading = false
-      }
+          this.list = response.rows
+          this.total = response.total
+          this.loading = false
+        }
       )
     },
     // 取消按钮
@@ -258,7 +268,7 @@ export default {
       })
     },
     /** 提交按钮 */
-    submitForm: function() {
+    submitForm: function () {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
@@ -280,12 +290,13 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$modal.confirm('是否确认删除资源编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除资源编号为"' + ids + '"的数据项？').then(function () {
         return del(ids)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess('删除成功')
-      }).catch(() => {})
+      }).catch(() => {
+      })
     }
   }
 }

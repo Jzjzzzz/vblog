@@ -13,6 +13,9 @@ public class UserConstants {
      */
     public static final String SYS_USER = "SYS_USER";
 
+    /*系统超级用户id*/
+    public static final String SYS_ADMIN_ID = "149dd22e7c4e8b0f1121ac1d3718dd93";
+
     /** 正常状态 */
     public static final String NORMAL = "0";
 

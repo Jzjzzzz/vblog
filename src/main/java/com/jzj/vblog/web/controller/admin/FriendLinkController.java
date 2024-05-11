@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.R;
@@ -12,6 +11,7 @@ import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.FriendLinkService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +28,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/friend/link")
-@SaCheckLogin
 public class FriendLinkController extends BaseController {
     @Autowired
     private FriendLinkService friendLinkService;
 
     @ApiOperation("分页列表")
     @GetMapping
+    @PreAuthorize("hasAuthority('btn.link.list')")
     public TableDataInfo pageList(FriendLink friendLink) {
         startPage();
         List<FriendLink> list = friendLinkService.selectLinkList(friendLink);
@@ -44,6 +44,7 @@ public class FriendLinkController extends BaseController {
     @Log(title = "友链管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增友链")
     @PostMapping
+    @PreAuthorize("hasAuthority('btn.link.add')")
     public R add(@Validated @RequestBody FriendLink friendLink) {
         if (UserConstants.NOT_UNIQUE.equals(friendLinkService.checkLinkUnique(friendLink))) {
             return R.error("新增友链'" + friendLink.getName()+ "'失败，友链已存在");
@@ -53,6 +54,7 @@ public class FriendLinkController extends BaseController {
 
     @ApiOperation("根据资源id获取资源详细信息")
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('btn.link.list')")
     public R getInfo(@PathVariable String id) {
         return R.ok(friendLinkService.selectLinkById(id));
     }
@@ -60,6 +62,7 @@ public class FriendLinkController extends BaseController {
     @ApiOperation("修改资源")
     @Log(title = "友链管理", businessType = BusinessType.UPDATE)
     @PutMapping
+    @PreAuthorize("hasAuthority('btn.link.edit')")
     public R edit(@Validated @RequestBody FriendLink friendLink) {
         if (UserConstants.NOT_UNIQUE.equals(friendLinkService.checkLinkUnique(friendLink))) {
             return R.error("修改资源'" + friendLink.getName() + "'失败，资源已存在");
@@ -70,6 +73,7 @@ public class FriendLinkController extends BaseController {
     @ApiOperation("删除资源")
     @Log(title = "友链管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
+    @PreAuthorize("hasAuthority('btn.link.del')")
     public R remove(@PathVariable List<String> ids, HttpServletRequest request) {
         return toAjax(friendLinkService.deleteLinkByIds(ids, request));
     }

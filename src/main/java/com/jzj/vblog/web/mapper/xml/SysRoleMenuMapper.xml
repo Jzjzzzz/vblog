@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.vblog.web.mapper.SysRoleMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.SysRoleMenu">
+        <id column="id" property="id" />
+        <result column="role_id" property="roleId" />
+        <result column="menu_id" property="menuId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        SELECT
+        id, role_id, menu_id, create_time, update_time, is_deleted
+        FROM sys_role_menu
+    </sql>
+    <delete id="deleteBatchByRoleId">
+        DELETE FROM sys_role_menu WHERE role_id = #{roleId}
+    </delete>
+
+    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.SysRoleMenu">
+        <include refid="Base_Column_List"/>
+        <where>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+</mapper>

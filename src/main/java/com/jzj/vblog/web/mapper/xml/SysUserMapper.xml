@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.vblog.web.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.SysUser">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="head_url" property="headUrl" />
+        <result column="dept_id" property="deptId" />
+        <result column="post_id" property="postId" />
+        <result column="open_id" property="openId" />
+        <result column="description" property="description" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="sex" property="sex" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        SELECT
+        id, username, sex,password, name, phone, head_url, dept_id, post_id, open_id, description, status, create_time, update_time, is_deleted
+        FROM sys_user
+    </sql>
+
+    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.SysUser">
+        <include refid="Base_Column_List"/>
+        <where>
+            <if test="username != null and username != ''">
+                AND username like concat('%',#{username},'%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+</mapper>

@@ -15,23 +15,22 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-    /**
-     * 表示通过aop框架暴露该代理对象,AopContext能够访问
-     */
-    private static final long MAX_AGE = 24 * 60 * 60;
     @Bean
     public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        // 设置访问源地址
+        config.addAllowedOriginPattern("*");
+        // 设置访问源请求头
+        config.addAllowedHeader("*");
+        // 设置访问源请求方法
+        config.addAllowedMethod("*");
+        // 有效期 1800秒
+        config.setMaxAge(1800L);
+        // 添加映射路径，拦截一切请求
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        // 1 设置访问源地址
-        corsConfiguration.addAllowedOrigin("*");
-        // 2 设置访问源请求头
-        corsConfiguration.addAllowedHeader("*");
-        // 3 设置访问源请求方法
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.setMaxAge(MAX_AGE);
-        // 4 对接口配置跨域设置
-        source.registerCorsConfiguration("/**", corsConfiguration);
+        source.registerCorsConfiguration("/**", config);
+        // 返回新的CorsFilter
         return new CorsFilter(source);
     }
 

@@ -71,4 +71,9 @@ public class CacheConstants {
      * 文章点击数缓存
      */
     public static final String VBLOG_ARTICLE_CLICK = "vblog:article:click:";
+
+    /**
+     * 用户菜单权限缓存
+     */
+    public static final String VBLOG_AUTH_USER = "vblog:auth:user:";
 }

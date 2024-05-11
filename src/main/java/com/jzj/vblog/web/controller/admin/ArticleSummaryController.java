@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.BusinessException;
@@ -30,7 +29,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/article/summary")
-@SaCheckLogin
 public class ArticleSummaryController extends BaseController {
 
     @Autowired

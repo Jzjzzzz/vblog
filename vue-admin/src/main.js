@@ -6,7 +6,7 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-import { addDateRange, handleTree, parseTime, resetForm, selectDictLabel, selectDictLabels } from '@/utils/vblog'
+import { addDateRange, handleTree, parseTime, resetForm,isPerList, selectDictLabel, selectDictLabels } from '@/utils/vblog'
 import '@/icons' // icon
 import '@/permission' // permission control
 import { getDicts } from '@/api/system/dict/data'
@@ -29,6 +29,9 @@ import Editor from '@/components/Editor'
 import EleUploadImage from 'vue-ele-upload-image'
 // Markdown
 import mavonEditor from 'mavon-editor'
+// 自定义权限判断方法
+import hasBtnPermission from '@/utils/btn-permission'
+
 
 /**
  * If you don't want to use mock-server
@@ -48,9 +51,11 @@ Vue.prototype.getDicts = getDicts
 Vue.prototype.addDateRange = addDateRange
 Vue.prototype.parseTime = parseTime
 Vue.prototype.resetForm = resetForm
+Vue.prototype.isPreList = isPerList
 Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.handleTree = handleTree
+Vue.prototype.$hasBP = hasBtnPermission
 Vue.component('Editor', Editor)
 Vue.component(EleUploadImage.name, EleUploadImage)
 

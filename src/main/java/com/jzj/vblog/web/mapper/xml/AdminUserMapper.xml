@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jzj.vblog.web.mapper.AdminUserMapper">
-
-    <select id="login" resultType="com.jzj.vblog.web.pojo.entity.AdminUser">
-        SELECT id,username,avatar,phone,roles,introduction FROM admin_user
-        WHERE username=#{username} and password=#{password}
-    </select>
-</mapper>

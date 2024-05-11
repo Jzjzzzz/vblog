@@ -6,6 +6,6 @@ package com.jzj.vblog.utils.constant;
  * @Version 1.0
  * @Message: RabbitMQ常量池
  */
-public interface RabbitConstants {
-    String EMAIL_QUEUE = "email.queue";
+public class RabbitConstants {
+    public final static String EMAIL_QUEUE = "email.queue";
 }

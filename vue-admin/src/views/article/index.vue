@@ -80,6 +80,7 @@
             plain
             icon="el-icon-plus"
             size="mini"
+            :disabled="$hasBP('btn.article.add')  === false"
           >新增
           </el-button>
         </router-link>

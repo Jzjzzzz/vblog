@@ -53,178 +53,19 @@ export const constantRoutes = [
       meta: { title: '主页', icon: 'dashboard' }
     }]
   },
-  {
-    path: '/article',
-    component: Layout,
-    redirect: '/article/index',
-    name: 'sys_article',
-    meta: { title: '文章管理', icon: 'el-icon-collection' },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'index',
-        name: 'Article',
-        component: () => import('@/views/article/index'),
-        meta: { title: '文章列表', icon: 'el-icon-receiving' }
-      },
-      {
-        path: 'summary',
-        name: 'Summary',
-        component: () => import('@/views/article/summary'),
-        meta: { title: '文章归档', icon: 'el-icon-folder-opened' }
-      },
-      {
-        path: 'add/',
-        name: 'Add',
-        component: () => import('@/views/article/add'),
-        hidden: true,
-        meta: { title: '新增文章', icon: 'el-icon-receiving' }
-      },
-      {
-        path: 'update/:id',
-        name: 'update',
-        component: () => import('@/views/article/add'),
-        hidden: true,
-        meta: { title: '修改文章', icon: 'el-icon-receiving' }
-      },
-      {
-        path: 'comment',
-        name: 'Comment',
-        component: () => import('@/views/article/comment'),
-        meta: { title: '评论列表', icon: 'el-icon-edit-outline' }
-      },
-    ]
-  },
-  {
-    path: '/website',
-    component: Layout,
-    redirect: '/website/index',
-    name: 'sys_website',
-    meta: { title: '资源管理', icon: 'el-icon-folder-opened' },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'index',
-        name: 'Website',
-        component: () => import('@/views/website/index'),
-        meta: { title: '资源列表', icon: 'el-icon-receiving' }
-      }
-    ]
-  },
-  {
-    path: '/link',
-    component: Layout,
-    redirect: '/link/index',
-    name: 'friend_link',
-    meta: { title: '友链管理', icon: 'el-icon-position' },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'index',
-        name: 'Link',
-        component: () => import('@/views/link/index'),
-        meta: { title: '友链列表', icon: 'el-icon-receiving' }
-      }
-    ]
-  },
-  {
-    path: '/gallery',
-    component: Layout,
-    redirect: '/gallery/index',
-    name: 'gallery',
-    meta: { title: '图片管理', icon: 'el-icon-collection-tag' },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'index',
-        name: 'GalleryList',
-        component: () => import('@/views/gallery/index'),
-        meta: { title: '图库', icon: 'el-icon-receiving' }
-      }
-    ]
-  },
-  {
-    path: '/itembank',
-    component: Layout,
-    redirect: '/itembank/index',
-    name: 'itembank',
-    meta: { title: '题库', icon: 'el-icon-collection-tag' },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'index',
-        name: 'itembankList',
-        component: () => import('@/views/itembank/index'),
-        meta: { title: '题库', icon: 'el-icon-receiving' }
-      }
-    ]
-  },
-  {
-    path: '/system',
-    component: Layout,
-    redirect: '/system/dict',
-    name: 'System',
-    meta: { title: '系统管理', icon: 'el-icon-setting' },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'dict',
-        name: 'Dict',
-        component: () => import('@/views/system/dict/index'),
-        meta: { title: '字典分类', icon: 'el-icon-receiving' }
-      },
-      {
-        path: 'data/:id(\\d+)',
-        name: 'Data',
-        hidden: true,
-        component: () => import('@/views/system/dict/data'),
-        meta: { title: '字典数据', icon: 'el-icon-receiving' }
-      },
-      {
-        path: 'config',
-        name: 'Config',
-        component: () => import('@/views/system/config/index'),
-        meta: { title: '参数设置', icon: 'el-icon-s-tools' }
-      },
-      {
-        path: 'job',
-        name: 'Job',
-        component: () => import('@/views/system/job/index'),
-        meta: { title: '定时任务', icon: 'el-icon-alarm-clock' }
-      },
-      {
-        path: 'information',
-        name: 'Information',
-        component: () => import('@/views/system/information/index'),
-        meta: { title: '网站信息', icon: 'el-icon-postcard' }
-      },
-      {
-        path: 'notice',
-        name: 'Notice',
-        component: () => import('@/views/system/notice/index'),
-        meta: { title: '公告管理', icon: 'el-icon-s-comment' }
-      },
-      {
-        path: 'operlog',
-        name: 'Operlog',
-        component: () => import('@/views/monitor/operlog/index'),
-        meta: { title: '日志管理', icon: 'el-icon-s-order' }
-      }
-    ]
-  },
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'http://jzjzzzz.cn/',
-        meta: { title: '博客首页', icon: 'link' }
-      }
-    ]
-  },
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'http://jzjzzzz.cn/',
+  //       meta: { title: '博客首页', icon: 'link' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

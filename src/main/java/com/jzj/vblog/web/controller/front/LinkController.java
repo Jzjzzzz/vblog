@@ -1,6 +1,5 @@
 package com.jzj.vblog.web.controller.front;
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.pojo.entity.FriendLink;

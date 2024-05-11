@@ -1,8 +1,12 @@
 package com.jzj.vblog.web.controller.admin;
 
-import com.jzj.vblog.web.pojo.entity.AdminUser;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
 
-import java.util.Date;
+import java.util.Map;
 
 /**
  * @Author Jzj
@@ -10,9 +14,19 @@ import java.util.Date;
  * @Version 1.0
  * @Message:
  */
+@SpringBootTest
 public class TestDemo01 {
-    public static void main(String[] args) {
-        Date date = new Date();
-        System.out.println(date);
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @Test
+    public void test01(){
+        Map<String, FilterRegistrationBean> beans = applicationContext.getBeansOfType(FilterRegistrationBean.class);
+        for (Map.Entry<String, FilterRegistrationBean> entry : beans.entrySet()) {
+                    FilterRegistrationBean bean = entry.getValue();
+                     System.out.println("Filter: " + bean.getFilter().getClass().getName() +
+                                        ", Order: " + bean.getOrder());
+                 }
+
     }
 }

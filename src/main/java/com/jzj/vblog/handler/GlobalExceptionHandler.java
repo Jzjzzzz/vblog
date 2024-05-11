@@ -4,6 +4,7 @@ import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.ExceptionUtil;
 import com.jzj.vblog.utils.result.R;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,5 +46,14 @@ public class GlobalExceptionHandler {
         log.error(ExceptionUtil.getMessage(e));
         e.printStackTrace();
         return R.error().code(e.getCode()).message(e.getMessage());
+    }
+
+    /**
+     * spring security异常
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    public R error(AccessDeniedException e) throws AccessDeniedException{
+        return R.error(e.getMessage());
     }
 }
