@@ -35,19 +35,6 @@
     <el-dialog title="个人资料" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="修改头像" name="first">
-            <el-form-item label="头像" label-width="44%" >
-              <ele-upload-image
-                :action="BASE_API+uploadUrl"
-                v-model="form.avatar"
-                :responseFn="handleResponse"
-                :isShowSuccessTip="false"
-                :fileSize="5"
-                :file-type="imgType"
-                :beforeRemove="beforeRemove"
-              ></ele-upload-image>
-            </el-form-item>
-          </el-tab-pane>
           <el-tab-pane label="修改密码" name="second">
             <el-form-item label="旧密码" :label-width="formLabelWidth">
               <el-input type="password" v-model="form.oldpassword" autocomplete="off"></el-input>

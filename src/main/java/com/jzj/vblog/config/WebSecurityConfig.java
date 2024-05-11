@@ -1,5 +1,7 @@
 package com.jzj.vblog.config;
 
+import com.anji.captcha.service.CaptchaService;
+import com.jzj.vblog.security.custom.CustomLogoutHandler;
 import com.jzj.vblog.security.custom.CustomMd5PasswordEncoder;
 import com.jzj.vblog.security.filter.TokenAuthenticationFilter;
 import com.jzj.vblog.security.filter.TokenLoginFilter;
@@ -42,6 +44,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CorsFilter corsFilter;
 
+    @Autowired
+    private CaptchaService captchaService;
+
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -56,12 +61,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 指定某些接口不需要通过验证即可访问。登陆接口肯定是不需要认证的
                 .antMatchers("/admin/index/login","/admin/index/get","/admin/index/check").permitAll()
                 // 这里意思是其它所有接口需要认证才能访问
-                .anyRequest().authenticated()
-                .and()
+                .anyRequest().authenticated().and()
                 .headers().frameOptions().disable().and()
+                .logout().logoutUrl("/admin/index/logout")
+                .addLogoutHandler(new CustomLogoutHandler(redisCache)).and()
                 //TokenAuthenticationFilter放到UsernamePasswordAuthenticationFilter的前面，这样做就是为了除了登录的时候去查询数据库外，其他时候都用token进行认证。
                 .addFilterBefore(new TokenAuthenticationFilter(redisCache), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new TokenLoginFilter(authenticationManager(),redisCache));
+                .addFilter(new TokenLoginFilter(authenticationManager(),redisCache,captchaService));
         //禁用session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

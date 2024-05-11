@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-08-23
  */
 @RestController
-@RequestMapping("/sys/count")
+@RequestMapping("/system/count")
 public class SysCountController {
 
     @Autowired

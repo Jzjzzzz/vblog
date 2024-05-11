@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2022-07-28
  */
 @RestController
-@RequestMapping("/sys/web/information")
+@RequestMapping("/system/web/information")
 public class SysWebInformationController extends BaseController {
     @Autowired
     private SysWebInformationService sysWebInformationService;

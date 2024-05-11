@@ -3,17 +3,13 @@ package com.jzj.vblog.web.controller.admin;
 import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
-import com.jzj.vblog.utils.result.ResponseEnum;
-import com.jzj.vblog.utils.sign.JwtHelper;
+import com.jzj.vblog.utils.sign.JwtUtils;
 import com.jzj.vblog.utils.sign.VerifyCodeUtils;
 import com.jzj.vblog.web.controller.BaseController;
-import com.jzj.vblog.web.pojo.entity.SysUser;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
-import com.jzj.vblog.web.pojo.vo.LoginVo;
 import com.jzj.vblog.web.pojo.vo.UserUpdateVo;
 import com.jzj.vblog.web.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -23,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -43,30 +38,6 @@ public class AdminIndexController extends BaseController {
     @Autowired
     private SysUserService sysUserService;
 
-    @ApiOperation("管理员登录")
-    @PostMapping("/login")
-    public R login(@RequestBody LoginVo vo) {
-        //行为验证码二次校验
-        CaptchaVO captchaVO = new CaptchaVO();
-        captchaVO.setCaptchaVerification(vo.getCode());
-        ResponseModel response = captchaService.verification(captchaVO);
-        if (!"0000".equals(response.getRepCode())) {
-            throw new BusinessException(ResponseEnum.CODE_ERROR);
-        }
-        //登录校验
-        SysUser sysUser = sysUserService.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, vo.getUsername()));
-        Map<String, Object> map = new HashMap<>();
-        map.put("token", JwtHelper.createToken(sysUser.getId(), sysUser.getUsername()));
-        return R.ok(map);
-    }
-
-    @ApiOperation("退出登录")
-    @PostMapping("/logout")
-    public R logout() {
-        // StpUtil.logout();
-        return R.ok();
-    }
-
     @ApiOperation("获取行为验证码")
     @PostMapping({"/get"})
     public R get(@RequestBody CaptchaVO data, HttpServletRequest request) {
@@ -79,13 +50,19 @@ public class AdminIndexController extends BaseController {
     @PostMapping({"/check"})
     public R check(@RequestBody CaptchaVO data, HttpServletRequest request) {
         data.setBrowserInfo(VerifyCodeUtils.getRemoteId(request));
-        return R.ok(captchaService.check(data));
+        try {
+            ResponseModel response = captchaService.check(data);
+            return R.ok(response);
+        } catch (Exception e) {
+            return R.error("验证码校验异常");
+        }
     }
 
     @GetMapping("/info")
     @ApiOperation("获取用户信息")
     public R info(HttpServletRequest request) {
-        String username = JwtHelper.getUsername(request.getHeader("token"));
+        if(!JwtUtils.checkToken(request)) throw new BusinessException("无效token");
+        String username = JwtUtils.getUsername(request.getHeader("token"));
         Map<String, Object> map = sysUserService.info(username);
         return R.ok(map);
     }

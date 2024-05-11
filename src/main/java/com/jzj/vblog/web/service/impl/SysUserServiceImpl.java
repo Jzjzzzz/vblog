@@ -14,8 +14,11 @@ import com.jzj.vblog.web.pojo.vo.UserUpdateVo;
 import com.jzj.vblog.web.service.SysMenuService;
 import com.jzj.vblog.web.service.SysRoleService;
 import com.jzj.vblog.web.service.SysUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -90,7 +93,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser sysUser = this.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
         if(null == sysUser) {
-            throw new UsernameNotFoundException("账号密码错误!");
+            throw new BusinessException("账号密码错误!");
         }
         if(sysUser.getStatus().equals("0")) {
             throw new BusinessException("账号已停用!");
@@ -125,7 +128,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public int updateUser(UserUpdateVo vo) {
-        //TODO 修改用户信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SysUser user = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, authentication.getName()));
+        if(null == user) throw new BusinessException("用户不存在!");
+        if(StringUtils.isNotEmpty(vo.getNewpassword1())) {
+            if(!vo.getNewpassword1().equals(vo.getNewpassword2())) throw new BusinessException("两次输入的密码不一致!");
+            if(StringUtils.isEmpty(vo.getOldpassword())) throw new BusinessException("旧密码不能为空!");
+            String oldPassword = MD5Utils.encrypt(vo.getOldpassword());
+            if(!oldPassword.equals(user.getPassword())) throw new BusinessException("旧密码错误!");
+            user.setPassword(MD5Utils.encrypt(vo.getNewpassword1()));
+            return baseMapper.updateById(user);
+        }
         return 0;
     }
 }

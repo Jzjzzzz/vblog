@@ -1,9 +1,11 @@
 import request from '@/utils/request'
 
+const api_name = '/system/role'
+
 // 查询列表
 export function list(query) {
   return request({
-    url: '/system/role/',
+    url: `${api_name}`,
     method: 'get',
     params: query
   })
@@ -12,7 +14,7 @@ export function list(query) {
 // 角色列表
 export function listAll(userId) {
   return request({
-    url: '/system/role/listAll/' + userId,
+    url: `${api_name}/listAll/${userId}`,
     method: 'get'
   })
 }
@@ -20,7 +22,7 @@ export function listAll(userId) {
 // 查询详细
 export function get(id) {
   return request({
-    url: '/system/role/' + id,
+    url: `${api_name}/${id}`,
     method: 'get'
   })
 }
@@ -28,7 +30,7 @@ export function get(id) {
 // 新增
 export function add(data) {
   return request({
-    url: '/system/role',
+    url: `${api_name}`,
     method: 'post',
     data: data
   })
@@ -37,7 +39,7 @@ export function add(data) {
 // 修改
 export function update(data) {
   return request({
-    url: '/system/role',
+    url: `${api_name}`,
     method: 'put',
     data: data
   })
@@ -46,7 +48,7 @@ export function update(data) {
 // 删除
 export function del(id) {
   return request({
-    url: '/system/role/' + id,
+    url: `${api_name}/${id}`,
     method: 'delete'
   })
 }

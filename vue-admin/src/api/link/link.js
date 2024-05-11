@@ -1,9 +1,11 @@
 import request from '@/utils/request'
 
+const api_name = '/friend/link'
+
 // 查询列表
 export function list(query) {
   return request({
-    url: '/friend/link',
+    url: `${api_name}`,
     method: 'get',
     params: query
   })
@@ -11,7 +13,7 @@ export function list(query) {
 // 新增
 export function add(data) {
   return request({
-    url: '/friend/link',
+    url: `${api_name}`,
     method: 'post',
     data: data
   })
@@ -19,7 +21,7 @@ export function add(data) {
 // 根据Id查询
 export function getInfo(id) {
   return request({
-    url: `/friend/link/${id}`,
+    url: `${api_name}/${id}`,
     method: 'get'
   })
 }
@@ -27,7 +29,7 @@ export function getInfo(id) {
 // 修改
 export function update(data) {
   return request({
-    url: '/friend/link',
+    url: `${api_name}`,
     method: 'put',
     data: data
   })
@@ -36,7 +38,7 @@ export function update(data) {
 // 删除
 export function del(id) {
   return request({
-    url: `/friend/link/${id}`,
+    url: `${api_name}/${id}`,
     method: 'delete'
   })
 }

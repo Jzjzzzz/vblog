@@ -60,13 +60,6 @@ export default {
     Verify
   },
   data() {
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
         username: '',
@@ -74,7 +67,8 @@ export default {
         code: undefined
       },
       loginRules: {
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur', message:'请输入用户名' }],
+        password: [{ required: true, trigger: 'blur', message:'请输入密码' }]
       },
       loading: false,
       passwordType: 'password',
@@ -95,7 +89,11 @@ export default {
       this.handleLogin()
     },
     useVerify() {
-      this.$refs.verify.show()
+      this.$refs.loginForm.validate(valid => {
+          if (valid) {
+            this.$refs.verify.show()
+          }
+      })
     },
     showPwd() {
       if (this.passwordType === 'password') {

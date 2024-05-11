@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2022-08-14
  */
 @RestController
-@RequestMapping("/sys/todo")
+@RequestMapping("/system/todo")
 public class SysTodoController extends BaseController {
 
     @Autowired
