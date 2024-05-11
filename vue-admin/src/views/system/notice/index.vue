@@ -41,6 +41,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.notice.add')  === false"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -49,7 +50,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.notice.edit')  === false"
           @click="handleUpdate"
         >修改</el-button>
       </el-col>
@@ -59,7 +60,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.notice.del')  === false"
           @click="handleDelete"
         >删除</el-button>
       </el-col>
@@ -98,12 +99,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.notice.edit')  === false"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.notice.del')  === false"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -221,6 +224,7 @@ export default {
     },
     /** 查询公告列表 */
     getList() {
+      this.isPreList('btn.notice.list')
       this.loading = true
       listNotice(this.queryParams).then(response => {
         this.noticeList = response.rows

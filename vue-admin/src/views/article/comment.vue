@@ -88,7 +88,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.comment.edit')  === false"
           @click="handleUpdate"
         >回复</el-button>
       </el-col>
@@ -98,7 +98,7 @@
           plain
           icon="el-icon-thumb"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.comment.edit')  === false"
           @click="handleAudit"
         >审核
         </el-button>
@@ -109,7 +109,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.comment.del')  === false"
           @click="handleDelete"
         >删除
         </el-button>
@@ -153,6 +153,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.comment.edit')  === false"
           >回复</el-button>
           <el-button
             v-if="scope.row.auditStatus !=='1'"
@@ -160,12 +161,14 @@
             type="text"
             icon="el-icon-thumb"
             @click="handleAudit(scope.row)"
+            :disabled="$hasBP('btn.comment.edit')  === false"
           >审核</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.comment.del')  === false"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -209,6 +212,7 @@
 
 <script>
 import { pageList, getInfo, reply, update, del, audit } from '@/api/article/comment'
+import {isPerList} from "@/utils/vblog";
 export default {
   name: 'Comment',
   dicts: ['article_comment_type', 'article_comment_status', 'article_comment_audit_status'],
@@ -256,6 +260,7 @@ export default {
   methods: {
     /** 查询文章列表 */
     getList() {
+      this.isPerList('btn.comment.list')
       this.loading = true
       pageList(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.list = response.rows

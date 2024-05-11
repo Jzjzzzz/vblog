@@ -9,6 +9,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="add"
+          :disabled="$hasBP('btn.menu.add')  === false"
         >新增目录</el-button>
       </el-col>
     </el-row>
@@ -49,19 +50,21 @@
             size="mini"
             @click="add(scope.row)"
             v-if="scope.row.type !== '2'"
+            :disabled="$hasBP('btn.menu.add')  === false"
           >新增</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="edit(scope.row)"
+            :disabled="$hasBP('btn.menu.edit')  === false"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="removeDataById(scope.row)"
-            :disabled="scope.row.children.length > 0"
+            :disabled="scope.row.children.length > 0 || $hasBP('btn.menu.del')  === false"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -275,9 +278,9 @@ export default {
   methods: {
     // 调用api层获取数据库中的数据
     fetchData() {
+      this.isPreList('btn.menu.list')
       findNodes().then(response => {
         this.sysMenuList = response.data
-        console.log(this.sysMenuList)
       })
     },
 

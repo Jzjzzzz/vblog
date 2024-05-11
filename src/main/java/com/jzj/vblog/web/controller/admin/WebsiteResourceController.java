@@ -12,6 +12,7 @@ import com.jzj.vblog.web.service.WebsiteResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public class WebsiteResourceController extends BaseController {
 
     @ApiOperation("分页列表")
     @GetMapping
+    @PreAuthorize("hasAuthority('btn.website.list')")
     public TableDataInfo list(WebsiteResource websiteResource) {
         startPage();
         List<WebsiteResource> list = websiteResourceService.selectWebsiteList(websiteResource);
@@ -44,6 +46,7 @@ public class WebsiteResourceController extends BaseController {
     @Log(title = "资源站点", businessType = BusinessType.INSERT)
     @ApiOperation("新增资源")
     @PostMapping
+    @PreAuthorize("hasAuthority('btn.website.add')")
     public R add(@Validated @RequestBody WebsiteResource websiteResource) {
         if (UserConstants.NOT_UNIQUE.equals(websiteResourceService.checkWebsiteUnique(websiteResource))) {
             return R.error("新增资源'" + websiteResource.getResourceName() + "'失败，资源已存在");
@@ -55,6 +58,7 @@ public class WebsiteResourceController extends BaseController {
      * 根据资源id获取资源详细信息
      */
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('btn.website.list')")
     public R getInfo(@PathVariable String id) {
         return R.ok(websiteResourceService.selectWebsiteById(id));
     }
@@ -64,6 +68,7 @@ public class WebsiteResourceController extends BaseController {
      */
     @Log(title = "资源站点", businessType = BusinessType.UPDATE)
     @PutMapping
+    @PreAuthorize("hasAuthority('btn.website.edit')")
     public R edit(@Validated @RequestBody WebsiteResource websiteResource) {
         if (UserConstants.NOT_UNIQUE.equals(websiteResourceService.checkWebsiteUnique(websiteResource))) {
             return R.error("修改资源'" + websiteResource.getResourceName() + "'失败，资源已存在");
@@ -76,6 +81,7 @@ public class WebsiteResourceController extends BaseController {
      */
     @Log(title = "资源站点", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
+    @PreAuthorize("hasAuthority('btn.website.del')")
     public R remove(@PathVariable List<String> ids, HttpServletRequest request) {
         return toAjax(websiteResourceService.deleteWebsiteByIds(ids, request));
     }

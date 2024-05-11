@@ -65,6 +65,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.website.add')  === false"
         >新增
         </el-button>
       </el-col>
@@ -74,7 +75,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.website.edit')  === false"
           @click="handleUpdate"
         >修改
         </el-button>
@@ -85,7 +86,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.website.del')  === false"
           @click="handleDelete"
         >删除
         </el-button>
@@ -143,6 +144,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.website.edit')  === false"
           >修改
           </el-button>
           <el-button
@@ -150,6 +152,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.website.del')  === false"
           >删除
           </el-button>
         </template>
@@ -300,8 +303,9 @@ export default {
         this.$modal.msgSuccess('删除成功')
       })
     },
-    /** 查询文章列表 */
+    /** 查询列表 */
     getList() {
+      this.isPreList('btn.website.list')
       this.loading = true
       listWebsiteInform(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.websiteList = response.rows

@@ -54,6 +54,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.config.add')  === false"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -62,7 +63,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.config.edit')  === false"
           @click="handleUpdate"
         >修改</el-button>
       </el-col>
@@ -72,7 +73,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.config.del')  === false"
           @click="handleDelete"
         >删除</el-button>
       </el-col>
@@ -93,6 +94,7 @@
           icon="el-icon-refresh"
           size="mini"
           @click="handleRefreshCache"
+          :disabled="$hasBP('btn.config.edit')  === false"
         >刷新缓存</el-button>
       </el-col>
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
@@ -122,12 +124,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.config.edit')  === false"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.config.del')  === false"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -233,6 +237,7 @@ export default {
 
     /** 查询参数列表 */
     getList() {
+      this.isPreList('btn.config.list')
       this.loading = true
       listConfig(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.configList = response.rows

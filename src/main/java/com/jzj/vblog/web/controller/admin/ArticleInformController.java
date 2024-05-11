@@ -44,12 +44,14 @@ public class ArticleInformController extends BaseController {
     @Log(title = "文章管理", businessType = BusinessType.INSERT)
     @ApiOperation("新增文章")
     @PostMapping
+    @PreAuthorize("hasAuthority('btn.article.add')")
     public R add(@RequestBody ArticleAddVo vo) {
         return toAjax(articleInformService.articleAdd(vo));
     }
 
     @ApiOperation("根据Id获取文章")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('btn.article.list')")
     public R getById(@PathVariable String id) {
         return R.ok(articleInformService.getArticleById(id));
     }
@@ -57,6 +59,7 @@ public class ArticleInformController extends BaseController {
     @Log(title = "文章管理", businessType = BusinessType.UPDATE)
     @ApiOperation("根据Id修改文章")
     @PutMapping
+    @PreAuthorize("hasAuthority('btn.article.edit')")
     public R updateById(@RequestBody ArticleAddVo vo) {
         return toAjax(articleInformService.updateArticleById(vo));
     }
@@ -64,6 +67,7 @@ public class ArticleInformController extends BaseController {
     @Log(title = "文章管理", businessType = BusinessType.DELETE)
     @ApiOperation("根据Id批量删除文章")
     @DeleteMapping("/{ids}")
+    @PreAuthorize("hasAuthority('btn.article.del')")
     public R deleteBthById(@PathVariable String[] ids, HttpServletRequest request) {
         articleInformService.deleteArticleById(ids, request);
         return R.ok();
@@ -72,9 +76,11 @@ public class ArticleInformController extends BaseController {
     @Log(title = "文章管理", businessType = BusinessType.UPDATE)
     @ApiOperation("根据id修改文章归档")
     @PutMapping("updateSummaryById/{id}/{summaryId}/{type}")
+    @PreAuthorize("hasAuthority('btn.article.edit')")
     public R updateSummaryById(@PathVariable String id,@PathVariable String summaryId,@PathVariable String type) {
         return toAjax(articleInformService.updateSummaryById(id,summaryId,type));
     }
+
 
     @ApiOperation("获取文章后台排行榜")
     @GetMapping("/getRank")

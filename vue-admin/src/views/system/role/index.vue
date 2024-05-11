@@ -49,6 +49,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.role.add')  === false"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -57,7 +58,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.role.edit')  === false"
           @click="handleUpdate"
         >修改</el-button>
       </el-col>
@@ -67,7 +68,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.role.del')  === false"
           @click="handleDelete"
         >删除</el-button>
       </el-col>
@@ -106,18 +107,21 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.role.edit')  === false"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-s-flag"
             @click="handlePerms(scope.row)"
+            :disabled="$hasBP('btn.role.edit')  === false"
           >权限分配</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.role.del')  === false"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -253,6 +257,7 @@ export default {
   methods: {
     /** 查询列表 */
     getList() {
+      this.isPreList('btn.role.list')
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.list = response.rows

@@ -91,7 +91,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.article.del')  === false"
           @click="handleDelete"
         >删除
         </el-button>
@@ -161,6 +161,7 @@
               size="mini"
               type="text"
               icon="el-icon-edit"
+              :disabled="$hasBP('btn.article.edit')  === false"
             >修改
             </el-button>
           </router-link>
@@ -169,6 +170,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.article.del')  === false"
           >删除
           </el-button>
         </template>
@@ -233,6 +235,7 @@ export default {
     },
     /** 查询文章列表 */
     getList() {
+      this.isPreList("btn.article.list")
       this.loading = true
       listArticleInform(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.articleList = response.rows

@@ -59,6 +59,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.dict.add')  === false"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -67,7 +68,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.dict.edit')  === false"
           @click="handleUpdate"
         >修改</el-button>
       </el-col>
@@ -77,7 +78,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.dict.del')  === false"
           @click="handleDelete"
         >删除</el-button>
       </el-col>
@@ -98,6 +99,7 @@
           icon="el-icon-refresh"
           size="mini"
           @click="handleRefreshCache"
+          :disabled="$hasBP('btn.dict.edit')  === false"
         >刷新缓存</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -111,7 +113,7 @@
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
       <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <router-link :to="'/system/data/' + scope.row.id" class="link-type">
+          <router-link :to="'/system/data/' + scope.row.id" class="link-type" >
             <span>{{ scope.row.dictType }}</span>
           </router-link>
         </template>
@@ -134,12 +136,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.dict.edit')  === false"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.dict.del')  === false"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -242,6 +246,7 @@ export default {
     },
     /** 查询字典类型列表 */
     getList() {
+      this.isPreList('btn.dict.list')
       this.loading = true
       listType(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.typeList = response.rows

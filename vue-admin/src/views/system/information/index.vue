@@ -146,9 +146,9 @@
         <el-col :span="12" :offset="8">
           <div class="grid-content bg-purple">
             <el-form-item size="large">
-              <el-button size="medium" type="primary" @click="submitForm">提交</el-button>
+              <el-button size="medium" type="primary" @click="submitForm" :disabled="$hasBP('btn.itembank.edit')  === false">提交</el-button>
               <el-button size="medium" @click="resetForm">重置</el-button>
-              <el-button size="medium" type="danger" icon="el-icon-refresh" @click="handleRefreshCache">刷新缓存</el-button>
+              <el-button size="medium" type="danger" icon="el-icon-refresh" @click="handleRefreshCache" :disabled="$hasBP('btn.itembank.edit')  === false">刷新缓存</el-button>
             </el-form-item>
           </div>
         </el-col>
@@ -230,6 +230,7 @@ export default {
       })
     },
     getInfo() {
+      this.isPreList('btn.information.list')
       getInformation().then(response => {
         this.formData = response.data
         this.imgPath = this.formData.webAvatar

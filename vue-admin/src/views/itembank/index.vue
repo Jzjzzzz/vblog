@@ -50,6 +50,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.itembank.add')  === false"
         >新增
         </el-button>
       </el-col>
@@ -59,7 +60,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.itembank.edit')  === false"
           @click="handleUpdate"
         >修改
         </el-button>
@@ -70,7 +71,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.itembank.del')  === false"
           @click="handleDelete"
         >删除
         </el-button>
@@ -82,6 +83,7 @@
           icon="el-icon-s-promotion"
           size="mini"
           @click="handleRandom"
+          :disabled="$hasBP('btn.itembank.list')  === false"
         >每日一题
         </el-button>
       </el-col>
@@ -111,6 +113,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.itembank.edit')  === false"
           >修改
           </el-button>
           <el-button
@@ -118,6 +121,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.itembank.del')  === false"
           >删除
           </el-button>
         </template>
@@ -296,6 +300,7 @@ export default {
   methods: {
     /** 查询文章列表 */
     getList() {
+      this.isPreList("btn.itembank.list")
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.list = response.rows

@@ -49,12 +49,13 @@
           size="mini"
           type="primary"
           @click="handleAdd"
+          :disabled="$hasBP('btn.user.add')  === false"
         >新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          :disabled="single"
+          :disabled="single || $hasBP('btn.user.edit')  === false"
           icon="el-icon-edit"
           plain
           size="mini"
@@ -65,7 +66,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.user.del')  === false"
           icon="el-icon-delete"
           plain
           size="mini"
@@ -120,6 +121,7 @@
             size="mini"
             type="text"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.user.edit')  === false"
           >修改
           </el-button>
           <el-button
@@ -127,6 +129,7 @@
             size="mini"
             type="text"
             @click="handleRole(scope.row)"
+            :disabled="$hasBP('btn.user.edit')  === false"
           >角色分配
           </el-button>
           <el-button
@@ -134,6 +137,7 @@
             size="mini"
             type="text"
             @click="handleResetPassword(scope.row)"
+            :disabled="$hasBP('btn.user.edit')  === false"
           >重置密码
           </el-button>
           <el-button
@@ -141,6 +145,7 @@
             size="mini"
             type="text"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.user.del')  === false"
           >删除
           </el-button>
         </template>
@@ -323,6 +328,7 @@ export default {
   methods: {
     /** 查询列表 */
     getList() {
+      this.isPreList('btn.user.list')
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.list = response.rows

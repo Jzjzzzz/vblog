@@ -10,6 +10,7 @@ import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysNoticeService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class SysNoticeController extends BaseController {
 
     @ApiOperation("获取通知公告列表")
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('btn.notice.list')")
     public TableDataInfo list(SysNotice notice) {
         startPage();
         List<SysNotice> list = noticeService.selectNoticeList(notice);
@@ -39,6 +41,7 @@ public class SysNoticeController extends BaseController {
 
     @ApiOperation("根据通知公告编号获取详细信息")
     @GetMapping(value = "/{noticeId}")
+    @PreAuthorize("hasAuthority('btn.notice.list')")
     public R getInfo(@PathVariable Long noticeId) {
         return R.ok(noticeService.selectNoticeById(noticeId));
     }
@@ -46,6 +49,7 @@ public class SysNoticeController extends BaseController {
     @ApiOperation("新增通知公告")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
+    @PreAuthorize("hasAuthority('btn.notice.add')")
     public R add(@Validated @RequestBody SysNotice notice) {
         notice.setCreateBy(getUsername());
         return toAjax(noticeService.insertNotice(notice));
@@ -54,6 +58,7 @@ public class SysNoticeController extends BaseController {
     @ApiOperation("修改通知公告")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
+    @PreAuthorize("hasAuthority('btn.notice.edit')")
     public R edit(@Validated @RequestBody SysNotice notice) {
         notice.setUpdateBy(getUsername());
         return toAjax(noticeService.updateNotice(notice));
@@ -62,6 +67,7 @@ public class SysNoticeController extends BaseController {
     @ApiOperation("删除通知公告")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
+    @PreAuthorize("hasAuthority('btn.notice.del')")
     public R remove(@PathVariable Long[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));
     }

@@ -25,6 +25,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.gallery.add')  === false"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -53,6 +54,7 @@
                 type="text"
                 icon="el-icon-delete"
                 @click="handleDelete(item.id)"
+                :disabled="$hasBP('btn.gallery.del')  === false"
               >删除</el-button>
             </div>
           </el-card>
@@ -163,6 +165,7 @@ export default {
     },
     /** 查询图片列表 */
     getList() {
+      this.isPreList("btn.gallery.list")
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.list = response.rows

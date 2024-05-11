@@ -13,6 +13,7 @@ import com.jzj.vblog.web.service.SysDictDataService;
 import com.jzj.vblog.web.service.SysDictTypeService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class SysDictDataController extends BaseController {
     private SysDictTypeService dictTypeService;
 
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('btn.dict.list')")
     public TableDataInfo list(SysDictData dictData) {
         startPage();
         List<SysDictData> list = dictDataService.selectDictDataList(dictData);
@@ -62,6 +64,7 @@ public class SysDictDataController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @ApiOperation("新增字典类型")
     @PostMapping
+    @PreAuthorize("hasAuthority('btn.dict.add')")
     public R add(@Validated @RequestBody SysDictData dict) {
         if (UserConstants.NOT_UNIQUE.equals(dictDataService.checkDictDataUnique(dict))) {
             return R.error("新增字典类型'" + dict.getDictValue() + "'失败，字典键值已存在");
@@ -73,6 +76,7 @@ public class SysDictDataController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @ApiOperation("修改保存字典类型")
     @PutMapping
+    @PreAuthorize("hasAuthority('btn.dict.edit')")
     public R edit(@Validated @RequestBody SysDictData dict) {
         if (UserConstants.NOT_UNIQUE.equals(dictDataService.checkDictDataUnique(dict))) {
             return R.error("修改字典类型'" + dict.getDictValue() + "'失败，字典键值已存在");
@@ -83,6 +87,7 @@ public class SysDictDataController extends BaseController {
 
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @ApiOperation("删除字典类型")
+    @PreAuthorize("hasAuthority('btn.dict.del')")
     @DeleteMapping("/{dictCodes}")
     public R remove(@PathVariable Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);

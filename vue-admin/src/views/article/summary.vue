@@ -50,6 +50,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.summary.add')  === false"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -58,7 +59,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
+          :disabled="single || $hasBP('btn.summary.edit')  === false"
           @click="handleUpdate"
         >修改</el-button>
       </el-col>
@@ -68,7 +69,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.summary.del')  === false"
           @click="handleDelete"
         >删除</el-button>
       </el-col>
@@ -107,18 +108,21 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            :disabled="$hasBP('btn.summary.edit')  === false"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleList(scope.row)"
+            :disabled="$hasBP('btn.article.list')  === false"
           >文章列表</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.summary.del')  === false"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -334,6 +338,7 @@ export default {
 
     /** 查询归档列表 */
     getList() {
+      this.isPreList("btn.summary.list")
       this.loading = true
       listArticleSummary(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.list = response.rows

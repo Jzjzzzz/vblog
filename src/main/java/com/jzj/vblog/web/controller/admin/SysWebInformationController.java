@@ -9,6 +9,7 @@ import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.service.SysWebInformationService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class SysWebInformationController extends BaseController {
 
     @ApiOperation("获取网站基础信息")
     @GetMapping(value = "/getInfo")
+    @PreAuthorize("hasAuthority('btn.information.list')")
     public R getInfo() {
         return R.ok(sysWebInformationService.selectWebInformationById());
     }
@@ -35,6 +37,7 @@ public class SysWebInformationController extends BaseController {
     @Log(title = "网站信息", businessType = BusinessType.UPDATE)
     @ApiOperation("修改网站信息")
     @PutMapping
+    @PreAuthorize("hasAuthority('btn.information.edit')")
     public R edit(@Validated @RequestBody SysWebInformation sysWebInformation) {
         return toAjax(sysWebInformationService.updateWebInformation(sysWebInformation));
     }
@@ -42,9 +45,10 @@ public class SysWebInformationController extends BaseController {
     @Log(title = "网站信息", businessType = BusinessType.CLEAN)
     @ApiOperation("刷新参数缓存")
     @DeleteMapping("/refreshCache")
+    @PreAuthorize("hasAuthority('btn.information.edit')")
     public R refreshCache() {
         sysWebInformationService.resetInformationCache();
-        return R.ok();
+        return R.ok().message("刷新成功");
     }
 }
 
