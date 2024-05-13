@@ -2,7 +2,6 @@ package com.jzj.vblog.security.custom;
 
 import com.jzj.vblog.utils.constant.CacheConstants;
 import com.jzj.vblog.utils.redis.RedisCache;
-import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.utils.sign.JwtUtils;
 import com.jzj.vblog.utils.sign.ResponseUtil;
@@ -30,12 +29,9 @@ public class CustomLogoutHandler implements LogoutHandler {
      */
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        String token = request.getHeader("token");
-        if(!JwtUtils.checkToken(token)) throw new BusinessException("无效token");
-        String userId = JwtUtils.getMemberIdByJwtToken(request);
+        String userId = JwtUtils.getSubject(request.getHeader("token"), JwtUtils.USERID);
         // 删除redis缓存中的token
         redisCache.deleteObject(CacheConstants.LOGIN_TOKEN_KEY+userId);
-        redisCache.deleteObject(CacheConstants.VBLOG_AUTH_USER+userId);
         ResponseUtil.out(response, R.ok());
     }
 }

@@ -53,8 +53,6 @@ export function resetForm(refName) {
 
 export function isPerList(pre) {
   if(!this.$hasBP(pre)) {
-    //跳转回首页
-    this.$router.push('/');
     this.$modal.msgWarning('无权访问')
   }
 }

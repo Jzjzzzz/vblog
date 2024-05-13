@@ -151,9 +151,10 @@ public class RedisCache {
      * @param key
      * @param dataMap
      */
-    public <T> void setCacheMap(final String key, final Map<String, T> dataMap) {
+    public <T> void setCacheMap(final String key, final Map<String, T> dataMap,final long timeout, final TimeUnit unit) {
         if (dataMap != null) {
             redisTemplate.opsForHash().putAll(key, dataMap);
+            expire(key, timeout, unit);
         }
     }
 

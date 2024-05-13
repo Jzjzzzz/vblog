@@ -80,12 +80,13 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth) throws IOException, ServletException {
         CustomUser customUser = (CustomUser) auth.getPrincipal();
+        //注:这里别把权限列表放入jwt中,这会导致生成的token过长,http的header有长度限制.
         String token = JwtUtils.getJwtToken(customUser);
         //将token放入缓存
-        redisCache.setCacheObject(CacheConstants.LOGIN_TOKEN_KEY+customUser.getSysUser().getId(), token,30, TimeUnit.MINUTES);
-        //注:这里别把权限列表放入jwt中,这会导致生成的token过长,http的header有长度限制.
-        //保存权限数据
-        redisCache.setCacheObject(CacheConstants.VBLOG_AUTH_USER+customUser.getSysUser().getId(),JSON.toJSONString(customUser.getAuthorities()),30, TimeUnit.MINUTES);
+        HashMap<String, String> redisMap = new HashMap<>();
+        redisMap.put("token", token);
+        redisMap.put("authorities", JSON.toJSONString(customUser.getAuthorities()));
+        redisCache.setCacheMap(CacheConstants.LOGIN_TOKEN_KEY+customUser.getSysUser().getId(),redisMap,30, TimeUnit.MINUTES);
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
         ResponseUtil.out(response, R.ok(map));

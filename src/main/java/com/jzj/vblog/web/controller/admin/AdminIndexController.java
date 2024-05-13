@@ -4,7 +4,6 @@ import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
 import com.jzj.vblog.annotation.Log;
-import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.utils.sign.JwtUtils;
 import com.jzj.vblog.utils.sign.VerifyCodeUtils;
@@ -61,8 +60,7 @@ public class AdminIndexController extends BaseController {
     @GetMapping("/info")
     @ApiOperation("获取用户信息")
     public R info(HttpServletRequest request) {
-        if(!JwtUtils.checkToken(request)) throw new BusinessException("无效token");
-        String username = JwtUtils.getUsername(request.getHeader("token"));
+        String username = JwtUtils.getSubject(request.getHeader("token"), JwtUtils.USERNAME);
         Map<String, Object> map = sysUserService.info(username);
         return R.ok(map);
     }

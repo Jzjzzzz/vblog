@@ -1,6 +1,7 @@
 package com.jzj.vblog.utils.sign;
 
 import com.jzj.vblog.security.custom.CustomUser;
+import com.jzj.vblog.utils.result.BusinessException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -8,7 +9,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -23,6 +23,9 @@ public class JwtUtils {
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
     public static final String APP_SECRET = "ukc8BDbRzgUDaY6pZFfWus2jZWLPHO";
 
+    public static final String USERID = "userId";
+    public static final String USERNAME = "username";
+
     public static String getJwtToken(CustomUser customUser){
 
         String JwtToken = Jwts.builder()
@@ -34,8 +37,8 @@ public class JwtUtils {
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 //主体信息
-                .claim("userId",customUser.getSysUser().getId() )
-                .claim("username", customUser.getSysUser().getUsername())
+                .claim(USERID,customUser.getSysUser().getId() )
+                .claim(USERNAME, customUser.getSysUser().getUsername())
                 //签名哈希
                 .signWith(SignatureAlgorithm.HS256, APP_SECRET)
                 .compact();
@@ -53,55 +56,19 @@ public class JwtUtils {
         try {
             Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
         } catch (Exception e) {
-            log.error("checkToken(String jwtToken)方法数据异常:{}",e.getMessage());
             return false;
         }
         return true;
     }
 
-    /**
-     * 判断token是否存在与有效
-     * @param request
-     * @return
-     */
-    public static boolean checkToken(HttpServletRequest request) {
+    public static String getSubject(String token,String key){
         try {
-            String jwtToken = request.getHeader("token");
-            if(StringUtils.isEmpty(jwtToken)) return false;
-            Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
-        } catch (Exception e) {
-            log.error("checkToken(HttpServletRequest request)数据异常:{}",e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 根据token获取会员id
-     * @param request
-     * @return
-     */
-    public static String getMemberIdByJwtToken(HttpServletRequest request) {
-        String jwtToken = request.getHeader("token");
-        if(StringUtils.isEmpty(jwtToken)) return null;
-        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
-        Claims claims = claimsJws.getBody();
-        return (String) claims.get("userId");
-    }
-
-    /**
-     * 根据token获取会员姓名
-     * @param token
-     * @return
-     */
-    public static String getUsername(String token) {
-        try {
+            if(!checkToken(token)) throw new BusinessException("token无效");
             if (StringUtils.isEmpty(token)) return "";
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token);
             Claims claims = claimsJws.getBody();
-            return (String) claims.get("username");
+            return (String) claims.get(key);
         } catch (Exception e) {
-            log.error("getUsername(String token)方法数据异常:{}",e.getMessage());
             return null;
         }
     }

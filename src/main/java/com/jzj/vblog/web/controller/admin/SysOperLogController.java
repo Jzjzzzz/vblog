@@ -9,6 +9,7 @@ import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysOperLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class SysOperLogController extends BaseController {
     private SysOperLogService operLogService;
 
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('btn.operlog.list')")
     public TableDataInfo list(SysOperLog operLog) {
         startPage();
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
@@ -37,12 +39,14 @@ public class SysOperLogController extends BaseController {
 
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{operIds}")
+    @PreAuthorize("hasAuthority('btn.operlog.del')")
     public R remove(@PathVariable Long[] operIds) {
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
 
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
+    @PreAuthorize("hasAuthority('btn.operlog.del')")
     public R clean() {
         operLogService.cleanOperLog();
         return R.ok();

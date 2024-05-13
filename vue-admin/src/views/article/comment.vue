@@ -212,7 +212,6 @@
 
 <script>
 import { pageList, getInfo, reply, update, del, audit } from '@/api/article/comment'
-import {isPerList} from "@/utils/vblog";
 export default {
   name: 'Comment',
   dicts: ['article_comment_type', 'article_comment_status', 'article_comment_audit_status'],
@@ -260,7 +259,7 @@ export default {
   methods: {
     /** 查询文章列表 */
     getList() {
-      this.isPerList('btn.comment.list')
+      this.isPreList('btn.comment.list')
       this.loading = true
       pageList(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.list = response.rows

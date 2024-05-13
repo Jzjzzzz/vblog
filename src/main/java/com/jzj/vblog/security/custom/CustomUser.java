@@ -24,8 +24,4 @@ public class CustomUser extends User {
     public SysUser getSysUser() {
         return sysUser;
     }
-
-    public void setSysUser(SysUser sysUser) {
-        this.sysUser = sysUser;
-    }
 }

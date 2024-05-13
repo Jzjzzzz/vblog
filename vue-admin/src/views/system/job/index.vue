@@ -27,6 +27,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+          :disabled="$hasBP('btn.job.add')  === false"
         >新增
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -54,6 +55,7 @@
             type="text"
             icon="el-icon-magic-stick"
             @click="handleManual(scope.$index, scope.row)"
+            :disabled="$hasBP('btn.job.edit')  === false"
           >手动执行
           </el-button>
           <el-button
@@ -61,6 +63,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.$index, scope.row)"
+            :disabled="$hasBP('btn.job.edit')  === false"
           >修改
           </el-button>
           <el-button
@@ -69,6 +72,7 @@
             type="text"
             icon="el-icon-video-pause"
             @click="handlePause(scope.$index, scope.row)"
+            :disabled="$hasBP('btn.job.edit')  === false"
           >暂停
           </el-button>
           <el-button
@@ -77,6 +81,7 @@
             type="text"
             icon="el-icon-video-play"
             @click="handleResume(scope.$index, scope.row)"
+            :disabled="$hasBP('btn.job.edit')  === false"
           >恢复
           </el-button>
           <el-button
@@ -84,6 +89,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.$index, scope.row)"
+            :disabled="$hasBP('btn.job.del')  === false"
           >删除
           </el-button>
         </template>
@@ -236,6 +242,7 @@ export default {
   methods: {
     /** 查询参数列表 */
     getList() {
+      this.isPreList('btn.job.list')
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.list = response.rows

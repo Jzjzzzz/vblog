@@ -19,7 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * @Author Jzj
@@ -42,9 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private RedisCache redisCache;
 
     @Autowired
-    private CorsFilter corsFilter;
-
-    @Autowired
     private CaptchaService captchaService;
 
     @Bean
@@ -59,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .authorizeRequests()
                 // 指定某些接口不需要通过验证即可访问。登陆接口肯定是不需要认证的
-                .antMatchers("/admin/index/login","/admin/index/get","/admin/index/check").permitAll()
+                .antMatchers("/admin/index/get","/admin/index/check","/front/**").permitAll()
                 // 这里意思是其它所有接口需要认证才能访问
                 .anyRequest().authenticated().and()
                 .headers().frameOptions().disable().and()

@@ -23,21 +23,6 @@ public class CacheConstants {
     public static final String SYS_CONFIG_KEY = "sys_config:";
 
     /**
-     * 字典管理 cache key
-     */
-    public static final String SYS_DICT_KEY = "sys_dict:";
-
-    /**
-     * 防重提交 redis key
-     */
-    public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
-
-    /**
-     * 限流 redis key
-     */
-    public static final String RATE_LIMIT_KEY = "rate_limit:";
-
-    /**
      * 阿里云存储开关 redis key
      */
     public static final String A_LI_YUN_ENABLE_CODE = "sys.oss.enable";
@@ -71,9 +56,4 @@ public class CacheConstants {
      * 文章点击数缓存
      */
     public static final String VBLOG_ARTICLE_CLICK = "vblog:article:click:";
-
-    /**
-     * 用户菜单权限缓存
-     */
-    public static final String VBLOG_AUTH_USER = "vblog:auth:user:";
 }

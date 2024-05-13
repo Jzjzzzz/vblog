@@ -73,7 +73,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="multiple || $hasBP('btn.operlog.del')  === false"
           @click="handleDelete"
         >删除</el-button>
       </el-col>
@@ -84,6 +84,7 @@
           icon="el-icon-delete"
           size="mini"
           @click="handleClean"
+          :disabled="$hasBP('btn.operlog.del')  === false"
         >清空</el-button>
       </el-col>
 <!--      <el-col :span="1.5">-->
@@ -100,7 +101,7 @@
 
     <el-table ref="tables" v-loading="loading" :data="list" :default-sort="defaultSort" @selection-change="handleSelectionChange" @sort-change="handleSortChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" align="center" :index="getIndex" type="index" />
+      <el-table-column label="序号" align="center" type="index" />
       <el-table-column label="系统模块" align="center" prop="title" />
       <el-table-column label="操作类型" align="center" prop="businessType">
         <template slot-scope="scope">
@@ -228,12 +229,9 @@ export default {
     this.getList()
   },
   methods: {
-    // 设置序号
-    getIndex(index) {
-      return index + (this.queryParams.pageNum - 1) * this.queryParams.pageSize + 1
-    },
     /** 查询登录日志 */
     getList() {
+      this.isPreList('btn.operlog.list')
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.list = response.rows

@@ -57,7 +57,7 @@
                     :style="{width: '100%'}"
                   />
                 </el-form-item>
-                <el-form-item label="Email" prop="Email">
+                <el-form-item label="Email" prop="email">
                   <el-input
                     v-model="formData.email"
                     placeholder="请输入Email"
@@ -180,6 +180,7 @@ export default {
         webName: undefined,
         webDetails: undefined,
         webAvatar: undefined,
+        email:undefined,
         id: undefined,
         homeBanner: undefined,
         articleBanner: undefined,

@@ -36,37 +36,27 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        //如果是登录接口，直接放行
-        if ("/admin/index/login".equals(request.getRequestURI())
-                || "/admin/index/get".equals(request.getRequestURI())
-                || "/admin/index/check".equals(request.getRequestURI())) {
-            chain.doFilter(request, response);
-            return;
-        }
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        getAuthentication(request);
         chain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+    private void getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("token");
-        if (!JwtUtils.checkToken(token)) throw new BusinessException("无效token");
-        String userId = JwtUtils.getMemberIdByJwtToken(request);
-        String cacheToken = redisCache.getCacheObject(CacheConstants.LOGIN_TOKEN_KEY + userId);
-        if (!token.equals(cacheToken)) throw new BusinessException("无效token");
-        String username = JwtUtils.getUsername(token);
-        if (!StringUtils.isEmpty(userId) && !StringUtils.isEmpty(username)) {
-            String authoritiesString = redisCache.getCacheObject(CacheConstants.VBLOG_AUTH_USER + userId);
-            List<Map> mapList = JSON.parseArray(authoritiesString, Map.class);
-            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            if (null != mapList && !mapList.isEmpty()) {
-                for (Map map : mapList) {
-                    authorities.add(new SimpleGrantedAuthority((String) map.get("authority")));
+        if(StringUtils.isNotBlank(token)){
+            String userId = JwtUtils.getSubject(token, JwtUtils.USERID);
+            String username = JwtUtils.getSubject(token, JwtUtils.USERNAME);
+            if (!StringUtils.isEmpty(userId) && !StringUtils.isEmpty(username)) {
+                Map<String, String> cacheMap = redisCache.getCacheMap(CacheConstants.LOGIN_TOKEN_KEY + userId);
+                if (!token.equals(cacheMap.get("token"))) throw new BusinessException("无效token");
+                List<Map> mapList = JSON.parseArray(cacheMap.get("authorities"), Map.class);
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                if (null != mapList && !mapList.isEmpty()) {
+                    for (Map map : mapList) {
+                        authorities.add(new SimpleGrantedAuthority((String) map.get("authority")));
+                    }
                 }
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(username, null, authorities));
             }
-            return new UsernamePasswordAuthenticationToken(username, null, authorities);
-        } else {
-            return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
         }
     }
 }
