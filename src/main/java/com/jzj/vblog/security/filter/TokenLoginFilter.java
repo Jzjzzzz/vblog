@@ -99,6 +99,8 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         if(e.getCause() instanceof RuntimeException) {
             ResponseUtil.out(response, R.error().code(204).message(e.getMessage()));
+        } else{
+             ResponseUtil.out(response, R.error().code(204).message("账号密码错误"));
         }
     }
 }
