@@ -83,6 +83,7 @@
             :file-size="5"
             :file-type="imgType"
             :before-remove="beforeRemove"
+            :headers="header"
           />
         </el-form-item>
       </el-form>
@@ -97,12 +98,16 @@
 <script>
 import { list,add,del } from "@/api/gallery/gallery"
 import { deleteImg } from '@/api/upload'
+import {getToken} from '@/utils/auth'
 export default {
   name: 'Gallery',
   data() {
     return {
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
-      uploadUrl: '/api/upload/uploadImg?name=gallery',
+      uploadUrl: 'api/upload/uploadImg?name=gallery',
+      header:{
+        token: getToken()
+      },
       // 文件上传类型
       imgType: ['png', 'jpg', 'jpeg'],
       // 遮罩层
