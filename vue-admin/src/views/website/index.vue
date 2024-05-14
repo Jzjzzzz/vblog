@@ -208,6 +208,7 @@
             :file-size="5"
             :file-type="imgType"
             :before-remove="beforeRemove"
+            :headers="header"
           />
         </el-form-item>
       </el-form>
@@ -222,6 +223,7 @@
 <script>
 import {listWebsiteInform, addWebSite, getInfo, updateWebsite, delWebSite} from '@/api/website/website'
 import {deleteImg} from '@/api/upload'
+import {getToken} from '@/utils/auth'
 
 export default {
   name: 'Website',
@@ -229,7 +231,10 @@ export default {
   data() {
     return {
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
-      uploadUrl: '/api/upload/uploadImg?name=website',
+      uploadUrl: 'api/upload/uploadImg?name=website',
+      header:{
+        token: getToken()
+      },
       // 文件上传类型
       imgType: ['png', 'jpg', 'jpeg'],
       // 遮罩层

@@ -98,6 +98,7 @@
                     :file-size="20"
                     :file-type="imgType"
                     :before-remove="beforeRemove"
+                    :headers="header"
                   />
                 </el-form-item>
                 <el-form-item label="首页头像" prop="logImg">
@@ -109,6 +110,7 @@
                     :file-size="5"
                     :file-type="imgType"
                     :before-remove="beforeRemove"
+                    :headers="header"
                   />
                 </el-form-item>
               </div>
@@ -124,6 +126,7 @@
                     :file-size="20"
                     :file-type="imgType"
                     :before-remove="beforeRemove"
+                    :headers="header"
                   />
                 </el-form-item>
                 <el-form-item label="评论头像" prop="commentImg">
@@ -135,6 +138,7 @@
                     :file-size="20"
                     :file-type="imgType"
                     :before-remove="beforeRemove"
+                    :headers="header"
                   />
                 </el-form-item>
               </div>
@@ -160,7 +164,7 @@
 <script>
 import { getInformation, refreshCache, updateInformation } from '@/api/system/information'
 import { deleteImg } from '@/api/upload'
-
+import {getToken} from '@/utils/auth'
 export default {
   components: {},
   props: [],
@@ -168,7 +172,10 @@ export default {
     return {
       activeName: 'first',
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
-      uploadUrl: '/api/upload/uploadImg?name=webLogo',
+      uploadUrl: 'api/upload/uploadImg?name=webLogo',
+      header:{
+        token: getToken()
+      },
       imgPath: '',
       // 文件上传类型
       imgType: ['png', 'jpg', 'jpeg'],

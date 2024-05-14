@@ -1,6 +1,6 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.JobAndTrigger;
+import com.jzj.vblog.web.pojo.entity.job.JobAndTrigger;
 import com.jzj.vblog.web.pojo.vo.JobVo;
 import org.quartz.SchedulerException;
 

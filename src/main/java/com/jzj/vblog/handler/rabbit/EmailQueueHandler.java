@@ -1,7 +1,7 @@
 package com.jzj.vblog.handler.rabbit;
 
 import com.jzj.vblog.utils.constant.RabbitConstants;
-import com.jzj.vblog.web.pojo.entity.EmailMessageStruct;
+import com.jzj.vblog.web.pojo.entity.rabbit.EmailMessageStruct;
 import com.jzj.vblog.web.service.EmailService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;

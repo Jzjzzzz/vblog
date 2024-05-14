@@ -4,7 +4,7 @@ import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
-import com.jzj.vblog.web.pojo.entity.JobAndTrigger;
+import com.jzj.vblog.web.pojo.entity.job.JobAndTrigger;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.pojo.vo.JobVo;

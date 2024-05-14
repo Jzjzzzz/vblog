@@ -1,4 +1,4 @@
-package com.jzj.vblog.web.pojo.entity;
+package com.jzj.vblog.web.pojo.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +16,6 @@ import java.util.Map;
 
 @ApiModel(value = "Entity基类", description = "Entity基类")
 public class BaseEntity implements Serializable {
-
     /**
      * 搜索值
      */

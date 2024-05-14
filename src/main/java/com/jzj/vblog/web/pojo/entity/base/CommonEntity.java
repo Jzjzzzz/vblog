@@ -1,35 +1,31 @@
-package com.jzj.vblog.web.pojo.entity;
+package com.jzj.vblog.web.pojo.entity.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.jzj.vblog.web.pojo.entity.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
 /**
- * <p>
- * 备忘录
- * </p>
- *
- * @author Jzj
- * @since 2022-08-14
+ * @Author Jzj
+ * @Date 2024/5/14 下午3:20
+ * @Version 1.0
+ * @Message: 通用字段基类(字段存在差异使用其父类)
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "SysTodo对象", description = "备忘录")
-public class SysTodo extends BaseEntity {
-
-    private static final long serialVersionUID = 1L;
+@ApiModel(value = "通用字段基类", description = "通用字段基类")
+public class CommonEntity extends BaseEntity {
 
     @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
+
+    @ApiModelProperty(value = "状态")
+    private String status;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -38,12 +34,4 @@ public class SysTodo extends BaseEntity {
     @ApiModelProperty(value = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-
-    @ApiModelProperty(value = "状态")
-    private boolean done;
-
-    @ApiModelProperty(value = "内容")
-    private String text;
-
-
 }

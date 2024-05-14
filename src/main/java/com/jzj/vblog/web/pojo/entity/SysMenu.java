@@ -1,15 +1,12 @@
 package com.jzj.vblog.web.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.jzj.vblog.web.pojo.entity.base.CommonEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,13 +20,9 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="SysMenu对象", description="菜单表")
-public class SysMenu extends BaseEntity {
+public class SysMenu extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "编号")
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private String id;
 
     @ApiModelProperty(value = "所属上级")
     private String parentId;
@@ -55,17 +48,6 @@ public class SysMenu extends BaseEntity {
     @ApiModelProperty(value = "排序")
     private Integer sortValue;
 
-    @ApiModelProperty(value = "状态(0:禁止,1:正常)")
-    private String status;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @ApiModelProperty(value = "更新时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
-
     @ApiModelProperty(value = "删除标记（0:不可用 1:可用）")
     private String isDeleted;
 
@@ -75,6 +57,4 @@ public class SysMenu extends BaseEntity {
     //是否选中
     @TableField(exist = false)
     private boolean isSelect;
-
-
 }

@@ -3,7 +3,7 @@ package com.jzj.vblog.web.service.impl;
 import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.sign.JobUtil;
 import com.jzj.vblog.web.mapper.JobMapper;
-import com.jzj.vblog.web.pojo.entity.JobAndTrigger;
+import com.jzj.vblog.web.pojo.entity.job.JobAndTrigger;
 import com.jzj.vblog.web.pojo.vo.JobVo;
 import com.jzj.vblog.web.service.JobService;
 import lombok.extern.slf4j.Slf4j;

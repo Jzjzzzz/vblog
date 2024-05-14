@@ -13,7 +13,7 @@ import com.jzj.vblog.web.mapper.ArticleCommentMapper;
 import com.jzj.vblog.web.mapper.ArticleInformMapper;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.jzj.vblog.web.pojo.entity.ArticleInform;
-import com.jzj.vblog.web.pojo.entity.EmailMessageStruct;
+import com.jzj.vblog.web.pojo.entity.rabbit.EmailMessageStruct;
 import com.jzj.vblog.web.pojo.entity.SysWebInformation;
 import com.jzj.vblog.web.pojo.vo.CommentFrontListVo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;

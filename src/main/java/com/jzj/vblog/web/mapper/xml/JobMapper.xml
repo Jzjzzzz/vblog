@@ -3,7 +3,7 @@
 <mapper namespace="com.jzj.vblog.web.mapper.JobMapper">
 
 
-	<select id="list" resultType="com.jzj.vblog.web.pojo.entity.JobAndTrigger" parameterType="com.jzj.vblog.web.pojo.entity.JobAndTrigger">
+	<select id="list" resultType="com.jzj.vblog.web.pojo.entity.job.JobAndTrigger" parameterType="com.jzj.vblog.web.pojo.entity.job.JobAndTrigger">
 		SELECT
 			job_details.`JOB_NAME`,
 			job_details.`JOB_GROUP`,

@@ -1,15 +1,10 @@
 package com.jzj.vblog.web.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.jzj.vblog.web.pojo.entity.base.CommonEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Date;
 
 /**
  * <p>
@@ -22,24 +17,9 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "WebsiteResource对象", description = "资源站点")
-public class WebsiteResource extends BaseEntity {
+public class WebsiteResource extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "资源站点表id")
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private String id;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
-
-    @ApiModelProperty(value = "状态")
-    private String status;
 
     @ApiModelProperty(value = "资源名称")
     private String resourceName;
@@ -58,6 +38,4 @@ public class WebsiteResource extends BaseEntity {
 
     @ApiModelProperty(value = "资源描述")
     private String resourceDetail;
-
-
 }

@@ -1,4 +1,4 @@
-package com.jzj.vblog.web.pojo.entity;
+package com.jzj.vblog.web.pojo.entity.job;
 
 import lombok.Data;
 

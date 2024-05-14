@@ -1,6 +1,6 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.JobAndTrigger;
+import com.jzj.vblog.web.pojo.entity.job.JobAndTrigger;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
