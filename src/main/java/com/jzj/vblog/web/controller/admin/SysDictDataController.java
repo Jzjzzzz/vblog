@@ -90,8 +90,7 @@ public class SysDictDataController extends BaseController {
     @PreAuthorize("hasAuthority('btn.dict.del')")
     @DeleteMapping("/{dictCodes}")
     public R remove(@PathVariable Long[] dictCodes) {
-        dictDataService.deleteDictDataByIds(dictCodes);
-        return success();
+        return toAjax(dictDataService.deleteDictDataByIds(dictCodes));
     }
 }
 

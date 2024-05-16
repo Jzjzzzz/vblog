@@ -2,7 +2,6 @@ package com.jzj.vblog.web.service;
 
 import com.jzj.vblog.web.pojo.entity.job.JobAndTrigger;
 import com.jzj.vblog.web.pojo.vo.JobVo;
-import org.quartz.SchedulerException;
 
 import java.util.List;
 
@@ -18,49 +17,57 @@ public interface JobService {
     /**
      * 添加并启动定时任务
      *
-     * @param form 表单参数 {@link JobVo}
-     * @throws Exception 异常
+     * @param form 表单参数
+     * @return 是否成功
      */
-    void addJob(JobVo form) throws Exception;
+    boolean addJob(JobVo form);
 
     /**
      * 删除定时任务
      *
-     * @param form 表单参数 {@link JobVo}
-     * @throws SchedulerException 异常
+     * @param form 表单参数
+     * @return 是否成功
      */
-    void deleteJob(JobVo form) throws SchedulerException;
+    boolean deleteJob(JobVo form);
 
     /**
      * 暂停定时任务
      *
-     * @param form 表单参数 {@link JobVo}
-     * @throws SchedulerException 异常
+     * @param form 表单参数
+     * @return 是否成功
      */
-    void pauseJob(JobVo form) throws SchedulerException;
+    boolean pauseJob(JobVo form);
 
     /**
      * 恢复定时任务
      *
-     * @param form 表单参数 {@link JobVo}
-     * @throws SchedulerException 异常
+     * @param form 表单参数
+     * @return 是否成功
      */
-    void resumeJob(JobVo form) throws SchedulerException;
+    boolean resumeJob(JobVo form);
 
     /**
      * 重新配置定时任务
      *
-     * @param form 表单参数 {@link JobVo}
-     * @throws Exception 异常
+     * @param form 表单参数
+     * @return 是否成功
      */
-    void cronJob(JobVo form) throws Exception;
+    boolean cronJob(JobVo form);
 
 
+    /**
+     * 查询定时任务列表
+     *
+     * @param jobAndTrigger 查询条件
+     * @return 列表
+     */
     List<JobAndTrigger> selectJobList(JobAndTrigger jobAndTrigger);
 
     /**
      * 手动执行一次定时计划
-     * @param form
+     *
+     * @param form 参数
+     * @return 是否成功
      */
-    void manualJob(JobVo form);
+    boolean manualJob(JobVo form);
 }

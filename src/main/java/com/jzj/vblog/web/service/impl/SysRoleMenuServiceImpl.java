@@ -6,6 +6,7 @@ import com.jzj.vblog.web.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     }
 
     @Override
-        public int deleteByIds(List<String> ids, HttpServletRequest request) {
+    public int deleteByIds(List<String> ids, HttpServletRequest request) {
         return sysRoleMenuMapper.deleteBatchIds(ids);
     }
 }

@@ -42,7 +42,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private void getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("token");
-        if(StringUtils.isNotBlank(token)){
+        if (StringUtils.isNotBlank(token)) {
             String userId = JwtUtils.getSubject(token, JwtUtils.USERID);
             String username = JwtUtils.getSubject(token, JwtUtils.USERNAME);
             if (!StringUtils.isEmpty(userId) && !StringUtils.isEmpty(username)) {

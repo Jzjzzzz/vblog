@@ -15,6 +15,9 @@ import com.jzj.vblog.web.pojo.vo.UserAddRoleVo;
 public interface SysUserRoleService extends IService<SysUserRole> {
     /**
      * 用户分配角色
+     *
+     * @param vo 用户分配角色
+     * @return 分配结果
      */
-    void allocationRole(UserAddRoleVo vo);
+    boolean allocationRole(UserAddRoleVo vo);
 }

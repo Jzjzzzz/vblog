@@ -45,28 +45,17 @@ public class SysWebInformationServiceImpl extends ServiceImpl<SysWebInformationM
         redisCache.setCacheObject(getCacheKey(), information);
     }
 
-    /**
-     * 清空参数缓存数据
-     */
     @Override
     public void clearInformationCache() {
         redisCache.deleteObject(CacheConstants.SYS_WEB_INFORMATION);
     }
 
-    /**
-     * 重置参数缓存数据
-     */
     @Override
     public void resetInformationCache() {
         clearInformationCache();
         loadingWebInformationCache();
     }
 
-    /**
-     * 获取网站基本信息
-     *
-     * @return
-     */
     @Override
     public SysWebInformation selectWebInformationById() {
         SysWebInformation information;

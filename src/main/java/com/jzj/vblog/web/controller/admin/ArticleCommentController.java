@@ -70,16 +70,15 @@ public class ArticleCommentController extends BaseController {
     @ApiOperation("删除评论")
     @PreAuthorize("hasAuthority('btn.comment.del')")
     public R remove(@PathVariable String[] ids) {
-        articleCommentService.deleteCommentById(ids);
-        return success();
+        return toAjax(articleCommentService.deleteCommentById(ids));
     }
 
     @Log(title = "评论管理", businessType = BusinessType.UPDATE)
     @PutMapping("/{ids}/{type}")
     @ApiOperation("审核评论")
     @PreAuthorize("hasAuthority('btn.comment.edit')")
-    public R audit(@PathVariable String[] ids,@PathVariable String type) {
-        return toAjax(articleCommentService.auditCommentById(ids,type));
+    public R audit(@PathVariable String[] ids, @PathVariable String type) {
+        return toAjax(articleCommentService.auditCommentById(ids, type));
     }
 }
 

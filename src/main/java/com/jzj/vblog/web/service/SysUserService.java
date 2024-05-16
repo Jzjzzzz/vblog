@@ -19,40 +19,45 @@ import java.util.Map;
  * @author Jzj
  * @since 2024-04-30
  */
-public interface SysUserService  extends IService<SysUser> , UserDetailsService {
+public interface SysUserService extends IService<SysUser>, UserDetailsService {
 
     /**
-    * 分页查询
-    * @param sysUser 查询参数
-    * @return 列表
-    */
+     * 分页查询
+     *
+     * @param sysUser 查询参数
+     * @return 列表
+     */
     List<SysUser> pageList(SysUser sysUser);
 
     /**
-    * 新增用户表
-    * @param sysUser 实体
-    * @return 成功条数
-    */
+     * 新增用户表
+     *
+     * @param sysUser 实体
+     * @return 成功条数
+     */
     int add(SysUser sysUser);
 
     /**
-    * 根据id查询单条记录
-    * @param id
-    */
+     * 根据id查询单条记录
+     *
+     * @param id id
+     */
     SysUser selectById(String id);
 
     /**
-    * 修改用户表
-    * @param sysUser 实体
-    * @return 成功条数
-    */
+     * 修改用户表
+     *
+     * @param sysUser 实体
+     * @return 成功条数
+     */
     int modify(SysUser sysUser);
 
     /**
-    * 批量删除用户表
-    * @param ids id数组
-    * @return 成功条数
-    */
+     * 批量删除用户表
+     *
+     * @param ids id数组
+     * @return 成功条数
+     */
     int deleteByIds(List<String> ids, HttpServletRequest request);
 
     @Override

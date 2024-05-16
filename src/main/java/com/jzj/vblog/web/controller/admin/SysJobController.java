@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.controller.admin;
 
 import com.jzj.vblog.annotation.Log;
-import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.job.JobAndTrigger;
@@ -12,7 +11,6 @@ import com.jzj.vblog.web.service.JobService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,49 +48,41 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", businessType = BusinessType.INSERT)
     @PreAuthorize("hasAuthority('btn.job.add')")
     public R addJob(@RequestBody JobVo form) {
-        try {
-            jobService.addJob(form);
-        } catch (Exception e) {
-            return R.error("定时任务保存失败!");
-        }
-        return R.ok();
+        return toAjax(jobService.addJob(form));
     }
 
     @ApiOperation("删除定时任务")
     @DeleteMapping
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     @PreAuthorize("hasAuthority('btn.job.del')")
-    public R deleteJob(@RequestBody JobVo form) throws SchedulerException {
+    public R deleteJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error();
         }
-        jobService.deleteJob(form);
-        return R.ok();
+        return toAjax(jobService.deleteJob(form));
     }
 
     @ApiOperation("暂停定时任务")
     @PutMapping("/pause")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PreAuthorize("hasAuthority('btn.job.edit')")
-    public R pauseJob(@RequestBody JobVo form) throws SchedulerException {
+    public R pauseJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
-        jobService.pauseJob(form);
-        return R.ok("暂停成功");
+
+        return toAjax(jobService.pauseJob(form));
     }
 
     @ApiOperation("恢复定时任务")
     @PutMapping("/resume")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PreAuthorize("hasAuthority('btn.job.edit')")
-    public R resumeJob(@RequestBody JobVo form) throws SchedulerException {
+    public R resumeJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
-
-        jobService.resumeJob(form);
-        return R.ok("恢复成功");
+        return toAjax(jobService.resumeJob(form));
     }
 
     @ApiOperation("修改定时任务，定时时间")
@@ -100,27 +90,21 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PreAuthorize("hasAuthority('btn.job.edit')")
     public R cronJob(@RequestBody JobVo form) {
-        try {
-            if (StringUtils.isBlank(form.getCronExpression())) {
-                throw new BusinessException("表达式不能为空");
-            }
-            jobService.cronJob(form);
-        } catch (Exception e) {
-            return R.error(e.getMessage());
+        if (StringUtils.isBlank(form.getCronExpression())) {
+            return R.error("表达式不能为空");
         }
-        return R.ok("修改成功");
+        return toAjax(jobService.cronJob(form));
     }
 
     @ApiOperation("手动调用一次定时计划")
     @PostMapping("/manualJob")
     @Log(title = "定时任务", businessType = BusinessType.OTHER)
     @PreAuthorize("hasAuthority('btn.job.edit')")
-    public R manualJob(@RequestBody JobVo form){
+    public R manualJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
         }
-        jobService.manualJob(form);
-        return R.ok("调用成功");
+        return toAjax(jobService.manualJob(form));
     }
 
 }

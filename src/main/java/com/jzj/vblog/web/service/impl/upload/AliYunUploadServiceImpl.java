@@ -91,7 +91,7 @@ public class AliYunUploadServiceImpl implements UploadService {
      * @param request
      * @return
      */
-    @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override
     public boolean deleteImg(String url, HttpServletRequest request) {
         OSS ossClient = null;
@@ -116,10 +116,11 @@ public class AliYunUploadServiceImpl implements UploadService {
 
     /**
      * oss批量删除
+     *
      * @param list
      * @param request
      */
-    @Retryable(value = Exception.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override
     public void deleteBtnImg(List<String> list, HttpServletRequest request) {
         OSS ossClient = null;

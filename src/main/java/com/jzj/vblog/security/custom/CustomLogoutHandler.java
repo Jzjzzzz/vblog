@@ -31,7 +31,7 @@ public class CustomLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String userId = JwtUtils.getSubject(request.getHeader("token"), JwtUtils.USERID);
         // 删除redis缓存中的token
-        redisCache.deleteObject(CacheConstants.LOGIN_TOKEN_KEY+userId);
+        redisCache.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + userId);
         ResponseUtil.out(response, R.ok());
     }
 }

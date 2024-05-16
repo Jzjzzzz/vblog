@@ -32,15 +32,15 @@ public class UploadFactory implements ApplicationContextAware {
         map.forEach((k, v) -> uploadServiceMap.put(v.getCode(), v));
     }
 
-    public static <T extends UploadService> T getUploadService(SysConfigService sysConfigService) {
+    public static UploadService getUploadService(SysConfigService sysConfigService) {
         //获取阿里云oss是否开启
         String enable = sysConfigService.selectConfigByKey(CacheConstants.A_LI_YUN_ENABLE_CODE);
         if (OPEN.equals(enable)) {
             //阿里云存储
-            return (T) uploadServiceMap.get(UploadCode.A_LI_YUN);
+            return uploadServiceMap.get(UploadCode.A_LI_YUN);
         } else {
             //本地存储
-            return (T) uploadServiceMap.get(UploadCode.LOCAL);
+            return uploadServiceMap.get(UploadCode.LOCAL);
         }
 
     }

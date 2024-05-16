@@ -11,7 +11,7 @@ package com.jzj.vblog.web.service;
 public interface EmailService {
 
     /**
-     * 发送纯文本邮件.
+     * 发送纯文本邮件
      *
      * @param to      目标email 地址
      * @param subject 邮件主题
@@ -20,7 +20,7 @@ public interface EmailService {
     void sendMail(String to, String subject, String text);
 
     /**
-     * 发送邮件并携带附件.
+     * 发送邮件并携带附件
      * 请注意 from 、 to 邮件服务器是否限制邮件大小
      *
      * @param to       目标email 地址
@@ -31,7 +31,7 @@ public interface EmailService {
     void sendMailWithAttachment(String to, String subject, String text, String filePath);
 
     /**
-     * 发送富文本邮件.
+     * 发送富文本邮件
      *
      * @param to       目标email 地址
      * @param subject  邮件主题

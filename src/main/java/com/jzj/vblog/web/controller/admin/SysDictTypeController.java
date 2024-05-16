@@ -79,8 +79,7 @@ public class SysDictTypeController extends BaseController {
     @DeleteMapping("/{dictIds}")
     @PreAuthorize("hasAuthority('btn.dict.del')")
     public R remove(@PathVariable Long[] dictIds) {
-        dictTypeService.deleteDictTypeByIds(dictIds);
-        return success();
+        return toAjax(dictTypeService.deleteDictTypeByIds(dictIds));
     }
 
     @Log(title = "字典类型", businessType = BusinessType.CLEAN)
@@ -96,8 +95,7 @@ public class SysDictTypeController extends BaseController {
     @GetMapping("/optionselect")
     @PreAuthorize("hasAuthority('btn.dict.list')")
     public R optionselect() {
-        List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
-        return R.ok(dictTypes);
+        return R.ok(dictTypeService.selectDictTypeAll());
     }
 
 }

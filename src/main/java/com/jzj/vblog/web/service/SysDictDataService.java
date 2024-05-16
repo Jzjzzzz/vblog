@@ -45,8 +45,15 @@ public interface SysDictDataService extends IService<SysDictData> {
      * 批量删除字典数据信息
      *
      * @param dictCodes 需要删除的字典数据ID
+     * @return 是否成功
      */
-    void deleteDictDataByIds(Long[] dictCodes);
+    boolean deleteDictDataByIds(Long[] dictCodes);
 
+    /**
+     * 校验字典数据是否唯一
+     *
+     * @param dict 实体
+     * @return 校验结果
+     */
     String checkDictDataUnique(SysDictData dict);
 }

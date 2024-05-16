@@ -102,6 +102,5 @@ public class ArticleSummaryController extends BaseController {
         return R.ok(articleSummaryService.articleList(id));
     }
 
-
 }
 

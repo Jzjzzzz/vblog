@@ -26,15 +26,21 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Transactional
     @Override
-    public void allocationRole(UserAddRoleVo vo) {
-        baseMapper.delete(new QueryWrapper<SysUserRole>().eq("user_id", vo.getUserId()));
-        List<SysUserRole> list = new ArrayList<>();
-        Arrays.stream(vo.getRoleIds()).forEach(s->{
-            SysUserRole sysUserRole = new SysUserRole();
-            sysUserRole.setUserId(vo.getUserId());
-            sysUserRole.setRoleId(s);
-            list.add(sysUserRole);
-        });
-        this.saveBatch(list);
+    public boolean allocationRole(UserAddRoleVo vo) {
+        try {
+            baseMapper.delete(new QueryWrapper<SysUserRole>().eq("user_id", vo.getUserId()));
+            List<SysUserRole> list = new ArrayList<>();
+            Arrays.stream(vo.getRoleIds()).forEach(s -> {
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setUserId(vo.getUserId());
+                sysUserRole.setRoleId(s);
+                list.add(sysUserRole);
+            });
+            this.saveBatch(list);
+            return true;
+        } catch (Exception e) {
+            log.error("用户分配角色出错", e);
+            return false;
+        }
     }
 }

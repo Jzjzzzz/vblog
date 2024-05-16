@@ -18,45 +18,51 @@ import java.util.Map;
 public interface SysRoleService extends IService<SysRole> {
 
     /**
-    * 分页查询
-    * @param sysRole 查询参数
-    * @return 列表
-    */
+     * 分页查询
+     *
+     * @param sysRole 查询参数
+     * @return 列表
+     */
     List<SysRole> pageList(SysRole sysRole);
 
     /**
-    * 新增角色
-    * @param sysRole 实体
-    * @return 成功条数
-    */
+     * 新增角色
+     *
+     * @param sysRole 实体
+     * @return 成功条数
+     */
     int add(SysRole sysRole);
 
     /**
-    * 根据id查询单条记录
-    * @param id
-    */
+     * 根据id查询单条记录
+     *
+     * @param id id
+     */
     SysRole selectById(String id);
 
     /**
-    * 修改角色
-    * @param sysRole 实体
-    * @return 成功条数
-    */
+     * 修改角色
+     *
+     * @param sysRole 实体
+     * @return 成功条数
+     */
     int modify(SysRole sysRole);
 
     /**
-    * 批量删除角色
-    * @param ids id数组
-    * @return 成功条数
-    */
+     * 批量删除角色
+     *
+     * @param ids id数组
+     * @return 成功条数
+     */
     int deleteByIds(List<String> ids, HttpServletRequest request);
 
     Map<String, Object> getRoleListByUserId(String userId);
 
     /**
      * 获取用户角色权限
-     * @param id
-     * @return
+     *
+     * @param id id
+     * @return 列表
      */
     List<String> findUserRoleList(String id);
 }

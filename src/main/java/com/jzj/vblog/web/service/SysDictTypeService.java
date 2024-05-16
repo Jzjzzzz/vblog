@@ -1,8 +1,8 @@
 package com.jzj.vblog.web.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.jzj.vblog.web.pojo.entity.SysDictType;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
@@ -16,12 +16,36 @@ import java.util.List;
  */
 public interface SysDictTypeService extends IService<SysDictType> {
 
+    /**
+     * 查询字典类型列表
+     *
+     * @param dictType 字典类型信息
+     * @return 列表
+     */
     List<SysDictType> selectDictTypeList(SysDictType dictType);
 
+    /**
+     * 根据id查询字典类型
+     *
+     * @param dictId 字典id
+     * @return 字典类型
+     */
     SysDictType selectDictTypeById(Long dictId);
 
+    /**
+     * 查询字典类型列表
+     *
+     * @param dictType 字典类型信息
+     * @return 列表
+     */
     List<SysDictData> selectDictDataByType(String dictType);
 
+    /**
+     * 唯一性校验
+     *
+     * @param dict 实体
+     * @return 校验结果
+     */
     String checkDictTypeUnique(SysDictType dict);
 
 
@@ -46,7 +70,7 @@ public interface SysDictTypeService extends IService<SysDictType> {
      *
      * @param dictIds 需要删除的字典ID
      */
-    void deleteDictTypeByIds(Long[] dictIds);
+    boolean deleteDictTypeByIds(Long[] dictIds);
 
 
     /**
@@ -70,5 +94,5 @@ public interface SysDictTypeService extends IService<SysDictType> {
      *
      * @return 字典类型集合信息
      */
-     List<SysDictType> selectDictTypeAll();
+    List<SysDictType> selectDictTypeAll();
 }

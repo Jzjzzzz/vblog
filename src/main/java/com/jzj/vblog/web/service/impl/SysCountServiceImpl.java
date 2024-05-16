@@ -26,15 +26,11 @@ public class SysCountServiceImpl extends ServiceImpl<SysCountMapper, SysCount> i
     @Autowired
     private SysCountMapper sysCountMapper;
 
-    /**
-     * 获取首页统计数据
-     * @return
-     */
     @Override
     public SysCount getCount() {
         SysCount sysCount;
         sysCount = sysCountMapper.getBeforeDayCount();
-        if(sysCount==null){
+        if (sysCount == null) {
             sysCount = new SysCount();
             sysCount.setArticleCount(0L);
             sysCount.setLikeCount(0L);
@@ -44,16 +40,12 @@ public class SysCountServiceImpl extends ServiceImpl<SysCountMapper, SysCount> i
         return sysCount;
     }
 
-    /**
-     * 获取过去七天日统计数据
-     * @return
-     */
     @Override
     public BeforeDayCountVo getSevenCount() {
         BeforeDayCountVo beforeDayCountVo = new BeforeDayCountVo();
         List<Long> clickDayCounts = new ArrayList<>();
         List<Long> likeDayCounts = new ArrayList<>();
-         List<String> dateList = new ArrayList<>();
+        List<String> dateList = new ArrayList<>();
         List<SysCount> list = sysCountMapper.getSevenCount();
         for (SysCount sysCount : list) {
             clickDayCounts.add(sysCount.getClickDayCount());

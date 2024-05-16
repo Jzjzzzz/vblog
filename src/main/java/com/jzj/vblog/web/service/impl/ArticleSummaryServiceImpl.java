@@ -49,9 +49,6 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
         return articleSummaryMapper.selectSummaryList(articleSummary);
     }
 
-    /**
-     * 校验资源是否唯一
-     */
     @Override
     public String checkSummaryUnique(ArticleSummary articleSummary) {
         String summaryId = StringUtils.isNull(articleSummary.getId()) ? "-1L" : articleSummary.getId();
@@ -67,11 +64,10 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
         if (TOP_STATUS.equals(articleSummary.getTopStatus())) {
             if (articleSummary.getId() != null) {
                 ArticleSummary summary = articleSummaryMapper.selectById(articleSummary.getId());
-                if (summary.getTopStatus().equals(articleSummary.getTopStatus())) {
-                    return false;
+                if (!summary.getTopStatus().equals(articleSummary.getTopStatus())) {
+                    return articleSummaryMapper.selectCount(new QueryWrapper<ArticleSummary>().eq("top_status", 1)) >= 3;
                 }
             }
-            return articleSummaryMapper.selectCount(new QueryWrapper<ArticleSummary>().eq("top_status", 1)) >= 3;
         }
         return false;
     }
@@ -92,7 +88,7 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
             list.forEach(s -> {
                 //更新文章基础表
                 List<ArticleInform> informList = articleInformService.list(new QueryWrapper<ArticleInform>().eq("aggregate_id", s.getId()));
-                if(!informList.isEmpty()){
+                if (!informList.isEmpty()) {
                     for (ArticleInform articleInform : informList) {
                         articleInform.setAggregateId("");
                     }
@@ -101,7 +97,7 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
             });
             return articleSummaryMapper.deleteBatchIds(ids);
         } catch (Exception e) {
-            log.error("批量删除错误:" + e.getMessage());
+            log.error("批量删除错误" + e);
             throw new RuntimeException(e);
         }
     }
@@ -132,7 +128,7 @@ public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper,
     @Override
     public List<ArticleListSummaryVo> articleList(String id) {
         //获取文章列表
-        List<ArticleInform> informs = articleInformService.list(new QueryWrapper<ArticleInform>().select("id","article_title","aggregate_id"));
+        List<ArticleInform> informs = articleInformService.list(new QueryWrapper<ArticleInform>().select("id", "article_title", "aggregate_id"));
         return informs.stream().map(s -> {
             ArticleListSummaryVo vo = new ArticleListSummaryVo();
             vo.setKey(s.getId());

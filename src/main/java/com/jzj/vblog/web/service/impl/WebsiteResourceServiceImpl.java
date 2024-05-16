@@ -29,17 +29,11 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
     @Autowired
     private WebsiteResourceMapper websiteResourceMapper;
 
-    /**
-     * 分页查询资源
-     */
     @Override
     public List<WebsiteResource> selectWebsiteList(WebsiteResource websiteResource) {
         return websiteResourceMapper.selectWebsiteList(websiteResource);
     }
 
-    /**
-     * 校验资源是否唯一
-     */
     @Override
     public String checkWebsiteUnique(WebsiteResource websiteResource) {
         String websiteId = StringUtils.isNull(websiteResource.getId()) ? "-1L" : websiteResource.getId();
@@ -50,9 +44,6 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
         return UserConstants.UNIQUE;
     }
 
-    /**
-     * 新增资源
-     */
     @Override
     public int insertWebsite(WebsiteResource websiteResource) {
         //设置默认值
@@ -60,12 +51,6 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
         return websiteResourceMapper.insert(websiteResource);
     }
 
-    /**
-     * 根据id获取资源
-     *
-     * @param id
-     * @return
-     */
     @Override
     public WebsiteResource selectWebsiteById(String id) {
         return websiteResourceMapper.selectById(id);
@@ -76,12 +61,6 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
         return websiteResourceMapper.updateById(websiteResource);
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids
-     * @return
-     */
     @Override
     public int deleteWebsiteByIds(List<String> ids, HttpServletRequest request) {
         try {
@@ -94,7 +73,7 @@ public class WebsiteResourceServiceImpl extends ServiceImpl<WebsiteResourceMappe
             AsyncManager.me().execute(AsyncFactory.deleteBtnImg(imgList, request));
             return result;
         } catch (Exception e) {
-            log.error("批量删除错误:" + e.getMessage());
+            log.error("批量删除错误" + e);
             throw new RuntimeException(e);
         }
     }

@@ -1,6 +1,5 @@
 package com.jzj.vblog.web.service.impl;
 
-import com.jzj.vblog.utils.result.BusinessException;
 import com.jzj.vblog.utils.sign.JobUtil;
 import com.jzj.vblog.web.mapper.JobMapper;
 import com.jzj.vblog.web.pojo.entity.job.JobAndTrigger;
@@ -37,119 +36,92 @@ public class JobServiceImpl implements JobService {
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
 
-    /**
-     * 添加并启动定时任务
-     *
-     * @param form 表单参数 {@link JobVo}
-     * @return {@link JobDetail}
-     * @throws Exception 异常
-     */
     @Override
-    public void addJob(JobVo form) throws Exception {
-        // 启动调度器
-        scheduler.start();
-
-        // 构建Job信息
-        JobDetail jobDetail = JobBuilder.newJob(JobUtil.getClass(form.getJobClassName()).getClass()).withIdentity(form.getJobClassName(), form.getJobGroupName()).build();
-
-        // Cron表达式调度构建器(即任务执行的时间)
-        CronScheduleBuilder cron = CronScheduleBuilder.cronSchedule(form.getCronExpression());
-
-        //根据Cron表达式构建一个Trigger
-        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(form.getJobClassName(), form.getJobGroupName()).withSchedule(cron).build();
-
+    public boolean addJob(JobVo form) {
         try {
+            // 启动调度器
+            scheduler.start();
+            // 构建Job信息
+            JobDetail jobDetail = JobBuilder.newJob(JobUtil.getClass(form.getJobClassName()).getClass()).withIdentity(form.getJobClassName(), form.getJobGroupName()).build();
+            // Cron表达式调度构建器(即任务执行的时间)
+            CronScheduleBuilder cron = CronScheduleBuilder.cronSchedule(form.getCronExpression());
+            //根据Cron表达式构建一个Trigger
+            CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(form.getJobClassName(), form.getJobGroupName()).withSchedule(cron).build();
             scheduler.scheduleJob(jobDetail, trigger);
-        } catch (SchedulerException e) {
+            return true;
+        } catch (Exception e) {
             log.error("【定时任务】创建失败！", e);
-            throw new Exception("【定时任务】创建失败！");
+            return false;
         }
-
     }
 
-    /**
-     * 删除定时任务
-     *
-     * @param form 表单参数 {@link JobVo}
-     * @throws SchedulerException 异常
-     */
     @Override
-    public void deleteJob(JobVo form) throws SchedulerException {
-        scheduler.pauseTrigger(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
-        scheduler.unscheduleJob(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
-        scheduler.deleteJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+    public boolean deleteJob(JobVo form) {
+        try {
+            scheduler.pauseTrigger(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
+            scheduler.unscheduleJob(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
+            scheduler.deleteJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+            return true;
+        } catch (Exception e) {
+            log.error("删除定时计划出错", e);
+            return false;
+        }
     }
 
-    /**
-     * 暂停定时任务
-     *
-     * @param form 表单参数 {@link JobVo}
-     * @throws SchedulerException 异常
-     */
     @Override
-    public void pauseJob(JobVo form) throws SchedulerException {
-        scheduler.pauseJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+    public boolean pauseJob(JobVo form) {
+        try {
+            scheduler.pauseJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+            return true;
+        } catch (Exception e) {
+            log.error("暂停定时任务出错", e);
+            return false;
+        }
     }
 
-    /**
-     * 恢复定时任务
-     *
-     * @param form 表单参数 {@link JobVo}
-     * @throws SchedulerException 异常
-     */
     @Override
-    public void resumeJob(JobVo form) throws SchedulerException {
-        scheduler.resumeJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+    public boolean resumeJob(JobVo form) {
+        try {
+            scheduler.resumeJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+            return true;
+        } catch (Exception e) {
+            log.error("恢复定时任务出错", e);
+            return false;
+        }
     }
 
-    /**
-     * 重新配置定时任务
-     *
-     * @param form 表单参数 {@link JobVo}
-     * @throws Exception 异常
-     */
     @Override
-    public void cronJob(JobVo form) throws Exception {
+    public boolean cronJob(JobVo form) {
         try {
             TriggerKey triggerKey = TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName());
             // 表达式调度构建器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(form.getCronExpression());
-
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-
             // 根据Cron表达式构建一个Trigger
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-
             // 按新的trigger重新设置job执行
             scheduler.rescheduleJob(triggerKey, trigger);
+            return true;
         } catch (SchedulerException e) {
-            log.error("【定时任务】更新失败！", e);
-            throw new Exception("【定时任务】创建失败！");
+            log.error("重新配置定时任务出错", e);
+            return false;
         }
     }
 
 
-    /**
-     * 查询定时任务列表
-     * @param jobAndTrigger
-     * @return
-     */
     @Override
     public List<JobAndTrigger> selectJobList(JobAndTrigger jobAndTrigger) {
         return jobMapper.list(jobAndTrigger);
     }
 
-
-    /**
-     * 手动调用一次定时计划
-     * @param form
-     */
     @Override
-    public void manualJob(JobVo form) {
+    public boolean manualJob(JobVo form) {
         try {
-            schedulerFactoryBean.getScheduler().triggerJob(JobKey.jobKey(form.getJobClassName(),form.getJobGroupName()));
+            schedulerFactoryBean.getScheduler().triggerJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+            return true;
         } catch (SchedulerException e) {
-            throw new BusinessException("运行手动调用一次定时计划任务失败,失败原因:"+e);
+            log.error("手动调用一次定时计划出错", e);
+            return false;
         }
     }
 }

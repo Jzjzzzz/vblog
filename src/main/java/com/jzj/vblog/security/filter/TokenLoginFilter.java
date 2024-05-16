@@ -43,11 +43,11 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private CaptchaService captchaService;
 
-    public TokenLoginFilter(AuthenticationManager authenticationManager, RedisCache redisCache,CaptchaService captchaService) {
+    public TokenLoginFilter(AuthenticationManager authenticationManager, RedisCache redisCache, CaptchaService captchaService) {
         this.setAuthenticationManager(authenticationManager);
         this.setPostOnly(false);
         //指定登录接口及提交方式，可以指定任意路径
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/index/login","POST"));
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/index/login", "POST"));
         this.redisCache = redisCache;
         this.captchaService = captchaService;
     }
@@ -60,7 +60,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         try {
             LoginVo loginVo = new ObjectMapper().readValue(request.getInputStream(), LoginVo.class);
             //行为验证码二次校验
-            if(StringUtils.isBlank(loginVo.getCode())) throw new BusinessException(ResponseEnum.CODE_ERROR);
+            if (StringUtils.isBlank(loginVo.getCode())) throw new BusinessException(ResponseEnum.CODE_ERROR);
             CaptchaVO captchaVO = new CaptchaVO();
             captchaVO.setCaptchaVerification(loginVo.getCode());
             ResponseModel resCode = captchaService.verification(captchaVO);
@@ -86,7 +86,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         HashMap<String, String> redisMap = new HashMap<>();
         redisMap.put("token", token);
         redisMap.put("authorities", JSON.toJSONString(customUser.getAuthorities()));
-        redisCache.setCacheMap(CacheConstants.LOGIN_TOKEN_KEY+customUser.getSysUser().getId(),redisMap,30, TimeUnit.MINUTES);
+        redisCache.setCacheMap(CacheConstants.LOGIN_TOKEN_KEY + customUser.getSysUser().getId(), redisMap, 30, TimeUnit.MINUTES);
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
         ResponseUtil.out(response, R.ok(map));
@@ -97,10 +97,10 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        if(e.getCause() instanceof RuntimeException) {
+        if (e.getCause() instanceof RuntimeException) {
             ResponseUtil.out(response, R.error().code(204).message(e.getMessage()));
-        } else{
-             ResponseUtil.out(response, R.error().code(204).message("账号密码错误"));
+        } else {
+            ResponseUtil.out(response, R.error().code(204).message("账号密码错误"));
         }
     }
 }

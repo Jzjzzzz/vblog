@@ -19,6 +19,6 @@ public class VblogApplication {
         ApplicationContext run = SpringApplication.run(VblogApplication.class, args);
         Environment env = run.getEnvironment();
         log.info("启动成功!");
-        log.info("地址:\thttp://127.0.0.1:{}",env.getProperty("server.port"));
+        log.info("地址:\thttp://127.0.0.1:{}", env.getProperty("server.port"));
     }
 }

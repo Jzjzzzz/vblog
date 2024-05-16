@@ -62,7 +62,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-        public int deleteByIds(List<String> ids, HttpServletRequest request) {
+    public int deleteByIds(List<String> ids, HttpServletRequest request) {
         return sysMenuMapper.deleteBatchIds(ids);
     }
 
@@ -73,8 +73,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (CollectionUtils.isEmpty(sysMenuList)) return null;
 
         //构建树形数据
-        List<SysMenu> result = MenuUtils.buildTree(sysMenuList);
-        return result;
+        return MenuUtils.buildTree(sysMenuList);
     }
 
     @Override
@@ -95,14 +94,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Transactional
     @Override
-    public void doAssign(AssignMenuVo assignMenuVo) {
-        sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, assignMenuVo.getRoleId()));
-        for (String menuId : assignMenuVo.getMenuIdList()) {
-            if (StringUtils.isEmpty(menuId)) continue;
-            SysRoleMenu rolePermission = new SysRoleMenu();
-            rolePermission.setRoleId(assignMenuVo.getRoleId());
-            rolePermission.setMenuId(menuId);
-            sysRoleMenuMapper.insert(rolePermission);
+    public boolean doAssign(AssignMenuVo assignMenuVo) {
+        try {
+            sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, assignMenuVo.getRoleId()));
+            for (String menuId : assignMenuVo.getMenuIdList()) {
+                if (StringUtils.isEmpty(menuId)) continue;
+                SysRoleMenu rolePermission = new SysRoleMenu();
+                rolePermission.setRoleId(assignMenuVo.getRoleId());
+                rolePermission.setMenuId(menuId);
+                sysRoleMenuMapper.insert(rolePermission);
+            }
+            return true;
+        } catch (Exception e) {
+            log.error("分配角色权限出错", e);
+            return false;
         }
     }
 
@@ -121,11 +126,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return this.buildMenus(sysMenuTreeList);
     }
 
-    /**
-     * 根据菜单构建路由
-     * @param menus
-     * @return
-     */
     private List<RouterVo> buildMenus(List<SysMenu> menus) {
         List<RouterVo> routers = new LinkedList<RouterVo>();
         for (SysMenu menu : menus) {
@@ -137,7 +137,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             router.setMeta(new MetaVo(menu.getName(), menu.getIcon()));
             List<SysMenu> children = menu.getChildren();
             //如果当前是菜单，需将按钮对应的路由加载出来，如：“角色授权”按钮对应的路由在“系统管理”下面
-            if(menu.getType().equals("1")) {
+            if (menu.getType().equals("1")) {
                 List<SysMenu> hiddenMenuList = children.stream().filter(item -> !org.springframework.util.StringUtils.isEmpty(item.getComponent())).collect(Collectors.toList());
                 for (SysMenu hiddenMenu : hiddenMenuList) {
                     RouterVo hiddenRouter = new RouterVo();
@@ -150,9 +150,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 }
             } else {
                 if (!CollectionUtils.isEmpty(children)) {
-                    if(children.size() > 0) {
-                        router.setAlwaysShow(true);
-                    }
+                    router.setAlwaysShow(true);
                     router.setChildren(buildMenus(children));
                 }
             }
@@ -161,15 +159,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return routers;
     }
 
-    /**
-     * 获取路由地址
-     *
-     * @param menu 菜单信息
-     * @return 路由地址
-     */
     public String getRouterPath(SysMenu menu) {
         String routerPath = "/" + menu.getPath();
-        if(!menu.getParentId().equals("0")) {
+        if (!menu.getParentId().equals("0")) {
             routerPath = menu.getPath();
         }
         return routerPath;
@@ -184,7 +176,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         } else {
             sysMenuList = sysMenuMapper.findListByUserId(userId);
         }
-        List<String> permsList = sysMenuList.stream().filter(item -> item.getType().equals("2")).map(item -> item.getPerms()).collect(Collectors.toList());
-        return permsList;
+        return sysMenuList.stream().filter(item -> item.getType().equals("2")).map(item -> item.getPerms()).collect(Collectors.toList());
     }
 }

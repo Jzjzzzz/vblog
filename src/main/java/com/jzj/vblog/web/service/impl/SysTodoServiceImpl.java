@@ -24,12 +24,6 @@ public class SysTodoServiceImpl extends ServiceImpl<SysTodoMapper, SysTodo> impl
     @Autowired
     private SysTodoMapper sysTodoMapper;
 
-    /**
-     * 检查唯一性
-     *
-     * @param content 事件内容
-     * @return
-     */
     @Override
     public String checkUnique(String content) {
         Integer count = sysTodoMapper.selectCount(new QueryWrapper<SysTodo>().eq("text", content));

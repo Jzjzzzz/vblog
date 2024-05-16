@@ -16,14 +16,16 @@ public interface SysCountService extends IService<SysCount> {
 
     /**
      * 获取首页统计数据
-     * @return
+     *
+     * @return 实体
      */
     SysCount getCount();
 
 
     /**
      * 获取过去七天日统计数据
-     * @return
+     *
+     * @return 实体
      */
     BeforeDayCountVo getSevenCount();
 }

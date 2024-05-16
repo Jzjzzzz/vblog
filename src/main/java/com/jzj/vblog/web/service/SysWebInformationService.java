@@ -16,15 +16,15 @@ public interface SysWebInformationService extends IService<SysWebInformation> {
     /**
      * 根据id查询网站基本信息
      *
-     * @return
+     * @return 实体
      */
     SysWebInformation selectWebInformationById();
 
     /**
      * 修改网站基本信息
      *
-     * @param sysWebInformation
-     * @return
+     * @param sysWebInformation 实体
+     * @return 变更条数
      */
     int updateWebInformation(SysWebInformation sysWebInformation);
 

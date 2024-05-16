@@ -17,7 +17,7 @@ public interface SysTodoService extends IService<SysTodo> {
      * 唯一性检查
      *
      * @param content 事件内容
-     * @return
+     * @return 校验结果
      */
     String checkUnique(String content);
 
@@ -25,7 +25,7 @@ public interface SysTodoService extends IService<SysTodo> {
      * 新增事件
      *
      * @param content 事件内容
-     * @return
+     * @return 变更数量
      */
     int insertTodo(String content);
 
@@ -33,7 +33,7 @@ public interface SysTodoService extends IService<SysTodo> {
     /**
      * 修改备忘状态
      *
-     * @return
+     * @return 变更数量
      */
     int updateTodo(SysTodo sysTodo);
 }

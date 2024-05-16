@@ -63,7 +63,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public int add(SysUser sysUser) {
         //判断是否唯一
         int usrCount = this.count(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, sysUser.getUsername()));
-        if(usrCount >0) throw new BusinessException("用户名已存在!");
+        if (usrCount > 0) throw new BusinessException("用户名已存在!");
         sysUser.setPassword(MD5Utils.encrypt(sysUser.getPassword()));
         return sysUserMapper.insert(sysUser);
     }
@@ -80,9 +80,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Transactional
     @Override
-        public int deleteByIds(List<String> ids, HttpServletRequest request) {
+    public int deleteByIds(List<String> ids, HttpServletRequest request) {
         ids.forEach(id -> {
-            if(UserConstants.SYS_ADMIN_ID.equals(id)) throw new BusinessException("不允许删除超级管理员!");
+            if (UserConstants.SYS_ADMIN_ID.equals(id)) throw new BusinessException("不允许删除超级管理员!");
             //删除用户之前先去删除用户角色关联表数据
             sysUserRoleMapper.deleteBatchByUserId(id);
         });
@@ -92,10 +92,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser sysUser = this.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
-        if(null == sysUser) {
+        if (null == sysUser) {
             throw new BusinessException("账号密码错误!");
         }
-        if(sysUser.getStatus().equals("0")) {
+        if (sysUser.getStatus().equals("0")) {
             throw new BusinessException("账号已停用!");
         }
         List<String> userPermsList = sysMenuService.findUserPermsList(sysUser.getId());
@@ -120,7 +120,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         permsList.removeIf(String::isEmpty);
         result.put("name", sysUser.getUsername());
         result.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        result.put("roles",  roles);
+        result.put("roles", roles);
         result.put("buttons", permsList);
         result.put("routers", routerVoList);
         return result;
@@ -130,12 +130,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public int updateUser(UserUpdateVo vo) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SysUser user = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, authentication.getName()));
-        if(null == user) throw new BusinessException("用户不存在!");
-        if(StringUtils.isNotEmpty(vo.getNewpassword1())) {
-            if(!vo.getNewpassword1().equals(vo.getNewpassword2())) throw new BusinessException("两次输入的密码不一致!");
-            if(StringUtils.isEmpty(vo.getOldpassword())) throw new BusinessException("旧密码不能为空!");
+        if (null == user) throw new BusinessException("用户不存在!");
+        if (StringUtils.isNotEmpty(vo.getNewpassword1())) {
+            if (!vo.getNewpassword1().equals(vo.getNewpassword2()))
+                throw new BusinessException("两次输入的密码不一致!");
+            if (StringUtils.isEmpty(vo.getOldpassword())) throw new BusinessException("旧密码不能为空!");
             String oldPassword = MD5Utils.encrypt(vo.getOldpassword());
-            if(!oldPassword.equals(user.getPassword())) throw new BusinessException("旧密码错误!");
+            if (!oldPassword.equals(user.getPassword())) throw new BusinessException("旧密码错误!");
             user.setPassword(MD5Utils.encrypt(vo.getNewpassword1()));
             return baseMapper.updateById(user);
         }

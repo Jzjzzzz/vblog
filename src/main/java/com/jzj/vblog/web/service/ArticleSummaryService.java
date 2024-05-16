@@ -1,7 +1,6 @@
 package com.jzj.vblog.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.vo.ArticleListSummaryVo;
 
@@ -23,7 +22,7 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
     /**
      * 获取全部归档
      *
-     * @param articleSummary
+     * @param articleSummary 查询条件
      * @return 列表
      */
     List<ArticleSummary> selectSummaryList(ArticleSummary articleSummary);
@@ -55,7 +54,7 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
      * 批量删除归档
      *
      * @param ids     id数组
-     * @param request
+     * @param request 请求
      * @return 修改条数
      */
     int deleteSummaryByIds(List<String> ids, HttpServletRequest request);
@@ -79,10 +78,16 @@ public interface ArticleSummaryService extends IService<ArticleSummary> {
     /**
      * 前台分页获取归档
      *
-     * @param queryMap
-     * @return
+     * @param queryMap 查询参数
+     * @return 列表
      */
     HashMap<String, Object> summaryPage(Map<String, Object> queryMap);
 
+    /**
+     * 根据归档id查询文章列表
+     *
+     * @param id 归档id
+     * @return 文章列表
+     */
     List<ArticleListSummaryVo> articleList(String id);
 }

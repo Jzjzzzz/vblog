@@ -82,8 +82,7 @@ public class SysMenuController extends BaseController {
     @PostMapping("/doAssign")
     @PreAuthorize("hasAuthority('btn.menu.edit')")
     public R doAssign(@RequestBody AssignMenuVo assignMenuVo) {
-        sysMenuService.doAssign(assignMenuVo);
-        return R.ok();
+        return toAjax(sysMenuService.doAssign(assignMenuVo));
     }
 }
 

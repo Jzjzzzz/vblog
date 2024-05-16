@@ -30,18 +30,11 @@ public class EmailServiceImpl implements EmailService {
     private String from;
 
 
-    /**
-     * 发送纯文本邮件.
-     *
-     * @param to      目标email 地址
-     * @param subject 邮件主题
-     * @param text    纯文本内容
-     */
-    @Retryable(value = MailException.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
+    @Retryable(value = MailException.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override
     public void sendMail(String to, String subject, String text) {
         try {
-            if(EmailUtil.isEmail(to)){
+            if (EmailUtil.isEmail(to)) {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setFrom(from);
                 message.setTo(to);
@@ -50,61 +43,44 @@ public class EmailServiceImpl implements EmailService {
                 mailSender.send(message);
             }
         } catch (MailException e) {
-            log.error("邮箱发送失败,发送用户为:"+to+"---错误信息为:"+e);
+            log.error("邮箱发送失败,发送用户为:" + to + "---错误信息为:" + e);
         }
     }
 
-    /**
-     * 发送邮件并携带附件.
-     * 请注意 from 、 to 邮件服务器是否限制邮件大小
-     *
-     * @param to       目标email 地址
-     * @param subject  邮件主题
-     * @param text     纯文本内容
-     * @param filePath 附件的路径 当然你可以改写传入文件
-     */
-    @Retryable(value = RuntimeException.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
+    @Retryable(value = RuntimeException.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override
     public void sendMailWithAttachment(String to, String subject, String text, String filePath) {
         try {
             File attachment = new File(filePath);
             MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper=new MimeMessageHelper(mimeMessage,true);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(text);
-            helper.addAttachment(attachment.getName(),attachment);
+            helper.addAttachment(attachment.getName(), attachment);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            log.error("邮箱发送失败,发送用户为:"+to+"---错误信息为:"+e);
+            log.error("邮箱发送失败,发送用户为:" + to + "---错误信息为:" + e);
         }
     }
 
-    /**
-     * 发送富文本邮件.
-     *
-     * @param to       目标email 地址
-     * @param subject  邮件主题
-     * @param text     纯文本内容
-     * @param filePath 附件的路径 当然你可以改写传入文件
-     */
-    @Retryable(value = RuntimeException.class,maxAttempts = 2,backoff = @Backoff(delay = 2000,multiplier = 1.5))
+    @Retryable(value = RuntimeException.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override
     public void sendRichMail(String to, String subject, String text, String filePath) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper=new MimeMessageHelper(mimeMessage,true);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
 
-            helper.setText(text,true);
+            helper.setText(text, true);
             // 图片占位写法  如果图片链接写入模板 注释下面这一行
-            helper.addInline("qr",new FileSystemResource(filePath));
+            helper.addInline("qr", new FileSystemResource(filePath));
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            log.error("邮箱发送失败,发送用户为:"+to+"---错误信息为:"+e);
+            log.error("邮箱发送失败,发送用户为:" + to + "---错误信息为:" + e);
         }
     }
 }

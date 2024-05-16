@@ -16,7 +16,20 @@ import java.util.List;
  */
 public interface GalleryService extends IService<Gallery> {
 
+    /**
+     * 查询图集列表
+     *
+     * @param gallery 查询条件
+     * @return 列表
+     */
     List<Gallery> selectGalleryList(Gallery gallery);
 
-    int removeByIdImg(String id,HttpServletRequest request);
+    /**
+     * 删除图集
+     *
+     * @param id      图片id
+     * @param request 请求
+     * @return 变动条数
+     */
+    int removeByIdImg(String id, HttpServletRequest request);
 }

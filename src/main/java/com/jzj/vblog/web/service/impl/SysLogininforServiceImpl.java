@@ -21,11 +21,6 @@ public class SysLogininforServiceImpl extends ServiceImpl<SysLogininforMapper, S
     @Autowired
     private SysLogininforMapper logininforMapper;
 
-    /**
-     * 新增系统登录日志
-     *
-     * @param logininfor 访问日志对象
-     */
     @Override
     public void insertLogininfor(SysLogininfor logininfor)
     {

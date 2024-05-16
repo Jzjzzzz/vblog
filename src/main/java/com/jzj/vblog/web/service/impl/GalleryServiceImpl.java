@@ -34,12 +34,12 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery> impl
     }
 
     @Override
-    public int removeByIdImg(String id,HttpServletRequest request) {
+    public int removeByIdImg(String id, HttpServletRequest request) {
         ArrayList<String> imgList = new ArrayList<>();
         Gallery gallery = galleryMapper.selectById(id);
         imgList.add(gallery.getImgAddress());
         //异步删除图片
-        AsyncManager.me().execute(AsyncFactory.deleteBtnImg(imgList,request));
+        AsyncManager.me().execute(AsyncFactory.deleteBtnImg(imgList, request));
         return galleryMapper.deleteById(id);
     }
 }

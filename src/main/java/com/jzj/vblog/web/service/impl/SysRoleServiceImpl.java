@@ -63,7 +63,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Transactional
     @Override
-        public int deleteByIds(List<String> ids, HttpServletRequest request) {
+    public int deleteByIds(List<String> ids, HttpServletRequest request) {
         ids.forEach(id -> {
             //这里既要删除用户角色表关联数据，又要删除角色权限表关联数据
             sysUserRoleMapper.deleteBatchByRoleId(id);
@@ -76,14 +76,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public Map<String, Object> getRoleListByUserId(String userId) {
         HashMap<String, Object> map = new HashMap<>();
         List<SysRole> roles = sysRoleMapper.selectList(new QueryWrapper<SysRole>().eq("status", 1));
-        List<SysUserRole> selectList= sysUserRoleMapper.selectList(new QueryWrapper<SysUserRole>().eq("user_id", userId));
-        String [] ids = new String[selectList.size()];
-        if(!selectList.isEmpty()){
+        List<SysUserRole> selectList = sysUserRoleMapper.selectList(new QueryWrapper<SysUserRole>().eq("user_id", userId));
+        String[] ids = new String[selectList.size()];
+        if (!selectList.isEmpty()) {
             for (int i = 0; i < selectList.size(); i++) {
                 ids[i] = selectList.get(i).getRoleId();
             }
         }
-        map.put("roles",roles);
+        map.put("roles", roles);
         map.put("ids", ids);
         return map;
     }

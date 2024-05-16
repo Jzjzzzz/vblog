@@ -47,7 +47,7 @@ public class FriendLinkController extends BaseController {
     @PreAuthorize("hasAuthority('btn.link.add')")
     public R add(@Validated @RequestBody FriendLink friendLink) {
         if (UserConstants.NOT_UNIQUE.equals(friendLinkService.checkLinkUnique(friendLink))) {
-            return R.error("新增友链'" + friendLink.getName()+ "'失败，友链已存在");
+            return R.error("新增友链'" + friendLink.getName() + "'失败，友链已存在");
         }
         return toAjax(friendLinkService.insertLink(friendLink));
     }

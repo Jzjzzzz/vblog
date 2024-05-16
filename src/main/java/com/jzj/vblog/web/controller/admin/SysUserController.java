@@ -91,8 +91,8 @@ public class SysUserController extends BaseController {
     @PutMapping("/allocationRole")
     @PreAuthorize("hasAuthority('btn.user.edit')")
     public R allocationRole(@RequestBody UserAddRoleVo vo) {
-        sysUserRoleService.allocationRole(vo);
-        return R.ok();
+
+        return toAjax(sysUserRoleService.allocationRole(vo));
     }
 }
 
