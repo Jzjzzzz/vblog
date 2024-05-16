@@ -42,6 +42,5 @@ public class UploadFactory implements ApplicationContextAware {
             //本地存储
             return uploadServiceMap.get(UploadCode.LOCAL);
         }
-
     }
 }

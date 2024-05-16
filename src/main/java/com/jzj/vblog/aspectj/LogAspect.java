@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,7 +66,7 @@ public class LogAspect {
         try
         {
             // 获取当前的用户
-
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
             // *========数据库日志=========*//
             SysOperLog operLog = new SysOperLog();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
@@ -73,8 +74,7 @@ public class LogAspect {
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
             operLog.setOperIp(ip);
             operLog.setOperUrl(ServletUtils.getRequest().getRequestURI());
-            operLog.setOperName("admin");
-
+            operLog.setOperName(username);
             if (e != null)
             {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
@@ -96,7 +96,6 @@ public class LogAspect {
             // 记录本地异常日志
             log.error("==前置通知异常==");
             log.error("异常信息:{}", exp.getMessage());
-            exp.printStackTrace();
         }
     }
 

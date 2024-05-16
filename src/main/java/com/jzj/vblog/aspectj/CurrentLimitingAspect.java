@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class CurrentLimitingAspect {
-    private static ConcurrentHashMap<String, ExpiringMap<String, Integer>> map= new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, ExpiringMap<String, Integer>> map= new ConcurrentHashMap<>();
 
     /**
      *  层切点
@@ -51,7 +51,7 @@ public class CurrentLimitingAspect {
         Integer Count = em.getOrDefault(request.getRemoteAddr(), 0);
 
         if (Count >= currentLimiting.value()) { // 超过次数，不执行目标方法
-            log.error("接口请求超过次数,请求ip为："+request.getRemoteAddr());
+            log.error("接口请求超过次数,请求ip为：{}", request.getRemoteAddr());
             throw new BusinessException(ResponseEnum.REQUEST_UPPER_LIMIT);
         } else if (Count == 0){ // 第一次请求时，设置有效时间
             em.put(request.getRemoteAddr(), Count + 1, ExpirationPolicy.CREATED, currentLimiting.time(), TimeUnit.MILLISECONDS);
@@ -61,8 +61,6 @@ public class CurrentLimitingAspect {
         map.put(request.getRequestURI(), em);
 
         // result的值就是被拦截方法的返回值
-        Object result = pjp.proceed();
-
-        return result;
+        return pjp.proceed();
     }
 }
