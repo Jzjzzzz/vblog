@@ -1,17 +1,17 @@
 <template>
   <div class="life-content">
-    <div v-for="(lifeItem,$index) in lifeList" class="row-item-detail shadow">
+    <div v-for="item in lifeList" class="row-item-detail shadow">
       <div class="detail-body">
-        <div class="detail-img"><img :src="lifeItem.banner">
-          <div @click="jumpTo(lifeItem.id,lifeItem.name)" class="detail-title">
-            <div class="title"><i class="fa fa-title" aria-hidden="true"></i> {{ lifeItem.name }}</div>
+        <div class="detail-img"><img :src="item.banner">
+          <div @click="jumpTo(item.id,item.name)" class="detail-title">
+            <div class="title"><i class="fa fa-title" aria-hidden="true"></i> {{ item.name }}</div>
             <div class="content">
               <div class="content-flex">
-                <div class="content-desc"><i class="fa fa-user" aria-hidden="true"></i> {{ lifeItem.author }}</div>
+                <div class="content-desc"><i class="fa fa-user" aria-hidden="true"></i> {{ item.author }}</div>
               </div>
               <div class="content-flex">
                 <div class="content-desc"><i class="fa fa-calendar-o" aria-hidden="true"></i>
-                  {{ lifeItem.createTime.split(' ')[0] }}
+                  {{formatDate(new Date(item.createTime)) }}
                 </div>
               </div>
             </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+
+import moment from 'moment';
 export default {
   props: {
     lifeList: {
@@ -35,15 +37,19 @@ export default {
     return {}
   },
   methods: {
+    formatDate(date) {
+      return moment(date).format('YYYY-MM-DD');
+    },
     jumpTo: function (id, name) {
       this.$router.push({
-        path: `/blog`,
-        name: 'blog',
-        params: {
+        path: `/list`,
+        name: 'list',
+        query: {
           summaryId: id,
-          summaryName: name
+          summaryName: name,
+          refresh: 'true'
         }
-      }) // 这里跳转到页面
+      })
     }
   }
 }

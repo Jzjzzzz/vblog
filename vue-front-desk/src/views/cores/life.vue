@@ -39,10 +39,6 @@ export default {
   },
   methods: {
     init() {
-      // 在这里初始化
-      this.getConfig();
-    },
-    getConfig() {
       list().then(res => {
         this.lifeList = res.data
       })

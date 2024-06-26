@@ -58,7 +58,16 @@
 		    "backgroundImage": "assets/image/background/30.jpg",
 		    "isOpacityFull": false,
 		    "titleClass": "title-blog"
-		  },{
+		  },
+      {
+        "name": "list",
+        "title": "技术杂谈",
+        "desc": "保持谦逊",
+        "backgroundImage": "assets/image/background/30.jpg",
+        "isOpacityFull": false,
+        "titleClass": "title-blog"
+      },
+      {
 		    "name": "life",
 		    "title": "归档",
 		    "desc": "井井有条",

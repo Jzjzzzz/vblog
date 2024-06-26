@@ -26,7 +26,18 @@ export default new Router({
         {
           path: 'blog',
           component: (resolve) => require(['@/views/cores/blog'], resolve),
-          name: 'blog'
+          name: 'blog',
+          meta:{
+            keepAlive: true
+          }
+        },
+        {
+          path: 'list',
+          component: (resolve) => require(['@/views/cores/list'], resolve),
+          name: 'list',
+          meta:{
+            keepAlive: true
+          }
         },
         {
           path: 'life',

@@ -1,8 +1,8 @@
-var scrollToBottom = {
+const scrollToBottom = {
   getScrollTop: function () {
-    var scrollTop = 0;
-    var bodyScrollTop = 0;
-    var documentScrollTop = 0;
+    let scrollTop = 0;
+    let bodyScrollTop = 0;
+    let documentScrollTop = 0;
     if (document.body) {
       bodyScrollTop = document.body.scrollTop;
     }
@@ -13,9 +13,9 @@ var scrollToBottom = {
     return scrollTop;
   },
   getScrollHeight: function () {
-    var scrollHeight = 0;
-    var bodyScrollHeight = 0;
-    var documentScrollHeight = 0;
+    let scrollHeight = 0;
+    let bodyScrollHeight = 0;
+    let documentScrollHeight = 0;
     if (document.body) {
       bodyScrollHeight = document.body.scrollHeight;
     }
@@ -27,8 +27,8 @@ var scrollToBottom = {
     return scrollHeight;
   },
   getClientHeight: function () {
-    var windowHeight = 0;
-    if (document.compatMode == 'CSS1Compat') {
+    let windowHeight = 0;
+    if (document.compatMode === 'CSS1Compat') {
       windowHeight = document.documentElement.clientHeight;
     } else {
       windowHeight = document.body.clientHeight;
@@ -36,19 +36,19 @@ var scrollToBottom = {
     return windowHeight;
   },
   onScrollEvent: function (callback) {
-    var This = this;
-    var scrollSum = Math.ceil(This.getScrollTop() + This.getClientHeight());
+    const This = this;
+    const scrollSum = Math.ceil(This.getScrollTop() + This.getClientHeight());
     if (scrollSum >= This.getScrollHeight()) {
       typeof callback == 'function' && callback.call(this);
     }
   }
 };
 
-var throttle = function (fn, delay) {
-  var timer = null;
+const throttle = function (fn, delay) {
+  let timer = null;
   return function () {
-    var context = this;
-    var args = arguments;
+    const context = this;
+    const args = arguments;
     clearTimeout(timer);
     timer = setTimeout(function () {
       fn.apply(context, args);
@@ -56,19 +56,19 @@ var throttle = function (fn, delay) {
   };
 };
 
-var isPhone = function () {
-  var userAgentInfo = navigator.userAgent;
-  var Agents = ['Android', 'iPhone',
+const isPhone = function () {
+  const userAgentInfo = navigator.userAgent;
+  const Agents = ['Android', 'iPhone',
     'SymbianOS', 'Windows Phone'];
-  var flag = false;
-  for (var v = 0; v < Agents.length; v++) {
+  let flag = false;
+  for (let v = 0; v < Agents.length; v++) {
     if (userAgentInfo.indexOf(Agents[v]) > 0) {
       flag = true;
       break;
     }
   }
   return flag;
-}
+};
 
 export {
   scrollToBottom,

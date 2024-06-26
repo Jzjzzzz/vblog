@@ -1,7 +1,8 @@
 <template>
   <div id="app" class="conetent" :class="headCoverSilde?'slide':''">
     <nav-header v-show="isShowNav" :nav-list="navList" v-on:slidechange="headSilde"></nav-header>
-    <router-view/>
+    <keep-alive><router-view v-if="$route.meta.keepAlive" /></keep-alive>
+    <router-view v-if="!$route.meta.keepAlive" />
   </div>
 </template>
 
