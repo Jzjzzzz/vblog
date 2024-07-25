@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/system/dict'
-
 // 查询字典数据列表
 export function listData(query) {
   return request({
-    url: `${api_name}/data/list`,
+    url: `/system/dict/data/list`,
     method: 'get',
     params: query
   })
@@ -14,7 +12,7 @@ export function listData(query) {
 // 查询字典数据详细
 export function getData(dictCode) {
   return request({
-    url: `${api_name}/data/${dictCode}` ,
+    url: `/system/dict/data/${dictCode}` ,
     method: 'get'
   })
 }
@@ -22,7 +20,7 @@ export function getData(dictCode) {
 // 根据字典类型查询字典数据信息
 export function getDicts(dictType) {
   return request({
-    url: `${api_name}/data/type/${dictType}`,
+    url: `/system/dict/data/type/${dictType}`,
     method: 'get'
   })
 }
@@ -30,7 +28,7 @@ export function getDicts(dictType) {
 // 新增字典数据
 export function addData(data) {
   return request({
-    url: `${api_name}/data`,
+    url: `/system/dict/data`,
     method: 'post',
     data: data
   })
@@ -39,7 +37,7 @@ export function addData(data) {
 // 修改字典数据
 export function updateData(data) {
   return request({
-    url: `${api_name}/data`,
+    url: `/system/dict/data`,
     method: 'put',
     data: data
   })
@@ -48,7 +46,7 @@ export function updateData(data) {
 // 删除字典数据
 export function delData(dictCode) {
   return request({
-    url: `${api_name}/data/${dictCode}`,
+    url: `/system/dict/data/${dictCode}`,
     method: 'delete'
   })
 }

@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/system/count'
-
 // 获取统计数据
 export function getCount() {
   return request({
-    url: `${api_name}`,
+    url: `/system/count`,
     method: 'get'
   })
 }
@@ -14,7 +12,7 @@ export function getCount() {
 // 获取过去七天单日统计数据
 export function getSevenCount() {
   return request({
-    url: `${api_name}/getSevenCount`,
+    url: `/system/count/getSevenCount`,
     method: 'get'
   })
 }

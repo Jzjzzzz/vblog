@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/system/user'
-
 // 查询列表
 export function list(query) {
   return request({
-    url: `${api_name}`,
+    url: `/system/user`,
     method: 'get',
     params: query
   })
@@ -14,7 +12,7 @@ export function list(query) {
 // 查询详细
 export function get(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/system/user/${id}`,
     method: 'get'
   })
 }
@@ -22,7 +20,7 @@ export function get(id) {
 // 新增
 export function add(data) {
   return request({
-    url: `${api_name}`,
+    url: `/system/user`,
     method: 'post',
     data: data
   })
@@ -31,7 +29,7 @@ export function add(data) {
 // 修改
 export function update(data) {
   return request({
-    url: `${api_name}`,
+    url: `/system/user`,
     method: 'put',
     data: data
   })
@@ -40,7 +38,7 @@ export function update(data) {
 // 重置密码
 export function restPassword(data) {
   return request({
-    url: `${api_name}/restPassword`,
+    url: `/system/user/restPassword`,
     method: 'put',
     data: data
   })
@@ -48,7 +46,7 @@ export function restPassword(data) {
 //分配角色
 export function allocationRole(data){
   return request({
-    url: `${api_name}/allocationRole`,
+    url: `/system/user/allocationRole`,
     method: 'put',
     data: data
   })
@@ -56,7 +54,7 @@ export function allocationRole(data){
 // 删除
 export function del(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/system/user/${id}`,
     method: 'delete'
   })
 }

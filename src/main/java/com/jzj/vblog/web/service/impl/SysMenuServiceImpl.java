@@ -176,6 +176,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         } else {
             sysMenuList = sysMenuMapper.findListByUserId(userId);
         }
-        return sysMenuList.stream().filter(item -> item.getType().equals("2")).map(item -> item.getPerms()).collect(Collectors.toList());
+        return sysMenuList.stream().filter(item -> item.getType().equals("2")).map(item -> item.getPerms()).filter(perms->perms!=null && !perms.isEmpty()).collect(Collectors.toList());
     }
 }

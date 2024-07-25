@@ -103,8 +103,8 @@
     <el-table v-loading="loading" :data="articleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" />
-      <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true" />
-      <el-table-column prop="logImg" label="背景" align="center">
+      <el-table-column label="标题" align="center" prop="articleTitle" :show-overflow-tooltip="true" min-width="200px" />
+      <el-table-column prop="logImg" label="背景" align="center" width="150px">
         <template slot-scope="scope">
           <el-image
             style="width:100px;height: 100px"
@@ -118,7 +118,7 @@
           <dict-tag :options="dict.type.sys_article_type" :value="scope.row.articleType" />
         </template>
       </el-table-column>
-      <el-table-column label="标签" align="center" prop="articleTagList" :show-overflow-tooltip="true">
+      <el-table-column label="标签" align="center" prop="articleTagList" :show-overflow-tooltip="true" min-width="200px">
         <template slot-scope="scope">
           <el-tag v-for="item in scope.row.articleTagList" :key="item.id" style="margin: 5px" type="success">{{
             item

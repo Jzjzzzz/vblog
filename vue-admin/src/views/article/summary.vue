@@ -81,8 +81,8 @@
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" />
-      <el-table-column label="归档标题" align="center" prop="name" :show-overflow-tooltip="true" />
-      <el-table-column prop="banner" label="归档图" align="center">
+      <el-table-column label="归档标题" align="center" prop="name" :show-overflow-tooltip="true" min-width="100px" />
+      <el-table-column prop="banner" label="归档图" align="center" width="150px">
         <template slot-scope="scope">
           <el-image
             style="width:100px;height: 100px"
@@ -137,7 +137,7 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="30%" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="归档标题" prop="name">
           <el-input v-model="form.name" placeholder="请输入归档标题" />
@@ -159,7 +159,7 @@
                       fit="fill"
                       :preview-src-list="[form.banner]">
             </el-image>
-            <el-button style="margin-left: 53px" type="success" size="mini" @click="handleImgList">选择图片
+            <el-button type="success" size="mini" @click="handleImgList">选择图片
             </el-button>
           </div>
         </el-form-item>
@@ -171,7 +171,7 @@
     </el-dialog>
 
     <!-- 文章列表 -->
-    <el-dialog :title="title" :visible.sync="openList" append-to-body width="780px">
+    <el-dialog :title="title" :visible.sync="openList" append-to-body width="700px">
       <el-transfer
         v-model="value"
         :titles="['所有文章', '当前归档']"
@@ -182,7 +182,7 @@
     </el-dialog>
 
     <!-- 图片列表 -->
-    <el-dialog  :visible.sync="imgOpenList" width="780px" append-to-body>
+    <el-dialog  :visible.sync="imgOpenList" width="600px" append-to-body>
       <div class="goods-list-container" v-for="(item, index) in this.galleryList" :key="index">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <div class="goods-list-card-body">

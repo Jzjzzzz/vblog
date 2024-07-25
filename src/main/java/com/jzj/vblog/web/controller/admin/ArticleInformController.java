@@ -1,6 +1,5 @@
 package com.jzj.vblog.web.controller.admin;
 
-
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
@@ -79,7 +78,6 @@ public class ArticleInformController extends BaseController {
     public R updateSummaryById(@PathVariable String id, @PathVariable String summaryId, @PathVariable String type) {
         return toAjax(articleInformService.updateSummaryById(id, summaryId, type));
     }
-
 
     @ApiOperation("获取文章后台排行榜")
     @GetMapping("/getRank")

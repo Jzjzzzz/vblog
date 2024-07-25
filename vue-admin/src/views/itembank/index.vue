@@ -95,7 +95,7 @@
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column type="index" label="序号" align="center"/>
-      <el-table-column label="题目" align="center" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="题目" align="center" prop="title" :show-overflow-tooltip="true" min-width="120px"/>
       <el-table-column label="类型" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_item_bank_type" :value="scope.row.type"/>

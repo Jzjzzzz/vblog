@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/article/summary'
-
 // 查询归档列表
 export function listArticleSummary(query) {
   return request({
-    url: `${api_name}`,
+    url: `/article/summary`,
     method: 'get',
     params: query
   })
@@ -14,7 +12,7 @@ export function listArticleSummary(query) {
 // 查询所有归档列表
 export function listAll() {
   return request({
-    url: `${api_name}/listAll`,
+    url: `/article/summary/listAll`,
     method: 'get'
   })
 }
@@ -22,7 +20,7 @@ export function listAll() {
 // 新增归档
 export function add(data) {
   return request({
-    url: `${api_name}`,
+    url: `/article/summary`,
     method: 'post',
     data: data
   })
@@ -31,14 +29,14 @@ export function add(data) {
 // 删除归档
 export function del(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/article/summary/${id}`,
     method: 'delete'
   })
 }
 // 根据Id查询归档详细
 export function getInfo(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/article/summary/${id}`,
     method: 'get'
   })
 }
@@ -46,7 +44,7 @@ export function getInfo(id) {
 // 修改归档
 export function update(data) {
   return request({
-    url: `${api_name}`,
+    url: `/article/summary`,
     method: 'put',
     data: data
   })
@@ -55,7 +53,7 @@ export function update(data) {
 // 根据归档id查询文章列表
 export function articleList(id) {
   return request({
-    url: `${api_name}/articleList/${id}`,
+    url: `/article/summary/articleList/${id}`,
     method: 'get'
   })
 }

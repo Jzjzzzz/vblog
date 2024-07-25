@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/system/todo'
-
 // 列表
 export function list() {
   return request({
-    url: `${api_name}`,
+    url: `/system/todo`,
     method: 'get'
   })
 }
@@ -13,7 +11,7 @@ export function list() {
 // 新增备忘
 export function addTodo(content) {
   return request({
-    url: `${api_name}/${content}`,
+    url: `/system/todo/${content}`,
     method: 'post'
   })
 }
@@ -22,7 +20,7 @@ export function addTodo(content) {
 // 根据id修改文章
 export function updateById(data) {
   return request({
-    url: `${api_name}`,
+    url: `/system/todo`,
     method: 'put',
     data: data
   })
@@ -31,7 +29,7 @@ export function updateById(data) {
 // 根据id删除
 export function deleteById(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/system/todo/${id}`,
     method: 'delete'
   })
 }

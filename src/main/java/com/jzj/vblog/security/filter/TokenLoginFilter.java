@@ -86,7 +86,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         HashMap<String, String> redisMap = new HashMap<>();
         redisMap.put("token", token);
         redisMap.put("authorities", JSON.toJSONString(customUser.getAuthorities()));
-        redisCache.setCacheMap(CacheConstants.LOGIN_TOKEN_KEY + customUser.getSysUser().getId(), redisMap, 2, TimeUnit.HOURS);
+        redisCache.setCacheMap(CacheConstants.LOGIN_TOKEN_KEY + customUser.getSysUser().getId(), redisMap, 24, TimeUnit.HOURS);
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
         ResponseUtil.out(response, R.ok(map));

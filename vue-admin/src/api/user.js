@@ -1,10 +1,8 @@
 import request from '@/utils/request'
 
-const api_name = '/admin/index'
-
 export function login(data) {
   return request({
-    url: `${api_name}/login`,
+    url: `/admin/index/login`,
     method: 'post',
     data
   })
@@ -12,7 +10,7 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: `${api_name}/info`,
+    url: `/admin/index/info`,
     method: 'get',
     params: { token }
   })
@@ -20,7 +18,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: `${api_name}/logout`,
+    url: `/admin/index/logout`,
     method: 'post'
   })
 }
@@ -28,7 +26,7 @@ export function logout() {
 // 修改资料
 export function updateUser(data) {
   return request({
-    url: `${api_name}`,
+    url: `/admin/index`,
     method: 'put',
     data: data
   })

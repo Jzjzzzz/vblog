@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/article/comment'
-
 // 分页查询
 export function pageList(query) {
   return request({
-    url: `${api_name}`,
+    url: `/article/comment`,
     method: 'get',
     params: query
   })
@@ -14,7 +12,7 @@ export function pageList(query) {
 // 根据id获取评论详情
 export function getInfo(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/article/comment/${id}`,
     method: 'get'
   })
 }
@@ -22,7 +20,7 @@ export function getInfo(id) {
 // 回复
 export function reply(data) {
   return request({
-    url: `${api_name}`,
+    url: `/article/comment`,
     method: 'post',
     data: data
   })
@@ -31,7 +29,7 @@ export function reply(data) {
 // 修改回复
 export function update(data) {
   return request({
-    url: `${api_name}`,
+    url: `/article/comment`,
     method: 'put',
     data: data
   })
@@ -40,7 +38,7 @@ export function update(data) {
 // 删除评论
 export function del(ids) {
   return request({
-    url: `${api_name}/${ids}`,
+    url: `/article/comment/${ids}`,
     method: 'delete'
   })
 }
@@ -48,7 +46,7 @@ export function del(ids) {
 // 审核评论
 export function audit(ids,type) {
   return request({
-    url: `${api_name}/${ids}/${type}`,
+    url: `/article/comment/${ids}/${type}`,
     method: 'put'
   })
 }

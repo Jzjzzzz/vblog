@@ -1,6 +1,5 @@
 package com.jzj.vblog.web.controller.admin;
 
-
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.BusinessException;
@@ -62,7 +61,6 @@ public class ArticleSummaryController extends BaseController {
         if (articleSummaryService.checkSummaryTop(articleSummary)) {
             throw new BusinessException(ResponseEnum.SUMMARY_TOP_NUMBER_MAX);
         }
-
         return toAjax(articleSummaryService.insertSummary(articleSummary));
     }
 

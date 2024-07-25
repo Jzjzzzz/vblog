@@ -122,10 +122,10 @@
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" />
-      <el-table-column label="昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
-      <el-table-column label="邮箱" align="center" prop="email" :show-overflow-tooltip="true" />
-      <el-table-column label="IP" align="center" prop="ip" :show-overflow-tooltip="true" />
-      <el-table-column label="归属地" align="center" prop="city" :show-overflow-tooltip="true" />
+      <el-table-column label="昵称" align="center" prop="nickName" width="150px" />
+      <el-table-column label="邮箱" align="center" prop="email" width="200px" />
+      <el-table-column label="IP" align="center" prop="ip" width="150px" />
+      <el-table-column label="归属地" align="center" prop="city" width="120px"  />
       <el-table-column label="评论类型" align="center" prop="commentType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.article_comment_type" :value="scope.row.commentType" />
@@ -146,7 +146,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="150px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -183,7 +183,7 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="50%" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="昵称">
           <el-input v-model="form.nickName" placeholder="请输入昵称" disabled />

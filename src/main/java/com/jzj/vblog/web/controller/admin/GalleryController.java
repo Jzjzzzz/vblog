@@ -1,6 +1,5 @@
 package com.jzj.vblog.web.controller.admin;
 
-
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
@@ -28,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/gallery")
 public class GalleryController extends BaseController {
+
     @Autowired
     private GalleryService galleryService;
 

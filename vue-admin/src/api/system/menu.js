@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/system/menu'
-
 // 查询列表
 export function list(query) {
   return request({
-    url: `${api_name}/findNodes`,
+    url: `/system/menu/findNodes`,
     method: 'get',
     params: query
   })
@@ -13,7 +11,7 @@ export function list(query) {
 
 export function findNodes(){
   return request({
-    url: `${api_name}/findNodes`,
+    url: `/system/menu/findNodes`,
     method: 'get'
   })
 }
@@ -22,7 +20,7 @@ export function findNodes(){
 // 查询详细
 export function get(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/system/menu/${id}`,
     method: 'get'
   })
 }
@@ -30,7 +28,7 @@ export function get(id) {
 // 新增
 export function add(data) {
   return request({
-    url: `${api_name}`,
+    url: `/system/menu`,
     method: 'post',
     data: data
   })
@@ -39,7 +37,7 @@ export function add(data) {
 // 修改
 export function update(data) {
   return request({
-    url: `${api_name}`,
+    url: `/system/menu`,
     method: 'put',
     data: data
   })
@@ -48,14 +46,14 @@ export function update(data) {
 // 删除
 export function del(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/system/menu/${id}`,
     method: 'delete'
   })
 }
 // 查看某个角色的权限列表
 export function toAssign(roleId) {
   return request({
-    url: `${api_name}/toAssign/${roleId}`,
+    url: `/system/menu/toAssign/${roleId}`,
     method: 'get'
   })
 }
@@ -63,7 +61,7 @@ export function toAssign(roleId) {
 // 给某个角色授权
 export function doAssign(assignMenuVo) {
   return request({
-    url: `${api_name}/doAssign`,
+    url: `/system/menu/doAssign`,
     method: "post",
     data: assignMenuVo
   })

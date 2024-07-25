@@ -99,8 +99,8 @@
     <el-table v-loading="loading" :data="websiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column type="index" label="序号" align="center"/>
-      <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true"/>
-      <el-table-column label="资源网址" align="center" prop="resourceAddress">
+      <el-table-column label="资源名称" align="center" prop="resourceName" :show-overflow-tooltip="true" min-width="150px"/>
+      <el-table-column label="资源网址" align="center" prop="resourceAddress" width="200px">
         <template slot-scope="scope">
           <a :href="scope.row.resourceAddress" target="_blank">
             <button class="learn-more">
@@ -112,7 +112,7 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column prop="resourceImg" label="标题图" align="center">
+      <el-table-column prop="resourceImg" label="标题图" align="center" width="150px">
         <template slot-scope="scope">
           <el-image
             style="width:100px;height: 100px"
@@ -121,7 +121,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="分类" align="center" prop="resourceType">
+      <el-table-column label="分类" align="center" prop="resourceType" width="80px">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_website_type" :value="scope.row.resourceType"/>
         </template>
@@ -137,7 +137,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="100px">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -168,7 +168,7 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="30%" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="资源名称" prop="resourceName">
           <el-input v-model="form.resourceName" placeholder="请输入资源名称"/>

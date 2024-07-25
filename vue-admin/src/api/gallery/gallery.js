@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/gallery'
-
 // 查询列表
 export function list(query) {
   return request({
-    url: `${api_name}`,
+    url: `/gallery`,
     method: 'get',
     params: query
   })
@@ -14,7 +12,7 @@ export function list(query) {
 // 新增
 export function add(data) {
   return request({
-    url: `${api_name}`,
+    url: `/gallery`,
     method: 'post',
     data: data
   })
@@ -23,7 +21,7 @@ export function add(data) {
 // 删除
 export function del(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/gallery/${id}`,
     method: 'delete'
   })
 }

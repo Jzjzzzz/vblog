@@ -42,7 +42,6 @@
           :md="8"
           :lg="8"
           :xl="4"
-          style="margin-left: 60px"
         >
           <el-card :body-style="{ padding: '0px' }" shadow="hover">
             <div class="goods-list-card-body">
@@ -72,7 +71,7 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="25%" append-to-body>
+    <el-dialog :title="title" :visible.sync="open"  append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="220px">
         <el-form-item label="图片" prop="imgAddress">
           <ele-upload-image

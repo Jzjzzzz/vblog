@@ -84,8 +84,8 @@
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column type="index" label="序号" align="center"/>
-      <el-table-column label="友链名称" align="center" prop="name" :show-overflow-tooltip="true"/>
-      <el-table-column label="友链地址" align="center" prop="link" :show-overflow-tooltip="true"/>
+      <el-table-column label="友链名称" align="center" prop="name" :show-overflow-tooltip="true" min-width="80px"/>
+      <el-table-column label="友链地址" align="center" prop="link" :show-overflow-tooltip="true" min-width="100px"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.currency_status" :value="scope.row.status"/>
@@ -127,7 +127,7 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="30%" append-to-body>
+    <el-dialog :title="title" :visible.sync="open"  append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="友链名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入友链名称"/>

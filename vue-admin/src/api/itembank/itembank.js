@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-const api_name = '/itemBank'
-
 // 分页查询
 export function list(query) {
   return request({
-    url: `${api_name}`,
+    url: `/itemBank`,
     method: 'get',
     params: query
   })
@@ -13,7 +11,7 @@ export function list(query) {
 // 新增
 export function add(data) {
   return request({
-    url: `${api_name}`,
+    url: `/itemBank`,
     method: 'post',
     data: data
   })
@@ -21,14 +19,14 @@ export function add(data) {
 // 根据Id查询
 export function getInfo(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/itemBank/${id}`,
     method: 'get'
   })
 }
 
 export function random() {
   return request({
-    url: `${api_name}/random`,
+    url: `/itemBank/random`,
     method: 'get'
   })
 }
@@ -36,7 +34,7 @@ export function random() {
 // 修改
 export function update(data) {
   return request({
-    url: `${api_name}`,
+    url: `/itemBank`,
     method: 'put',
     data: data
   })
@@ -45,7 +43,7 @@ export function update(data) {
 // 删除
 export function del(id) {
   return request({
-    url: `${api_name}/${id}`,
+    url: `/itemBank/${id}`,
     method: 'delete'
   })
 }
