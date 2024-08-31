@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController {
+
     @Autowired
     private SysNoticeService noticeService;
 
@@ -42,7 +43,7 @@ public class SysNoticeController extends BaseController {
     @ApiOperation("根据通知公告编号获取详细信息")
     @GetMapping(value = "/{noticeId}")
     @PreAuthorize("hasAuthority('btn.notice.list')")
-    public R getInfo(@PathVariable Long noticeId) {
+    public R getInfo(@PathVariable String noticeId) {
         return R.ok(noticeService.selectNoticeById(noticeId));
     }
 
@@ -51,7 +52,6 @@ public class SysNoticeController extends BaseController {
     @PostMapping
     @PreAuthorize("hasAuthority('btn.notice.add')")
     public R add(@Validated @RequestBody SysNotice notice) {
-        notice.setCreateBy(getUsername());
         return toAjax(noticeService.insertNotice(notice));
     }
 
@@ -68,7 +68,7 @@ public class SysNoticeController extends BaseController {
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
     @PreAuthorize("hasAuthority('btn.notice.del')")
-    public R remove(@PathVariable Long[] noticeIds) {
+    public R remove(@PathVariable String[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));
     }
 }

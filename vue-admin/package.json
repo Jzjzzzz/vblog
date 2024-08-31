@@ -32,6 +32,7 @@
     "vue-image-crop-upload": "^3.0.3",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "3.0.6",
+    "vue-socket.io": "^3.0.10",
     "vuex": "3.1.0"
   },
   "devDependencies": {

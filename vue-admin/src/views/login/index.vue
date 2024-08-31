@@ -53,6 +53,7 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import Verify from './../../components/verifition/Verify'
+import {getToken} from "@/utils/auth";
 export default {
   name: 'Login',
   components: {
@@ -111,6 +112,7 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
+            this.$socket.emit('login', getToken())
             this.loading = false
           }).catch(() => {
             this.loading = false

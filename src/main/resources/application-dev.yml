@@ -56,9 +56,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/vblog?serverTimezone=GMT%2B8&characterEncoding=utf-8
+    url: jdbc:mysql://117.72.47.88:3306/vblog?serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
-    password: root
+    password: 4odqqueypOUNTLEewKrFjrg5giHw5LHD
     druid:
       # 初始连接数
       initialSize: 5

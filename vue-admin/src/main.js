@@ -31,6 +31,10 @@ import EleUploadImage from 'vue-ele-upload-image'
 import mavonEditor from 'mavon-editor'
 // 自定义权限判断方法
 import hasBtnPermission from '@/utils/btn-permission'
+//websocket
+import VueSocketIO from 'vue-socket.io'
+import socketIo from 'socket.io-client'
+import {getToken} from "@/utils/auth";
 
 
 /**
@@ -69,6 +73,10 @@ Vue.component('RightToolbar', RightToolbar)
 Vue.use(ElementUI)
 Vue.use(plugins)
 Vue.use(mavonEditor)
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: socketIo('http://127.0.0.1:9999?token=' + getToken())
+}))
 DictData.install()
 
 Vue.config.productionTip = false

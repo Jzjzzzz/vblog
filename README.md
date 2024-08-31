@@ -11,12 +11,14 @@
 - RabbitMQ
 - SpringSecurity
 - Mybatis-Plus
-- MySql
+- MySQL
+- WebSocket
 - Swagger
 - AJ-Captcha
 - Quartz
 - Vue
 - Element-UI
+
 
 ### 后台功能
 1. 文章管理:文章列表,支持Markdown编写博客，可直接复制图片到编辑器上自动上传OSS(可切换本地),文章归档。
@@ -27,8 +29,9 @@
 6. 个人信息：头像修改，密码修改。
 7. 登录：SpringSecurity鉴权，图形验证码校验。
 8. 评论列表，评论回复可通过邮箱通知留言者(可关闭),评论消息发送通过RabbitMQ(可关闭)。
-9. 题库(2023/12/15添加)
-10. 移除Sa-Token，使用SpringSecurity鉴权,新增用户管理，角色管理，菜单管理(2024/05/12添加)
+9. 题库(2023/12/15)
+10. 移除Sa-Token，使用SpringSecurity鉴权,新增用户管理，角色管理，菜单管理(2024/05/12)
+11. 添加WebSocket实现公告广播(2024/08/31)
 
 ### 前台功能
 1. 文章列表，详情展示。

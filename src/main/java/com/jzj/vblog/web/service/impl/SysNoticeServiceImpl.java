@@ -1,5 +1,6 @@
 package com.jzj.vblog.web.service.impl;
 
+import com.jzj.vblog.socket.handler.MessageEventHandler;
 import com.jzj.vblog.web.pojo.entity.SysNotice;
 import com.jzj.vblog.web.mapper.SysNoticeMapper;
 import com.jzj.vblog.web.service.SysNoticeService;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,12 +21,16 @@ import java.util.List;
  */
 @Service
 public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements SysNoticeService {
+
     @Autowired
     private SysNoticeMapper noticeMapper;
 
+    @Autowired
+    private MessageEventHandler handler;
+
     @Override
-    public SysNotice selectNoticeById(Long noticeId) {
-        return noticeMapper.selectNoticeById(noticeId);
+    public SysNotice selectNoticeById(String noticeId) {
+        return noticeMapper.selectById(noticeId);
     }
 
     @Override
@@ -34,21 +40,17 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
 
     @Override
     public int insertNotice(SysNotice notice) {
-        return noticeMapper.insertNotice(notice);
+        handler.broadcast(notice.getNoticeContent());
+        return noticeMapper.insert(notice);
     }
 
     @Override
     public int updateNotice(SysNotice notice) {
-        return noticeMapper.updateNotice(notice);
+        return noticeMapper.updateById(notice);
     }
 
     @Override
-    public int deleteNoticeById(Long noticeId) {
-        return noticeMapper.deleteNoticeById(noticeId);
-    }
-
-    @Override
-    public int deleteNoticeByIds(Long[] noticeIds) {
-        return noticeMapper.deleteNoticeByIds(noticeIds);
+    public int deleteNoticeByIds(String[] noticeIds) {
+        return noticeMapper.deleteBatchIds(Arrays.asList(noticeIds));
     }
 }
