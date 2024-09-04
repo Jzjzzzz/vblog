@@ -36,7 +36,7 @@ import java.util.Map;
  * </p>
  *
  * @author Jzj
- * @since 2024-04-30
+ * @since 2024-04-30 11:12
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {

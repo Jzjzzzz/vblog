@@ -6,12 +6,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:40
- * @Version 1.0
- * @Message: 字符集工具类
+ * <p>
+ * 字符集工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:40
  */
 public class CharsetKit {
+
     /** ISO-8859-1 */
     public static final String ISO_8859_1 = "ISO-8859-1";
     /** UTF-8 */

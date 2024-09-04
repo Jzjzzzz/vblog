@@ -8,6 +8,7 @@ import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.pojo.vo.ArticleAddVo;
 import com.jzj.vblog.web.service.ArticleInformService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,8 +23,9 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-23
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "文章基础信息管理")
 @RestController
 @RequestMapping("/article/inform")
 public class ArticleInformController extends BaseController {

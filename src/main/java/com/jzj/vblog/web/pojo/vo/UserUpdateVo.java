@@ -3,10 +3,12 @@ package com.jzj.vblog.web.pojo.vo;
 import lombok.Data;
 
 /**
- * @Author Jzj
- * @Date 2022/8/19 14:30
- * @Version 1.0
- * @Message: 个人信息修改vo
+ * <p>
+ * 个人信息修改vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/19 14:30
  */
 @Data
 public class UserUpdateVo {

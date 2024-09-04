@@ -5,11 +5,15 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
+ * <p>
+ * 异常工具类
+ * </p>
+ *
  * @author Jzj
- * @version 1.0
- * @date 2021/7/25 3:54
+ * @since 2021/7/25 3:54
  */
 public class ExceptionUtil {
+
     public static String getMessage(Exception e) {
         StringWriter sw = null;
         PrintWriter pw = null;

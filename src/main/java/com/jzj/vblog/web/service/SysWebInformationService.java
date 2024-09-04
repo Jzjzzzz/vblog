@@ -9,7 +9,7 @@ import com.jzj.vblog.web.pojo.entity.SysWebInformation;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-28
+ * @since 2022-07-28 11:12
  */
 public interface SysWebInformationService extends IService<SysWebInformation> {
 

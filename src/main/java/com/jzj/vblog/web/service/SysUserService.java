@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.SysUser;
 import com.jzj.vblog.web.pojo.vo.UserUpdateVo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,7 @@ import java.util.Map;
  * </p>
  *
  * @author Jzj
- * @since 2024-04-30
+ * @since 2024-04-30 11:12
  */
 public interface SysUserService extends IService<SysUser>, UserDetailsService {
 

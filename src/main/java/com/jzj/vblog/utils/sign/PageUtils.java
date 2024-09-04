@@ -5,10 +5,12 @@ import com.jzj.vblog.web.pojo.page.PageDomain;
 import com.jzj.vblog.web.pojo.page.TableSupport;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:31
- * @Version 1.0
- * @Message: 分页工具类
+ * <p>
+ * 分页工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:31
  */
 public class PageUtils {
 

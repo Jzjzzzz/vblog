@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-11
+ * @since 2022-08-11 11:12
  */
 @Service
 public class ArticleSummaryServiceImpl extends ServiceImpl<ArticleSummaryMapper, ArticleSummary> implements ArticleSummaryService {

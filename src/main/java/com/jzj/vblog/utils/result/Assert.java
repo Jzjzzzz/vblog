@@ -3,6 +3,14 @@ package com.jzj.vblog.utils.result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
+/**
+ * <p>
+ * 断言工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/19 11:23
+ */
 @Slf4j
 public class Assert {
 
@@ -22,8 +30,6 @@ public class Assert {
     /**
      * 断言对象为空
      * 如果对象obj不为空，则抛出异常
-     * @param object
-     * @param responseEnum
      */
     public static void isNull(Object object, ResponseEnum responseEnum) {
         if (object != null) {
@@ -48,9 +54,6 @@ public class Assert {
     /**
      * 断言两个对象不相等
      * 如果相等，则抛出异常
-     * @param m1
-     * @param m2
-     * @param responseEnum
      */
     public static void notEquals(Object m1, Object m2,  ResponseEnum responseEnum) {
         if (m1.equals(m2)) {
@@ -62,9 +65,6 @@ public class Assert {
     /**
      * 断言两个对象相等
      * 如果不相等，则抛出异常
-     * @param m1
-     * @param m2
-     * @param responseEnum
      */
     public static void equals(Object m1, Object m2,  ResponseEnum responseEnum) {
         if (!m1.equals(m2)) {
@@ -76,8 +76,6 @@ public class Assert {
     /**
      * 断言参数不为空
      * 如果为空，则抛出异常
-     * @param s
-     * @param responseEnum
      */
     public static void notEmpty(String s, ResponseEnum responseEnum) {
         if (StringUtils.isEmpty(s)) {

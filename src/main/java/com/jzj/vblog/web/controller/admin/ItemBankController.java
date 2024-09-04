@@ -8,6 +8,7 @@ import com.jzj.vblog.web.pojo.entity.ItemBank;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.ItemBankService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,11 +24,13 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2023-06-07
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "题库管理")
 @RestController
 @RequestMapping("/itemBank")
 public class ItemBankController extends BaseController {
+
     @Autowired
     private ItemBankService itemBankService;
 

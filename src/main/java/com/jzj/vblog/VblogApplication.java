@@ -4,12 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.retry.annotation.EnableRetry;
 
 /**
+ * <p>
+ * 启动类
+ * </p>
+ *
  * @author Jzj
+ * @since 2022/7/22 11:12
  */
 @SpringBootApplication
 @EnableRetry

@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @Author Jzj
- * @Date 2022/7/29 17:08
- * @Version 1.0
- * @Message: 前台文章vo
+ * <p>
+ * 前台文章vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/9/6 16:03
  */
 @Data
 @ApiModel(description = "前台文章vo")

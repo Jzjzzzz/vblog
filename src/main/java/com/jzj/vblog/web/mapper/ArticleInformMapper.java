@@ -14,29 +14,22 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-23
+ * @since 2022-07-23 11:12
  */
 public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
 
     /**
      * 后台查询文章
-     * @param entity
-     * @return
      */
     List<ArticleInform> selectArticleList(ArticleInform entity);
 
     /**
      * 前台分页查询文章列表
-     * @param page
-     * @return
      */
     Page<ArticleVo> selectPageVo(@Param("page") Page<ArticleVo> page, @Param("tagId") String tagId,@Param("summaryId") String summaryId);
 
     /**
      * 根据id获取文章
-     *
-     * @param id
-     * @return
      */
     ArticleAddVo selectArticleByIdVo(@Param("id") String id);
 
@@ -44,33 +37,26 @@ public interface ArticleInformMapper extends BaseMapper<ArticleInform> {
 
     /**
      * 获取文章点击率前7条数据
-     *
-     * @return
      */
     List<ArticleRankVo> selectArticleRank();
 
     /**
      * 获取点击率排行前3条文章
-     * @return
      */
     List<ArticlePopular> selectArticlePopular();
 
     /**
      * 获取所有上架置顶文章
-     * @return
      */
     List<SwiperVo> selectArticleTop();
 
     /**
      * 根据id获取前台文章头部内容
-     * @param id
-     * @return
      */
     ArticleHeadVo selectFrontArticleHeadByIdVo(String id);
 
     /**
      * 根据关键字获取文章
-     * @return
      */
     List<SwiperVo> selectArticleListKw(@Param("kw") String kw);
 }

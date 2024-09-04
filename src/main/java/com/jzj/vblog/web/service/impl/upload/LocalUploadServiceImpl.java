@@ -17,19 +17,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/27 17:14
- * @Version 1.0
- * @Message: 本地文件存储实现类
+ * <p>
+ * 本地文件存储实现类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/27 17:14
  */
 @Service
 public class LocalUploadServiceImpl implements UploadService {
 
-
     /**
      * 获取当前实现类编码
-     *
-     * @return
      */
     @Override
     public UploadCode getCode() {
@@ -41,8 +40,6 @@ public class LocalUploadServiceImpl implements UploadService {
      *
      * @param photo   文件
      * @param name    文件模块名
-     * @param request
-     * @return
      */
     @Override
     public String uploadImg(MultipartFile photo, String name, HttpServletRequest request) {
@@ -68,10 +65,6 @@ public class LocalUploadServiceImpl implements UploadService {
 
     /**
      * 本地文件删除
-     *
-     * @param url
-     * @param request
-     * @return
      */
     @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override
@@ -95,9 +88,6 @@ public class LocalUploadServiceImpl implements UploadService {
 
     /**
      * 本地批量删除
-     *
-     * @param list
-     * @param request
      */
     @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override

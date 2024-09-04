@@ -7,15 +7,19 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
 /**
- * @Author Jzj
- * @Date 2024/5/14 下午3:20
- * @Version 1.0
- * @Message: 通用字段基类(字段存在差异使用其父类)
+ * <p>
+ * 通用字段基类(字段存在差异使用其父类)
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/8 16:23
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "通用字段基类", description = "通用字段基类")
 public class CommonEntity extends BaseEntity {

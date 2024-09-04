@@ -1,19 +1,19 @@
 package com.jzj.vblog.utils.sign;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:33
- * @Version 1.0
- * @Message: 文件读取工具类
+ * <p>
+ * 文件读取工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:33
  */
 public class FileUtils {
 

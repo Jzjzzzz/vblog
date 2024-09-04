@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.SysRoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.SysRoleMenu;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-07
+ * @since 2024-05-07 11:12
  */
 public interface SysRoleMenuService extends IService<SysRoleMenu> {
 

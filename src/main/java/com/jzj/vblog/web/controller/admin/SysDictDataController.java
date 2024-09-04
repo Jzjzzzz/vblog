@@ -11,6 +11,7 @@ import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysDictDataService;
 import com.jzj.vblog.web.service.SysDictTypeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,11 +27,13 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-08
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "字典数据管理")
 @RestController
 @RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController {
+
     @Autowired
     private SysDictDataService dictDataService;
 

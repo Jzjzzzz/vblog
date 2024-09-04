@@ -4,6 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * <p>
+ * 评论详情vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/9/6 16:03
+ */
 @Data
 @ApiModel(description = "评论详情vo")
 public class CommentInfoVo {

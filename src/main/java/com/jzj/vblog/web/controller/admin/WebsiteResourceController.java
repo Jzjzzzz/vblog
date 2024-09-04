@@ -25,12 +25,13 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-26
+ * @since 2022-07-26 11:12
  */
 @Api(tags = "资源站点管理")
 @RestController
 @RequestMapping("/website/resource")
 public class WebsiteResourceController extends BaseController {
+
     @Autowired
     private WebsiteResourceService websiteResourceService;
 

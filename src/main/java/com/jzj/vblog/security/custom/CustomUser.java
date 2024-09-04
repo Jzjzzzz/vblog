@@ -7,10 +7,12 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 上午11:55
- * @Version 1.0
- * @Message:
+ * <p>
+ * 自定义用户
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/22 15:36
  */
 public class CustomUser extends User {
 

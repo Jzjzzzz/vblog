@@ -8,12 +8,13 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @Author Jzj
- * @Date 2022/9/13 9:39
- * @Version 1.0
- * @Message: 前台评论展示列表
+ * <p>
+ * 前台评论展示列表vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/9/6 16:03
  */
-
 @Data
 @ApiModel(description = "前台评论展示列表vo")
 public class CommentFrontListVo {

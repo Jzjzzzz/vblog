@@ -11,13 +11,16 @@ import java.time.*;
 import java.util.Date;
 
 /**
- * @Author Jzj
- * @Date 2022/7/21 17:27
- * @Version 1.0
- * @Message: 时间工具类
+ * <p>
+ * 时间工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/21 17:27
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils
 {
+
     public static String YYYY = "yyyy";
 
     public static String YYYY_MM = "yyyy-MM";

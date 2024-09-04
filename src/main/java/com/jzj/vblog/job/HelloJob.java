@@ -8,11 +8,11 @@ import java.util.Date;
 
 /**
  * <p>
- * Hello Job
+ * 测试案例
  * </p>
  *
  * @author Jzj
- * @date Created in 2022-08-22
+ * @since 2022/8/22 15:36
  */
 @Slf4j
 public class HelloJob implements BaseJob {

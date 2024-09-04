@@ -16,13 +16,16 @@ import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
- * @Author Jzj
- * @Date 2022/8/9 14:16
- * @Version 1.0
- * @Message: 连接池配置
+ * <p>
+ * 连接池配置
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/9 14:16
  */
 @Configuration
 public class DruidConfig {
+
     @Bean
     @ConfigurationProperties("spring.datasource")
     public DataSource druidDataSource(DruidProperties druidProperties) {

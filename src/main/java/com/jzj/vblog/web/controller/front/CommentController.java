@@ -7,6 +7,7 @@ import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.service.ArticleCommentService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
+ * <p>
  * 评论控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "评论控制器")
 @RestController
 @RequestMapping("/front/comment")
 @Slf4j
 public class CommentController extends BaseController {
+
     @Autowired
     private ArticleCommentService articleCommentService;
 

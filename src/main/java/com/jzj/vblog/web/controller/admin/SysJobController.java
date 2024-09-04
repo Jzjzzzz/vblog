@@ -8,6 +8,7 @@ import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.pojo.vo.JobVo;
 import com.jzj.vblog.web.service.JobService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,15 +19,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/8/22 15:38
- * @Version 1.0
- * @Message: 定时任务Controller
+ * <p>
+ * 定时任务 前端控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/22 15:38
  */
+@Api(tags = "定时任务管理")
 @RestController
 @RequestMapping("/system/job")
 @Slf4j
 public class SysJobController extends BaseController {
+
     private final JobService jobService;
 
     @Autowired

@@ -8,6 +8,7 @@ import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.SysTodo;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.service.SysTodoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -19,8 +20,9 @@ import org.springframework.web.bind.annotation.*;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-14
+ * @since 2022-08-14 11:12
  */
+@Api(tags = "备忘录管理")
 @RestController
 @RequestMapping("/system/todo")
 public class SysTodoController extends BaseController {

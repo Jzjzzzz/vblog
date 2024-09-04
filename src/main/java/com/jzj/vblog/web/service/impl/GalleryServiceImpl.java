@@ -19,7 +19,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-09-24
+ * @since 2022-09-24 11:12
  */
 @Service
 public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery> implements GalleryService {

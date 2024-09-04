@@ -10,20 +10,21 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * <p>
  * 提供通用唯一识别码（universally unique identifier）（UUID）实现
+ * </p>
  *
  * @author Jzj
+ * @since 2022/7/22 11:12
  */
-public final class UUID implements java.io.Serializable, Comparable<UUID>
-{
+public final class UUID implements java.io.Serializable, Comparable<UUID> {
+
     private static final long serialVersionUID = -1185015143654744140L;
 
     /**
      * SecureRandom 的单例
-     *
      */
-    private static class Holder
-    {
+    private static class Holder {
         static final SecureRandom numberGenerator = getSecureRandom();
     }
 

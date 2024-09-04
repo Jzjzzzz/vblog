@@ -14,14 +14,16 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author Jzj
- * @Date 2022/7/26 16:17
- * @Version 1.0
- * @Message: 图片上传控制器
+ * <p>
+ * 图片上传控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/26 16:17
  */
 @RestController
 @RequestMapping("/api/upload")
-@Api("图片上传控制器")
+@Api(tags = "图片上传控制器")
 public class UploadController {
 
     @Autowired

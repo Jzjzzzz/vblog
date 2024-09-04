@@ -15,7 +15,7 @@ import java.util.Map;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-23
+ * @since 2022-07-23 11:12
  */
 public interface ArticleInformService extends IService<ArticleInform> {
 

@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @Author Jzj
- * @Date 2022/6/7 15:11
- * @Version 1.0
- * @Message: 登录表单提交实体
+ * <p>
+ * 登录表单提交vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/6/7 15:11
  */
 @Data
 @ApiModel(description="登录表单提交对象")

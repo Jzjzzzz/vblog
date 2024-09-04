@@ -20,13 +20,14 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:30
- * @Version 1.0
- * @Message: web层通用数据处理
+ * <p>
+ * web层通用数据处理
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:30
  */
 public class BaseController {
-
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型

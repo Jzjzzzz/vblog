@@ -1,9 +1,12 @@
 package com.jzj.vblog.utils.result;
 
 /**
+ * <p>
+ * 返回code常量
+ * </p>
+ *
  * @author Jzj
- * @version 1.0
- * @date 2021/7/24 21:52
+ * @since 2021/7/24 21:57
  */
 public interface ResultCode {
 

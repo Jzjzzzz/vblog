@@ -3,12 +3,15 @@ package com.jzj.vblog.utils.text;
 import com.jzj.vblog.utils.sign.StringUtils;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:38
- * @Version 1.0
- * @Message: 字符串格式化
+ * <p>
+ * 字符串格式化
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:38
  */
 public class StrFormatter {
+
     public static final String EMPTY_JSON = "{}";
     public static final char C_BACKSLASH = '\\';
     public static final char C_DELIM_START = '{';

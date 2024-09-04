@@ -1,12 +1,15 @@
 package com.jzj.vblog.web.pojo.enums;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:03
- * @Version 1.0
- * @Message: 操作人类别
+ * <p>
+ * 操作人类别枚举
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
 public enum OperatorType {
+
     /**
      * 其它
      */

@@ -12,9 +12,10 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-06
+ * @since 2024-05-06 11:12
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
+
     List<SysRole> getPageList(SysRole sysRole);
 
     List<SysRole> findListByUserId(@Param("userId") String userId);

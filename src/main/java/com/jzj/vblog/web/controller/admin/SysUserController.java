@@ -11,6 +11,7 @@ import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.pojo.vo.UserAddRoleVo;
 import com.jzj.vblog.web.service.SysUserRoleService;
 import com.jzj.vblog.web.service.SysUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,11 +27,13 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-04-30
+ * @since 2024-04-30 11:12
  */
+@Api(tags = "用户管理")
 @RestController
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
+
     @Autowired
     private SysUserService sysUserService;
 

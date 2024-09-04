@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-23
+ * @since 2022-07-23 11:12
  */
 @Service
 public class ArticleInformServiceImpl extends ServiceImpl<ArticleInformMapper, ArticleInform> implements ArticleInformService {

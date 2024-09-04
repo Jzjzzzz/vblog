@@ -1,11 +1,11 @@
 package com.jzj.vblog.web.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.sign.StringUtils;
-import com.jzj.vblog.web.pojo.entity.FriendLink;
 import com.jzj.vblog.web.mapper.FriendLinkMapper;
+import com.jzj.vblog.web.pojo.entity.FriendLink;
 import com.jzj.vblog.web.service.FriendLinkService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-09-10
+ * @since 2022-09-10 11:12
  */
 @Service
 public class FriendLinkServiceImpl extends ServiceImpl<FriendLinkMapper, FriendLink> implements FriendLinkService {

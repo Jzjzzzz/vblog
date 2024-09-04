@@ -6,9 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * <p>
+ * 自定义异常类
+ * </p>
+ *
  * @author Jzj
- * @version 1.0
- * @date 2021/8/7 2:52
+ * @since 2021/8/7 2:52
  */
 @Data
 @NoArgsConstructor

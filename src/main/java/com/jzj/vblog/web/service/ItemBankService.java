@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.ItemBank;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.ItemBank;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2023-06-07
+ * @since 2023-06-07 11:12
  */
 public interface ItemBankService extends IService<ItemBank> {
 

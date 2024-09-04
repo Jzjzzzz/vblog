@@ -18,10 +18,11 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-08
+ * @since 2022-07-08 11:12
  */
 @Service
 public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDictData> implements SysDictDataService {
+
     @Autowired
     private SysDictDataMapper dictDataMapper;
 

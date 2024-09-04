@@ -10,9 +10,10 @@ import org.apache.ibatis.annotations.Param;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-06
+ * @since 2024-05-06 11:12
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
+
     void deleteBatchByUserId(@Param("userId") String userId);
 
     void deleteBatchByRoleId(@Param("roleId") String roleId);

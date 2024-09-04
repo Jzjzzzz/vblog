@@ -16,14 +16,17 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 下午4:38
- * @Version 1.0
- * @Message: 后台管理用户登录相关控制器
+ * <p>
+ * 后台管理用户登录相关控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
 @Api(tags = "后台管理用户登录相关")
 @RestController

@@ -6,14 +6,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author Jzj
- * @Date 2022/6/6 16:43
- * @Version 1.0
- * @Message: Mybatis配置类
+ * <p>
+ * Mybatis-Plus配置类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/6/6 16:43
  */
 @Configuration
 @MapperScan("com.jzj.vblog.web.mapper")
 public class MybatisConfig {
+
     /**
      * 分页插件
      */

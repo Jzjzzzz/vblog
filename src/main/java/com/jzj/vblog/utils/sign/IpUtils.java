@@ -15,13 +15,16 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:05
- * @Version 1.0
- * @Message: 获取IP方法
+ * <p>
+ * 获取IP方法
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:05
  */
 @Slf4j
 public class IpUtils {
+
     /**
      * 获取客户端IP
      *
@@ -270,13 +273,6 @@ public class IpUtils {
     public static boolean isUnknown(String checkString)
     {
         return StringUtils.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
-    }
-
-    public static void main(String[] args) {
-        String[] split = getCityInfo("127.0.0.1").split("\\|");
-        for (int i = 0; i < split.length; i++) {
-            System.out.println(split[i]);
-        }
     }
 
     /**

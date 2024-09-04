@@ -4,6 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * <p>
+ * 返回枚举值
+ * </p>
+ *
+ * @author Jzj
+ * @since 2021/7/24 21:57
+ */
 @Getter
 @ToString
 @AllArgsConstructor
@@ -32,11 +40,10 @@ public enum ResponseEnum {
     LOGIN_PASSWORD_ERROR(209, "密码错误"),
     LOGIN_LOKED_ERROR(210, "用户被锁定"),
     LOGIN_AUTH_ERROR(-211, "未登录"),
-    LOGIN_USER_ERROR(-212,"账号密码错误"),
-    LOGIN_USER_NULL_ERROR(-213,"账号不能为空"),
-    LOGIN_PASSWORD_NULL_ERROR(-214,"密码不能为空"),
-    SUMMARY_TOP_NUMBER_MAX(-215,"归档置顶数置顶数超过最大值3");
-    ;
+    LOGIN_USER_ERROR(-212, "账号密码错误"),
+    LOGIN_USER_NULL_ERROR(-213, "账号不能为空"),
+    LOGIN_PASSWORD_NULL_ERROR(-214, "密码不能为空"),
+    SUMMARY_TOP_NUMBER_MAX(-215, "归档置顶数置顶数超过最大值3");;
 
     private Integer code;
     private String message;

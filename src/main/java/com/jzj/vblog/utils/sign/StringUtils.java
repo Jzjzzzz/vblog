@@ -7,17 +7,23 @@ import org.springframework.util.AntPathMatcher;
 import java.util.*;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:33
- * @Version 1.0
- * @Message: 字符串工具类
+ * <p>
+ * 字符串工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:33
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils{
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
-    /** 空字符串 */
+    /**
+     * 空字符串
+     */
     private static final String NULLSTR = "";
 
-    /** 下划线 */
+    /**
+     * 下划线
+     */
     private static final char SEPARATOR = '_';
 
     /**
@@ -26,8 +32,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils{
      * @param value defaultValue 要判断的value
      * @return value 返回值
      */
-    public static <T> T nvl(T value, T defaultValue)
-    {
+    public static <T> T nvl(T value, T defaultValue) {
         return value != null ? value : defaultValue;
     }
 

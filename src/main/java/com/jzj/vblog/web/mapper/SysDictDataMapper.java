@@ -1,9 +1,8 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.SysDictData;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jzj.vblog.web.pojo.entity.SysDictData;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-08
+ * @since 2022-07-08 11:12
  */
 public interface SysDictDataMapper extends BaseMapper<SysDictData> {
 

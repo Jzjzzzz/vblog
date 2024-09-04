@@ -7,15 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * <p>
+ * 统一返回结果的类
+ * </p>
+ *
  * @author Jzj
- * @version 1.0
- * @date 2021/7/24 21:57
+ * @since 2021/7/24 21:57
  */
-
-
-//统一返回结果的类
 @Data
 public class R {
+
     @ApiModelProperty(value = "是否成功")
     private Boolean success;
 
@@ -98,7 +99,4 @@ public class R {
         this.setCode(code);
         return this;
     }
-
-
-
 }

@@ -8,11 +8,13 @@ import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 import com.jzj.vblog.web.service.ArticleCommentService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -21,8 +23,9 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-09-11
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "留言板管理")
 @RestController
 @RequestMapping("/article/comment")
 public class ArticleCommentController extends BaseController {
@@ -54,7 +57,6 @@ public class ArticleCommentController extends BaseController {
         return R.ok(articleCommentService.selectCommentById(id));
     }
 
-
     @Log(title = "评论管理", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改回复")
@@ -78,5 +80,6 @@ public class ArticleCommentController extends BaseController {
     public R audit(@PathVariable String[] ids, @PathVariable String type) {
         return toAjax(articleCommentService.auditCommentById(ids, type));
     }
+
 }
 

@@ -1,28 +1,27 @@
 package com.jzj.vblog.web.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @Author Jzj
- * @Date 2023/9/7 9:26
- * @Version 1.0
- * @Message: 文章轮播图vo
+ * <p>
+ * 文章轮播图vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/9/7 9:26
  */
 @Data
+@ApiModel(description = "文章轮播图vo")
 public class SwiperVo {
 
-    /**
-     * 文章id
-     */
+    @ApiModelProperty(value = "文章id")
     private String id;
 
-    /**
-     * 图片
-     */
+    @ApiModelProperty(value = "图片")
     private String logImg;
 
-    /**
-     * 文章标题
-     */
+    @ApiModelProperty(value = "文章标题")
     private String title;
 }

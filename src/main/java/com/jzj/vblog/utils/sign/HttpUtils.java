@@ -14,12 +14,15 @@ import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:15
- * @Version 1.0
- * @Message: 通用http发送方法
+ * <p>
+ * 通用http发送方法
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:15
  */
 public class HttpUtils {
+
     private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
 
     /**

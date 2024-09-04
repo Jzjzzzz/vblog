@@ -6,12 +6,15 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.*;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:11
- * @Version 1.0
- * @Message: 线程相关工具类
+ * <p>
+ * 线程相关工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:11
  */
 public class Threads {
+
     private static final Logger logger = LoggerFactory.getLogger(Threads.class);
 
     /**

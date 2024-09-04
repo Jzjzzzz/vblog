@@ -13,9 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * <p>
  * 文件上传工厂类
+ * </p>
  *
  * @author Jzj
+ * @since 2022/7/22 13:57
  */
 @Component
 public class UploadFactory implements ApplicationContextAware {
@@ -33,13 +36,10 @@ public class UploadFactory implements ApplicationContextAware {
     }
 
     public static UploadService getUploadService(SysConfigService sysConfigService) {
-        //获取阿里云oss是否开启
         String enable = sysConfigService.selectConfigByKey(CacheConstants.A_LI_YUN_ENABLE_CODE);
         if (OPEN.equals(enable)) {
-            //阿里云存储
             return uploadServiceMap.get(UploadCode.A_LI_YUN);
         } else {
-            //本地存储
             return uploadServiceMap.get(UploadCode.LOCAL);
         }
     }

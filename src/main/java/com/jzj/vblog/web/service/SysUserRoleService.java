@@ -10,9 +10,10 @@ import com.jzj.vblog.web.pojo.vo.UserAddRoleVo;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-06
+ * @since 2024-05-06 11:12
  */
 public interface SysUserRoleService extends IService<SysUserRole> {
+
     /**
      * 用户分配角色
      *

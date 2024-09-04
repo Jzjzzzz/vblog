@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.FriendLink;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.FriendLink;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-09-10
+ * @since 2022-09-10 11:12
  */
 public interface FriendLinkService extends IService<FriendLink> {
 

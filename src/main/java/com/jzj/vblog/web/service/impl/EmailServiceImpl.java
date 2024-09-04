@@ -19,6 +19,14 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 
 
+/**
+ * <p>
+ * 邮箱发送服务层
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
+ */
 @Service
 @Slf4j
 public class EmailServiceImpl implements EmailService {

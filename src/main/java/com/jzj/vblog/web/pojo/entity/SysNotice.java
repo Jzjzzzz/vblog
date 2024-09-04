@@ -1,17 +1,12 @@
 package com.jzj.vblog.web.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.jzj.vblog.web.pojo.entity.base.BaseEntity;
 import com.jzj.vblog.web.pojo.entity.base.CommonEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Date;
 
 /**
  * <p>
@@ -19,7 +14,7 @@ import java.util.Date;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-22
+ * @since 2022-07-22 11:12
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -8,14 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2022/7/8 16:23
- * @Version 1.0
- * @Message: Entity基类
+ * <p>
+ * Entity基类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/8 16:23
  */
-
 @ApiModel(value = "Entity基类", description = "Entity基类")
 public class BaseEntity implements Serializable {
+
     /**
      * 搜索值
      */

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-08
+ * @since 2022-07-08 11:12
  */
 @Service
 public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDictType> implements SysDictTypeService {
@@ -36,7 +36,6 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
 
     @Autowired
     private SysDictDataMapper dictDataMapper;
-
 
     @Override
     public List<SysDictType> selectDictTypeList(SysDictType dictType) {

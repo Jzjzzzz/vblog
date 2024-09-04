@@ -8,14 +8,17 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author Jzj
- * @Date 2022/7/19 11:23
- * @Version 1.0
- * @Message: spring redis 工具类
+ * <p>
+ * spring redis 工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/19 11:23
  */
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 public class RedisCache {
+
     @Autowired
     public RedisTemplate redisTemplate;
 
@@ -137,9 +140,6 @@ public class RedisCache {
 
     /**
      * 获得缓存的set
-     *
-     * @param key
-     * @return
      */
     public <T> Set<T> getCacheSet(final String key) {
         return redisTemplate.opsForSet().members(key);
@@ -147,9 +147,6 @@ public class RedisCache {
 
     /**
      * 缓存Map
-     *
-     * @param key
-     * @param dataMap
      */
     public <T> void setCacheMap(final String key, final Map<String, T> dataMap,final long timeout, final TimeUnit unit) {
         if (dataMap != null) {
@@ -160,9 +157,6 @@ public class RedisCache {
 
     /**
      * 获得缓存的Map
-     *
-     * @param key
-     * @return
      */
     public <T> Map<String, T> getCacheMap(final String key) {
         return redisTemplate.opsForHash().entries(key);

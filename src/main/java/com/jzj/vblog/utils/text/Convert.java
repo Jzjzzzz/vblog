@@ -11,12 +11,15 @@ import java.text.NumberFormat;
 import java.util.Set;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:39
- * @Version 1.0
- * @Message: 类型转换器
+ * <p>
+ * 类型转换器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:39
  */
 public class Convert {
+
     /**
      * 转换为字符串<br>
      * 如果给定的值为null，或者转换失败，返回默认值<br>

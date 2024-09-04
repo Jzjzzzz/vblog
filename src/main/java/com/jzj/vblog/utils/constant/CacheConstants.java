@@ -1,12 +1,15 @@
 package com.jzj.vblog.utils.constant;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 10:02
- * @Version 1.0
- * @Message: 缓存的key 常量
+ * <p>
+ * 缓存的key 常量
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 10:02
  */
 public class CacheConstants {
+
     /**
      * 登录用户 redis key
      */

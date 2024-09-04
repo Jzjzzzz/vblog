@@ -9,9 +9,10 @@ import com.jzj.vblog.job.base.BaseJob;
  * </p>
  *
  * @author Jzj
- * @date Created in 2018-11-26 13:33
+ * @since 2022/7/22 11:15
  */
 public class JobUtil {
+
     /**
      * 根据全类名获取Job实例
      *

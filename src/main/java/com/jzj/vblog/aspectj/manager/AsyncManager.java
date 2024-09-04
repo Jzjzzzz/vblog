@@ -9,10 +9,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:10
- * @Version 1.0
- * @Message: 异步任务管理器
+ * <p>
+ * 异步任务管理器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
 public class AsyncManager
 {

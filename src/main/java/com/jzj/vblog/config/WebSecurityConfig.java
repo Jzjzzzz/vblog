@@ -21,10 +21,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 上午11:28
- * @Version 1.0
- * @Message: SpringSecurity 配置类
+ * <p>
+ * SpringSecurity 配置类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 13:57
  */
 @Configurable
 @EnableWebSecurity

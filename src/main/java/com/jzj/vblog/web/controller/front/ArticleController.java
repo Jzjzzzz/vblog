@@ -3,14 +3,13 @@ package com.jzj.vblog.web.controller.front;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.controller.BaseController;
-import com.jzj.vblog.web.pojo.entity.ArticleInform;
 import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.vo.ArticleFrontVo;
 import com.jzj.vblog.web.pojo.vo.ArticleHeadVo;
-import com.jzj.vblog.web.pojo.vo.ArticlePopular;
 import com.jzj.vblog.web.pojo.vo.SwiperVo;
 import com.jzj.vblog.web.service.ArticleInformService;
 import com.jzj.vblog.web.service.ArticleSummaryService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2022/7/29 17:17
- * @Version 1.0
- * @Message: 前台文章控制器
+ * <p>
+ * 前台文章控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/29 17:17
  */
+@Api(tags = "前台文章控制器")
 @RestController
 @RequestMapping("/front/article")
 public class ArticleController extends BaseController {

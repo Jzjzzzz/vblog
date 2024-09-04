@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/14 16:17
- * @Version 1.0
- * @Message: 表格分页数据对象
+ * <p>
+ * 表格分页数据对象
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/14 16:17
  */
 public class TableDataInfo implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**

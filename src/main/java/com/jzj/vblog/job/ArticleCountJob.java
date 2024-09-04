@@ -17,7 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>
  * 文章统计定时计划
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/22 15:36
  */
 @Slf4j
 public class ArticleCountJob implements BaseJob {
@@ -29,11 +34,13 @@ public class ArticleCountJob implements BaseJob {
 
     @Autowired
     private ArticleSummaryService articleSummaryService;
+
     @Autowired
     private ArticleInformService articleInformService;
 
     @Autowired
     private RedisCache redisCache;
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         //点击数更新集合

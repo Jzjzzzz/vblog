@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.SysRoleMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jzj.vblog.web.pojo.entity.SysRoleMenu;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,9 +12,10 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-07
+ * @since 2024-05-07 11:12
  */
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
+
     List<SysRoleMenu> getPageList(SysRoleMenu sysRoleMenu);
 
     void deleteBatchByRoleId(@Param("roleId") String roleId);

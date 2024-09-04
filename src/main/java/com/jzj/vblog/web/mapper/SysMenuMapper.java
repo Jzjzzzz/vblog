@@ -12,9 +12,10 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-07
+ * @since 2024-05-07 11:12
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
+
     List<SysMenu> getPageList(SysMenu sysMenu);
 
     List<SysMenu> findListByUserId(@Param("userId") String userId);

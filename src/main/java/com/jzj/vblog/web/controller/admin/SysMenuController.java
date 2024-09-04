@@ -8,6 +8,7 @@ import com.jzj.vblog.web.pojo.entity.SysMenu;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.vo.AssignMenuVo;
 import com.jzj.vblog.web.service.SysMenuService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,11 +24,13 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-07
+ * @since 2024-05-07 11:12
  */
+@Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/system/menu")
 public class SysMenuController extends BaseController {
+
     @Autowired
     private SysMenuService sysMenuService;
 

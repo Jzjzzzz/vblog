@@ -10,6 +10,7 @@ import com.jzj.vblog.web.pojo.entity.ArticleSummary;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.ArticleSummaryService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,8 +26,9 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-11
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "文章归档管理")
 @RestController
 @RequestMapping("/article/summary")
 public class ArticleSummaryController extends BaseController {

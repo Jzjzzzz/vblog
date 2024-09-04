@@ -10,10 +10,11 @@ import java.math.BigInteger;
  * </p>
  *
  * @author Jzj
- * @date Created in 2022-08-08
+ * @since 2022/7/22 11:12
  */
 @Data
 public class JobAndTrigger {
+
     /**
      * 定时任务名称
      */

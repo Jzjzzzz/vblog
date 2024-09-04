@@ -4,11 +4,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ * <p>
+ * MD5工具类
+ * </p>
+ *
  * @author Jzj
- * @version 1.0
- * @date 2021/7/24 21:57
+ * @since 2021/7/24 21:57
  */
-
 public final class MD5Utils {
 
     public static String encrypt(String strSrc) {
@@ -33,6 +35,5 @@ public final class MD5Utils {
             throw new RuntimeException("MD5加密出错！！+" + e);
         }
     }
-
 
 }

@@ -23,13 +23,17 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
+ * <p>
  * redis配置
+ * </p>
  *
  * @author Jzj
+ * @since 2023/1/16 9:37
  */
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
+
     @Bean
     @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
@@ -65,8 +69,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * Netty心跳解决断连问题
-     *
-     * @return
      */
     @Bean
     public ClientResources clientResources() {

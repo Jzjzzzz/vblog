@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jzj.vblog.web.pojo.entity.ArticleComment;
 import com.jzj.vblog.web.pojo.vo.CommentInfoVo;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-09-11
+ * @since 2022-09-11 11:12
  */
 public interface ArticleCommentMapper extends BaseMapper<ArticleComment> {
 

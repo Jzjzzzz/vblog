@@ -1,16 +1,20 @@
 package com.jzj.vblog.web.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/12/8 9:11
- * @Version 1.0
- * @Message: 获取七日统计vo
+ * <p>
+ * 获取七日统计vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/9/6 16:03
  */
+@ApiModel(description = "获取七日统计vo")
 @Data
 public class BeforeDayCountVo {
 

@@ -7,6 +7,7 @@ import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.SysWebInformation;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.service.SysWebInformationService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.*;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-28
+ * @since 2022-07-28 11:12
  */
+@Api(tags = "网站基本信息管理")
 @RestController
 @RequestMapping("/system/web/information")
 public class SysWebInformationController extends BaseController {
+
     @Autowired
     private SysWebInformationService sysWebInformationService;
 

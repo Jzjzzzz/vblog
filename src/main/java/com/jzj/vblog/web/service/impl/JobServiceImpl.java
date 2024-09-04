@@ -19,12 +19,14 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-08
+ * @since 2022-08-08 11:12
  */
 @Service
 @Slf4j
 public class JobServiceImpl implements JobService {
+
     private final Scheduler scheduler;
+
     private final JobMapper jobMapper;
 
     @Autowired

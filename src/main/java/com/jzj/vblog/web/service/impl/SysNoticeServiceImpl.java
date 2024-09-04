@@ -1,10 +1,10 @@
 package com.jzj.vblog.web.service.impl;
 
-import com.jzj.vblog.socket.handler.MessageEventHandler;
-import com.jzj.vblog.web.pojo.entity.SysNotice;
-import com.jzj.vblog.web.mapper.SysNoticeMapper;
-import com.jzj.vblog.web.service.SysNoticeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.socket.handler.MessageEventHandler;
+import com.jzj.vblog.web.mapper.SysNoticeMapper;
+import com.jzj.vblog.web.pojo.entity.SysNotice;
+import com.jzj.vblog.web.service.SysNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-22
+ * @since 2022-07-22 11:12
  */
 @Service
 public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements SysNoticeService {

@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author Jzj
- * @Date 2024/5/11 下午1:58
- * @Version 1.0
- * @Message: 自定义退出登录处理器
+ * <p>
+ * 自定义退出登录处理器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/22 15:36
  */
 public class CustomLogoutHandler implements LogoutHandler {
+
     private RedisCache redisCache;
 
     public CustomLogoutHandler(RedisCache redisCache) {

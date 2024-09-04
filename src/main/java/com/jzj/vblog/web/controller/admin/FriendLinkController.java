@@ -8,6 +8,7 @@ import com.jzj.vblog.web.pojo.entity.FriendLink;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.FriendLinkService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,11 +24,13 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-09-10
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "友情链接管理")
 @RestController
 @RequestMapping("/friend/link")
 public class FriendLinkController extends BaseController {
+
     @Autowired
     private FriendLinkService friendLinkService;
 

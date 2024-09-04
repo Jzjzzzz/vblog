@@ -1,9 +1,9 @@
 package com.jzj.vblog.web.service.impl;
 
-import com.jzj.vblog.web.pojo.entity.SysRoleMenu;
-import com.jzj.vblog.web.mapper.SysRoleMenuMapper;
-import com.jzj.vblog.web.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.web.mapper.SysRoleMenuMapper;
+import com.jzj.vblog.web.pojo.entity.SysRoleMenu;
+import com.jzj.vblog.web.service.SysRoleMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-07
+ * @since 2024-05-07 11:12
  */
 @Service
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {

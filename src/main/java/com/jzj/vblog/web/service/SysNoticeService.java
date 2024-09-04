@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.SysNotice;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.SysNotice;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-22
+ * @since 2022-07-22 11:12
  */
 public interface SysNoticeService extends IService<SysNotice> {
 

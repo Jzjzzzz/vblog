@@ -6,13 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:08
- * @Version 1.0
- * @Message: 请求方式
+ * <p>
+ * 请求方式枚举
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
 @SuppressWarnings("AlibabaEnumConstantsMustHaveComment")
 public enum HttpMethod {
+
     GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;
 
     private static final Map<String, HttpMethod> mappings = new HashMap<>(16);

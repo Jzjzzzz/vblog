@@ -7,13 +7,16 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * @Author Jzj
- * @Date 2022/6/6 16:46
- * @Version 1.0
- * @Message: 时间自动填充拦截器
+ * <p>
+ * 时间自动填充拦截器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/6/6 16:46
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
+
     @Override
     public void insertFill(MetaObject metaObject) {
         //这里是属性名称，不是字段名称

@@ -5,13 +5,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 上午11:51
- * @Version 1.0
- * @Message: 密码处理
+ * <p>
+ * 密码处理
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/22 15:36
  */
 @Component
 public class CustomMd5PasswordEncoder implements PasswordEncoder {
+
     @Override
     public String encode(CharSequence charSequence) {
         return MD5Utils.encrypt(charSequence.toString());

@@ -1,12 +1,15 @@
 package com.jzj.vblog.utils.constant;
 
 /**
- * @Author Jzj
- * @Date 2022/7/14 16:18
- * @Version 1.0
- * @Message: 返回状态码
+ * <p>
+ * 返回状态码
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/14 16:18
  */
 public class HttpStatus {
+
     /**
      * 操作成功
      */

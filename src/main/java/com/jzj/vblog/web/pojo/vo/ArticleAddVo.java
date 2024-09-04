@@ -7,10 +7,12 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/8/4 10:36
- * @Version 1.0
- * @Message: 文章新增修改Vo
+ * <p>
+ * 文章新增修改vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/8/4 10:36
  */
 @Data
 @ApiModel(description = "文章新增修改vo")

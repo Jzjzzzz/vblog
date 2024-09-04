@@ -18,7 +18,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-23
+ * @since 2022-08-23 11:12
  */
 @Service
 public class SysCountServiceImpl extends ServiceImpl<SysCountMapper, SysCount> implements SysCountService {

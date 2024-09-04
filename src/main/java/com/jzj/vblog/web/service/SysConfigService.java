@@ -11,7 +11,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-22
+ * @since 2022-07-22 11:12
  */
 public interface SysConfigService extends IService<SysConfig> {
 

@@ -11,10 +11,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:42
- * @Version 1.0
- * @Message: 客户端工具类
+ * <p>
+ * 客户端工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:42
  */
 public class ServletUtils {
     /**

@@ -18,12 +18,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * @Author Jzj
- * @Date 2022/6/6 16:36
- * @Version 1.0
- * @Message: 代码生成器
+ * <p>
+ * 代码生成器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/6/6 16:36
  */
 public class CodeGenerator {
+
     public static void main(String[] args) {
         // 1、创建代码生成器
         AutoGenerator mpg = new AutoGenerator();

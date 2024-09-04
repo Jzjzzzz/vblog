@@ -1,22 +1,22 @@
 package com.jzj.vblog.web.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @Author Jzj
- * @Date 2022/9/6 16:00
- * @Version 1.0
- * @Message: 文章列表归档使用vo
+ * <p>
+ * 文章列表归档使用vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/9/6 16:00
  */
-
 @Data
 @ApiModel(description = "文章列表归档使用vo")
 public class ArticleListSummaryVo {
 
-    @TableId(value = "id")
+    @ApiModelProperty(value = "文章id")
     private String key;
 
     @ApiModelProperty(value = "文章标题")

@@ -13,15 +13,18 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @Author Jzj
- * @Date 2022/6/6 16:38
- * @Version 1.0
- * @Message: Swagger配置类
+ * <p>
+ * Swagger配置类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/6/6 16:38
  */
 @Configuration
 @EnableSwagger2
 @ConditionalOnProperty(name = "swagger.enable",havingValue = "true")
 public class Swagger2Config {
+
     @Bean
     public Docket adminApiConfig() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -37,7 +40,7 @@ public class Swagger2Config {
                 .title("个人博客后台管理系统API文档")
                 .description("本文档描述了个人博客后台管理系统的各个模块的接口的调用方式")
                 .version("1.0")
-                .contact(new Contact("漫漫长路", "Jzjzzzz.icu", "946232976@qq.com"))
+                .contact(new Contact("漫漫长路", "http://jzjzzzz.cn/", "946232976@qq.com"))
                 .build();
     }
 }

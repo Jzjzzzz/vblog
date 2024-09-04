@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-28
+ * @since 2022-07-28 11:12
  */
 @Service
 public class SysWebInformationServiceImpl extends ServiceImpl<SysWebInformationMapper, SysWebInformation> implements SysWebInformationService {

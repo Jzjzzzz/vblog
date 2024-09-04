@@ -15,11 +15,10 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-14
+ * @since 2022-08-14 11:12
  */
 @Service
 public class SysTodoServiceImpl extends ServiceImpl<SysTodoMapper, SysTodo> implements SysTodoService {
-
 
     @Autowired
     private SysTodoMapper sysTodoMapper;

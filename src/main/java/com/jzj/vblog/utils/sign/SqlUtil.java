@@ -3,12 +3,15 @@ package com.jzj.vblog.utils.sign;
 import com.sun.xml.internal.ws.util.UtilException;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:43
- * @Version 1.0
- * @Message: sql操作工具类
+ * <p>
+ * sql操作工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:43
  */
 public class SqlUtil {
+
     /**
      * 定义常用的 sql关键字
      */

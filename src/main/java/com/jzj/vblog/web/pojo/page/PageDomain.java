@@ -3,10 +3,12 @@ package com.jzj.vblog.web.pojo.page;
 import com.jzj.vblog.utils.sign.StringUtils;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:32
- * @Version 1.0
- * @Message: 分页数据
+ * <p>
+ * 分页数据
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:32
  */
 public class PageDomain {
 

@@ -7,10 +7,12 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2023/7/10 16:09
- * @Version 1.0
- * @Message: 前台文章详细头部内容vo
+ * <p>
+ * 前台文章详细头部内容vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/7/10 16:09
  */
 @Data
 @ApiModel(description = "前台文章详细头部内容vo")
@@ -42,6 +44,5 @@ public class ArticleHeadVo {
 
     @ApiModelProperty(value = "评论数")
     private Long commentNumber;
-
 
 }

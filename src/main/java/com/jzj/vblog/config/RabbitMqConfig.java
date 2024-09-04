@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author Jzj
- * @Date 2023/1/16 9:37
- * @Version 1.0
- * @Message: RabbitMQ配置类
+ * <p>
+ * RabbitMQ配置类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/1/16 9:37
  */
 @Configuration
 public class RabbitMqConfig {

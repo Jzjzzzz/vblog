@@ -11,23 +11,17 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-11
+ * @since 2022-08-11 11:12
  */
 public interface ArticleSummaryMapper extends BaseMapper<ArticleSummary> {
 
     /**
      * 条件查询归档列表
-     *
-     * @param articleSummary
-     * @return
      */
     List<ArticleSummary> selectSummaryList(ArticleSummary articleSummary);
 
     /**
      * 唯一性检查
-     *
-     * @param name
-     * @return
      */
     ArticleSummary checkSummaryUnique(String name);
 }

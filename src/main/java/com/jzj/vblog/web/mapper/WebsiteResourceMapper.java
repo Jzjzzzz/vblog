@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jzj.vblog.web.pojo.entity.WebsiteResource;
 
 import java.util.List;
 
@@ -11,11 +11,9 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-26
+ * @since 2022-07-26 11:12
  */
 public interface WebsiteResourceMapper extends BaseMapper<WebsiteResource> {
-
-
 
     List<WebsiteResource> selectWebsiteList(WebsiteResource websiteResource);
 

@@ -7,10 +7,12 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/6/7 16:43
- * @Version 1.0
- * @Message: 用户信息实体
+ * <p>
+ * 用户信息实体
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/6/7 16:43
  */
 @ApiModel("用户信息实体")
 @Data

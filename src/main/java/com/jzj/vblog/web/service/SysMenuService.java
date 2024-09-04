@@ -14,7 +14,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-07
+ * @since 2024-05-07 11:12
  */
 public interface SysMenuService extends IService<SysMenu> {
 

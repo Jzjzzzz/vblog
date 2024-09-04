@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.service;
 
-import com.jzj.vblog.web.pojo.entity.ArticleContent;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.vblog.web.pojo.entity.ArticleContent;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-23
+ * @since 2022-07-23 11:12
  */
 public interface ArticleContentService extends IService<ArticleContent> {
 

@@ -32,10 +32,12 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 下午2:07
- * @Version 1.0
- * @Message: 登录过滤器，继承UsernamePasswordAuthenticationFilter，对用户名密码进行登录校验
+ * <p>
+ * 登录过滤器，继承UsernamePasswordAuthenticationFilter，对用户名密码进行登录校验
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 

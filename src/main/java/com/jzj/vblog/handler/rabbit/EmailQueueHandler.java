@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author Jzj
- * @Date 2023/1/16 9:56
- * @Version 1.0
- * @Message: 发送Email队列处理器
+ * <p>
+ * 发送Email队列处理器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/1/16 9:56
  */
 @Component
 public class EmailQueueHandler {

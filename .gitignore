@@ -1,5 +1,6 @@
 HELP.md
 target/
+log/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -36,10 +37,10 @@ target/
 **/.mvn
 
 **/target/
-.idea
 **/.gitignore
 
 # vue-admin
 vue-admin/README.md
 vue-admin/README-zh.md
 vue-admin/node_modules
+vue-admin/dist

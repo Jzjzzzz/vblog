@@ -6,29 +6,30 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 /**
+ * <p>
+ * Jwt工具类
+ * </p>
+ *
  * @author Jzj
- * @version 1.0
- * @date 2021/7/24 21:57
+ * @since 2021/7/24 21:57
  */
 public class JwtUtils {
 
-    private final static Logger log = LoggerFactory.getLogger(JwtUtils.class);
-
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
+
     public static final String APP_SECRET = "ukc8BDbRzgUDaY6pZFfWus2jZWLPHO";
 
     public static final String USERID = "userId";
+
     public static final String USERNAME = "username";
 
     public static String getJwtToken(CustomUser customUser){
 
-        String JwtToken = Jwts.builder()
+        return Jwts.builder()
                 //头部信息
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "HS256")
@@ -37,19 +38,15 @@ public class JwtUtils {
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 //主体信息
-                .claim(USERID,customUser.getSysUser().getId() )
+                .claim(USERID, customUser.getSysUser().getId())
                 .claim(USERNAME, customUser.getSysUser().getUsername())
                 //签名哈希
                 .signWith(SignatureAlgorithm.HS256, APP_SECRET)
                 .compact();
-
-        return JwtToken;
     }
 
     /**
      * 判断token是否存在与有效
-     * @param jwtToken
-     * @return
      */
     public static boolean checkToken(String jwtToken) {
         if(StringUtils.isEmpty(jwtToken)) return false;

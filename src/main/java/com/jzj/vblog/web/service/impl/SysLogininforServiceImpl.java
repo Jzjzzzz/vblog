@@ -1,9 +1,9 @@
 package com.jzj.vblog.web.service.impl;
 
-import com.jzj.vblog.web.pojo.entity.SysLogininfor;
-import com.jzj.vblog.web.mapper.SysLogininforMapper;
-import com.jzj.vblog.web.service.SysLogininforService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.vblog.web.mapper.SysLogininforMapper;
+import com.jzj.vblog.web.pojo.entity.SysLogininfor;
+import com.jzj.vblog.web.service.SysLogininforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-22
+ * @since 2022-07-22 11:12
  */
 @Service
 public class SysLogininforServiceImpl extends ServiceImpl<SysLogininforMapper, SysLogininfor> implements SysLogininforService {
@@ -26,6 +26,5 @@ public class SysLogininforServiceImpl extends ServiceImpl<SysLogininforMapper, S
     {
         logininforMapper.insertLogininfor(logininfor);
     }
-
 
 }

@@ -8,6 +8,7 @@ import com.jzj.vblog.web.pojo.entity.SysRole;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysRoleService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,11 +25,13 @@ import java.util.Map;
  * </p>
  *
  * @author Jzj
- * @since 2024-05-06
+ * @since 2024-05-06 11:12
  */
+@Api(tags = "角色管理")
 @RestController
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController {
+
     @Autowired
     private SysRoleService sysRoleService;
 

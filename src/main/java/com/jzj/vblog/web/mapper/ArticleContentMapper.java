@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.ArticleContent;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jzj.vblog.web.pojo.entity.ArticleContent;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-23
+ * @since 2022-07-23 11:12
  */
 public interface ArticleContentMapper extends BaseMapper<ArticleContent> {
 

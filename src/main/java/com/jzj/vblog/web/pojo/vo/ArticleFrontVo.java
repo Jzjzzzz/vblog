@@ -8,14 +8,17 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/9/6 16:00
- * @Version 1.0
- * @Message: 前台文章详细vo
+ * <p>
+ * 前台文章详细vo
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/9/6 16:00
  */
 @Data
 @ApiModel(description = "前台文章详细vo")
 public class ArticleFrontVo {
+
     @ApiModelProperty(value = "文章id")
     private String id;
 

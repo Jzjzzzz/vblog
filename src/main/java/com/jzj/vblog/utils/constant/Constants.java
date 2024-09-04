@@ -3,10 +3,12 @@ package com.jzj.vblog.utils.constant;
 import io.jsonwebtoken.Claims;
 
 /**
- * @Author Jzj
- * @Date 2022/7/11 14:36
- * @Version 1.0
- * @Message: 通用常量信息
+ * <p>
+ * 通用常量信息
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:36
  */
 public class Constants {
 

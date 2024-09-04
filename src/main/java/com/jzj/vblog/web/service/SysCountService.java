@@ -10,7 +10,7 @@ import com.jzj.vblog.web.pojo.vo.BeforeDayCountVo;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-23
+ * @since 2022-08-23 11:12
  */
 public interface SysCountService extends IService<SysCount> {
 

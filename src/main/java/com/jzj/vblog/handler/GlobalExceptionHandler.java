@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @Author Jzj
- * @Date 2022/6/6 16:49
- * @Version 1.0
- * @Message: 异常处理拦截器
+ * <p>
+ * 异常处理拦截器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/6/6 16:49
  */
 @ControllerAdvice
 @Slf4j
@@ -21,9 +23,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 全局异常处理
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
@@ -36,9 +35,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 自定义异常处理
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseBody

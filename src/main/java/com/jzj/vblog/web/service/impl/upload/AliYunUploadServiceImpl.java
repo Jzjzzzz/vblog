@@ -23,10 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/27 17:14
- * @Version 1.0
- * @Message: 阿里云文件存储实现类
+ * <p>
+ * 阿里云文件存储实现类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/27 17:14
  */
 @Slf4j
 @Service
@@ -34,8 +36,6 @@ public class AliYunUploadServiceImpl implements UploadService {
 
     /**
      * 获取当前实现类编码
-     *
-     * @return
      */
     @Override
     public UploadCode getCode() {
@@ -47,8 +47,6 @@ public class AliYunUploadServiceImpl implements UploadService {
      *
      * @param photo   文件
      * @param name    文件模块名
-     * @param request
-     * @return
      */
     @Override
     public String uploadImg(MultipartFile photo, String name, HttpServletRequest request) {
@@ -86,10 +84,6 @@ public class AliYunUploadServiceImpl implements UploadService {
 
     /**
      * oss文件删除
-     *
-     * @param url
-     * @param request
-     * @return
      */
     @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override
@@ -116,9 +110,6 @@ public class AliYunUploadServiceImpl implements UploadService {
 
     /**
      * oss批量删除
-     *
-     * @param list
-     * @param request
      */
     @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     @Override

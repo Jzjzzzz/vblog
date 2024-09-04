@@ -8,12 +8,15 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/19 11:21
- * @Version 1.0
- * @Message: 字典工具类
+ * <p>
+ * 字典工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/19 11:21
  */
 public class DictUtils {
+
     /**
      * 分隔符
      */

@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2024/5/7 上午11:43
- * @Version 1.0
- * @Message: 根据菜单数据构建菜单数据
+ * <p>
+ * 根据菜单数据构建菜单数据
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
 public class MenuUtils {
     /**
      * 使用递归方法建菜单
-     * @param sysMenuList
-     * @return
      */
     public static List<SysMenu> buildTree(List<SysMenu> sysMenuList) {
         List<SysMenu> trees = new ArrayList<>();
@@ -29,8 +29,6 @@ public class MenuUtils {
 
     /**
      * 递归查找子节点
-     * @param treeNodes
-     * @return
      */
     public static SysMenu findChildren(SysMenu sysMenu, List<SysMenu> treeNodes) {
         sysMenu.setChildren(new ArrayList<>());

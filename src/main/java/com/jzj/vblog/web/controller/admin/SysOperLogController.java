@@ -8,6 +8,7 @@ import com.jzj.vblog.web.pojo.entity.SysOperLog;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
 import com.jzj.vblog.web.pojo.page.TableDataInfo;
 import com.jzj.vblog.web.service.SysOperLogService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,9 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-22
+ * @since 2022-07-22 11:12
  */
+@Api(tags = "操作日志管理")
 @RestController
 @RequestMapping("/monitor/operlog")
 public class SysOperLogController extends BaseController {

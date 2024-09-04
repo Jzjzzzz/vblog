@@ -24,7 +24,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-08
+ * @since 2022/7/22 11:12
  */
 @Api(tags = "字典类型管理")
 @RestController

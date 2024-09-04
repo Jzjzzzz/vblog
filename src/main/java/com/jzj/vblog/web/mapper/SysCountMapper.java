@@ -11,19 +11,17 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-23
+ * @since 2022-08-23 11:12
  */
 public interface SysCountMapper extends BaseMapper<SysCount> {
 
     /**
      * 获取昨天的统计数据
-     * @return
      */
     SysCount getBeforeDayCount();
 
     /**
      * 获取前7天的统计数据
-     * @return
      */
     List<SysCount> getSevenCount();
 

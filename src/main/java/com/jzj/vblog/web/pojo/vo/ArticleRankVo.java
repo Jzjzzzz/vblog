@@ -5,7 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
+ * <p>
+ * 文章后台排行榜实体
+ * </p>
+ *
  * @author Jzj
+ * @since 2022/9/6 16:03
  */
 @Data
 @ApiModel(description = "文章后台排行榜实体")

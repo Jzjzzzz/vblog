@@ -28,14 +28,17 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 10:50
- * @Version 1.0
- * @Message: 操作日志记录处理
+ * <p>
+ * 操作日志记录处理
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 10:50
  */
 @Aspect
 @Component
 public class LogAspect {
+
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     /**

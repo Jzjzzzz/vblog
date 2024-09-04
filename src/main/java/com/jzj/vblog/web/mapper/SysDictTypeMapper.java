@@ -1,7 +1,7 @@
 package com.jzj.vblog.web.mapper;
 
-import com.jzj.vblog.web.pojo.entity.SysDictType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jzj.vblog.web.pojo.entity.SysDictType;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * </p>
  *
  * @author Jzj
- * @since 2022-07-08
+ * @since 2022-07-08 11:12
  */
 public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
 

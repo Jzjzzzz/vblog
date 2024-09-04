@@ -3,6 +3,7 @@ package com.jzj.vblog.web.controller.admin;
 
 import com.jzj.vblog.utils.result.R;
 import com.jzj.vblog.web.service.SysCountService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author Jzj
- * @since 2022-08-23
+ * @since 2022/7/22 11:12
  */
+@Api(tags = "统计归档管理")
 @RestController
 @RequestMapping("/system/count")
 public class SysCountController {

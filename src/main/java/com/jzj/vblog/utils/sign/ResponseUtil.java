@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 下午2:23
- * @Version 1.0
- * @Message:
+ * <p>
+ * 响应工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/11 14:31
  */
 public class ResponseUtil {
     public static void out(HttpServletResponse response, R r) {

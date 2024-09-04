@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @Author Jzj
- * @Date 2023/1/16 15:32
- * @Version 1.0
- * @Message: 邮箱发送消息体
+ * <p>
+ * 邮箱发送消息体
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/1/16 15:32
  */
 @Data
 @Builder

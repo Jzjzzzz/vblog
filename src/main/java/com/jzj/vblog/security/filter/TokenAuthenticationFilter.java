@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 下午2:33
- * @Version 1.0
- * @Message: 认证解析token过滤器
+ * <p>
+ * 认证解析token过滤器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/22 11:12
  */
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
