@@ -46,14 +46,14 @@
 
 ### 启动教程
 #### 后端
-1. 项目下db目录内寻找最新日期sql文件运行。
+1. 创建数据库vblog,运行db文件夹下的vblog.sql文件。
 2. 修改dev下redis，mysql配置信息，这时即可通过VblogApplication启动项目。
 3. 如不需要oss和邮箱功能可去系统管理-参数设置处关闭，如开启状态下需要在dev里填入相关秘钥即可。
 
 #### 后台前端页面（vue-admin）
 1. npm install
 2. npm run dev
-3. 后台初始账号密码：admin,123456
+3. 后台初始账号密码：admin,111111
 
 #### 前台前端页面（vue-front-desk）
 1. npm install
