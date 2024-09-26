@@ -3,7 +3,7 @@
 <mapper namespace="com.jzj.vblog.web.mapper.SysUserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.SysUser">
+    <resultMap id="BaseResultMap" type="SysUser">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="password" property="password" />
@@ -28,7 +28,7 @@
         FROM sys_user
     </sql>
 
-    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.SysUser">
+    <select id="getPageList" resultType="SysUser">
         <include refid="Base_Column_List"/>
         <where>
             <if test="username != null and username != ''">

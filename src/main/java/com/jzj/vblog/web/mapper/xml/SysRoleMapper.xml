@@ -3,7 +3,7 @@
 <mapper namespace="com.jzj.vblog.web.mapper.SysRoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.SysRole">
+    <resultMap id="BaseResultMap" type="SysRole">
         <id column="id" property="id" />
         <result column="role_name" property="roleName" />
         <result column="role_code" property="roleCode" />
@@ -21,7 +21,7 @@
         FROM sys_role
     </sql>
 
-    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.SysRole">
+    <select id="getPageList" resultType="SysRole">
         <include refid="Base_Column_List"/>
         <where>
             <if test="roleName != null and roleName != ''">
@@ -39,7 +39,7 @@
         </where>
         ORDER BY create_time DESC
     </select>
-    <select id="findListByUserId" resultType="com.jzj.vblog.web.pojo.entity.SysRole">
+    <select id="findListByUserId" resultType="SysRole">
         SELECT
             sr.id,
             sr.role_name,

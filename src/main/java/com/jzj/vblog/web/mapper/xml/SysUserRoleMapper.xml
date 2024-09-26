@@ -3,7 +3,7 @@
 <mapper namespace="com.jzj.vblog.web.mapper.SysUserRoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.SysUserRole">
+    <resultMap id="BaseResultMap" type="SysUserRole">
         <id column="id" property="id" />
         <result column="role_id" property="roleId" />
         <result column="user_id" property="userId" />

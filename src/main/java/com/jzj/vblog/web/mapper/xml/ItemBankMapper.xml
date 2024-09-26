@@ -3,7 +3,7 @@
 <mapper namespace="com.jzj.vblog.web.mapper.ItemBankMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.ItemBank">
+    <resultMap id="BaseResultMap" type="ItemBank">
         <id column="id" property="id" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
@@ -21,7 +21,7 @@
         FROM item_bank
     </sql>
 
-    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.ItemBank">
+    <select id="getPageList" resultType="ItemBank">
         <include refid="Base_Column_List"/>
         <where>
             <if test="title != null and title != ''">
@@ -39,7 +39,7 @@
         </where>
         ORDER BY create_time DESC
     </select>
-    <select id="random" resultType="com.jzj.vblog.web.pojo.entity.ItemBank">
+    <select id="random" resultType="ItemBank">
         <include refid="Base_Column_List"/>
         ORDER BY RAND() LIMIT 1;
     </select>

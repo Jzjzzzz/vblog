@@ -39,7 +39,7 @@ spring:
   mail:
     host: smtp.163.com #SMTP服务器地址
     username: mm946232976@163.com
-    password: SGfertCnIjKNm3x9 #登陆密码（或授权码）
+    password: xx #登陆密码（或授权码）
     port: 465
     properties:
       mail:
@@ -56,9 +56,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://117.72.47.88:3306/vblog?serverTimezone=GMT%2B8&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/vblog?serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
-    password: 4odqqueypOUNTLEewKrFjrg5giHw5LHD
+    password: root
     druid:
       # 初始连接数
       initialSize: 5
@@ -105,6 +105,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #日志输出配置
   mapper-locations: classpath:com/jzj/vblog/web/mapper/xml/*.xml  #xml文件位置
+  type-aliases-package: com.jzj.vblog.web.pojo.*
 
 #分页插件PageHelper配置
 pagehelper:
@@ -120,31 +121,7 @@ aliyun:
     keySecret: xxx
     bucketName: vue-vblog
 
-#行为验证码相关
-aj:
-  captcha:
-    jigsaw: classpath:images/jigsaw
-    pic-click: classpath:images/pic-click
-    cache-type: redis
-    # local缓存的阈值,达到这个值，清除缓存
-    cache-number: 1000
-    # local定时清除过期缓存(单位秒),设置为0代表不执行
-    timing-clear: 180
-    type: default
-    water-mark: V-Blog
-    slip-offset: 5 # 校验滑动拼图允许误差偏移量(默认5像素)
-    aes-status: true # aes加密坐标开启或者禁用(true|false)
-    interference-options: 2 # 滑动干扰项(0/1/2)
-    font-style: 1 #点选字体样式 默认Font.BOLD
-    font-size: 25 #点选字体字体大小
-    history-data-clear-enable: false
-    req-frequency-limit-enable: true # 接口请求次数一分钟限制是否开启 true|false
-    req-get-lock-limit: 5 # 验证失败5次，get接口锁定
-    req-get-lock-seconds: 120 # 验证失败后，锁定时间间隔,s
-    req-get-minute-limit: 30 # get接口一分钟内请求数限制
-    req-check-minute-limit: 60 # check接口一分钟内请求数限制
-    req-verify-minute-limit: 60 # verify接口一分钟内请求数限制
-
+#Swagger配置
 Swagger:
   production: false
   enable: true

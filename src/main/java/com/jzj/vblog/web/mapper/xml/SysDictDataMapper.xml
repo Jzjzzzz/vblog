@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzj.vblog.web.mapper.SysDictDataMapper">
 
-    <resultMap type="com.jzj.vblog.web.pojo.entity.SysDictData" id="SysDictDataResult">
+    <resultMap type="SysDictData" id="SysDictDataResult">
         <id     property="id"   column="id"   />
         <result property="dictSort"   column="dict_sort"   />
         <result property="dictLabel"  column="dict_label"  />
@@ -23,7 +23,7 @@
         from sys_dict_data
     </sql>
 
-    <select id="selectDictDataList" parameterType="com.jzj.vblog.web.pojo.entity.SysDictData" resultMap="SysDictDataResult">
+    <select id="selectDictDataList" parameterType="SysDictData" resultMap="SysDictDataResult">
         <include refid="selectDictDataVo"/>
         <where>
             <if test="dictType != null and dictType != ''">
@@ -56,12 +56,12 @@
         <include refid="selectDictDataVo"/>
         where id = #{dictCode}
     </select>
-    <select id="checkDictDataUnique" resultType="com.jzj.vblog.web.pojo.entity.SysDictData">
+    <select id="checkDictDataUnique" resultType="SysDictData">
         <include refid="selectDictDataVo"/>
         where dict_type = #{dictType} and dict_value = #{dictValue} limit 1
     </select>
 
-    <insert id="insertDictData" parameterType="com.jzj.vblog.web.pojo.entity.SysDictData">
+    <insert id="insertDictData" parameterType="SysDictData">
         insert into sys_dict_data(
         <if test="dictSort != null">dict_sort,</if>
         <if test="dictLabel != null and dictLabel != ''">dict_label,</if>
@@ -89,7 +89,7 @@
         )
     </insert>
 
-    <update id="updateDictData" parameterType="com.jzj.vblog.web.pojo.entity.SysDictData">
+    <update id="updateDictData" parameterType="SysDictData">
         update sys_dict_data
         <set>
             <if test="dictSort != null">dict_sort = #{dictSort},</if>

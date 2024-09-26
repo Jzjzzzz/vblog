@@ -3,7 +3,7 @@
 <mapper namespace="com.jzj.vblog.web.mapper.SysRoleMenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.SysRoleMenu">
+    <resultMap id="BaseResultMap" type="SysRoleMenu">
         <id column="id" property="id" />
         <result column="role_id" property="roleId" />
         <result column="menu_id" property="menuId" />
@@ -22,7 +22,7 @@
         DELETE FROM sys_role_menu WHERE role_id = #{roleId}
     </delete>
 
-    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.SysRoleMenu">
+    <select id="getPageList" resultType="SysRoleMenu">
         <include refid="Base_Column_List"/>
         <where>
             <if test="status != null and status != ''">

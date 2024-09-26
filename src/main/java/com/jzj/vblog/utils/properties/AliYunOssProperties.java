@@ -36,9 +36,6 @@ public class AliYunOssProperties implements InitializingBean {
 
     public static String BUCKET_NAME;
 
-    /**
-     * 当私有成员被赋值后，此方法自动被调用，从而初始化常量
-     */
     @Override
     public void afterPropertiesSet() {
         ENDPOINT = endpoint;

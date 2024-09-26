@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzj.vblog.web.mapper.SysNoticeMapper">
 
-    <resultMap type="com.jzj.vblog.web.pojo.entity.SysNotice" id="SysNoticeResult">
+    <resultMap type="SysNotice" id="SysNoticeResult">
         <result property="id"       column="id"       />
         <result property="noticeTitle"    column="notice_title"    />
         <result property="noticeType"     column="notice_type"     />
@@ -21,7 +21,7 @@
     </sql>
 
 
-    <select id="selectNoticeList" parameterType="com.jzj.vblog.web.pojo.entity.SysNotice" resultMap="SysNoticeResult">
+    <select id="selectNoticeList" parameterType="SysNotice" resultMap="SysNoticeResult">
         <include refid="selectNoticeVo"/>
         <where>
             <if test="noticeTitle != null and noticeTitle != ''">

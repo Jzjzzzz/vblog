@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzj.vblog.web.mapper.FriendLinkMapper">
-    <resultMap id="FriendLinkResult" type="com.jzj.vblog.web.pojo.entity.FriendLink">
+    <resultMap id="FriendLinkResult" type="FriendLink">
         <id property="id" column="id"/>
         <result property="status" column="status"/>
         <result property="createTime" column="create_time"/>
@@ -14,7 +14,7 @@
         FROM friend_link
     </sql>
 
-    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.FriendLink">
+    <select id="getPageList" resultType="FriendLink">
         <include refid="selectFriendLinkVo"/>
         <where>
             <if test="name != null and name != ''">
@@ -32,7 +32,7 @@
         </where>
         ORDER BY create_time DESC
     </select>
-    <select id="checkLinkUnique" resultType="com.jzj.vblog.web.pojo.entity.FriendLink">
+    <select id="checkLinkUnique" resultType="FriendLink">
         <include refid="selectFriendLinkVo"/>
         where name = #{name} limit 1
     </select>

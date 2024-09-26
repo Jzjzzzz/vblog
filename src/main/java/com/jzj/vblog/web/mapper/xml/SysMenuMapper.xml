@@ -3,7 +3,7 @@
 <mapper namespace="com.jzj.vblog.web.mapper.SysMenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jzj.vblog.web.pojo.entity.SysMenu">
+    <resultMap id="BaseResultMap" type="SysMenu">
         <id column="id" property="id" />
         <result column="parent_id" property="parentId" />
         <result column="name" property="name" />
@@ -30,7 +30,7 @@
         m.id,m.parent_id,m.name,m.type,m.path,m.component,m.perms,m.icon,m.sort_value,m.status,m.create_time,m.update_time,m.is_deleted
     </sql>
 
-    <select id="getPageList" resultType="com.jzj.vblog.web.pojo.entity.SysMenu">
+    <select id="getPageList" resultType="SysMenu">
         <include refid="Base_Column_List"/>
         <where>
             <if test="status != null and status != ''">

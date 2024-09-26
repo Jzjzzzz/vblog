@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzj.vblog.web.mapper.ArticleInformMapper">
 
-    <resultMap id="ArticleInformResult" type="com.jzj.vblog.web.pojo.entity.ArticleInform">
+    <resultMap id="ArticleInformResult" type="ArticleInform">
         <id     property="id" column="id" />
         <result property="updateTime" column="update_time" />
         <result property="createTime" column="create_time" />
@@ -28,7 +28,7 @@
         FROM article_inform
     </sql>
 
-    <select id="selectArticleList" resultType="com.jzj.vblog.web.pojo.entity.ArticleInform">
+    <select id="selectArticleList" resultType="ArticleInform">
         <include refid="ArticleInformVo" />
         <where>
             <if test="articleTitle != null and articleTitle != ''">
@@ -56,7 +56,7 @@
         ORDER BY create_time DESC
     </select>
 
-    <select id="selectPageVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleVo">
+    <select id="selectPageVo" resultType="ArticleVo">
         SELECT
         ai.id id,
         ai.top_status isTop,
@@ -92,7 +92,7 @@
             </otherwise>
         </choose>
     </select>
-    <select id="selectArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleAddVo" parameterType="java.lang.String">
+    <select id="selectArticleByIdVo" resultType="ArticleAddVo" parameterType="java.lang.String">
         SELECT
             ai.id,
             ai.article_title,
@@ -112,7 +112,7 @@
                 LEFT JOIN article_content ac ON ai.id = ac.id
         WHERE ai.id = #{id}
     </select>
-    <select id="selectFrontArticleByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleFrontVo" parameterType="java.lang.String">
+    <select id="selectFrontArticleByIdVo" resultType="ArticleFrontVo" parameterType="java.lang.String">
         SELECT
             ai.id,
             ai.article_title,
@@ -131,7 +131,7 @@
             ai.id = #{id}
           AND ai.`status` = '1'
     </select>
-    <select id="selectArticleRank" resultType="com.jzj.vblog.web.pojo.vo.ArticleRankVo">
+    <select id="selectArticleRank" resultType="ArticleRankVo">
         SELECT article_title,
                click_rate,
                number_like,
@@ -140,7 +140,7 @@
         ORDER BY click_rate DESC
         LIMIT 7
     </select>
-    <select id="selectArticlePopular" resultType="com.jzj.vblog.web.pojo.vo.ArticlePopular">
+    <select id="selectArticlePopular" resultType="ArticlePopular">
         SELECT
             id,
             article_title,
@@ -153,7 +153,7 @@
             click_rate DESC
         LIMIT 3
     </select>
-    <select id="selectFrontArticleHeadByIdVo" resultType="com.jzj.vblog.web.pojo.vo.ArticleHeadVo">
+    <select id="selectFrontArticleHeadByIdVo" resultType="ArticleHeadVo">
         SELECT
             ai.id,
             ai.article_title,
@@ -169,7 +169,7 @@
             ai.id = #{id}
           AND ai.`status` = '1'
     </select>
-    <select id="selectArticleTop" resultType="com.jzj.vblog.web.pojo.vo.SwiperVo">
+    <select id="selectArticleTop" resultType="SwiperVo">
         SELECT
             id,
             article_title title,
@@ -182,7 +182,7 @@
         ORDER BY
             create_time DESC
     </select>
-    <select id="selectArticleListKw" resultType="com.jzj.vblog.web.pojo.vo.SwiperVo">
+    <select id="selectArticleListKw" resultType="SwiperVo">
         SELECT
             id,
             article_title title

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzj.vblog.web.mapper.SysCountMapper">
-    <resultMap id="sysCountResult" type="com.jzj.vblog.web.pojo.entity.SysCount">
+    <resultMap id="sysCountResult" type="SysCount">
         <id     property="id"      column="id"      />
         <result property="articleCount" column="article_count"/>
         <result property="clickCount" column="click_count"/>
@@ -26,13 +26,13 @@
         FROM
             sys_count
     </sql>
-    <select id="getBeforeDayCount" resultType="com.jzj.vblog.web.pojo.entity.SysCount">
+    <select id="getBeforeDayCount" resultType="SysCount">
         <include refid="selectSysCountVo"/>
         WHERE
             TO_DAYS( create_time ) = TO_DAYS(NOW())-1
         LIMIT 1
     </select>
-    <select id="getSevenCount" resultType="com.jzj.vblog.web.pojo.entity.SysCount">
+    <select id="getSevenCount" resultType="SysCount">
         SELECT
         *
         FROM
@@ -41,7 +41,7 @@
         TO_DAYS( create_time ) &lt;= TO_DAYS( NOW())- 1 AND TO_DAYS( create_time ) &gt;= TO_DAYS(NOW())- 7
         ORDER BY create_time
     </select>
-    <select id="getNowDateCount" resultType="com.jzj.vblog.web.pojo.entity.SysCount">
+    <select id="getNowDateCount" resultType="SysCount">
         SELECT * FROM `sys_count` WHERE DATE(create_time) = CURDATE()
     </select>
 </mapper>

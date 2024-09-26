@@ -11,4 +11,5 @@ package com.jzj.vblog.utils.constant;
 public class RabbitConstants {
 
     public final static String EMAIL_QUEUE = "email.queue";
+
 }

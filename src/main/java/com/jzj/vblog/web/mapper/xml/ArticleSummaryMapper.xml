@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzj.vblog.web.mapper.ArticleSummaryMapper">
 
-    <resultMap id="ArticleSummaryResult" type="com.jzj.vblog.web.pojo.entity.ArticleSummary">
+    <resultMap id="ArticleSummaryResult" type="ArticleSummary">
         <id property="id" column="id" />
         <result property="name" column="name" />
         <result property="banner" column="banner"/>
@@ -27,7 +27,7 @@
             article_summary
     </sql>
 
-    <select id="selectSummaryList" resultType="com.jzj.vblog.web.pojo.entity.ArticleSummary" parameterType="com.jzj.vblog.web.pojo.entity.ArticleSummary">
+    <select id="selectSummaryList" resultType="ArticleSummary" parameterType="ArticleSummary">
         <include refid="ArticleSummaryVo" />
         <where>
             <if test="status != null and status != ''">
@@ -42,7 +42,7 @@
         </where>
         ORDER BY create_time DESC
     </select>
-    <select id="checkSummaryUnique" resultType="com.jzj.vblog.web.pojo.entity.ArticleSummary" parameterType="java.lang.String">
+    <select id="checkSummaryUnique" resultType="ArticleSummary" parameterType="java.lang.String">
         <include refid="ArticleSummaryVo"/>
         where name = #{name} limit 1
     </select>
