@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.security.custom.CustomUser;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.result.BusinessException;
-import com.jzj.vblog.utils.sign.MD5Utils;
 import com.jzj.vblog.web.mapper.SysUserMapper;
 import com.jzj.vblog.web.mapper.SysUserRoleMapper;
 import com.jzj.vblog.web.pojo.entity.SysUser;
@@ -21,6 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,7 +64,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //判断是否唯一
         int usrCount = this.count(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, sysUser.getUsername()));
         if (usrCount > 0) throw new BusinessException("用户名已存在!");
-        sysUser.setPassword(MD5Utils.encrypt(sysUser.getPassword()));
+        sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
         return sysUserMapper.insert(sysUser);
     }
 
@@ -135,9 +135,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             if (!vo.getNewpassword1().equals(vo.getNewpassword2()))
                 throw new BusinessException("两次输入的密码不一致!");
             if (StringUtils.isEmpty(vo.getOldpassword())) throw new BusinessException("旧密码不能为空!");
-            String oldPassword = MD5Utils.encrypt(vo.getOldpassword());
-            if (!oldPassword.equals(user.getPassword())) throw new BusinessException("旧密码错误!");
-            user.setPassword(MD5Utils.encrypt(vo.getNewpassword1()));
+            boolean matches = new BCryptPasswordEncoder().matches(vo.getOldpassword(), user.getPassword());
+            if (!matches) throw new BusinessException("旧密码错误!");
+            user.setPassword(new BCryptPasswordEncoder().encode(vo.getNewpassword1()));
             return baseMapper.updateById(user);
         }
         return 0;

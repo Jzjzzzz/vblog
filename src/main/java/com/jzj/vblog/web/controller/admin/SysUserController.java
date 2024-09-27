@@ -3,7 +3,6 @@ package com.jzj.vblog.web.controller.admin;
 
 import com.jzj.vblog.annotation.Log;
 import com.jzj.vblog.utils.result.R;
-import com.jzj.vblog.utils.sign.MD5Utils;
 import com.jzj.vblog.web.controller.BaseController;
 import com.jzj.vblog.web.pojo.entity.SysUser;
 import com.jzj.vblog.web.pojo.enums.BusinessType;
@@ -15,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,7 +85,7 @@ public class SysUserController extends BaseController {
     @PutMapping("/restPassword")
     @PreAuthorize("hasAuthority('btn.user.edit')")
     public R restPassword(@RequestBody SysUser sysUser) {
-        sysUser.setPassword(MD5Utils.encrypt(sysUser.getPassword()));
+        sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
         return toAjax(sysUserService.modify(sysUser));
     }
 
