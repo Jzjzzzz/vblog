@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 27/09/2024 14:38:33
+ Date: 27/09/2024 14:55:49
 */
 
 SET NAMES utf8mb4;
@@ -783,11 +783,12 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
+INSERT INTO `sys_oper_log` VALUES (11, '用户表管理', 3, 'com.jzj.vblog.web.controller.admin.SysUserController.remove()', 'DELETE', 1, 'admin', NULL, '/system/user/149dd22e7c4e8b0f1121ac1d3718dd93', '127.0.0.1', '内网IP', '{ids=149dd22e7c4e8b0f1121ac1d3718dd93}', NULL, 1, '不允许删除超级管理员!', '2024-09-27 14:53:53');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -955,6 +956,7 @@ CREATE TABLE `sys_user`  (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '删除标记（0:不可用 1:可用）',
   `sex` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '性别（0：男 1：女 ）',
+  `is_super` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否是超级管理员',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_username`(`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
@@ -962,7 +964,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('149dd22e7c4e8b0f1121ac1d3718dd93', 'admin', '$2a$10$fNoJrHp5xoDwN95mJmpKzOeAi71HWe7WqgcgUnB.ckwgqrhy8q202', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2024-05-09 11:40:34', '2024-09-27 14:32:37', '0', '0');
+INSERT INTO `sys_user` VALUES ('149dd22e7c4e8b0f1121ac1d3718dd93', 'admin', '$2a$10$fNoJrHp5xoDwN95mJmpKzOeAi71HWe7WqgcgUnB.ckwgqrhy8q202', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2024-05-09 11:40:34', '2024-09-27 14:44:46', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for sys_user_role

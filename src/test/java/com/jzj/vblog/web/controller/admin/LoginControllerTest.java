@@ -1,8 +1,5 @@
 package com.jzj.vblog.web.controller.admin;
 
-import com.jzj.vblog.utils.sign.MD5Utils;
-import com.jzj.vblog.web.service.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

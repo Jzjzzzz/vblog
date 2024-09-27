@@ -6,8 +6,10 @@ import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.utils.sign.MenuUtils;
 import com.jzj.vblog.web.mapper.SysMenuMapper;
 import com.jzj.vblog.web.mapper.SysRoleMenuMapper;
+import com.jzj.vblog.web.mapper.SysUserMapper;
 import com.jzj.vblog.web.pojo.entity.SysMenu;
 import com.jzj.vblog.web.pojo.entity.SysRoleMenu;
+import com.jzj.vblog.web.pojo.entity.SysUser;
 import com.jzj.vblog.web.pojo.vo.AssignMenuVo;
 import com.jzj.vblog.web.pojo.vo.MetaVo;
 import com.jzj.vblog.web.pojo.vo.RouterVo;
@@ -40,10 +42,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Autowired
     private SysRoleMenuMapper sysRoleMenuMapper;
 
+    @Autowired
+    private SysUserMapper sysUserMapper;
+
     @Override
     public List<SysMenu> pageList(SysMenu sysMenu) {
-        List<SysMenu> list = sysMenuMapper.getPageList(sysMenu);
-        return list;
+        return sysMenuMapper.getPageList(sysMenu);
     }
 
     @Override
@@ -71,7 +75,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         //全部权限列表
         List<SysMenu> sysMenuList = this.list();
         if (CollectionUtils.isEmpty(sysMenuList)) return null;
-
         //构建树形数据
         return MenuUtils.buildTree(sysMenuList);
     }
@@ -80,12 +83,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<SysMenu> findSysMenuByRoleId(String roleId) {
         //全部权限列表
         List<SysMenu> allSysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1));
-
         //根据角色id获取角色权限
         List<SysRoleMenu> sysRoleMenuList = sysRoleMenuMapper.selectList(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, roleId));
         //转换给角色id与角色权限对应Map对象
         List<String> menuIdList = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-
         allSysMenuList.forEach(permission -> {
             permission.setSelect(menuIdList.contains(permission.getId()));
         });
@@ -115,7 +116,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<RouterVo> findUserMenuList(String userId) {
         List<SysMenu> sysMenuList = null;
         //超级管理员
-        if (UserConstants.SYS_ADMIN_ID.equals(userId)) {
+        SysUser user = sysUserMapper.selectById(userId);
+        if(UserConstants.IS_SUPER.equals(user.getIsSuper())) {
             sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1).orderByAsc(SysMenu::getSortValue));
         } else {
             sysMenuList = sysMenuMapper.findListByUserId(userId);
@@ -171,7 +173,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<String> findUserPermsList(String userId) {
         List<SysMenu> sysMenuList = null;
         //超级管理员
-        if (UserConstants.SYS_ADMIN_ID.equals(userId)) {
+        SysUser user = sysUserMapper.selectById(userId);
+        if(UserConstants.IS_SUPER.equals(user.getIsSuper())) {
             sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1));
         } else {
             sysMenuList = sysMenuMapper.findListByUserId(userId);

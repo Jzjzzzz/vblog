@@ -82,7 +82,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public int deleteByIds(List<String> ids, HttpServletRequest request) {
         ids.forEach(id -> {
-            if (UserConstants.SYS_ADMIN_ID.equals(id)) throw new BusinessException("不允许删除超级管理员!");
+            SysUser user = sysUserMapper.selectById(id);
+            if (UserConstants.IS_SUPER.equals(user.getIsSuper())) throw new BusinessException("不允许删除超级管理员!");
             //删除用户之前先去删除用户角色关联表数据
             sysUserRoleMapper.deleteBatchByUserId(id);
         });

@@ -57,4 +57,5 @@ public class SysMenu extends CommonEntity {
     //是否选中
     @TableField(exist = false)
     private boolean isSelect;
+
 }

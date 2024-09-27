@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.vblog.utils.constant.UserConstants;
 import com.jzj.vblog.web.mapper.SysRoleMapper;
 import com.jzj.vblog.web.mapper.SysRoleMenuMapper;
+import com.jzj.vblog.web.mapper.SysUserMapper;
 import com.jzj.vblog.web.mapper.SysUserRoleMapper;
 import com.jzj.vblog.web.pojo.entity.SysRole;
+import com.jzj.vblog.web.pojo.entity.SysUser;
 import com.jzj.vblog.web.pojo.entity.SysUserRole;
 import com.jzj.vblog.web.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Autowired
     private SysRoleMenuMapper sysRoleMenuMapper;
+
+    @Autowired
+    private SysUserMapper sysUserMapper;
 
     @Override
     public List<SysRole> pageList(SysRole sysRole) {
@@ -92,7 +97,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public List<String> findUserRoleList(String id) {
         List<SysRole> sysRoleList = null;
         //超级管理员
-        if (UserConstants.SYS_ADMIN_ID.equals(id)) {
+        SysUser user = sysUserMapper.selectById(id);
+        if(UserConstants.IS_SUPER.equals(user.getIsSuper())) {
             sysRoleList = this.list(new LambdaQueryWrapper<SysRole>().eq(SysRole::getStatus, 1));
         } else {
             sysRoleList = sysRoleMapper.findListByUserId(id);
