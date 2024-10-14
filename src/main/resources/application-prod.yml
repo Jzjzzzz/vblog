@@ -105,6 +105,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #日志输出配置
   mapper-locations: classpath:com/jzj/vblog/web/mapper/xml/*.xml  #xml文件位置
+  type-aliases-package: com.jzj.vblog.web.pojo.*
 
 #分页插件PageHelper配置
 pagehelper:
